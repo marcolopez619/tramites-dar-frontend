@@ -66,9 +66,10 @@ export class NotificacionService {
      */
     showSnackbarMensaje(pMensaje: string, pTiempo: number = 2000, pTipoNotificacion: eTipoNotificacion = eTipoNotificacion.Correcto): void {
         // Arma objeto resultado.
-        const resultado = new Resultado();
-        resultado.message = pMensaje;
-        resultado.tipoNotificacion = pTipoNotificacion;
+        const resultado: Resultado = {
+            message: pMensaje,
+            tipoNotificacion: pTipoNotificacion
+        };
 
         // Abre el snackbar.
         this.snackBar.openFromComponent(NotificacionComponent, {

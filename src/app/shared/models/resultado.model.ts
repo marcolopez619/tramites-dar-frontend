@@ -1,4 +1,3 @@
-import { Error } from './error.model';
 import { eTipoNotificacion } from '../enums/tipo-notificacion.enum';
 
 /**
@@ -7,7 +6,7 @@ import { eTipoNotificacion } from '../enums/tipo-notificacion.enum';
  * @export
  * @class Resultado
  */
-export class Resultado {
+export interface Resultado {
 
     /**
      * Datos de la operación, puede ser de cualquier tipo.
@@ -15,7 +14,7 @@ export class Resultado {
      * @type {*}
      * @memberof Resultado
      */
-    data: any;
+    data?: any;
 
     /**
      * Mensaje asociado al resultado.
@@ -23,7 +22,7 @@ export class Resultado {
      * @type {string}
      * @memberof Resultado
      */
-    message: string;
+    message?: string;
 
     /**
      * Error de la operación.
@@ -31,7 +30,7 @@ export class Resultado {
      * @type {any}
      * @memberof Resultado
      */
-    error: any;
+    error?: any;
 
     /**
      * Tipo de notificación.
@@ -39,5 +38,5 @@ export class Resultado {
      * @type {eTipoNotificacion}
      * @memberof Resultado
      */
-    tipoNotificacion: eTipoNotificacion;
+    tipoNotificacion?: eTipoNotificacion;
 }
