@@ -13,9 +13,10 @@ import { eTipoNotificacion } from '../enums/tipo-notificacion.enum';
 import { ContextoService } from '../services/contexto.service';
 import { LangService } from '../services/lang.service';
 import { eModulo } from '../enums/modulo.enum';
+import { BaseComponent } from '../base.component';
 
 @Injectable()
-export class BackendInterceptor implements HttpInterceptor {
+export class BackendInterceptor extends BaseComponent implements HttpInterceptor {
 
     // Servicios.
     private notificacionService: NotificacionService;
@@ -30,7 +31,9 @@ export class BackendInterceptor implements HttpInterceptor {
      */
     constructor(
         private inj: Injector
-    ) {}
+    ) {
+        super();
+    }
 
     /**
      * Método intercept.
@@ -50,8 +53,8 @@ export class BackendInterceptor implements HttpInterceptor {
         this.langService = this.inj.get(LangService);
 
         // Verifica si existen los parametros para ocultar el progressbar/notificador.
-        const showProgressBar = !req.headers.has('X-ProgressBar');
-        const showNotificador = !req.headers.has('X-Notificador');
+        const showProgressBar = !req.headers.has(this.config.headerProgressbar);
+        const showNotificador = !req.headers.has(this.config.headerNotificador);
 
         // Clona el request y adiciona headers.
         const reqClone = req.clone({
@@ -136,12 +139,11 @@ export class BackendInterceptor implements HttpInterceptor {
         if (!pReqHeaders.has('Accept')) {
             pReqHeaders = pReqHeaders.set('Accept', 'application/json; charset=utf-8');
         }
-        if (pReqHeaders.has('X-Notificador')) {
-            pReqHeaders = pReqHeaders.delete('X-Notificador');
+        if (pReqHeaders.has(this.config.headerNotificador)) {
+            pReqHeaders = pReqHeaders.delete(this.config.headerNotificador);
         }
-
-        if (pReqHeaders.has('X-ProgressBar')) {
-            pReqHeaders = pReqHeaders.delete('X-ProgressBar');
+        if (pReqHeaders.has(this.config.headerProgressbar)) {
+            pReqHeaders = pReqHeaders.delete(this.config.headerProgressbar);
         }
 
         // Obtiene el token con el servicio jwt.
