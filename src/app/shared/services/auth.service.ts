@@ -68,19 +68,27 @@ export class AuthService {
      * Permite realizar el cierre de sesion del usuario
      */
     logoutUser(): void {
-        const params = {
-            idHistoricoUsuarioSesion: this.contextoService.getItemContexto('IdHistoricoUsuarioSesion')
-        };
+      const idHistoricoUsuarioSesion = this.contextoService.getItemContexto('IdHistoricoUsuarioSesion');
+      const user = this.contextoService.getItemContexto('Usuario');
+
+      const params = {
+          user : user,
+          idHistoricoUsuarioSesion: idHistoricoUsuarioSesion
+      };
+
+      if (idHistoricoUsuarioSesion && user) {
 
         this.http.post<Resultado>(`${this.contextoService.getConfig('backendApi')}/logout`, params)
             .subscribe(
-                response => {
-                    // Finaliza el contexto.
-                    this.contextoService.finalizarContexto();
-                    // Redirecciona al login.
-                    this.router.navigate(['/login']);
-                }
-            );
+              response => {
+                // Finaliza el contexto.
+                this.contextoService.finalizarContexto();
+                // Redirecciona al login.
+                this.router.navigate(['/login']);
+              });
+
+      }
+
     }
 
     /**

@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { Injectable } from '@angular/core';
 import * as SecureLS from 'secure-ls';
+import { environment } from '../../../environments/environment';
 
 /**
  * Servicio para interactuar con el contexto del sistema.
@@ -19,6 +19,7 @@ export class ContextoService {
     private config: Object = undefined;
 
     private ls: any;
+    private userName: string;
 
     // Idioma seleccionado para el sistema.
     idiomaSeleccionado = '';
@@ -126,7 +127,9 @@ export class ContextoService {
      * @memberof ContextoService
      */
     setContexto(pContextoUsuario: any): void {
-        this.ls.set('context', pContextoUsuario);
+        // this.ls.set('context', pContextoUsuario); // Anteriormente
+        this.userName = pContextoUsuario.NombreUsuario;
+        this.ls.set(`contex-${this.userName}`, pContextoUsuario);
     }
 
     /**
@@ -135,7 +138,8 @@ export class ContextoService {
      * @memberof ContextoService
      */
     finalizarContexto(): void {
-        localStorage.removeItem('context');
+        // localStorage.removeItem('context'); // Anteriormente
+        localStorage.removeItem(`contex-${this.userName}`);
     }
 
     /**
@@ -146,7 +150,8 @@ export class ContextoService {
      * @memberof ContextoService
      */
     getItemContexto(key: string): any {
-        const context = this.ls.get('context');
+        // const context = this.ls.get('context'); // Anteriormente
+        const context = this.ls.get(`contex-${this.userName}`);
         if (context) {
             return context[key];
         } else {

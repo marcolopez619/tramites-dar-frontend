@@ -27,10 +27,12 @@
             <a mat-button routerLink="/login" matTooltip="{{langService.getLang(eModulo.Base,'loginMensaje')}}" *ngIf="!authService.isUserAuthenticated()"><mat-icon>input</mat-icon></a>
         </mat-toolbar>
     </header>
-    
+
     <base-progress-bar></base-progress-bar>
     <base-breadcrumbs [@breadListAnim] *ngIf="authService.isUserAuthenticated() && contextoService.breadCrumbs.length > 0"></base-breadcrumbs>
-        
+
+    <div (window:beforeunload)="closeSession($event)"> </div>
+
     <div fxFlex="1" fxLayout="column" fxLayoutAlign="center center" class="main-container">
         <router-outlet></router-outlet>
     </div>

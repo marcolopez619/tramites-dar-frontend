@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
-import { AuthService } from '../../shared/services/auth.service';
-import { LangService } from '../../shared/services/lang.service';
-import { BaseComponent } from '../../shared/base.component';
 import { fadeInAnim } from '../../shared/animations/template.animation';
+import { BaseComponent } from '../../shared/base.component';
+import { AuthService } from '../../shared/services/auth.service';
 import { ContextoService } from '../../shared/services/contexto.service';
+import { LangService } from '../../shared/services/lang.service';
 
 @Component({
     selector: 'base-login',
@@ -48,13 +47,16 @@ export class LoginComponent extends BaseComponent implements OnInit {
      * @memberof LoginComponent
      */
     ngOnInit(): void {
-        if (this.authService.isUserAuthenticated()) {
-            this.router.navigate(['menu']);
-        }
+      if (this.authService.isUserAuthenticated()) {
+          this.router.navigate(['menu']);
+      } else {
+          // Liebera al usuario del backend.
+          this.authService.logoutUser();
+      }
 
-        this.form = this.formbuilder.group({
-            usuario: ['', Validators.required],
-            password: ['', Validators.required]
-        });
+      this.form = this.formbuilder.group({
+          usuario: ['', Validators.required],
+          password: ['', Validators.required]
+      });
     }
 }
