@@ -28,7 +28,7 @@ export class MenuComponent extends BaseComponent implements OnInit {
      * @type {AutofocusDirective}
      * @memberof MenuComponent
      */
-    @ViewChild(AutofocusDirective) searchField: AutofocusDirective;
+    @ViewChild(AutofocusDirective, {static: true}) searchField: AutofocusDirective;
 
     /**
      * Lista de menus de respaldo desde de iniciar una búsqueda.

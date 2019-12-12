@@ -18,7 +18,7 @@ export class ProgressBarComponent extends BaseComponent implements OnInit {
 	 * @type {MatProgressBar}
 	 * @memberof ProgressComponent
 	 */
-    @ViewChild(MatProgressBar) private progressBar: MatProgressBar;
+    @ViewChild(MatProgressBar, {static: true}) private progressBar: MatProgressBar;
 
     /**
 	 * Observable que recibe el avance del progress bar.
