@@ -1,5 +1,5 @@
 {
-    "backendApi": "http://localhost/api/v1",
+    "backendApi": "https://localhost:9898/api/v1",
     "langs" : [
         {
             "id":"es",

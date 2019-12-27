@@ -5,7 +5,8 @@
   "scripts": {
     "ng": "ng",
     "version": "node version.js",
-    "start": "npm run version && ng serve -c devlocal -o",
+    "start": "npm run version && ng serve -c devlocal --port 4300 -o",
+    "start:https": "ng serve --port 4400 -o --ssl --ssl-key D:\\Node_proyects\\segip-base-backend\\bin\\certs\\key.pem  --ssl-cert D:\\Node_proyects\\segip-base-backend\\bin\\certs\\cert.pem",
     "build:prod": "npm run version && ng build -c production --output-path dist-prod --no-progress",
     "build:dev": "npm run version && ng build -c dev --output-path dist-dev --no-progress",
     "build:anl": "npm run version && ng build -c analisis --output-path dist-anl --no-progress",
