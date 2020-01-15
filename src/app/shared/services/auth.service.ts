@@ -43,7 +43,8 @@ export class AuthService {
     loginUser(pUsername: string, pPassword: string): void {
         const params = {
             user: pUsername,
-            pass: pPassword
+            pass: pPassword,
+            lsr : localStorage.length === 0 // Envía si se borró la cache del navegador
         };
 
         this.http.post<Resultado>(`${this.contextoService.getConfig('backendApi')}/login`, params)
