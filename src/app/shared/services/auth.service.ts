@@ -73,7 +73,8 @@ export class AuthService {
       const user = this.contextoService.getItemContexto('Usuario');
 
       const params = {
-          user : user,
+          user        : user,
+          isUserAction: true,
           idHistoricoUsuarioSesion: idHistoricoUsuarioSesion
       };
 
