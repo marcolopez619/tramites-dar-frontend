@@ -38,7 +38,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
      * @memberof LoginComponent
      */
     login(): void {
-        this.authService.loginUser(this.form.controls['usuario'].value, this.form.controls['password'].value);
+        this.authService.loginUser(this.form.controls['usuario'].value.trim(), this.form.controls['password'].value.trim());
     }
 
     /**
