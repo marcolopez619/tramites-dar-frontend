@@ -39,10 +39,11 @@ import { baseRoutes } from './base.routing';
   exports: [
     LayoutComponent,
     RouterModule
-  ],
+  ]
+  /* ,
   entryComponents: [
     NotificacionComponent,
     ErrorViewerComponent
-  ]
+  ] */
 })
 export class BaseModule {}

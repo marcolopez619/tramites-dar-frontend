@@ -1,4 +1,4 @@
-import { Directive, Input, HostListener, Renderer, ElementRef, Renderer2, OnInit } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
 /**
  * Directiva para manejar una card hover.
  *
