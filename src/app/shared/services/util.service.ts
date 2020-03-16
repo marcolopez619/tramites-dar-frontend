@@ -1,9 +1,11 @@
+import { Injectable } from "@angular/core";
 /**
  * Servicio que provee metodos utilitarios.
  *
  * @export
  * @class UtilService
  */
+@Injectable()
 export class UtilService {
 
     /**
