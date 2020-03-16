@@ -1,4 +1,4 @@
-import { MatPaginatorIntl } from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { Injectable } from '@angular/core';
 import { LangService } from './services/lang.service';
 import { eModulo } from './enums/modulo.enum';

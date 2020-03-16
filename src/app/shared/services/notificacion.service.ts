@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Resultado } from '../../shared/models/resultado.model';
 import { NotificacionComponent } from '../../base/notificacion/notificacion.component';
 import { eTipoNotificacion } from '../../shared/enums/tipo-notificacion.enum';

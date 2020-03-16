@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA, MatDialog, MatSnackBarRef } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 import { Resultado } from '../../shared/models/resultado.model';
 import { BaseComponent } from '../../shared/base.component';
 import { ErrorViewerComponent } from '../../shared/components/error-viewer/error-viewer.component';

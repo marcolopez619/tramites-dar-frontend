@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { BaseComponent } from '../../base.component';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { LangService } from '../../services/lang.service';
 
 @Component({

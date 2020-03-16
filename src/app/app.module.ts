@@ -12,7 +12,7 @@ import { LangService } from './shared/services/lang.service';
 import { UtilService } from './shared/services/util.service';
 import { NotificacionService } from './shared/services/notificacion.service';
 import { BackendInterceptor } from './shared/interceptors/backend.interceptor';
-import { MatPaginatorIntl } from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomMatPaginator } from './shared/custom.matpaginator';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';

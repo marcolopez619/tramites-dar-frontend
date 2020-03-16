@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { MatProgressBar } from '@angular/material';
+import { MatProgressBar } from '@angular/material/progress-bar';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NotificacionService } from '../../shared/services/notificacion.service';
