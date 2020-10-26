@@ -8,6 +8,6 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 export const baseRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'logout', component: LoginComponent, canActivate: [AuthGuardService], data: {checkRecurso: false} },
-    { path: 'menu', component: MenuComponent, canActivate: [AuthGuardService], data: {checkRecurso: false} },
+    { path: 'menu', component: MenuComponent },
     { path: 'unauthorized', component: UnauthorizedComponent }
 ];

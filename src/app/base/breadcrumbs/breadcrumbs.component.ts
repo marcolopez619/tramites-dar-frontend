@@ -44,7 +44,7 @@ export class BreadcrumbsComponent extends BaseComponent {
      */
     onBreadClick(pItem, pindex): void {
         // Carga los recursos hijos del elemento clickeado.
-        this.contextoService.listaMenu = pItem.RecursosHijos;
+        this.contextoService.listaMenu = pItem.recursosHijos;
         // Remuevo los items que esten despues del item clickeado en el array de migas de pan.
         this.contextoService.breadCrumbs.length = pindex + 1;
     }

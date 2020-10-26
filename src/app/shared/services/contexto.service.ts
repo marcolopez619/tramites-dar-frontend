@@ -89,7 +89,7 @@ export class ContextoService {
      */
     getListaSchemas(): Array<any> {
         const listaSchemas = [];
-        const item = this.getItemContexto('RecursosUsuario');
+        const item = this.getItemContexto('recursosUsuario');
         if (item) {
             for (const modulo of item) {
                 // for(let schema of modulo.RecursosHijos) {
@@ -108,7 +108,7 @@ export class ContextoService {
      * @memberof ContextoService
      */
     checkRecurso(pUrl: string): boolean {
-        const item = this.getItemContexto('Recursos');
+        const item = this.getItemContexto('recursos');
         if (item) {
             const result = item.filter(obj => {
                 return pUrl.includes(obj.Uri);
@@ -128,7 +128,7 @@ export class ContextoService {
      */
     setContexto(pContextoUsuario: any): void {
         // this.ls.set('context', pContextoUsuario); // Anteriormente
-        this.userName = pContextoUsuario.NombreUsuario;
+        this.userName = pContextoUsuario.nombreUsuario;
         this.ls.set(`contex-${this.userName}`, pContextoUsuario);
     }
 

@@ -42,12 +42,21 @@ export class AuthService {
      */
     loginUser(pUsername: string, pPassword: string): void {
         const params = {
+          UserName: pUsername,
+          Password: pPassword,
+            lsr : localStorage.length === 0 // Envía si se borró la cache del navegador
+        };
+
+        this.http.post<Resultado>(`${this.contextoService.getConfig('backendApi')}/autentificacion/login`, params)
+
+
+        /* const params = {
             user: pUsername,
             pass: pPassword,
             lsr : localStorage.length === 0 // Envía si se borró la cache del navegador
         };
 
-        this.http.post<Resultado>(`${this.contextoService.getConfig('backendApi')}/login`, params)
+        this.http.post<Resultado>(`${this.contextoService.getConfig('backendApi.back')}/login`, params) */
             .subscribe(
                 response => {
                     if (response.data) {
@@ -69,10 +78,28 @@ export class AuthService {
      * Permite realizar el cierre de sesion del usuario
      */
     logoutUser(): void {
-      const idHistoricoUsuarioSesion = this.contextoService.getItemContexto('IdHistoricoUsuarioSesion');
-      const user = this.contextoService.getItemContexto('Usuario');
+      const idHistoricoUsuarioSesion = this.contextoService.getItemContexto('idHistoricoUsuarioSesion');
+      const user = this.contextoService.getItemContexto('usuario');
 
       const params = {
+        UserName        : user,
+        IdHistoricoUsuarioSesion: idHistoricoUsuarioSesion,
+        isUserAction: true
+      };
+
+      if (idHistoricoUsuarioSesion && user) {
+
+        this.http.post<Resultado>(`${this.contextoService.getConfig('backendApi')}/autentificacion/logout`, params)
+            .subscribe(
+              response => {
+                // Finaliza el contexto.
+                this.contextoService.finalizarContexto();
+                // Redirecciona al login.
+                this.router.navigate(['login']);
+              });
+
+      }
+      /* const params = {
           user        : user,
           isUserAction: true,
           idHistoricoUsuarioSesion: idHistoricoUsuarioSesion
@@ -89,7 +116,7 @@ export class AuthService {
                 this.router.navigate(['/login']);
               });
 
-      }
+      } */
 
     }
 
@@ -98,6 +125,7 @@ export class AuthService {
     */
     isUserAuthenticated(): boolean {
         return !this.isTokenExpired();
+        // return true;
     }
 
     /**
