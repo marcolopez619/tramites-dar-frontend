@@ -14,7 +14,7 @@ import { ContextoService } from '../services/contexto.service';
 import { LangService } from '../services/lang.service';
 import { eModulo } from '../enums/modulo.enum';
 import { BaseComponent } from '../base.component';
-
+import { Resultado } from '../models/resultado.model';
 @Injectable()
 export class BackendInterceptor extends BaseComponent implements HttpInterceptor {
 
@@ -99,19 +99,37 @@ export class BackendInterceptor extends BaseComponent implements HttpInterceptor
                     }
                 }),
                 catchError(event => {
-                    if (event instanceof HttpErrorResponse) {
-                        // En event.error deberia esta la entidad result del backend.
 
-                        // Si el result tiene la propiedad error.
+                    if (event instanceof HttpErrorResponse) {
+
+                      const mostrarErroresDetallados = this.contextoService.getConfig('mostrarErroresDetallados');
+
+                      if (mostrarErroresDetallados) {
+
+                        // Muestra un error detallado
                         if (event.error.error) {
-                            this.notificacionService.showSnackbarConBoton(event.error, eTipoNotificacion.Incorrecto);
-                        } else if (event.error.message) {
-                            this.notificacionService.showSnackbarMensaje(event.error.message, 3000, this.getTipoNotificacion(event.status));
-                        } else {
-                            const url = reqClone.url.split('?');
-                            // tslint:disable-next-line:max-line-length
-                            this.notificacionService.showSnackbarMensaje(`${this.langService.getLang(eModulo.Base, 'msg-network-error')}${url[0]}`, 5000, eTipoNotificacion.Incorrecto);
+                          // Si el error viene del backend (si poseee la propiedad error) => mostrar ese error
+                          this.notificacionService.showSnackbarConBoton( event.error, eTipoNotificacion.Incorrecto );
+                        } else{
+                          // Sino viene del backend o no posee la propiedad : event.error.error, => crea un Resultado para visualizar el error desconocido.
+                          const errorDesconocido: Resultado = {
+                            data   : undefined,
+                            message: this.langService.getLang(eModulo.Base, 'msg-error-general-titulo'),
+                            error  : event.message
+                          };
+                          this.notificacionService.showSnackbarConBoton(errorDesconocido, eTipoNotificacion.Incorrecto );
                         }
+
+
+                      } else {
+                        this.notificacionService.showSnackbarMensaje(this.langService.getLang(eModulo.Base, 'msg-error-general-descripcion'), 3000, eTipoNotificacion.Incorrecto);
+                      }
+
+                    } else if (event.error.message) {
+                        this.notificacionService.showSnackbarMensaje(event.error.message, 3000, this.getTipoNotificacion(event.status));
+                    } else {
+                        const url = reqClone.url.split('?');
+                        this.notificacionService.showSnackbarMensaje(`${this.langService.getLang(eModulo.Base, 'msg-network-error')}${url[0]}`, 5000, eTipoNotificacion.Incorrecto);
                     }
                     // Dispara el error en el observable.
                     return throwError(event);

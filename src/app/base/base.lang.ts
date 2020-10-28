@@ -49,7 +49,9 @@ export const baseLang = {
             'lbl-user': 'Usuario',
             'lbl-inst': 'Institución',
             'menu-user': 'Información del usuario',
-            'tit-search-menu': 'Buscar página'
+            'tit-search-menu': 'Buscar página',
+            'msg-error-general-titulo' : 'ERROR',
+            'msg-error-general-descripcion' : 'Problemas de conexión, inténtelo más tarde'
         },
         'en': {
             'lang-error': 'Lang not found',
