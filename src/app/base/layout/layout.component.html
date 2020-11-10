@@ -13,7 +13,7 @@
                     <mat-icon>account_circle</mat-icon>
                     {{ contextoService.getItemContexto('nombreCompletoUsuario') }}
                 </button>
-                <button *ngIf="contextoService.getItemContexto('nombreFuncion')" mat-menu-item matTooltip="{{langService.getLang(eModulo.Base,'lbl-cargo-actual')}} : {{ contextoService.getItemContexto('NombreFuncion') }}" matTooltipShowDelay="500">
+                <button *ngIf="contextoService.getItemContexto('nombreFuncion')" mat-menu-item matTooltip="{{langService.getLang(eModulo.Base,'lbl-cargo-actual')}} : {{ contextoService.getItemContexto('nombreFuncion') }}" matTooltipShowDelay="500">
                   <mat-icon>recent_actors</mat-icon>
                   {{ contextoService.getItemContexto('nombreFuncion') }}
                 </button>

@@ -125,6 +125,9 @@ export class MenuComponent extends BaseComponent implements OnInit {
     ngOnInit(): void {
         if (this.contextoService.breadCrumbs.length === 0) {
             this.contextoService.listaMenu = this.contextoService.getListaSchemas();
+            if (this.contextoService.listaMenu.length === 0) {
+              this.router.navigate(['/login']);
+            }
         }
     }
 }

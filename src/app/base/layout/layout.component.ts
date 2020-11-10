@@ -39,8 +39,8 @@ export class LayoutComponent extends BaseComponent {
   @HostListener('window:beforeunload', ['$event'])
   // @HostListener('window:unload', ['$event'])
   closeSession($event): any {
-    // console.log('*** Cerrandooooooooooooooo ');
+    //** Emite una señal al backend para liberar al usuario en caso de uso de sockets, descomentar las linesa 43-44 **/
     this.authService.logoutUser();
-    window.event.returnValue = true;
+    // window.event.returnValue = true;
   }
 }
