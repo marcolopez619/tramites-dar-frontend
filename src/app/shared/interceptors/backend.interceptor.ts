@@ -108,9 +108,12 @@ export class BackendInterceptor extends BaseComponent implements HttpInterceptor
 
                         // Muestra un error detallado
                         if (event.error.error) {
-                          // Si el error viene del backend (si poseee la propiedad error) => mostrar ese error
+                          // Si el error viene del backend por ejemplo de un servicio (si poseee la propiedad error.error) => mostrar ese error
                           this.notificacionService.showSnackbarConBoton( event.error, eTipoNotificacion.Incorrecto );
-                        } else{
+                        } else if (event.error) {
+                          // Si el error viene del backend (si poseee la propiedad error) => mostrar ese error
+                          this.notificacionService.showSnackbarMensaje(event.error.message, 3000, eTipoNotificacion.Incorrecto);
+                        } else {
                           // Sino viene del backend o no posee la propiedad : event.error.error, => crea un Resultado para visualizar el error desconocido.
                           const errorDesconocido: Resultado = {
                             data   : undefined,
@@ -119,7 +122,6 @@ export class BackendInterceptor extends BaseComponent implements HttpInterceptor
                           };
                           this.notificacionService.showSnackbarConBoton(errorDesconocido, eTipoNotificacion.Incorrecto );
                         }
-
 
                       } else {
                         this.notificacionService.showSnackbarMensaje(this.langService.getLang(eModulo.Base, 'msg-error-general-descripcion'), 3000, eTipoNotificacion.Incorrecto);
