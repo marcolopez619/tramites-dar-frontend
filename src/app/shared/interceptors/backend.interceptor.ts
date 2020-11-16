@@ -112,7 +112,7 @@ export class BackendInterceptor extends BaseComponent implements HttpInterceptor
                           this.notificacionService.showSnackbarConBoton( event.error, eTipoNotificacion.Incorrecto );
                         } else if (event.error) {
                           // Si el error viene del backend (si poseee la propiedad error) => mostrar ese error
-                          this.notificacionService.showSnackbarMensaje(event.error.message, 3000, eTipoNotificacion.Incorrecto);
+                          this.notificacionService.showSnackbarMensaje(event.error.message ? event.error.message : event.message, 3000, eTipoNotificacion.Incorrecto);
                         } else {
                           // Sino viene del backend o no posee la propiedad : event.error.error, => crea un Resultado para visualizar el error desconocido.
                           const errorDesconocido: Resultado = {
