@@ -1,5 +1,6 @@
 {
     "backendApi": "http://api.base.dev.local/v1",
+    "mostrarErroresDetallados" : true,
     "langs" : [
         {
             "id":"es",
