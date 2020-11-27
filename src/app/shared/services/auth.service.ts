@@ -49,7 +49,6 @@ export class AuthService {
 
         this.http.post<Resultado>(`${this.contextoService.getConfig('backendApi')}/autentificacion/login`, params)
 
-
         /* const params = {
             user: pUsername,
             pass: pPassword,
