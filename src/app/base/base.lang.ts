@@ -52,7 +52,10 @@ export const baseLang = {
             'menu-user': 'Información del usuario',
             'tit-search-menu': 'Buscar página',
             'msg-error-general-titulo' : 'ERROR',
-            'msg-error-general-descripcion' : 'Problemas de conexión, inténtelo más tarde'
+            'msg-error-general-descripcion' : 'Problemas de conexión, inténtelo más tarde',
+            'lbl-cites' : 'Cites',
+            'lbl-hojas-de-ruta' : 'Hojas de Ruta',
+            'lbl-menu-principal' : 'Menu principal'
         },
         'en': {
             'lang-error': 'Lang not found',

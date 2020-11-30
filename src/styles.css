@@ -82,7 +82,7 @@ router-outlet{
 }
 
 .animate-icon-menu {
-    -ms-transform: scale(1.2); 
+    -ms-transform: scale(1.2);
     -webkit-transform: scale(1.2);
     transform: scale(1.2);
     transition: all 0.5s ease-out;
@@ -179,4 +179,8 @@ mat-card-content {
 .row-action{
     cursor: pointer;
     background: #f7be68;
+}
+
+.icono-tab{
+  margin-right: 8px;
 }

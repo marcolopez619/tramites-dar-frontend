@@ -32,7 +32,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     NotfoundComponent,
     ProgressBarComponent,
     UnauthorizedComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
   ],
   exports: [
     LayoutComponent,
