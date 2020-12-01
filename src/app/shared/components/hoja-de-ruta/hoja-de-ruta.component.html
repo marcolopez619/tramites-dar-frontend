@@ -14,11 +14,11 @@
   <mat-card>
     <br>
     <div fxFlexFill>
-      <form [formGroup]="formHojaDeRuta" fxLayout="row" fxFlexFill>
+      <form [formGroup]="formHojaDeRuta" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
 
         <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
 
-          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
 
             <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
               <mat-form-field fxFlex>
@@ -46,7 +46,7 @@
 
           </div>
 
-          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
             <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
               <mat-form-field fxFlex>
                 <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatario' )}} : </mat-label>
@@ -73,7 +73,7 @@
           </div>
 
 
-          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
             <mat-form-field fxFlex>
                 <input
                   matInput
@@ -99,7 +99,7 @@
 
           </div>
 
-          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
             <mat-form-field fxFlex>
                 <input
                   type="number"
@@ -124,7 +124,7 @@
 
           </div>
 
-          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
 
             <mat-checkbox formControlName="isUrgente" [labelPosition]="'before'">
               {{langService.getLang(eModulo.HojaDeRuta,'lbl-urgente')}}
