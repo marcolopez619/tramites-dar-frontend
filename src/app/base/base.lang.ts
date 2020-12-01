@@ -58,8 +58,9 @@ export const baseLang = {
             'lbl-menu-principal' : 'Menu principal',
             'lbl-acciones' : 'Acciones',
             'lbl-editar' : 'Editar',
+            'lbl-guardar' : 'Guardar',
             'lbl-generar-hoja-ruta' : 'Generar hoja de ruta',
-            'lbl-imprimir-hoja-ruta' : 'Imprimir hoja de ruta',
+            'lbl-imprimir-hoja-ruta' : 'Imprimir hoja de ruta'
         },
         'en': {
             'lang-error': 'Lang not found',

@@ -45,6 +45,7 @@ import { UppercaseDirective } from './directives/uppercase.directive';
 import { RightClickOffDirective } from './directives/right-click.directive';
 import { RowHoverDirective } from './directives/row-hover.directive';
 import { ToolbarErrorDirective } from './directives/toolbar-error.directive';
+import { HojaDeRutaComponent } from './components/hoja-de-ruta/hoja-de-ruta.component';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -71,7 +72,8 @@ import { ToolbarErrorDirective } from './directives/toolbar-error.directive';
         JsonViewerComponent,
         ErrorViewerComponent,
         LoaderSpinnerComponent,
-        TableEmptyComponent
+        TableEmptyComponent,
+        HojaDeRutaComponent
     ],
     imports: [
         CommonModule,
@@ -154,7 +156,8 @@ import { ToolbarErrorDirective } from './directives/toolbar-error.directive';
         JsonViewerComponent,
         ErrorViewerComponent,
         LoaderSpinnerComponent,
-        TableEmptyComponent
+        TableEmptyComponent,
+        HojaDeRutaComponent
     ],
     entryComponents: [
         ConfirmDialogComponent

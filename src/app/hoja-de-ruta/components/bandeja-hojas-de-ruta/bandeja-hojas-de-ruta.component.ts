@@ -4,8 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
+import { HojaDeRutaComponent } from '../../../shared/components/hoja-de-ruta/hoja-de-ruta.component';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 
@@ -28,7 +30,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
     public langService: LangService,
     public contextService: ContextoService,
     private router: Router,
-    private dialog: MatDialog,
+    private dialog: MatDialog
   ) {  super(); }
 
   ngOnInit(): void {
@@ -46,8 +48,21 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
     this.unsubscribe$.next(true);
   }
 
+  onCrearNuevaHojaDeRuta(): void {
 
-  onCrearNuevaHojaDeRuta(): void{
+    const dlgNuevaHojaRuta = this.dialog.open( HojaDeRutaComponent,  {
+      disableClose: true,
+      width: '1000px',
+      data: {
+
+      }
+    });
+    dlgNuevaHojaRuta.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
+      if (result) {
+        //..
+      }
+    });
+
     console.log( 'CREANDO UNA NUEVA HOJA DE RUTA' );
   }
 
