@@ -1,5 +1,18 @@
     <shared-loader-spinner></shared-loader-spinner>
 
+    <mat-card>
+      <mat-card-header class="alt-theme">
+      <mat-toolbar>
+          <!-- <h3>{{ langService.getLang(eModulo.HojaDeRuta, 'tit-adm-hoja-de-ruta') }}</h3> -->
+          <span class="flex-spacer"></span>
+          <a mat-button matTooltip="{{ langService.getLang(eModulo.Cites, 'btn-crear-nuevo-cite') }}" (click)="onCrearNuevoCite()">
+              <mat-icon>add_circle</mat-icon>
+          </a>
+      </mat-toolbar>
+    </mat-card-header>
+
+    <mat-card-content>
+
         <mat-table #table [dataSource]="dataSource" matSort>
 
           <ng-container matColumnDef="tipoDocumento">
@@ -49,3 +62,6 @@
 
         </mat-table>
         <shared-table-empty [datasource]="dataSource"></shared-table-empty>
+
+      </mat-card-content>
+    </mat-card>

@@ -8,7 +8,6 @@ export const citesRoutes: Routes = [
           {
               path: 'index',
               component: BandejaCitesComponent,
-              // canActivate: [AuthGuardService]
           }
       ]
   }

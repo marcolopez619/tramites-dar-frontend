@@ -4,6 +4,7 @@ export const citesLang = {
     'lbl-nro-cite' : 'Numero cite',
     'lbl-destinatarios' : 'Destinatarios',
     'lbl-referencia' : 'Referencia',
-    'lbl-fecha-creacion' : 'Fecha creación'
+    'lbl-fecha-creacion' : 'Fecha creación',
+    'btn-crear-nuevo-cite' : 'Crear nuevo cite'
   }
 };

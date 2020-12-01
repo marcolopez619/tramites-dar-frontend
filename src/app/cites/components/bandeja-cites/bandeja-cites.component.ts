@@ -22,7 +22,6 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
   displayedColumns = ['tipoDocumento', 'numeroCite', 'destinatarios', 'referencia', 'fechaCreacion', 'acciones'];
   dataSource = new MatTableDataSource<CiteModel>([]);
 
-
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -30,12 +29,12 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
     public langService: LangService,
     public contextService: ContextoService,
     private router: Router,
-    private dialog: MatDialog,
+    private dialog: MatDialog
   ) {  super(); }
 
   ngOnInit(): void {
-    const listaVias : Array<string> = [ 'SARDINA GUMUCIO FLORIPONDIO', 'CONDORI MALPARTIDA TIRADO' ];
-    const listaVias2 : Array<string> = [ 'ZARZURI TIRADO ELBA', 'ARCE CATARI GONZALES' ];
+    const listaVias: Array<string> = [ 'SARDINA GUMUCIO FLORIPONDIO', 'CONDORI MALPARTIDA TIRADO' ];
+    const listaVias2: Array<string> = [ 'ZARZURI TIRADO ELBA', 'ARCE CATARI GONZALES' ];
 
     const listaCites: Array<CiteModel> = [
       {
@@ -70,15 +69,19 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
     this.unsubscribe$.next(true);
   }
 
-  onEdit(pCiteModel: CiteModel): void{
+  onCrearNuevoCite(): void {
+    console.log( 'CREANDO UN NUEVO CITEEEEE' );
+  }
+
+  onEdit(pCiteModel: CiteModel): void {
     console.log( `EDITANDO ---> ${pCiteModel}` );
   }
 
-  onGenerateHojaRuta(pCiteModel: CiteModel): void{
+  onGenerateHojaRuta(pCiteModel: CiteModel): void {
     console.log( `GENERANDO ---> ${pCiteModel}` );
   }
 
-  onPrintHojaRuta(pCiteModel: CiteModel): void{
+  onPrintHojaRuta(pCiteModel: CiteModel): void {
     console.log( `IMPRIMIENDO ---> ${pCiteModel}` );
   }
 
