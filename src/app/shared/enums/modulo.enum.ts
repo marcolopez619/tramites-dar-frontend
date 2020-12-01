@@ -6,5 +6,6 @@
  */
 export enum eModulo {
     Base,
-    Cites
+    Cites,
+    HojaDeRuta
 }

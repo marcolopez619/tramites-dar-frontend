@@ -1,3 +1,4 @@
+import { HojaDeRutaModule } from './../hoja-de-ruta/hoja-de-ruta.module';
 import { CitesModule } from './../cites/cites.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -24,7 +25,8 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     CommonModule,
     RouterModule.forChild(baseRoutes),
     SharedModule,
-    CitesModule
+    CitesModule,
+    HojaDeRutaModule
   ],
   declarations: [
     LayoutComponent,
@@ -34,7 +36,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     NotfoundComponent,
     ProgressBarComponent,
     UnauthorizedComponent,
-    BreadcrumbsComponent,
+    BreadcrumbsComponent
   ],
   exports: [
     LayoutComponent,

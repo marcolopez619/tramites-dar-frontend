@@ -1,3 +1,4 @@
+import { HojaDeRutaModule } from './hoja-de-ruta/hoja-de-ruta.module';
 import { CitesModule } from './cites/cites.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,7 +30,8 @@ registerLocaleData(localeEs);
         HttpClientModule,
         BaseModule,
         RouterModule.forRoot(appRoutes),
-        CitesModule
+        CitesModule,
+        HojaDeRutaModule
     ],
     providers: [
         AuthService,

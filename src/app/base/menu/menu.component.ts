@@ -48,4 +48,8 @@ export class MenuComponent extends BaseComponent implements OnInit {
             }
         } */
     }
+
+    gotoAnotherPage(): void {
+      this.router.navigate(['cites/index']);
+    }
 }

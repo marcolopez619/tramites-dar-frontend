@@ -13,12 +13,7 @@
             <mat-icon class="icono-tab">folder</mat-icon>
             {{langService.getLang(eModulo.Base, 'lbl-cites' )}}
           </ng-template>
-
-          <app-bandeja-cites></app-bandeja-cites>
-
-          <!-- <button mat-raised-button color="primary" (click)="gotoAnotherPage()">Primary</button>
-          <button mat-raised-button color="accent">Accent</button>
-          <button mat-raised-button color="warn">Warn</button> -->
+            <app-bandeja-cites></app-bandeja-cites>
         </mat-tab>
 
         <mat-tab>
@@ -26,7 +21,7 @@
             <mat-icon class="icono-tab">table_rows</mat-icon>
             {{langService.getLang(eModulo.Base, 'lbl-hojas-de-ruta' )}}
           </ng-template>
-          Contenido de hojas de ruta
+            <app-bandeja-hojas-de-ruta></app-bandeja-hojas-de-ruta>
         </mat-tab>
 
       </mat-tab-group>
