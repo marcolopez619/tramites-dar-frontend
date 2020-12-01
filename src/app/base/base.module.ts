@@ -1,3 +1,4 @@
+import { CitesModule } from './../cites/cites.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -22,7 +23,8 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
   imports: [
     CommonModule,
     RouterModule.forChild(baseRoutes),
-    SharedModule
+    SharedModule,
+    CitesModule
   ],
   declarations: [
     LayoutComponent,

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { baseLang } from '../../base/base.lang';
 import { eModulo } from '../../shared/enums/modulo.enum';
 import { ContextoService } from './contexto.service';
+import { citesLang } from '../../cites/cites.langs';
 
 /**
  * Servicio para manejar langs de forma global en el sistema.
@@ -24,7 +25,12 @@ export class LangService {
       {
         id: eModulo.Base,
         contenido: baseLang
-      });
+      },
+      {
+        id: eModulo.Cites,
+        contenido: citesLang
+      }
+      );
   }
 
   /**

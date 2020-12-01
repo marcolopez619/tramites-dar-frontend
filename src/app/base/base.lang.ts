@@ -55,7 +55,11 @@ export const baseLang = {
             'msg-error-general-descripcion' : 'Problemas de conexión, inténtelo más tarde',
             'lbl-cites' : 'Cites',
             'lbl-hojas-de-ruta' : 'Hojas de Ruta',
-            'lbl-menu-principal' : 'Menu principal'
+            'lbl-menu-principal' : 'Menu principal',
+            'lbl-acciones' : 'Acciones',
+            'lbl-editar' : 'Editar',
+            'lbl-generar-hoja-ruta' : 'Generar hoja de ruta',
+            'lbl-imprimir-hoja-ruta' : 'Imprimir hoja de ruta',
         },
         'en': {
             'lang-error': 'Lang not found',

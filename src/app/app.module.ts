@@ -1,3 +1,4 @@
+import { CitesModule } from './cites/cites.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
@@ -27,7 +28,8 @@ registerLocaleData(localeEs);
         BrowserAnimationsModule,
         HttpClientModule,
         BaseModule,
-        RouterModule.forRoot(appRoutes)
+        RouterModule.forRoot(appRoutes),
+        CitesModule
     ],
     providers: [
         AuthService,
