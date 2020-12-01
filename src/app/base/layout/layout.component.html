@@ -4,22 +4,22 @@
             <img class="main-logo" src="../../assets/logo.png" alt="logo">
             <h1 style="font-size: 25px">{{ config.nombreSistema }}</h1>
             <span class="flex-spacer"></span>
-            <button mat-button [matMenuTriggerFor]="userInfo" *ngIf="authService.isUserAuthenticated()" matTooltip="{{langService.getLang(eModulo.Base,'menu-user')}}">
+            <button mat-button [matMenuTriggerFor]="userInfo" *ngIf="true" matTooltip="{{langService.getLang(eModulo.Base,'menu-user')}}">
                 <mat-icon>person</mat-icon>
             </button>
 
             <mat-menu #userInfo="matMenu" xPosition="before" yPosition="below" [overlapTrigger]="false" class="user-info">
-                <button mat-menu-item matTooltip="{{langService.getLang(eModulo.Base,'lbl-user')}} : {{ contextoService.getItemContexto('nombreCompletoUsuario') }}" matTooltipShowDelay="500">
+                <button mat-menu-item matTooltip="{{langService.getLang(eModulo.Base,'lbl-user')}} : {{ contextoService.getItemContexto('nombreCompleto') }}" matTooltipShowDelay="500">
                     <mat-icon>account_circle</mat-icon>
-                    {{ contextoService.getItemContexto('nombreCompletoUsuario') }}
+                    {{ contextoService.getItemContexto('nombreCompleto') }}
                 </button>
-                <button *ngIf="contextoService.getItemContexto('nombreFuncion')" mat-menu-item matTooltip="{{langService.getLang(eModulo.Base,'lbl-cargo-actual')}} : {{ contextoService.getItemContexto('nombreFuncion') }}" matTooltipShowDelay="500">
+                <button *ngIf="contextoService.getItemContexto('cargo')" mat-menu-item matTooltip="{{langService.getLang(eModulo.Base,'lbl-cargo-actual')}} : {{ contextoService.getItemContexto('cargo') }}" matTooltipShowDelay="500">
                   <mat-icon>recent_actors</mat-icon>
-                  {{ contextoService.getItemContexto('nombreFuncion') }}
+                  {{ contextoService.getItemContexto('cargo') }}
                 </button>
-                <button mat-menu-item matTooltip="{{langService.getLang(eModulo.Base,'lbl-inst')}} : {{ contextoService.getItemContexto('nombreInstitucion') }}" matTooltipShowDelay="500">
+                <button mat-menu-item matTooltip="{{langService.getLang(eModulo.Base,'lbl-inst')}} : {{ contextoService.getItemContexto('email') }}" matTooltipShowDelay="500">
                     <mat-icon>work</mat-icon>
-                    {{ contextoService.getItemContexto('nombreInstitucion') }}
+                    {{ contextoService.getItemContexto('email') }}
                 </button>
                 <button mat-menu-item>
                     <mat-icon>date_range</mat-icon>

@@ -128,7 +128,7 @@ export class ContextoService {
      */
     setContexto(pContextoUsuario: any): void {
         // this.ls.set('context', pContextoUsuario); // Anteriormente
-        this.userName = pContextoUsuario.nombreUsuario;
+        this.userName = pContextoUsuario.samActname;
         this.ls.set(`contex-${this.userName}`, pContextoUsuario);
     }
 
