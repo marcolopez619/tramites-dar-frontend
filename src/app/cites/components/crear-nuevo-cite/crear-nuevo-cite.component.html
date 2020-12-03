@@ -1,0 +1,56 @@
+<shared-loader-spinner></shared-loader-spinner>
+
+<mat-card>
+  <mat-card-header class="alt-theme">
+  <mat-toolbar shToolbarModal color="primary">
+      <h3>{{ langService.getLang(eModulo.Cites, 'lbl-crear-nuevo-cite') }}</h3>
+      <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
+          <mat-icon>close</mat-icon>
+      </a>
+  </mat-toolbar>
+</mat-card-header>
+
+<mat-card-content>
+  <!-- <shared-loader-spinner></shared-loader-spinner> -->
+
+  <mat-horizontal-stepper labelPosition="bottom" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-crear-nuevo-cite' )}}</ng-template>
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" optional>
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-vista-previa-cite' )}}</ng-template>
+        <mat-form-field>
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
+          <button mat-button matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-crear-hoja-de-ruta' )}}</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+
+
+
+</mat-card-content>
+</mat-card>

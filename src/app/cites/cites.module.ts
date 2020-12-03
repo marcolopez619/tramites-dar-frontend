@@ -4,11 +4,12 @@ import { BandejaCitesComponent } from './components/bandeja-cites/bandeja-cites.
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { citesRoutes } from './cites.routing';
+import { CrearNuevoCiteComponent } from './components/crear-nuevo-cite/crear-nuevo-cite.component';
 
 
 
 @NgModule({
-  declarations: [BandejaCitesComponent],
+  declarations: [BandejaCitesComponent, CrearNuevoCiteComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(citesRoutes),

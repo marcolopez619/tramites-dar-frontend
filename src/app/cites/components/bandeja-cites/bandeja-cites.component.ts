@@ -1,3 +1,4 @@
+import { CrearNuevoCiteComponent } from './../crear-nuevo-cite/crear-nuevo-cite.component';
 import { BaseComponent } from './../../../shared/base.component';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,6 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { CiteModel } from '../../models/cites.models';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 
 @Component({
   selector: 'app-bandeja-cites',
@@ -70,7 +72,19 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
   }
 
   onCrearNuevoCite(): void {
-    console.log( 'CREANDO UN NUEVO CITEEEEE' );
+    const dlgNuevoCite = this.dialog.open( CrearNuevoCiteComponent,  {
+      disableClose: false,
+      width: '1000px',
+      data: {
+
+      }
+    });
+    dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
+      if (result) {
+        //..
+      }
+    });
+
   }
 
   onEdit(pCiteModel: CiteModel): void {
