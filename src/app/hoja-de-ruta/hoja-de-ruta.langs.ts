@@ -18,6 +18,9 @@ export const hojaDeRutaLang = {
     'lbl-cc' : 'CC',
     'lbl-error-cc' : 'La lista de CC es obligatoria',
 
+    'lbl-via' : 'Via (s)',
+    'lbl-error-via' : 'La lista de via es obligatoria',
+
     'lbl-numero-cite' : 'Número cite',
     'lbl-error-numero-cite' : 'El número de cite es inválido',
 

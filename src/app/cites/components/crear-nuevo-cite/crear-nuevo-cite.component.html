@@ -15,18 +15,95 @@
   <!-- <shared-loader-spinner></shared-loader-spinner> -->
 
   <mat-horizontal-stepper labelPosition="bottom" #stepper>
-    <mat-step [stepControl]="firstFormGroup">
-      <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-crear-nuevo-cite' )}}</ng-template>
-        <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
-        </div>
+
+    <!-- Creacion del cite -->
+    <mat-step [stepControl]="formCrearCite">
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-crear-nuevo-cite' )}}</ng-template>
+
+      <form [formGroup]="formCrearCite" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
+
+        <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
+
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+
+            <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
+              <mat-form-field fxFlex>
+                <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-tipo-tramite' )}} : </mat-label>
+                <mat-select formControlName="tipoDocumento">
+                  <mat-option *ngFor="let tipoDocumento of listaTipoDocumento" [value]="tipoDocumento.idTipoTramite">
+                    {{tipoDocumento.descripcionTipoTramite}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formCrearCite.controls['tipoDocumento'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-tipo-tramite') }}</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
+              <mat-form-field fxFlex>
+                <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-via' )}} :</mat-label>
+                <mat-select>
+                  <mat-option *ngFor="let via of listaVias" [value]="via.idRemitente">
+                    {{via.descripcionRemitente}}
+                  </mat-option>
+                </mat-select>
+                <!-- <mat-error *ngIf="formCrearCite.controls['listaVias'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-via') }}</mat-error> -->
+              </mat-form-field>
+            </div>
+
+          </div>
+
+
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+
+            <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
+              <mat-form-field fxFlex>
+                <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatario' )}} : </mat-label>
+                <mat-select formControlName="listaDestinatarios" required placeholder="Seleccione">
+                  <mat-option *ngFor="let destinatario of listaDestinatarios" [value]="destinatario.idDestinatario">
+                    {{destinatario.descripcionDestinatario}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formCrearCite.controls['listaDestinatarios'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-destinatario') }}</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
+              <mat-form-field fxFlex>
+                <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-remitente' )}} :</mat-label>
+                <mat-select formControlName="listaRemitentes" required placeholder="Seleccione">
+                  <mat-option *ngFor="let via of listaVias" [value]="via.idRemitente">
+                    {{via.descripcionRemitente}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formCrearCite.controls['listaRemitentes'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-remitente') }}</mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+
+
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+            <mat-form-field fxFlex>
+              <input
+                matInput
+                required
+                shUppercase
+                maxlength="100"
+                placeholder="{{langService.getLang(eModulo.HojaDeRuta,'lbl-referencia')}}"
+                formControlName="referencia">
+              <mat-error *ngIf="formCrearCite.controls['referencia'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-referencia') }}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>
+            <button mat-raised-button color="accent" disabled="{{formCrearCite.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+          </div>
+        </div> <!-- Contenedor principal -->
+
       </form>
     </mat-step>
+
+    <!-- Vista previa del cite-->
     <mat-step [stepControl]="secondFormGroup" optional>
       <form [formGroup]="secondFormGroup">
         <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-vista-previa-cite' )}}</ng-template>
@@ -34,12 +111,15 @@
           <mat-label>Address</mat-label>
           <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
         </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
-          <button mat-button matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+
+        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>
+          <button mat-raised-button color="accent" disabled="{{secondFormGroup.invalid || contextService.isLoading}}" matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
+          <button mat-raised-button color="accent" disabled="{{secondFormGroup.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
         </div>
       </form>
     </mat-step>
+
+    <!-- Creacion de Cites-->
     <mat-step>
       <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-crear-hoja-de-ruta' )}}</ng-template>
       <p>You are now done.</p>
