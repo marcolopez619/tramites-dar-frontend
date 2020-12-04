@@ -25,6 +25,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { ClassTipoNotificacionPipe } from './pipes/class-tipo-notificacion.pipe';
 import { IconTipoNotificacionPipe } from './pipes/icon-tipo-notificacion.pipe';
@@ -104,6 +105,7 @@ import { HojaDeRutaComponent } from './components/hoja-de-ruta/hoja-de-ruta.comp
         MatProgressSpinnerModule,
         MatTabsModule,
         MatStepperModule,
+        MatSidenavModule,
         // Modulos para formularios.
         FormsModule,
         ReactiveFormsModule,
@@ -136,6 +138,7 @@ import { HojaDeRutaComponent } from './components/hoja-de-ruta/hoja-de-ruta.comp
         MatProgressSpinnerModule,
         MatTabsModule,
         MatStepperModule,
+        MatSidenavModule,
 
         FormsModule,
         ReactiveFormsModule,
