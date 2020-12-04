@@ -16,8 +16,8 @@
         <mat-table #table [dataSource]="dataSource" matSort>
 
           <ng-container matColumnDef="tipoDocumento">
-            <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-tipo-documento') }} </mat-header-cell>
-            <mat-cell *matCellDef="let element" fxFlex="10"> {{element.tipoDocumento}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef fxFlex="15" mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-tipo-documento') }} </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="15"> {{element.tipoDocumento}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="numeroCite" >

@@ -41,7 +41,7 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
     const listaCites: Array<CiteModel> = [
       {
         idCiteModel: 1,
-        tipoDocumento : 'Interno',
+        tipoDocumento : 'MEMORANDUM',
         numeroCite : 'SEGIP/DES/2334_2021',
         destinatarios : listaVias,
         referencia : 'ALGUNA REFERENCIA DE M....',
@@ -49,7 +49,7 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
       },
       {
         idCiteModel: 2,
-        tipoDocumento : 'Externo',
+        tipoDocumento : 'INFORME',
         numeroCite : 'SEGIP/DES/77774_2021',
         destinatarios : listaVias2,
         referencia : 'Otra referencia....',
