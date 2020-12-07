@@ -1,0 +1,19 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav mode="side" opened>
+    <app-opciones-bandeja (onOpcionClick)="captureValueFromEmiter($event)"></app-opciones-bandeja>
+  </mat-sidenav>
+  <mat-sidenav-content fxFlexFill>
+    <app-detalle-bandeja [valorCapturado]="opcionSelectedFromEmiter"></app-detalle-bandeja>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!-- <mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened>
+    <app-opciones-bandeja></app-opciones-bandeja>
+  </mat-drawer>
+  <mat-drawer-content>
+
+    CONTENIDO
+
+  </mat-drawer-content>
+</mat-drawer-container> -->

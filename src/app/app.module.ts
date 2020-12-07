@@ -1,3 +1,4 @@
+import { BandejaPrincipalModule } from './bandeja-principal/bandeja-principal.module';
 import { HojaDeRutaModule } from './hoja-de-ruta/hoja-de-ruta.module';
 import { CitesModule } from './cites/cites.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -31,7 +32,8 @@ registerLocaleData(localeEs);
         BaseModule,
         RouterModule.forRoot(appRoutes),
         CitesModule,
-        HojaDeRutaModule
+        HojaDeRutaModule,
+        BandejaPrincipalModule
     ],
     providers: [
         AuthService,

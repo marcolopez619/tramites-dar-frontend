@@ -7,24 +7,7 @@
 
     <mat-card-content>
 
-      <mat-tab-group mat-align-tabs="center" dynamicHeight mat-stretch-tabs>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon class="icono-tab">folder</mat-icon>
-            {{langService.getLang(eModulo.Base, 'lbl-cites' )}}
-          </ng-template>
-            <app-bandeja-cites></app-bandeja-cites>
-        </mat-tab>
-
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon class="icono-tab">table_rows</mat-icon>
-            {{langService.getLang(eModulo.Base, 'lbl-hojas-de-ruta' )}}
-          </ng-template>
-            <app-bandeja-hojas-de-ruta></app-bandeja-hojas-de-ruta>
-        </mat-tab>
-
-      </mat-tab-group>
+      <app-container-bandeja></app-container-bandeja>
 
     </mat-card-content>
 </mat-card>

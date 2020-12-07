@@ -1,0 +1,17 @@
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<li *ngFor="let item of listaOpcionesBandeja">
+  <br />
+  <button
+    mat-raised-button
+    fxFlexFill
+    name="buton_{{ item }}"
+    (click)="onSelectedButton(item)"
+  >
+    {{ item }}
+  </button>
+</li>

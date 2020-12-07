@@ -1,0 +1,8 @@
+.example-container {
+  display: flex;
+  width: auto;
+  height: 100vh;
+  margin: 10px;
+  border: 1px solid #555;
+  flex: 1 1 auto;
+}
