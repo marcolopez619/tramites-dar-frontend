@@ -3,12 +3,22 @@
 <br />
 <br />
 <br />
-
+<li>
+  <br/>
+  <button mat-raised-button fxFlexFill class="button-text-align-left">MIS CITES</button>
+</li>
+<mat-divider></mat-divider>
+<li>
+  <br/>
+  <button mat-button fxFlexFill class="button-text-align-left">BANDEJA DE HOJAS DE RUTA</button>
+</li>
+<mat-divider></mat-divider>
 <li *ngFor="let item of listaOpcionesBandeja">
   <br />
   <button
     mat-raised-button
     fxFlexFill
+    class="button-text-align-right"
     name="buton_{{ item }}"
     (click)="onSelectedButton(item)"
   >
