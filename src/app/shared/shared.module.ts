@@ -48,6 +48,7 @@ import { RightClickOffDirective } from './directives/right-click.directive';
 import { RowHoverDirective } from './directives/row-hover.directive';
 import { ToolbarErrorDirective } from './directives/toolbar-error.directive';
 import { HojaDeRutaComponent } from './components/hoja-de-ruta/hoja-de-ruta.component';
+import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -75,7 +76,8 @@ import { HojaDeRutaComponent } from './components/hoja-de-ruta/hoja-de-ruta.comp
         ErrorViewerComponent,
         LoaderSpinnerComponent,
         TableEmptyComponent,
-        HojaDeRutaComponent
+        HojaDeRutaComponent,
+        AutocompleteComponent
     ],
     imports: [
         CommonModule,
@@ -163,7 +165,8 @@ import { HojaDeRutaComponent } from './components/hoja-de-ruta/hoja-de-ruta.comp
         ErrorViewerComponent,
         LoaderSpinnerComponent,
         TableEmptyComponent,
-        HojaDeRutaComponent
+        HojaDeRutaComponent,
+        AutocompleteComponent
     ],
     entryComponents: [
         ConfirmDialogComponent

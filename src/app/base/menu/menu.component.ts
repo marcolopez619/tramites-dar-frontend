@@ -22,6 +22,8 @@ export class MenuComponent extends BaseComponent implements OnInit {
 
   openSideNav = true;
 
+  listaCompleta = ['MARCO ANTONIO MOLINA LOPEZ', 'SARDINA CONDORI MALPARTIDA', 'MAMANI MAMANILLO JUAN', 'HUNCARIO LUIS', 'ZAPATA CONDORI ALBERTO'];
+
     /**
      * Creates an instance of MenuComponent.
      * @param {ContextoService} contextoService
@@ -51,5 +53,13 @@ export class MenuComponent extends BaseComponent implements OnInit {
 
     gotoAnotherPage(): void {
       this.router.navigate(['cites/index']);
+    }
+
+    getListaSeleccionada($event): void {
+      console.log('----------------------');
+
+      $event.forEach(element => {
+        console.log( '---> ' + element );
+      });
     }
 }
