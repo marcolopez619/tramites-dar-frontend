@@ -1,13 +1,16 @@
 <mat-card>
     <mat-card-header class="alt-theme">
       <mat-toolbar color="primary">
+        <a mat-button (click)="openSideNav=!openSideNav">
+          <mat-icon>menu</mat-icon>
+        </a>
         <h3>{{ langService.getLang(eModulo.Base, 'lbl-menu-principal') }}</h3>
       </mat-toolbar>
     </mat-card-header>
 
     <mat-card-content>
 
-      <app-container-bandeja></app-container-bandeja>
+      <app-container-bandeja [isOpenSidenav]="openSideNav"></app-container-bandeja>
 
     </mat-card-content>
 </mat-card>

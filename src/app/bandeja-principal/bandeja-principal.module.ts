@@ -1,3 +1,5 @@
+import { HojaDeRutaModule } from './../hoja-de-ruta/hoja-de-ruta.module';
+import { CitesModule } from './../cites/cites.module';
 import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,7 +13,9 @@ import { DetalleBandejaComponent } from './components/detalle-bandeja/detalle-ba
   declarations: [ContainerBandejaComponent, OpcionesBandejaComponent, DetalleBandejaComponent],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    CitesModule,
+    HojaDeRutaModule
   ],
   exports:[
     ContainerBandejaComponent, OpcionesBandejaComponent, DetalleBandejaComponent

@@ -1,10 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseComponent } from '../../shared/base.component';
 import { ContextoService } from '../../shared/services/contexto.service';
 import { LangService } from '../../shared/services/lang.service';
-import { zoomInAnim, fadeInLeftAnim, breadListAnim } from '../../shared/animations/template.animation';
-import { AutofocusDirective } from '../../shared/directives/autofocus.directive';
 
 /**
  * Componente para mostrar el menu del sistema.
@@ -21,6 +19,8 @@ import { AutofocusDirective } from '../../shared/directives/autofocus.directive'
     host: {class: 'container-fluid'}
 })
 export class MenuComponent extends BaseComponent implements OnInit {
+
+  openSideNav = true;
 
     /**
      * Creates an instance of MenuComponent.

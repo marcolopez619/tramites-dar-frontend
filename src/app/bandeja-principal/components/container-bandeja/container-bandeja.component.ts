@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
 
@@ -12,6 +12,9 @@ import { BaseComponent } from '../../../shared/base.component';
 export class ContainerBandejaComponent extends BaseComponent implements OnInit {
 
   opcionSelectedFromEmiter: string;
+
+  @Input()
+  isOpenSidenav: boolean;
 
   constructor() { super(); }
 
