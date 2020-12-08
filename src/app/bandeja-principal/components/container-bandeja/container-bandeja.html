@@ -1,0 +1,8 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav mode="side" opened="{{isOpenSidenav}}">
+    <app-opciones-bandeja (onOpcionClick)="captureValueFromEmiter($event)"></app-opciones-bandeja>
+  </mat-sidenav>
+  <mat-sidenav-content fxFlexFill>
+    <app-detalle-bandeja [valorCapturado]="opcionSelectedFromEmiter"></app-detalle-bandeja>
+  </mat-sidenav-content>
+</mat-sidenav-container>

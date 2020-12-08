@@ -1,3 +1,4 @@
+import { BandejaPrincipalModule } from './../bandeja-principal/bandeja-principal.module';
 import { HojaDeRutaModule } from './../hoja-de-ruta/hoja-de-ruta.module';
 import { CitesModule } from './../cites/cites.module';
 import { CommonModule } from '@angular/common';
@@ -26,7 +27,8 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     RouterModule.forChild(baseRoutes),
     SharedModule,
     CitesModule,
-    HojaDeRutaModule
+    HojaDeRutaModule,
+    BandejaPrincipalModule
   ],
   declarations: [
     LayoutComponent,

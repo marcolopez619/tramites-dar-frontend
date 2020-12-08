@@ -1,0 +1,55 @@
+<mat-card>
+  <!-- <mat-card-header class="alt-theme">
+    <mat-toolbar color="primary">
+      <h3>{{ langService.getLang(eModulo.Base, 'lbl-menu-principal') }}</h3>
+    </mat-toolbar>
+  </mat-card-header>
+ -->
+  <mat-card-content>
+    <span [ngSwitch]="valorCapturado">
+    <p *ngSwitchCase="'PRINCIPAL'">
+
+      <!-- <mat-tab-group mat-align-tabs="center" dynamicHeight mat-stretch-tabs> -->
+      <mat-tab-group mat-align-tabs="start" dynamicHeight >
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="icono-tab">folder</mat-icon>
+            {{langService.getLang(eModulo.Base, 'lbl-cites' )}}
+          </ng-template>
+
+          <app-bandeja-cites></app-bandeja-cites>
+
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="icono-tab">table_rows</mat-icon>
+            {{langService.getLang(eModulo.Base, 'lbl-hojas-de-ruta' )}}
+          </ng-template>
+
+        </mat-tab>
+
+      </mat-tab-group>
+
+    </p>
+    <p *ngSwitchCase="'PENDIENTES'">
+
+    </p>
+    <p *ngSwitchCase="'EN PROCESO'">
+
+    </p>
+    <p *ngSwitchDefault>
+
+    </p>
+    </span>
+
+
+  </mat-card-content>
+</mat-card>
+
+<h3>{{valorCapturado}}</h3>
+
+
+
+
+
