@@ -77,7 +77,33 @@ export class AuthService {
      * Permite realizar el cierre de sesion del usuario
      */
     logoutUser(): void {
-      const idHistoricoUsuarioSesion = this.contextoService.getItemContexto('idHistoricoUsuarioSesion');
+      const user = this.contextoService.getItemContexto('samActName');
+
+      const params = {
+        UserName    : user,
+        isUserAction: true
+      };
+
+      if (user) {
+        this.contextoService.finalizarContexto();
+        // Redirecciona al login.
+        this.router.navigate(['login']);
+      }
+
+        /* this.http.post<Resultado>(`${this.contextoService.getConfig('backendApi')}/autentificacion/logout`, params)
+            .subscribe(
+              response => {
+                // Finaliza el contexto.
+                this.contextoService.finalizarContexto();
+                // Redirecciona al login.
+                this.router.navigate(['login']);
+              });
+
+      } */
+
+
+
+      /* const idHistoricoUsuarioSesion = this.contextoService.getItemContexto('idHistoricoUsuarioSesion');
       const user = this.contextoService.getItemContexto('usuario');
 
       const params = {
@@ -97,7 +123,7 @@ export class AuthService {
                 this.router.navigate(['login']);
               });
 
-      }
+      } */
       /* const params = {
           user        : user,
           isUserAction: true,

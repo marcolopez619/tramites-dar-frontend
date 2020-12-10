@@ -4,7 +4,7 @@
             <img class="main-logo" src="../../assets/logo.png" alt="logo">
             <h1 style="font-size: 25px">{{ config.nombreSistema }}</h1>
             <span class="flex-spacer"></span>
-            <button mat-button [matMenuTriggerFor]="userInfo" *ngIf="true" matTooltip="{{langService.getLang(eModulo.Base,'menu-user')}}">
+            <button mat-button [matMenuTriggerFor]="userInfo" *ngIf="authService.isUserAuthenticated()" matTooltip="{{langService.getLang(eModulo.Base,'menu-user')}}">
                 <mat-icon>person</mat-icon>
             </button>
 

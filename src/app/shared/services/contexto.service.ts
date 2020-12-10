@@ -128,7 +128,7 @@ export class ContextoService {
      */
     setContexto(pContextoUsuario: any): void {
         // this.ls.set('context', pContextoUsuario); // Anteriormente
-        this.userName = pContextoUsuario.samActname;
+        this.userName = pContextoUsuario.samActName;
         this.ls.set(`contex-${this.userName}`, pContextoUsuario);
     }
 
@@ -138,8 +138,8 @@ export class ContextoService {
      * @memberof ContextoService
      */
     finalizarContexto(): void {
-        // localStorage.removeItem('context'); // Anteriormente
-        localStorage.removeItem(`contex-${this.userName}`);
+      // localStorage.removeItem('context'); // Anteriormente
+      localStorage.removeItem(`contex-${this.userName}`);
     }
 
     /**
