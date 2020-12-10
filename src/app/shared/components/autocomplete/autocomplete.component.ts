@@ -1,4 +1,3 @@
-import {T} from 'typescript/lib/typescript';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { BaseComponent } from './../../base.component';
 import { Component, ElementRef, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
@@ -25,16 +24,16 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
   separatorKeysCodes = [ENTER, COMMA];
   formAutocomplete = new FormControl();
   listaFiltrada: Observable<Array<string>>;
-  listaSeleccionados: Array<T> = [];
+  listaSeleccionados: Array<string> = [];
 
   @Input()
   placeHolder: string;
 
   @Input()
-  listaCompleta: Array<T>;
+  listaCompleta: Array<string>;
 
   @Output()
-  listaSeleccionadosEmiter = new EventEmitter<T>();
+  listaSeleccionadosEmiter = new EventEmitter();
 
 
   @ViewChild('input') input: ElementRef<HTMLInputElement>;
@@ -87,7 +86,7 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
     this.listaSeleccionadosEmiter.next( this.listaSeleccionados );
   }
 
-  private _filter(value: string): Array<T> {
+  private _filter(value: string): Array<string> {
     const filterValue = value.toLowerCase();
     // Busqueda que INCLUYE el parametro de busqueda dentro la cadena a buscar.
     return this.listaCompleta.filter(item => item.toLowerCase().includes(filterValue) );
