@@ -13,7 +13,7 @@ export const hojaDeRutaLang = {
     'lbl-error-tipo-tramite' : 'El tipo de trámite es necesario',
 
     'lbl-remitente' : 'Remitente(s)',
-    'lbl-error-remitente' : 'Debe existir al menos un remitente',
+    'lbl-error-remitente' : 'El remitente es inválido',
 
     'lbl-cc' : 'CC',
     'lbl-error-cc' : 'La lista de CC es obligatoria',

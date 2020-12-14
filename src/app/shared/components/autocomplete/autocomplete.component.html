@@ -1,27 +1,36 @@
-  <mat-form-field fxFlexFill>
-    <mat-label>{{placeHolder}}</mat-label>
-    <mat-chip-list #chipList>
-      <mat-chip
-        *ngFor="let item of listaSeleccionados"
-        [selectable]="selectable"
-        [removable]="removable"
-        (removed)="remove(item)">
-        {{item}}
-        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-      </mat-chip>
-      <input
-        placeholder="Nuevo item..."
-        #input
-        [formControl]="formAutocomplete"
-        [matAutocomplete]="auto"
-        [matChipInputFor]="chipList"
-        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-        (matChipInputTokenEnd)="add($event)">
-        <!-- <mat-error *ngIf="formAutocomplete.invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-referencia') }}</mat-error> -->
-    </mat-chip-list>
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-      <mat-option *ngFor="let itemFiltrado of listaFiltrada | async" [value]="itemFiltrado">
-        {{itemFiltrado}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
+  <form [formGroup]="formAutocomplete"fxFlexFill>
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+      <mat-form-field fxFlexFill>
+        <mat-label>{{placeHolder}}</mat-label>
+        <mat-chip-list #chipList>
+          <mat-chip
+            *ngFor="let item of listaSeleccionados"
+            [selectable]="selectable"
+            [removable]="removable"
+            (removed)="remove(item)">
+            {{item.nombreCompleto}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input
+            placeholder="Nuevo integrante"
+            #input
+            formControlName="autoCompleteData"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+            <!-- (matChipInputTokenEnd)="add($event)"> -->
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let itemFiltrado of listaFiltrada | async" [value]="itemFiltrado">
+              <span class="additional-selection">
+                {{itemFiltrado.nombreCompleto}}
+                <div class="mat-option-cargo">
+                  {{itemFiltrado.cargo}}
+                </div>
+              </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <mat-error *ngIf="formAutocomplete.controls['autoCompleteData'].invalid">{{matLabelError}}</mat-error>
+  </form>

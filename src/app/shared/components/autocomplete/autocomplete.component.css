@@ -1,0 +1,10 @@
+.additional-selection {
+  opacity: 0.75;
+  font-size: 0.80em;
+}
+mat-option{
+  line-height: normal;
+}
+.mat-option-cargo{
+  font-size: 12px;
+}
