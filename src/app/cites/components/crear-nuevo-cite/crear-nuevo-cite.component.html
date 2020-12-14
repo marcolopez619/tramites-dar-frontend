@@ -40,15 +40,21 @@
             </div>
 
             <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
-              <mat-form-field fxFlex>
-                <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-via' )}} :</mat-label>
-                <mat-select>
+              <sh-autocomplete *ngIf="listaUsuarios?.length > 0"
+                [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-via' )"
+                [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-via' )"
+                [listaCompleta]="listaUsuarios"
+                (listaSeleccionadosEmiter)="getListaSeleccionadaVias($event)">
+              </sh-autocomplete>
+              <!-- <mat-form-field fxFlex>
+                  <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-via' )}} :</mat-label>
+                  <mat-select>
                   <mat-option *ngFor="let via of listaVias" [value]="via.idRemitente">
                     {{via.descripcionRemitente}}
                   </mat-option>
-                </mat-select>
+                </mat-select> -->
                 <!-- <mat-error *ngIf="formCrearCite.controls['listaVias'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-via') }}</mat-error> -->
-              </mat-form-field>
+              <!-- </mat-form-field> -->
             </div>
 
           </div>
@@ -57,7 +63,13 @@
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
 
             <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
-              <mat-form-field fxFlex>
+              <sh-autocomplete *ngIf="listaUsuarios?.length > 0"
+                [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatario' )"
+                [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-destinatario' )"
+                [listaCompleta]="listaUsuarios"
+                (listaSeleccionadosEmiter)="getListaSeleccionadaDestinatarios($event)">
+              </sh-autocomplete>
+              <!-- <mat-form-field fxFlex>
                 <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatario' )}} : </mat-label>
                 <mat-select formControlName="listaDestinatarios" required placeholder="Seleccione">
                   <mat-option *ngFor="let destinatario of listaDestinatarios" [value]="destinatario.idDestinatario">
@@ -65,11 +77,17 @@
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="formCrearCite.controls['listaDestinatarios'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-destinatario') }}</mat-error>
-              </mat-form-field>
+              </mat-form-field> -->
             </div>
 
             <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
-              <mat-form-field fxFlex>
+              <sh-autocomplete *ngIf="listaUsuarios?.length > 0"
+                [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-remitente' )"
+                [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-remitente' )"
+                [listaCompleta]="listaUsuarios"
+                (listaSeleccionadosEmiter)="getListaSeleccionadaRemitentes($event)">
+              </sh-autocomplete>
+              <!-- <mat-form-field fxFlex>
                 <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-remitente' )}} :</mat-label>
                 <mat-select formControlName="listaRemitentes" required placeholder="Seleccione">
                   <mat-option *ngFor="let via of listaVias" [value]="via.idRemitente">
@@ -77,7 +95,7 @@
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="formCrearCite.controls['listaRemitentes'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-remitente') }}</mat-error>
-              </mat-form-field>
+              </mat-form-field> -->
             </div>
 
           </div>

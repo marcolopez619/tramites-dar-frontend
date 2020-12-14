@@ -7,6 +7,9 @@ import { LangService } from '../../../shared/services/lang.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TipoTramiteModel, RemitenteModel, DestinatarioModel } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
+import { UsuarioService } from '../../../shared/services/usuario.service';
+import { UsuarioModel } from '../../../shared/models/Usuario.model';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 
 @Component({
   selector: 'app-crear-nuevo-cite',
@@ -19,6 +22,8 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
   formCrearCite: FormGroup;
   secondFormGroup: FormGroup;
+
+  listaUsuarios: Array<UsuarioModel>;
 
   listaTipoDocumento: Array<TipoTramiteModel> = [
     { idTipoTramite: 1, descripcionTipoTramite: 'INTERNO' },
@@ -46,10 +51,15 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
     public langService: LangService,
     public contextService: ContextoService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private usuarioService: UsuarioService
   ) { super(); }
 
   ngOnInit(): void {
+
+    this.usuarioService.getAllUsuarios().pipe( takeUntil( this.unsubscribe$ )).subscribe( respService => {
+      this.listaUsuarios = respService.data;
+    });
 
     this.formCrearCite = this.formBuilder.group({
       tipoDocumento     : [undefined, Validators.compose([Validators.required])],
@@ -61,6 +71,30 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
     this.secondFormGroup = this.formBuilder.group({
       secondCtrl: ['', Validators.required]
+    });
+  }
+
+  getListaSeleccionadaVias($event): void {
+    console.log('----------------------');
+
+    $event.forEach( element => {
+      console.log( ' VIAS : ---> ' + ( element as UsuarioModel ).nombreCompleto );
+    });
+  }
+
+  getListaSeleccionadaDestinatarios($event): void {
+    console.log('----------------------');
+
+    $event.forEach( element => {
+      console.log( ' Destinatario ---> ' + ( element as UsuarioModel ).nombreCompleto );
+    });
+  }
+
+  getListaSeleccionadaRemitentes($event): void {
+    console.log('----------------------');
+
+    $event.forEach( element => {
+      console.log( 'Remitente ---> ' + ( element as UsuarioModel ).nombreCompleto );
     });
   }
 
