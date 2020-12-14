@@ -49,6 +49,7 @@ import { RowHoverDirective } from './directives/row-hover.directive';
 import { ToolbarErrorDirective } from './directives/toolbar-error.directive';
 import { HojaDeRutaComponent } from './components/hoja-de-ruta/hoja-de-ruta.component';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
+import { UsuarioService } from './services/usuario.service';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -170,6 +171,9 @@ import { AutocompleteComponent } from './components/autocomplete/autocomplete.co
     ],
     entryComponents: [
         ConfirmDialogComponent
+    ],
+    providers: [
+      UsuarioService
     ]
 })
 export class SharedModule { }
