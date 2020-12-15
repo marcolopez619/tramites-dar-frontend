@@ -69,6 +69,7 @@
                 [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-destinatario' )"
                 [isRequired]="true"
                 [listaCompleta]="listaUsuarios"
+                (isFormularioInvalid) = "getEstatusFormDestinatario($event)"
                 (listaSeleccionadosEmiter)="getListaSeleccionadaDestinatarios($event)">
               </sh-autocomplete>
               <!-- <mat-form-field fxFlex>
@@ -88,6 +89,7 @@
                 [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-remitente' )"
                 [isRequired]="true"
                 [listaCompleta]="listaUsuarios"
+                (isFormularioInvalid) = "getEstatusFormRemitente($event)"
                 (listaSeleccionadosEmiter)="getListaSeleccionadaRemitentes($event)">
               </sh-autocomplete>
               <!-- <mat-form-field fxFlex>

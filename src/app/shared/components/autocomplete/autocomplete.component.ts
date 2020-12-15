@@ -42,6 +42,9 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
   @Output()
   listaSeleccionadosEmiter = new EventEmitter();
 
+  @Output()
+  isFormularioInvalid = new EventEmitter();
+
   @ViewChild('input') input: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
@@ -86,6 +89,10 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
     }
   }
 
+  private _emitIsFormularioInvalid(): void {
+    this.isFormularioInvalid.emit( this.formAutocomplete.controls['autoCompleteData'].invalid );
+  }
+
   add(event: MatChipInputEvent): void {
     /* const input = event.input;
     const value = event.value;
@@ -112,6 +119,8 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
         this.formAutocomplete.controls['autoCompleteData'].reset();
         this.formAutocomplete.controls['autoCompleteData'].updateValueAndValidity();
       }
+      // this.isFormularioInvalid.emit( this.formAutocomplete.controls['autoCompleteData'].invalid );
+      this._emitIsFormularioInvalid();
       this.listaSeleccionadosEmiter.next( this.listaSeleccionados );
     }
   }
@@ -121,6 +130,8 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
     this.input.nativeElement.value = '';
     // this.formAutocomplete.setValue('');
     // this.formAutocomplete.controls[ 'autoCompleteData' ].setValue('');
+    // this.isFormularioInvalid.emit( this.formAutocomplete.controls['autoCompleteData'].invalid );
+    this._emitIsFormularioInvalid();
     this.listaSeleccionadosEmiter.next( this.listaSeleccionados );
   }
 

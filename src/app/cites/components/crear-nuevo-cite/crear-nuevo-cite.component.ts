@@ -1,15 +1,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
-import { BaseComponent } from '../../../shared/base.component';
-import { ContextoService } from '../../../shared/services/contexto.service';
-import { LangService } from '../../../shared/services/lang.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TipoTramiteModel, RemitenteModel, DestinatarioModel } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
-import { UsuarioService } from '../../../shared/services/usuario.service';
-import { UsuarioModel } from '../../../shared/models/Usuario.model';
+import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
+import { TipoTramiteModel } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
+import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
+import { BaseComponent } from '../../../shared/base.component';
+import { UsuarioModel } from '../../../shared/models/Usuario.model';
+import { ContextoService } from '../../../shared/services/contexto.service';
+import { LangService } from '../../../shared/services/lang.service';
+import { UsuarioService } from '../../../shared/services/usuario.service';
 
 @Component({
   selector: 'app-crear-nuevo-cite',
@@ -30,20 +30,12 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
     { idTipoTramite: 2, descripcionTipoTramite: 'EXTERNO' }
   ];
 
-  listaVias: Array<RemitenteModel> = [
-    { idRemitente: 1, descripcionRemitente: 'ZORRINNO CATARI ALBERTO' },
-    { idRemitente: 2, descripcionRemitente: 'ZUNAGUA SARDINA LEILA' }
-  ];
+  listaVias: Array<UsuarioModel> = [];
+  listaDestinatarios: Array<UsuarioModel> = [];
+  listaRemitentes: Array<UsuarioModel> = [];
 
-  listaDestinatarios: Array<DestinatarioModel> = [
-    { idDestinatario: 1, descripcionDestinatario: 'CACHICATARI JUAN GONZALO' },
-    { idDestinatario: 2, descripcionDestinatario: 'SALMON HUALLPA OZUNA' }
-  ];
-
-  listaRemitentes: Array<DestinatarioModel> = [
-    { idDestinatario: 1, descripcionDestinatario: 'PRIMIR REMITENTE' },
-    { idDestinatario: 2, descripcionDestinatario: 'SEGUNDO REMITENTE' }
-  ];
+  private _isDestinatarioInvalid: boolean;
+  private _isRemitenteInvalid: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -77,25 +69,42 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
   getListaSeleccionadaVias($event): void {
     console.log('----------------------');
 
-    $event.forEach( element => {
+    this.listaVias = $event as Array<UsuarioModel>;
+
+    this.listaVias.forEach( element => {
       console.log( ' VIAS : ---> ' + ( element as UsuarioModel ).nombreCompleto );
     });
   }
 
   getListaSeleccionadaDestinatarios($event): void {
     console.log('----------------------');
+    this.listaDestinatarios = $event as Array<UsuarioModel>;
 
-    $event.forEach( element => {
-      console.log( ' Destinatario ---> ' + ( element as UsuarioModel ).nombreCompleto );
+    this.listaDestinatarios.forEach( element => {
+      console.log( ' Destinatario ---> ' + element.nombreCompleto );
     });
+
+    this.formCrearCite.controls['listaDestinatarios'].setValue( (this._isDestinatarioInvalid) ? undefined : this.listaDestinatarios );
   }
 
   getListaSeleccionadaRemitentes($event): void {
     console.log('----------------------');
+    this.listaRemitentes = $event as Array<UsuarioModel>;
 
-    $event.forEach( element => {
-      console.log( 'Remitente ---> ' + ( element as UsuarioModel ).nombreCompleto );
+    this.listaRemitentes.forEach( element => {
+      console.log( 'Remitente ---> ' + element.nombreCompleto );
     });
+
+    this.formCrearCite.controls['listaRemitentes'].setValue( (this._isRemitenteInvalid) ? undefined : this.listaRemitentes );
+  }
+
+  getEstatusFormDestinatario($event): void {
+    this._isDestinatarioInvalid = $event;
+    console.log( ' is Invalid Destinatario : ' + $event );
+  }
+  getEstatusFormRemitente($event): void {
+    this._isRemitenteInvalid = $event;
+    console.log( ' is Invalid Remitente : ' + $event );
   }
 
   onClose(object?: any): void {
