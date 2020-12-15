@@ -36,6 +36,9 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
   @Input()
   listaCompleta: Array<UsuarioModel>;
 
+  @Input()
+  isRequired: boolean;
+
   @Output()
   listaSeleccionadosEmiter = new EventEmitter();
 
@@ -50,9 +53,15 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
   }
   ngOnInit(): void {
 
-    this.formAutocomplete = this.formBuilder.group({
-      autoCompleteData : [ undefined, Validators.compose([ Validators.required ])]
-    });
+    if (this.isRequired) {
+      this.formAutocomplete = this.formBuilder.group({
+        autoCompleteData : [ undefined, Validators.compose([ Validators.required ])]
+      });
+    } else {
+      this.formAutocomplete = this.formBuilder.group({
+        autoCompleteData : [ undefined ]
+      });
+    }
 
     this.listaFiltrada = this.formAutocomplete.valueChanges
         .pipe(
@@ -99,7 +108,7 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
 
     if (index >= 0) {
       this.listaSeleccionados.splice(index, 1);
-      if (this.listaSeleccionados.length === 0 ) {
+      if (this.listaSeleccionados.length === 0 && this.isRequired) {
         this.formAutocomplete.controls['autoCompleteData'].reset();
         this.formAutocomplete.controls['autoCompleteData'].updateValueAndValidity();
       }
@@ -114,7 +123,5 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
     // this.formAutocomplete.controls[ 'autoCompleteData' ].setValue('');
     this.listaSeleccionadosEmiter.next( this.listaSeleccionados );
   }
-
-
 
 }

@@ -43,6 +43,7 @@
               <sh-autocomplete *ngIf="listaUsuarios?.length > 0"
                 [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-via' )"
                 [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-via' )"
+                [isRequired]="false"
                 [listaCompleta]="listaUsuarios"
                 (listaSeleccionadosEmiter)="getListaSeleccionadaVias($event)">
               </sh-autocomplete>
@@ -66,6 +67,7 @@
               <sh-autocomplete *ngIf="listaUsuarios?.length > 0"
                 [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatario' )"
                 [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-destinatario' )"
+                [isRequired]="true"
                 [listaCompleta]="listaUsuarios"
                 (listaSeleccionadosEmiter)="getListaSeleccionadaDestinatarios($event)">
               </sh-autocomplete>
@@ -84,6 +86,7 @@
               <sh-autocomplete *ngIf="listaUsuarios?.length > 0"
                 [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-remitente' )"
                 [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-remitente' )"
+                [isRequired]="true"
                 [listaCompleta]="listaUsuarios"
                 (listaSeleccionadosEmiter)="getListaSeleccionadaRemitentes($event)">
               </sh-autocomplete>
