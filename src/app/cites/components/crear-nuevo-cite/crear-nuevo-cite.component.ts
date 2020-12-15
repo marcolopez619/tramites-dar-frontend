@@ -24,6 +24,7 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
   secondFormGroup: FormGroup;
 
   listaUsuarios: Array<UsuarioModel>;
+  fechaCreacionCite = new Date();
 
   listaTipoDocumento: Array<TipoTramiteModel> = [
     { idTipoTramite: 1, descripcionTipoTramite: 'INTERNO' },
@@ -105,6 +106,24 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
   getEstatusFormRemitente($event): void {
     this._isRemitenteInvalid = $event;
     console.log( ' is Invalid Remitente : ' + $event );
+  }
+
+  getFechaFormatoLiteral(indiceMes: number ): string{
+    switch (indiceMes) {
+      case 0: return 'ENERO';
+      case 1: return 'FEBRERO';
+      case 2: return 'MARZO';
+      case 3: return 'ABRIL';
+      case 4: return 'MAYO';
+      case 5: return 'JUNIO';
+      case 6: return 'JULIO';
+      case 7: return 'AGOSTO';
+      case 8: return 'SEPTIEMBRE';
+      case 9: return 'OCTUBRE';
+      case 10: return 'NOVIEMBRE';
+      case 11: return 'DICIEMBRE';
+      default: return 'MES NO ESPECIFICADO';
+    }
   }
 
   onClose(object?: any): void {

@@ -129,18 +129,72 @@
 
     <!-- Vista previa del cite-->
     <mat-step [stepControl]="secondFormGroup" optional>
-      <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-vista-previa-cite' )}}</ng-template>
-        <mat-form-field>
-          <mat-label>Address</mat-label>
-          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
-        </mat-form-field>
 
-        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>
-          <button mat-raised-button color="accent" disabled="{{secondFormGroup.invalid || contextService.isLoading}}" matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
-          <button mat-raised-button color="accent" disabled="{{secondFormGroup.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
-        </div>
-      </form>
+      <h1 class="alinear-columna-centro">NOTA INTERNA</h1>
+      <p class="alinear-columna-centro"><strong>CITE</strong>: a<em>qui viene mi citeeeeee </em></p>
+
+      <table border="1" cellpadding="1" cellspacing="1" class="tabla-centro">
+        <tbody>
+          <tr>
+            <td class="alinear-columna-derecha">De:</td>
+            <td>
+              <div *ngFor="let remitente of listaRemitentes">
+                {{remitente.nombreCompleto}}
+                <div class="columna-cargo-vista-previa">
+                  {{remitente.cargo}}
+                </div>
+                <br>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="listaVias?.length > 0">
+            <td class="alinear-columna-derecha">Via:</td>
+            <td>
+              <div *ngFor="let via of listaVias">
+                {{via.nombreCompleto}}
+                <div class="columna-cargo-vista-previa">
+                  {{via.cargo}}
+                </div>
+                <br>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="alinear-columna-derecha">Destinatario:</td>
+            <td>
+              <div *ngFor="let destinatario of listaDestinatarios">
+                {{destinatario.nombreCompleto}}
+                <div class="columna-cargo-vista-previa">
+                  {{destinatario.cargo}}
+                </div>
+                <br/>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="alinear-columna-derecha">Referencia:</td>
+            <td>
+              {{formCrearCite.controls['referencia'].value}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="alinear-columna-centro">FECHA: LA PAZ {{fechaCreacionCite.getDate()}} de {{getFechaFormatoLiteral(fechaCreacionCite.getMonth())}} de {{fechaCreacionCite.getFullYear()}}</p>
+
+
+
+
+
+
+
+      <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>
+        <button mat-raised-button color="accent" disabled="{{secondFormGroup.invalid || contextService.isLoading}}" matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
+        <button mat-raised-button color="accent" disabled="{{secondFormGroup.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+      </div>
+
+
     </mat-step>
 
     <!-- Creacion de Cites-->
