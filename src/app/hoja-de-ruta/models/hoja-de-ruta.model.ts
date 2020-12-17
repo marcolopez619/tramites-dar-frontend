@@ -1,15 +1,21 @@
 export interface HojaDeRutaModel {
-  idHojaRuta?: number;
-  tipoRemitente?: number;
-  listeRemitentes?: Array<string>;
-  listeCC?: Array<string>;
+  idHojaRutaModel?: number;
+  tipoRemitente?: string;
+  nombreRemitente?: string;
+  tipoDocumento?: string; 
   numeroCite?: string;
-  numeroFojas?: number;
+  destinatarios?: Array<string>;  
   referencia?: string;
-  listeDestinatarios?: Array<string>;
-  urgente?: boolean;
-  conCopiaFisica?: boolean;
-  plazo?: number;
+  estado?: string;
+
+  idTipoRemitente?: number;
+  idRemitente?: number;
+  idDestinatario?:number;
+  idCopiaCc?:number;
+  nombreTipoRemitente?: string;
+  //nombreRemitente?: string;
+  nombreDestinatario?: string;
+  nombreCopiaCc?: string;
   // TODO : AÑADIR EL ATRIBUTO QUE MAPEE A LA LISTA DE DOCUMENTOS ADJUNTO
 }
 

@@ -43,7 +43,13 @@ export const hojaDeRutaLang = {
     'lbl-error-plazo-dias' : 'Este campo es obligatorio',
 
     'lbl-doc-adjuntos' : 'Documentos adjuntos',
-    'lbl-error-doc-adjuntos' : 'Este campo es obligatorio'
+    'lbl-error-doc-adjuntos' : 'Este campo es obligatorio',
+
+    'lbl-tipo-remitente' : 'Tipo remitente',
+    'lbl-nombre-remitente' : 'Nombre remitente',    
+    'lbl-destinatarios':'Destinatarios',   
+    'lbl-estado' : 'Estado',
+    'lbl-tipo-documento': 'Tipo de documento'
 
   }
 };

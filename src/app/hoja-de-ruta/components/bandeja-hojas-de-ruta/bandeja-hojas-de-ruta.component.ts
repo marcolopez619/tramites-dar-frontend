@@ -10,6 +10,8 @@ import { BaseComponent } from '../../../shared/base.component';
 import { HojaDeRutaComponent } from '../../../shared/components/hoja-de-ruta/hoja-de-ruta.component';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
+import { HojaDeRutaModule } from '../../hoja-de-ruta.module';
+import { HojaDeRutaModel } from '../../models/hoja-de-ruta.model';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -20,7 +22,17 @@ import { LangService } from '../../../shared/services/lang.service';
 })
 export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['tipoDocumento', 'numeroCite', 'destinatarios', 'referencia', 'fechaCreacion', 'acciones'];
+  //////*
+  tipoRemitente?: number;
+  nombreRemitente?: string;
+  tipoDocumento?: string; 
+  numeroCite?: string;
+  destinatarios?: Array<string>;  
+  referencia?: string;
+  estado?: string;  
+  //*
+
+  displayedColumns = ['tipoRemitente', 'nombreRemitente','tipoDocumento', 'numeroCite', 'destinatarios', 'referencia', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -34,7 +46,33 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
   ) {  super(); }
 
   ngOnInit(): void {
-    // ..
+    const listaVias: Array<string> = [ 'SARDINA GUMUCIO FLORIPONDIO', 'CONDORI MALPARTIDA TIRADO' ];
+    const listaVias2: Array<string> = [ 'ZARZURI TIRADO ELBA', 'ARCE CATARI GONZALES' ];
+
+    const listaCites: Array<HojaDeRutaModel> = [
+      {
+        idHojaRutaModel: 1,
+        tipoRemitente: 'Externo',
+        nombreRemitente: 'Ministerio de Economia',
+        tipoDocumento : 'MEMORANDUM',
+        numeroCite : 'SEGIP/DES/2334_2021',
+        destinatarios : listaVias,
+        referencia : 'REFERENCIA DE PRUEBA 1',
+        estado: 'PENDIENTE'        
+      },
+      {
+        idHojaRutaModel: 2,
+        tipoRemitente: 'Externo',
+        nombreRemitente: 'Ministerio de Salud',
+        tipoDocumento : 'INFORME',
+        numeroCite : 'SEGIP/DES/2777_2021',
+        destinatarios : listaVias2,
+        referencia : 'REFERENCIA DE PRUEBA 2',
+        estado: 'EN PROCESO'         
+      }
+    ];
+
+    this.dataSource.data = listaCites;
   }
 
   ngAfterViewInit(): void {
@@ -64,6 +102,32 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
     });
 
     console.log( 'CREANDO UNA NUEVA HOJA DE RUTA' );
+  }
+  onEdit(pHojaDeRutaModel: HojaDeRutaModel): void {
+    console.log( `EDITANDO ---> ${pHojaDeRutaModel}` );
+  }
+
+  onEnviarHojaRuta(pHojaDeRutaModel: HojaDeRutaModel): void {
+    console.log( `RNVIANDO ---> ${pHojaDeRutaModel}` );
+  }
+
+  onPrintHojaRuta(pHojaDeRutaModel: HojaDeRutaModel): void {
+    console.log( `IMPRIMIENDO ---> ${pHojaDeRutaModel}` );
+  }
+
+  crearHojadeRuta(): void {
+    const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
+      disableClose: false,
+      width: '1000px',
+      data: {
+
+      }
+    });
+    dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
+      if (result) {
+        //..
+      }
+    });
   }
 
 }
