@@ -13,5 +13,6 @@ export interface CiteTemplateJsReport {
   ListaRemitente?: Array<UsuarioModel>;
   ListaVias?: Array<UsuarioModel>;
   ListaDestinatarios?: Array<UsuarioModel>;
-  Referencia?: string ;
+  Referencia?: string;
+  FechaCreacionLiteral?: string;
 }

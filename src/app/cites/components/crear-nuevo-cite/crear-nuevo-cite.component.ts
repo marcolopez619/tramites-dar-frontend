@@ -28,6 +28,8 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
   listaUsuarios: Array<UsuarioModel>;
   fechaCreacionCite = new Date();
+  fechaCreacionCiteLiteral = `LA PAZ ${this.fechaCreacionCite.getDate()} DE ${this.getFechaFormatoLiteral(this.fechaCreacionCite.getMonth())} DE ${this.fechaCreacionCite.getFullYear()}`;
+  // FECHA: LA PAZ {{fechaCreacionCite.getDate()}} de {{getFechaFormatoLiteral(fechaCreacionCite.getMonth())}} de {{fechaCreacionCite.getFullYear()}}
 
   listaTipoDocumento: Array<TipoTramiteModel> = [
     { idTipoTramite: 1, descripcionTipoTramite: 'INTERNO' },
@@ -132,12 +134,16 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
   onGenerateCiteTemplate(): void {
 
+    // TODO:  Consumir el servicio de creacion de cites.
+
     const datoReporte: CiteTemplateJsReport = {
-      ListaRemitente    : this.listaRemitentes,
-      ListaVias         : this.listaVias,
-      ListaDestinatarios: this.listaDestinatarios,
-      Referencia        : this.formCrearCite.controls[ 'referencia' ].value
+      ListaRemitente      : this.listaRemitentes,
+      ListaVias           : this.listaVias,
+      ListaDestinatarios  : this.listaDestinatarios,
+      Referencia          : this.formCrearCite.controls[ 'referencia' ].value,
+      FechaCreacionLiteral: this.fechaCreacionCiteLiteral
     };
+
 
     this.reporteService.getPlanillaCiteTemplate(datoReporte).pipe(takeUntil(this.unsubscribe$)).subscribe( respTemplate => {
       this.utilService.createDocumentFromBlob( respTemplate );

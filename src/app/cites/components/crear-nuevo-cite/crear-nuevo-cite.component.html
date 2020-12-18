@@ -131,6 +131,9 @@
     <mat-step [stepControl]="formCrearCite">
       <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-vista-previa-cite' )}}</ng-template>
 
+
+
+
       <h1 class="alinear-columna-centro">NOTA INTERNAAA</h1>
       <p class="alinear-columna-centro"><strong>CITE</strong>: a<em>qui viene mi citeeeeee </em></p>
 
@@ -138,7 +141,7 @@
         <tbody>
 
           <tr>
-            <td class="alinear-columna-derecha"><strong>Destinatario(s) :</strong></td>
+            <td class="alinear-columna-derecha"><strong>A :</strong></td>
             <td>
               <div *ngFor="let destinatario of listaDestinatarios">
                 {{destinatario.nombreCompleto}}
@@ -151,7 +154,7 @@
           </tr>
 
           <tr *ngIf="listaVias?.length > 0">
-            <td class="alinear-columna-derecha"><strong>Via(s) :</strong></td>
+            <td class="alinear-columna-derecha"><strong>Via :</strong></td>
             <td>
               <div *ngFor="let via of listaVias">
                 {{via.nombreCompleto}}
@@ -177,15 +180,19 @@
           </tr>
 
           <tr>
-            <td class="alinear-columna-derecha"><strong>Referencia :</strong></td>
+            <td class="alinear-columna-derecha"><strong>REFERENCIA :</strong></td>
             <td>
               {{formCrearCite.controls['referencia'].value}}
             </td>
           </tr>
+          <tr>
+            <td class="alinear-columna-derecha"><strong>FECHA :</strong></td>
+            <td>
+              {{fechaCreacionCiteLiteral}}
+            </td>
+          </tr>
         </tbody>
       </table>
-
-      <p class="alinear-columna-centro">FECHA: LA PAZ {{fechaCreacionCite.getDate()}} de {{getFechaFormatoLiteral(fechaCreacionCite.getMonth())}} de {{fechaCreacionCite.getFullYear()}}</p>
 
 
 
