@@ -1,0 +1,17 @@
+.alinear-columna-derecha {
+    text-align: right;
+  }
+  
+  .alinear-columna-centro {
+    text-align: center;
+  }
+  
+  .columna-cargo-vista-previa{
+    font-size: 11px;
+  }
+  
+  .tabla-centro{
+    width:auto;
+    margin-left: auto;
+    margin-right: auto;
+  }

@@ -54,14 +54,17 @@ export const baseLang = {
             'msg-error-general-titulo' : 'ERROR',
             'msg-error-general-descripcion' : 'Problemas de conexión, inténtelo más tarde',
             'lbl-cites' : 'Cites',
-            'lbl-hojas-de-ruta' : 'Hojas de Ruta',
+            'lbl-hojas-de-ruta' : 'Hojas de ruta',
             'lbl-menu-principal' : 'Menu principal',
             'lbl-acciones' : 'Acciones',
             'lbl-editar' : 'Editar',
             'lbl-guardar' : 'Guardar',
             'lbl-generar-hoja-ruta' : 'Generar hoja de ruta',
             'lbl-imprimir-hoja-ruta' : 'Imprimir hoja de ruta',
-            'msg-habilitar-ventana-popops' : 'POR FABOR HABILITE LA OPCION DE VENTANAS EMERGENTES EN SU NAVEGADOR PARA VER EL DOCUMENTO'
+            'msg-habilitar-ventana-popops' : 'POR FABOR HABILITE LA OPCION DE VENTANAS EMERGENTES EN SU NAVEGADOR PARA VER EL DOCUMENTO',
+            'lbl-enviar': 'Enviar',
+            'tit-ventana-hoja-de-ruta': 'HOJA DE RUTA',
+            'tit-volver': 'Volver'
         },
         'en': {
             'lang-error': 'Lang not found',
