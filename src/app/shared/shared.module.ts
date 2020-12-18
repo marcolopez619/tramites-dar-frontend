@@ -1,3 +1,4 @@
+import { ReporteService } from './services/reporte.service';
 import { NgModule } from '@angular/core';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -173,7 +174,8 @@ import { UsuarioService } from './services/usuario.service';
         ConfirmDialogComponent
     ],
     providers: [
-      UsuarioService
+      UsuarioService,
+      ReporteService
     ]
 })
 export class SharedModule { }
