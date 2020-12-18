@@ -60,7 +60,8 @@ export const baseLang = {
             'lbl-editar' : 'Editar',
             'lbl-guardar' : 'Guardar',
             'lbl-generar-hoja-ruta' : 'Generar hoja de ruta',
-            'lbl-imprimir-hoja-ruta' : 'Imprimir hoja de ruta'
+            'lbl-imprimir-hoja-ruta' : 'Imprimir hoja de ruta',
+            'msg-habilitar-ventana-popops' : 'POR FABOR HABILITE LA OPCION DE VENTANAS EMERGENTES EN SU NAVEGADOR PARA VER EL DOCUMENTO'
         },
         'en': {
             'lang-error': 'Lang not found',

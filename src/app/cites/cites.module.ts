@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { citesRoutes } from './cites.routing';
 import { CrearNuevoCiteComponent } from './components/crear-nuevo-cite/crear-nuevo-cite.component';
+import { CitesService } from './cites.service';
 
 
 
@@ -17,6 +18,9 @@ import { CrearNuevoCiteComponent } from './components/crear-nuevo-cite/crear-nue
   ],
   exports : [
     BandejaCitesComponent
+  ],
+  providers : [
+    CitesService
   ]
 })
 export class CitesModule { }

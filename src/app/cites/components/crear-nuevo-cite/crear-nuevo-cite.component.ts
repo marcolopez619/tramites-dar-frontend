@@ -10,6 +10,10 @@ import { UsuarioModel } from '../../../shared/models/Usuario.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { UsuarioService } from '../../../shared/services/usuario.service';
+import { UtilService } from '../../../shared/services/util.service';
+import { CitesService } from '../../cites.service';
+import { CiteTemplateJsReport } from '../../models/cites.models';
+import { ReporteService } from './../../../shared/services/reporte.service';
 
 @Component({
   selector: 'app-crear-nuevo-cite',
@@ -21,7 +25,6 @@ import { UsuarioService } from '../../../shared/services/usuario.service';
 export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
   formCrearCite: FormGroup;
-  secondFormGroup: FormGroup;
 
   listaUsuarios: Array<UsuarioModel>;
   fechaCreacionCite = new Date();
@@ -45,7 +48,10 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
     public contextService: ContextoService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private citesService: CitesService,
+    private reporteService: ReporteService,
+    private utilService: UtilService
   ) { super(); }
 
   ngOnInit(): void {
@@ -62,9 +68,6 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
       referencia        : [undefined, Validators.compose([Validators.required])]
     });
 
-    this.secondFormGroup = this.formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
   }
 
   getListaSeleccionadaVias($event): void {
@@ -103,12 +106,13 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
     this._isDestinatarioInvalid = $event;
     console.log( ' is Invalid Destinatario : ' + $event );
   }
+
   getEstatusFormRemitente($event): void {
     this._isRemitenteInvalid = $event;
     console.log( ' is Invalid Remitente : ' + $event );
   }
 
-  getFechaFormatoLiteral(indiceMes: number ): string{
+  getFechaFormatoLiteral(indiceMes: number ): string {
     switch (indiceMes) {
       case 0: return 'ENERO';
       case 1: return 'FEBRERO';
@@ -124,6 +128,20 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
       case 11: return 'DICIEMBRE';
       default: return 'MES NO ESPECIFICADO';
     }
+  }
+
+  onGenerateCiteTemplate(): void {
+
+    const datoReporte: CiteTemplateJsReport = {
+      ListaRemitente    : this.listaRemitentes,
+      ListaVias         : this.listaVias,
+      ListaDestinatarios: this.listaDestinatarios,
+      Referencia        : this.formCrearCite.controls[ 'referencia' ].value
+    };
+
+    this.reporteService.getPlanillaCiteTemplate(datoReporte).pipe(takeUntil(this.unsubscribe$)).subscribe( respTemplate => {
+      this.utilService.createDocumentFromBlob( respTemplate );
+    });
   }
 
   onClose(object?: any): void {
