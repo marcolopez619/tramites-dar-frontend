@@ -69,7 +69,8 @@ export const baseLang = {
             'lbl-nombre-documento' : 'Nombre documento',
             'lbl-extension-documento' : 'Tipo',
             'lbl-fecha-subida' : 'Fecha subida',
-            'btn-subir-nuevo-ducumento' : 'Subir nuevo documento'
+            'btn-subir-nuevo-ducumento' : 'Subir nuevo documento',
+            'tit-documentos-adjuntos' : 'Documentos adjuntos'
         },
         'en': {
             'lang-error': 'Lang not found',
