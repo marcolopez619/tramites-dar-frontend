@@ -52,6 +52,8 @@ export class BackendInterceptor extends BaseComponent implements HttpInterceptor
         this.contextoService = this.inj.get(ContextoService);
         this.langService = this.inj.get(LangService);
 
+        const isMultipart: boolean =  req.params.get('isMultipart') === 'true'  ;
+
         // Verifica si existen los parametros para ocultar el progressbar/notificador.
         const showProgressBar = !req.headers.has(this.config.headerProgressbar);
         const showNotificador = !req.headers.has(this.config.headerNotificador);
@@ -59,7 +61,7 @@ export class BackendInterceptor extends BaseComponent implements HttpInterceptor
         // Clona el request y adiciona headers.
         const reqClone = req.clone({
             params: req.params,
-            headers : this.getHeaders(req.headers),
+            headers : this.getHeaders(req.headers, isMultipart),
             reportProgress: showProgressBar
         });
 
@@ -149,11 +151,11 @@ export class BackendInterceptor extends BaseComponent implements HttpInterceptor
      * @returns {HttpHeaders} Headers.
      * @memberof BackendInterceptor
      */
-    getHeaders(pReqHeaders: HttpHeaders): HttpHeaders {
+    getHeaders(pReqHeaders: HttpHeaders, isMultipart?: boolean): HttpHeaders {
         // Adiciona headers.
         pReqHeaders = pReqHeaders.set('Accept-Language', this.contextoService.idiomaSeleccionado);
 
-        if (!pReqHeaders.has('Content-Type')) {
+        if (!pReqHeaders.has('Content-Type') && !isMultipart) {
             pReqHeaders = pReqHeaders.set('Content-Type', 'application/json; charset=utf-8');
         }
         if (!pReqHeaders.has('Accept')) {
