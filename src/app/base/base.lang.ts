@@ -64,7 +64,12 @@ export const baseLang = {
             'msg-habilitar-ventana-popops' : 'POR FABOR HABILITE LA OPCION DE VENTANAS EMERGENTES EN SU NAVEGADOR PARA VER EL DOCUMENTO',
             'lbl-enviar': 'Enviar',
             'tit-ventana-hoja-de-ruta': 'HOJA DE RUTA',
-            'tit-volver': 'Volver'
+            'tit-volver': 'Volver',
+            'lbl-eliminar' : 'Elmimar',
+            'lbl-nombre-documento' : 'Nombre documento',
+            'lbl-extension-documento' : 'Tipo',
+            'lbl-fecha-subida' : 'Fecha subida',
+            'btn-subir-nuevo-ducumento' : 'Subir nuevo documento'
         },
         'en': {
             'lang-error': 'Lang not found',
