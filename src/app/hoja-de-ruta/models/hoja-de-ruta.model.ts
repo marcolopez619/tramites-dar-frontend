@@ -2,9 +2,9 @@ export interface HojaDeRutaModel {
   idHojaRutaModel?: number;
   tipoRemitente?: string;
   nombreRemitente?: string;
-  tipoDocumento?: string; 
+  tipoDocumento?: string;
   numeroCite?: string;
-  destinatarios?: Array<string>;  
+  destinatarios?: Array<string>;
   referencia?: string;
   estado?: string;
 

@@ -3,12 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
-import { TipoTramiteModel } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
+import { TipoDocumentoModel } from '../../../shared/models/parametricas.model';
 import { UsuarioModel } from '../../../shared/models/Usuario.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
+import { ParametricaService } from '../../../shared/services/parametrica.service';
 import { UsuarioService } from '../../../shared/services/usuario.service';
 import { UtilService } from '../../../shared/services/util.service';
 import { CitesService } from '../../cites.service';
@@ -31,10 +32,7 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
   fechaCreacionCiteLiteral = `LA PAZ ${this.fechaCreacionCite.getDate()} DE ${this.getFechaFormatoLiteral(this.fechaCreacionCite.getMonth())} DE ${this.fechaCreacionCite.getFullYear()}`;
   // FECHA: LA PAZ {{fechaCreacionCite.getDate()}} de {{getFechaFormatoLiteral(fechaCreacionCite.getMonth())}} de {{fechaCreacionCite.getFullYear()}}
 
-  listaTipoDocumento: Array<TipoTramiteModel> = [
-    { idTipoTramite: 1, descripcionTipoTramite: 'INTERNO' },
-    { idTipoTramite: 2, descripcionTipoTramite: 'EXTERNO' }
-  ];
+  listaTipoDocumento: Array<TipoDocumentoModel> = [];
 
   listaVias: Array<UsuarioModel> = [];
   listaDestinatarios: Array<UsuarioModel> = [];
@@ -53,11 +51,21 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
     private usuarioService: UsuarioService,
     private citesService: CitesService,
     private reporteService: ReporteService,
-    private utilService: UtilService
+    private utilService: UtilService,
+    private parametricaService: ParametricaService
   ) { super(); }
 
   ngOnInit(): void {
 
+    const idUnidadDir = this.contextService.getItemContexto('idUnidadDir');
+    const idUnidadJef = this.contextService.getItemContexto('idUnidadJef');
+    const idUnidadOrg = Number( idUnidadJef && idUnidadJef >= 0 ? idUnidadJef : idUnidadDir );
+
+    this.parametricaService.getTipoDocumentos( idUnidadOrg ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaTipoDocs => {
+      this.listaTipoDocumento = listaTipoDocs.data as Array<TipoDocumentoModel>;
+    });
+
+    // Carga los usuarios del AD
     this.usuarioService.getAllUsuarios().pipe( takeUntil( this.unsubscribe$ )).subscribe( respService => {
       this.listaUsuarios = respService.data;
     });
@@ -143,7 +151,6 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
       Referencia          : this.formCrearCite.controls[ 'referencia' ].value,
       FechaCreacionLiteral: this.fechaCreacionCiteLiteral
     };
-
 
     this.reporteService.getPlanillaCiteTemplate(datoReporte).pipe(takeUntil(this.unsubscribe$)).subscribe( respTemplate => {
       this.utilService.createDocumentFromBlob( respTemplate );

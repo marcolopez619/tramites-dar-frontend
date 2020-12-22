@@ -31,8 +31,8 @@
               <mat-form-field fxFlex>
                 <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-tipo-tramite' )}} : </mat-label>
                 <mat-select formControlName="tipoDocumento">
-                  <mat-option *ngFor="let tipoDocumento of listaTipoDocumento" [value]="tipoDocumento.idTipoTramite">
-                    {{tipoDocumento.descripcionTipoTramite}}
+                  <mat-option *ngFor="let tipoDocumento of listaTipoDocumento" [value]="tipoDocumento.idDocumentoTipo">
+                    {{tipoDocumento.descripcionDoc}}
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="formCrearCite.controls['tipoDocumento'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-tipo-tramite') }}</mat-error>

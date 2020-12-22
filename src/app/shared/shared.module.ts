@@ -53,6 +53,7 @@ import { HojaDeRutaComponent } from './components/hoja-de-ruta/hoja-de-ruta.comp
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 import { UsuarioService } from './services/usuario.service';
 import { DocumentoAdjuntoComponent } from './components/documento-adjunto/documento-adjunto.component';
+import { ParametricaService } from './services/parametrica.service';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -180,7 +181,8 @@ import { DocumentoAdjuntoComponent } from './components/documento-adjunto/docume
     providers: [
       UsuarioService,
       ReporteService,
-      DocumentoAdjuntoService
+      DocumentoAdjuntoService,
+      ParametricaService
     ]
 })
 export class SharedModule { }
