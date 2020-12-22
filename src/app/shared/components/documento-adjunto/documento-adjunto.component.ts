@@ -72,10 +72,12 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
 
       listaTemporalDocumentosUpload.forEach(fileTemporal => {
 
+        const indexInicioExtensionFile = fileTemporal.name.lastIndexOf( '.' );
+
         const documentoAdjuntoToUpload: DocumentoAdjuntoModel = {
           id         : ( Math.random() * 10 ) / 100,
-          tipo       : fileTemporal.name.substring( fileTemporal.name.lastIndexOf( '.' ) + 1 ),
-          nombre     : fileTemporal.name,
+          tipo       : fileTemporal.name.substring( indexInicioExtensionFile + 1 ),
+          nombre     : fileTemporal.name.substring( 0, indexInicioExtensionFile ),
           fechaSubida: new Date(),
           informacion: fileTemporal
         };
@@ -114,6 +116,11 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
         console.log( '----> ', respSave.data );
       });
     });
+  }
+
+  onCancel(): void {
+    this.listaDocumentosToUpload.length = 0;
+    this.dataSource.data = this.listaDocumentosToUpload;
   }
 
   ngOnDestroy(): void {
