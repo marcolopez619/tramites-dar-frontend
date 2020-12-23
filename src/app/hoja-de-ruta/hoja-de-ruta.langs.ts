@@ -49,7 +49,9 @@ export const hojaDeRutaLang = {
     'lbl-nombre-remitente' : 'Nombre remitente',    
     'lbl-destinatarios':'Destinatarios',   
     'lbl-estado' : 'Estado',
-    'lbl-tipo-documento': 'Tipo de documento'
+    'lbl-tipo-documento': 'Tipo de documento',
+    'lbl-hoja-de-ruta-mensaje': 'Mensaje',
+    'val-mensaje-hoja-ruta': 'Debe ingresar el mensaje.'
 
   }
 };

@@ -12,6 +12,7 @@ import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { HojaDeRutaModule } from '../../hoja-de-ruta.module';
 import { HojaDeRutaModel } from '../../models/hoja-de-ruta.model';
+import { ComentarioHojaDeRutaComponent } from '../comentario-hoja-de-ruta/comentario-hoja-de-ruta.component';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -34,6 +35,8 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
 
   displayedColumns = ['tipoRemitente', 'nombreRemitente','tipoDocumento', 'numeroCite', 'destinatarios', 'referencia', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<any>([]);
+  
+  datoComunicarPadre: string;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -103,6 +106,10 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
 
     console.log( 'CREANDO UNA NUEVA HOJA DE RUTA' );
   }
+  realizaComunicacionHijo(event) {
+    this.datoComunicarPadre = event.elemento;
+  }
+
   onEdit(pHojaDeRutaModel: HojaDeRutaModel): void {
     console.log( `EDITANDO ---> ${pHojaDeRutaModel}` );
   }
@@ -114,7 +121,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
   onPrintHojaRuta(pHojaDeRutaModel: HojaDeRutaModel): void {
     console.log( `IMPRIMIENDO ---> ${pHojaDeRutaModel}` );
   }
-
+  /*
   crearHojadeRuta(): void {
     const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
       disableClose: false,
@@ -129,5 +136,21 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
       }
     });
   }
+ */
+
+crearHojadeRuta(): void {
+  const dlgNuevoCite = this.dialog.open( ComentarioHojaDeRutaComponent,  {
+    disableClose: false,
+    width: '1000px',
+    data: {
+    }
+  });
+  dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
+    if (result) {
+      //..
+    }
+  });
+}
+ 
 
 }

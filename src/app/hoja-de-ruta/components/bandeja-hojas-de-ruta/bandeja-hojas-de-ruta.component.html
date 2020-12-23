@@ -73,6 +73,19 @@
         </a>
       </mat-cell>
     </ng-container>
+    <!---------------------->
+    <!--
+    <div class="container-fluid top-space" style="background: #FFECB3">
+      <h2>Elemento padre</h2>
+      <p>
+          {{datoComunicarPadre}}
+      </p>
+
+      <app-hijo-dos (eventoComunicar)="realizaComunicacionHijo($event)"></app-hijo-dos>
+      <br/>
+    </div>
+    -->
+    <!---------------------->
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row shRowHover [ngClass]="{'row-action': idSeleccionado === row.idHojaRutaModel}" [@fadeInAnim]="true" *matRowDef="let row; columns: displayedColumns;"></mat-row>

@@ -1,23 +1,26 @@
 import { Component, Inject, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CCModel, DestinatarioModel, HojaDeRutaModel, RemitenteModel, TipoTramiteModel } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
-import { slideInLeftAnim, zoomInAnim } from '../../animations/template.animation';
-import { BaseComponent } from '../../base.component';
-import { ContextoService } from '../../services/contexto.service';
-import { LangService } from '../../services/lang.service';
+import { ComentarioHojaDeRutaModel } from '../../models/comentario-hoja-de-ruta.model';
+
+
+import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
+import { BaseComponent } from '../../../shared/base.component';
+import { ContextoService } from '../../../shared/services/contexto.service';
+import { LangService } from '../../../shared/services/lang.service';
 
 @Component({
-  selector: 'app-hoja-de-ruta',
-  templateUrl: './hoja-de-ruta.component.html',
-  styleUrls: ['./hoja-de-ruta.component.css'],
-  animations: [zoomInAnim, slideInLeftAnim],
-  host: { class: 'container-fluid', '[@zoomInAnim]': '' }
+  selector: 'comentario-hoja-de-ruta',
+  templateUrl: './comentario-hoja-de-ruta.component.html',  
+  animations: [fadeInAnim, slideInLeftAnim],
+  host: { class: 'container-fluid', '[@fadeInAnim]': 'true' }
 })
-export class HojaDeRutaComponent extends BaseComponent implements OnInit {
+export class ComentarioHojaDeRutaComponent extends BaseComponent implements OnInit {
 
-  formHojaDeRuta: FormGroup;
+  longMaxDescripcion = 500;
+  formComentarioHR :FormGroup;
 
+/*
   listaTipoTramite: Array<TipoTramiteModel> = [
     { idTipoTramite: 1, descripcionTipoTramite: 'INTERNO' },
     { idTipoTramite: 2, descripcionTipoTramite: 'EXTERNO' }
@@ -34,32 +37,26 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
     { idDestinatario: 1, descripcionDestinatario: 'CACHICATARI JUAN GONZALO' },
     { idDestinatario: 2, descripcionDestinatario: 'SALMON HUALLPA OZUNA' }
   ];
-  @Output('registraComponenteHojaDeRuta') 
-  registraComponenteHojaDeRuta: EventEmitter<HojaDeRutaModel> = new EventEmitter<HojaDeRutaModel>();
+  */   
 
   constructor(
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public contextService: ContextoService,
     public langService: LangService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder    
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.formHojaDeRuta = this.formBuilder.group({
-      tipoTramite       : [undefined, Validators.compose([Validators.required])],
-      listaRemitentes   : [undefined, Validators.compose([Validators.required])],
-      listaDestinatarios: [undefined, Validators.compose([Validators.required])],
-      listaCC           : [undefined],
-      numeroCite        : [undefined, Validators.compose([Validators.required])],
-      referencia        : [undefined, Validators.compose([Validators.required])],
-      numeroFojas       : [undefined, Validators.compose([Validators.required])],
-      plazoDias         : [undefined, Validators.compose([Validators.required])],
-      isUrgente         : [false, Validators.compose([Validators.required])],
-      isConCopiaFisica  : [false, Validators.compose([Validators.required])]
-    });
+    const dataForm: ComentarioHojaDeRutaModel = {};   
+      
+
+    this.formComentarioHR = this.formBuilder.group({
+        mensaje: [dataForm.mensaje, [Validators.required, Validators.maxLength(this.longMaxDescripcion)]]       
+      });
+    
   }
 
   onGuardarHojaDeRuta(): void {
@@ -76,12 +73,22 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
     console.log(`plazoDias          : ${this.formHojaDeRuta.controls['plazoDias'].value}`);
     console.log(`isUrgente          : ${this.formHojaDeRuta.controls['isUrgente'].value}`);
     console.log(`isConCopiaFisica   : ${this.formHojaDeRuta.controls['isConCopiaFisica'].value}`);*/
-    this.registraComponenteHojaDeRuta.emit();
+    //this.registraComponenteHojaDeRuta.emit();
   }
   /*
   realizaComunicacionHojaRuta(event) {
     this.datoComunicarPadre = event.elemento;
   }*/
+
+  save(): void {
+    const datosFormulario: ComentarioHojaDeRutaModel = {};
+    // console.log('Formulario> '.concat(JSON.stringify(datosFormulario)));
+    
+  }
+
+    cancelar(): void {
+        this.dialogRef.close(undefined);
+    }
 
   onClose(object?: any): void {
     this.dialogRef.close(object);
