@@ -13,6 +13,7 @@ import { LangService } from '../../../shared/services/lang.service';
 import { HojaDeRutaModule } from '../../hoja-de-ruta.module';
 import { HojaDeRutaModel } from '../../models/hoja-de-ruta.model';
 import { ComentarioHojaDeRutaComponent } from '../comentario-hoja-de-ruta/comentario-hoja-de-ruta.component';
+import { FinalizarTramiteComponent } from '../finalizar-tramite/finalizar-tramite.component';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -139,7 +140,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
  */
 
 crearHojadeRuta(): void {
-  const dlgNuevoCite = this.dialog.open( ComentarioHojaDeRutaComponent,  {
+  const dlgNuevoCite = this.dialog.open( FinalizarTramiteComponent,  {
     disableClose: false,
     width: '1000px',
     data: {

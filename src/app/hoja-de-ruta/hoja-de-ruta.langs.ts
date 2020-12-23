@@ -51,7 +51,10 @@ export const hojaDeRutaLang = {
     'lbl-estado' : 'Estado',
     'lbl-tipo-documento': 'Tipo de documento',
     'lbl-hoja-de-ruta-mensaje': 'Mensaje',
-    'val-mensaje-hoja-ruta': 'Debe ingresar el mensaje.'
+    'val-mensaje-hoja-ruta': 'Debe ingresar el mensaje.',
+    'lbl-hoja-de-ruta-referencia-mensaje': 'Referencia de mensaje',
+    'tit-ventana-finaliza-tramite': 'Finalizar trámite',
+    'tit-ventana-añadir-comentario': 'Añadir comentario'
 
   }
 };
