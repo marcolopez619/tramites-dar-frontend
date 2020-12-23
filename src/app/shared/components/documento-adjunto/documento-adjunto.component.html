@@ -1,0 +1,73 @@
+<mat-card>
+  <mat-card-header class="alt-theme">
+  <mat-toolbar color="primary">
+      <h3>{{ langService.getLang(eModulo.Base, 'tit-documentos-adjuntos') }}</h3>
+      <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-subir-nuevo-ducumento') }}" (click)="file.click()">
+          <mat-icon>cloud_upload</mat-icon>
+      </a>
+      <input #file type="file" id="file" (change)="onUploadDocument($event)" style="display:none;" multiple>
+      <!-- <input #file type="file" id="file" (change)="onUploadDocument($event)" style="display:none;" directory allowdirs webkitdirectory > -->
+  </mat-toolbar>
+  </mat-card-header>
+
+<mat-card-content>
+
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef fxFlex="60" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-nombre-documento') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="60"> {{element.nombre}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="tipo">
+        <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-extension-documento') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10"> {{element.tipo}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="fechaSubida" >
+        <mat-header-cell *matHeaderCellDef fxFlex="20"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-subida') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="20" > {{element.fechaSubida | date : 'dd/MM/yyyy' }} </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef fxFlex="10" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element;" fxFlex="10" fxLayoutAlign="center center">
+          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}"  (click)="onDeleteDocument(element)" >
+            <mat-icon>delete_forever</mat-icon>
+          </a>
+          <!-- <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}"  (click)="onSaveDocument()" >
+            <mat-icon>save</mat-icon>
+          </a> -->
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row shRowHover [ngClass]="{'row-action': idSeleccionado === row.id}" [@fadeInAnim]="true" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </mat-table>
+    <shared-table-empty [datasource]="dataSource"></shared-table-empty>
+    <mat-paginator #paginator [pageSize]="config.paginatorSize" [pageSizeOptions]="config.paginatorOptions" [showFirstLastButtons]="true"></mat-paginator>
+
+    <div fxLayout="row" fxLayoutAlign="space-evenly none" fxFlexFill>
+      <button
+        mat-raised-button
+        color="accent"
+        fxFlex="50"
+        (click)="onSaveDocument()"
+        disabled="{{listaDocumentosToUpload?.length <= 0 }}">
+        {{ langService.getLang(eModulo.Base, 'lbl-guardar') }}
+      </button>
+      <button mat-raised-button
+        fxFlex="50"
+        color="warn"
+        (click)="onCancel()"
+        disabled="{{listaDocumentosToUpload?.length <= 0 }}"
+        >
+        {{ langService.getLang(eModulo.Base,'btn-no') }}
+      </button>
+    </div>
+
+  </mat-card-content>
+</mat-card>

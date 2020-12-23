@@ -61,9 +61,16 @@ export const baseLang = {
             'lbl-guardar' : 'Guardar',
             'lbl-generar-hoja-ruta' : 'Generar hoja de ruta',
             'lbl-imprimir-hoja-ruta' : 'Imprimir hoja de ruta',
+            'msg-habilitar-ventana-popops' : 'POR FABOR HABILITE LA OPCION DE VENTANAS EMERGENTES EN SU NAVEGADOR PARA VER EL DOCUMENTO',
             'lbl-enviar': 'Enviar',
             'tit-ventana-hoja-de-ruta': 'HOJA DE RUTA',
-            'tit-volver': 'Volver'
+            'tit-volver': 'Volver',
+            'lbl-eliminar' : 'Elmimar',
+            'lbl-nombre-documento' : 'Nombre documento',
+            'lbl-extension-documento' : 'Tipo',
+            'lbl-fecha-subida' : 'Fecha subida',
+            'btn-subir-nuevo-ducumento' : 'Subir nuevo documento',
+            'tit-documentos-adjuntos' : 'Documentos adjuntos'
         },
         'en': {
             'lang-error': 'Lang not found',

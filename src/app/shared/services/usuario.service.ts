@@ -1,10 +1,9 @@
-import { takeUntil } from 'rxjs/internal/operators/takeUntil';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ContextoService } from './contexto.service';
 import { Observable } from 'rxjs';
 import { Resultado } from '../models/resultado.model';
 import { UsuarioModel } from '../models/Usuario.model';
+import { ContextoService } from './contexto.service';
 
 @Injectable()
 export class UsuarioService {
@@ -17,7 +16,7 @@ export class UsuarioService {
     private httpClient: HttpClient,
     private contextoService: ContextoService
   ) {
-    this.getAllUsuarios();
+    // this.getAllUsuarios();
    }
 
   getAllUsuarios(): Observable<Resultado> {

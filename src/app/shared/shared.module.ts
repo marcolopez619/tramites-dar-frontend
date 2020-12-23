@@ -1,3 +1,5 @@
+import { DocumentoAdjuntoService } from './services/documento-adjunto.service';
+import { ReporteService } from './services/reporte.service';
 import { NgModule } from '@angular/core';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -50,6 +52,8 @@ import { ToolbarErrorDirective } from './directives/toolbar-error.directive';
 import { HojaDeRutaComponent } from './components/hoja-de-ruta/hoja-de-ruta.component';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 import { UsuarioService } from './services/usuario.service';
+import { DocumentoAdjuntoComponent } from './components/documento-adjunto/documento-adjunto.component';
+import { ParametricaService } from './services/parametrica.service';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -78,7 +82,8 @@ import { UsuarioService } from './services/usuario.service';
         LoaderSpinnerComponent,
         TableEmptyComponent,
         HojaDeRutaComponent,
-        AutocompleteComponent
+        AutocompleteComponent,
+        DocumentoAdjuntoComponent
     ],
     imports: [
         CommonModule,
@@ -167,13 +172,17 @@ import { UsuarioService } from './services/usuario.service';
         LoaderSpinnerComponent,
         TableEmptyComponent,
         HojaDeRutaComponent,
-        AutocompleteComponent
+        AutocompleteComponent,
+        DocumentoAdjuntoComponent
     ],
     entryComponents: [
         ConfirmDialogComponent
     ],
     providers: [
-      UsuarioService
+      UsuarioService,
+      ReporteService,
+      DocumentoAdjuntoService,
+      ParametricaService
     ]
 })
 export class SharedModule { }

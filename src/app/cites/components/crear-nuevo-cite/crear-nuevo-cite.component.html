@@ -15,7 +15,7 @@
 <mat-card-content>
   <!-- <shared-loader-spinner></shared-loader-spinner> -->
 
-  <mat-horizontal-stepper labelPosition="bottom" #stepper>
+  <mat-horizontal-stepper labelPosition="bottom" #stepper >
 
     <!-- Creacion del cite -->
     <mat-step [stepControl]="formCrearCite">
@@ -31,8 +31,8 @@
               <mat-form-field fxFlex>
                 <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-tipo-tramite' )}} : </mat-label>
                 <mat-select formControlName="tipoDocumento">
-                  <mat-option *ngFor="let tipoDocumento of listaTipoDocumento" [value]="tipoDocumento.idTipoTramite">
-                    {{tipoDocumento.descripcionTipoTramite}}
+                  <mat-option *ngFor="let tipoDocumento of listaTipoDocumento" [value]="tipoDocumento.idDocumentoTipo">
+                    {{tipoDocumento.descripcionDoc}}
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="formCrearCite.controls['tipoDocumento'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-tipo-tramite') }}</mat-error>
@@ -106,7 +106,7 @@
           </div>
 
 
-          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="10px" fxFlexFill>
             <mat-form-field fxFlex>
               <input
                 matInput
@@ -120,7 +120,7 @@
           </div>
 
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>
-            <button mat-raised-button color="accent" disabled="{{formCrearCite.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+            <button mat-raised-button color="primary" disabled="{{formCrearCite.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
           </div>
         </div> <!-- Contenedor principal -->
 
@@ -128,39 +128,20 @@
     </mat-step>
 
     <!-- Vista previa del cite-->
-    <mat-step [stepControl]="secondFormGroup" optional>
+    <mat-step [stepControl]="formCrearCite">
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-vista-previa-cite' )}}</ng-template>
 
-      <h1 class="alinear-columna-centro">NOTA INTERNA</h1>
+
+
+
+      <h1 class="alinear-columna-centro">NOTA INTERNAAA</h1>
       <p class="alinear-columna-centro"><strong>CITE</strong>: a<em>qui viene mi citeeeeee </em></p>
 
       <table border="1" cellpadding="1" cellspacing="1" class="tabla-centro">
         <tbody>
+
           <tr>
-            <td class="alinear-columna-derecha">De:</td>
-            <td>
-              <div *ngFor="let remitente of listaRemitentes">
-                {{remitente.nombreCompleto}}
-                <div class="columna-cargo-vista-previa">
-                  {{remitente.cargo}}
-                </div>
-                <br>
-              </div>
-            </td>
-          </tr>
-          <tr *ngIf="listaVias?.length > 0">
-            <td class="alinear-columna-derecha">Via:</td>
-            <td>
-              <div *ngFor="let via of listaVias">
-                {{via.nombreCompleto}}
-                <div class="columna-cargo-vista-previa">
-                  {{via.cargo}}
-                </div>
-                <br>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td class="alinear-columna-derecha">Destinatario:</td>
+            <td class="alinear-columna-derecha"><strong>A :</strong></td>
             <td>
               <div *ngFor="let destinatario of listaDestinatarios">
                 {{destinatario.nombreCompleto}}
@@ -172,38 +153,85 @@
             </td>
           </tr>
 
+          <tr *ngIf="listaVias?.length > 0">
+            <td class="alinear-columna-derecha"><strong>Via :</strong></td>
+            <td>
+              <div *ngFor="let via of listaVias">
+                {{via.nombreCompleto}}
+                <div class="columna-cargo-vista-previa">
+                  {{via.cargo}}
+                </div>
+                <br>
+              </div>
+            </td>
+          </tr>
+
           <tr>
-            <td class="alinear-columna-derecha">Referencia:</td>
+            <td class="alinear-columna-derecha"><strong>De :</strong></td>
+            <td>
+              <div *ngFor="let remitente of listaRemitentes">
+                {{remitente.nombreCompleto}}
+                <div class="columna-cargo-vista-previa">
+                  {{remitente.cargo}}
+                </div>
+                <br>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="alinear-columna-derecha"><strong>REFERENCIA :</strong></td>
             <td>
               {{formCrearCite.controls['referencia'].value}}
+            </td>
+          </tr>
+          <tr>
+            <td class="alinear-columna-derecha"><strong>FECHA :</strong></td>
+            <td>
+              {{fechaCreacionCiteLiteral}}
             </td>
           </tr>
         </tbody>
       </table>
 
-      <p class="alinear-columna-centro">FECHA: LA PAZ {{fechaCreacionCite.getDate()}} de {{getFechaFormatoLiteral(fechaCreacionCite.getMonth())}} de {{fechaCreacionCite.getFullYear()}}</p>
 
 
 
 
 
-
-
-      <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>
-        <button mat-raised-button color="accent" disabled="{{secondFormGroup.invalid || contextService.isLoading}}" matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
-        <button mat-raised-button color="accent" disabled="{{secondFormGroup.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+      <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlexFill>
+        <button mat-raised-button color="primary" disabled="{{formCrearCite.invalid || contextService.isLoading}}" matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
+        <button mat-raised-button color="primary" disabled="{{formCrearCite.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
       </div>
+
 
 
     </mat-step>
 
-    <!-- Creacion de Cites-->
+    <!-- Finalizacion de creación de cite -->
     <mat-step>
-      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-crear-hoja-de-ruta' )}}</ng-template>
-      <p>You are now done.</p>
-      <div>
-        <button mat-button matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-confirmar-creacion-cite' )}}</ng-template>
+
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <div fxLayout="column" fxLayoutAlign="center center" fxFlex="15" >
+            <mat-icon [inline]="true" style="font-size: 50px !important" color="primary">help_outline</mat-icon>
+        </div>
+        <span style="font-size: 20px; text-align: center">{{langService.getLang(eModulo.Cites, 'lbl-confirmacion-finalizar-creacion-cite' )}}</span>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span style="font-size: 15px; text-align: center">{{langService.getLang(eModulo.Cites, 'msg-descarga-cite' )}}</span>
+      </div>
+      <br>
+      <br>
+      <br>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlexFill>
+        <button mat-raised-button color="primary" matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
+        <!-- <button mat-raised-button color="primary" (click)="stepper.reset()">{{langService.getLang(eModulo.Cites, 'lbl-reiniciar-creacion-cite' )}}</button> -->
+        <div fxLayout="row" fxLayoutAlign="center center" fxFlex >
+          <button mat-raised-button color="accent" (click)="onGenerateCiteTemplate()">{{langService.getLang(eModulo.Cites, 'lbl-finalizar-cite-confirmacion' )}}</button>
+        </div>
       </div>
     </mat-step>
   </mat-horizontal-stepper>

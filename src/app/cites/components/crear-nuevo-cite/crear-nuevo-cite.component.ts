@@ -3,13 +3,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
-import { TipoTramiteModel } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
+import { TipoDocumentoModel } from '../../../shared/models/parametricas.model';
 import { UsuarioModel } from '../../../shared/models/Usuario.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
+import { ParametricaService } from '../../../shared/services/parametrica.service';
 import { UsuarioService } from '../../../shared/services/usuario.service';
+import { UtilService } from '../../../shared/services/util.service';
+import { CitesService } from '../../cites.service';
+import { CiteTemplateJsReport } from '../../models/cites.models';
+import { ReporteService } from './../../../shared/services/reporte.service';
 
 @Component({
   selector: 'app-crear-nuevo-cite',
@@ -21,15 +26,13 @@ import { UsuarioService } from '../../../shared/services/usuario.service';
 export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
   formCrearCite: FormGroup;
-  secondFormGroup: FormGroup;
 
   listaUsuarios: Array<UsuarioModel>;
   fechaCreacionCite = new Date();
+  fechaCreacionCiteLiteral = `LA PAZ ${this.fechaCreacionCite.getDate()} DE ${this.getFechaFormatoLiteral(this.fechaCreacionCite.getMonth())} DE ${this.fechaCreacionCite.getFullYear()}`;
+  // FECHA: LA PAZ {{fechaCreacionCite.getDate()}} de {{getFechaFormatoLiteral(fechaCreacionCite.getMonth())}} de {{fechaCreacionCite.getFullYear()}}
 
-  listaTipoDocumento: Array<TipoTramiteModel> = [
-    { idTipoTramite: 1, descripcionTipoTramite: 'INTERNO' },
-    { idTipoTramite: 2, descripcionTipoTramite: 'EXTERNO' }
-  ];
+  listaTipoDocumento: Array<TipoDocumentoModel> = [];
 
   listaVias: Array<UsuarioModel> = [];
   listaDestinatarios: Array<UsuarioModel> = [];
@@ -45,11 +48,24 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
     public contextService: ContextoService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private citesService: CitesService,
+    private reporteService: ReporteService,
+    private utilService: UtilService,
+    private parametricaService: ParametricaService
   ) { super(); }
 
   ngOnInit(): void {
 
+    const idUnidadDir = this.contextService.getItemContexto('idUnidadDir');
+    const idUnidadJef = this.contextService.getItemContexto('idUnidadJef');
+    const idUnidadOrg = Number( idUnidadJef && idUnidadJef >= 0 ? idUnidadJef : idUnidadDir );
+
+    this.parametricaService.getTipoDocumentos( idUnidadOrg ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaTipoDocs => {
+      this.listaTipoDocumento = listaTipoDocs.data as Array<TipoDocumentoModel>;
+    });
+
+    // Carga los usuarios del AD
     this.usuarioService.getAllUsuarios().pipe( takeUntil( this.unsubscribe$ )).subscribe( respService => {
       this.listaUsuarios = respService.data;
     });
@@ -62,9 +78,6 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
       referencia        : [undefined, Validators.compose([Validators.required])]
     });
 
-    this.secondFormGroup = this.formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
   }
 
   getListaSeleccionadaVias($event): void {
@@ -103,12 +116,13 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
     this._isDestinatarioInvalid = $event;
     console.log( ' is Invalid Destinatario : ' + $event );
   }
+
   getEstatusFormRemitente($event): void {
     this._isRemitenteInvalid = $event;
     console.log( ' is Invalid Remitente : ' + $event );
   }
 
-  getFechaFormatoLiteral(indiceMes: number ): string{
+  getFechaFormatoLiteral(indiceMes: number ): string {
     switch (indiceMes) {
       case 0: return 'ENERO';
       case 1: return 'FEBRERO';
@@ -124,6 +138,23 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
       case 11: return 'DICIEMBRE';
       default: return 'MES NO ESPECIFICADO';
     }
+  }
+
+  onGenerateCiteTemplate(): void {
+
+    // TODO:  Consumir el servicio de creacion de cites.
+
+    const datoReporte: CiteTemplateJsReport = {
+      ListaRemitente      : this.listaRemitentes,
+      ListaVias           : this.listaVias,
+      ListaDestinatarios  : this.listaDestinatarios,
+      Referencia          : this.formCrearCite.controls[ 'referencia' ].value,
+      FechaCreacionLiteral: this.fechaCreacionCiteLiteral
+    };
+
+    this.reporteService.getPlanillaCiteTemplate(datoReporte).pipe(takeUntil(this.unsubscribe$)).subscribe( respTemplate => {
+      this.utilService.createDocumentFromBlob( respTemplate );
+    });
   }
 
   onClose(object?: any): void {
