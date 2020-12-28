@@ -1,6 +1,7 @@
 import { BaseComponent } from './../../../shared/base.component';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
+import { OpcionBandeja } from '../../models/bandeja-principal.model';
 
 @Component({
   selector: 'app-opciones-bandeja',
@@ -11,11 +12,42 @@ import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template
 })
 export class OpcionesBandejaComponent extends BaseComponent implements OnInit {
 
-  listaOpcionesBandeja = [
-    'PRINCIPAL',
-    'PENDIENTES',
-    'EN PROCESO',
-    'FINALIZADOS'
+  listaOpcionesBandeja : Array<OpcionBandeja> = [{
+    id : 1,
+    displayName: 'PRINCIPAL',
+    icono: 'home',
+    children: undefined
+   },{
+     id : 2,
+     displayName : 'CITES',
+     icono : 'folder_open',
+     children : [{
+        id : 3,
+        displayName : 'Creadas',
+        icono : 'folder',
+        children: undefined
+      }
+     ]
+   },
+   {
+     id : 4,
+     displayName : 'HOJAS DE RUTA',
+     icono : 'description',
+     children: [
+      {
+        id : 5,
+        displayName : 'Recibidos',
+        icono : 'how_to_reg',
+        children : undefined
+      },
+      {
+        id : 6,
+        displayName : 'Enviados',
+        icono : 'search',
+        children : undefined
+      }
+     ]
+   }
   ];
 
   @Output()

@@ -3,7 +3,7 @@
 <br />
 <br />
 <br />
-<li>
+<!-- <li>
   <br/>
   <button mat-raised-button fxFlexFill class="button-text-align-left">MIS CITES</button>
 </li>
@@ -24,4 +24,42 @@
   >
     {{ item }}
   </button>
-</li>
+</li> -->
+
+<mat-nav-list>
+  <span *ngFor="let item of listaOpcionesBandeja">
+    <span *ngIf="item.children && item.children.length > 0">
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <!-- Cabeceras del submenu -->
+              <div fxLayout="row" fxLayoutAlign="space-between center" >
+                <mat-icon>{{item.icono}}</mat-icon>
+                {{item.displayName}}
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <span *ngFor="let child of item.children">
+            <mat-list-item routerLink="[child.route]">
+              <!-- Entradas de cada submenú  -->
+              <div fxLayout="row" fxLayoutAlign="space-between center" >
+                <mat-icon>{{child.icono}}</mat-icon>
+                {{child.displayName}}
+              </div>
+            </mat-list-item>
+          </span>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </span>
+    <span *ngIf="!item.children || item.children.length === 0">
+      <mat-list-item routerLink="[item.route]">
+        <!-- Entradas principales -->
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <mat-icon>{{item.icono}}</mat-icon>
+          {{item.displayName}}
+        </div>
+      </mat-list-item>
+    </span>
+  </span>
+</mat-nav-list>
