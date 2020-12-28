@@ -14,6 +14,9 @@ export class ParametricaService {
     private contextoService: ContextoService
   ) {}
 
+  getTipoTramite(): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/tipotramite`);
+  }
   getTipoDocumentos(idUnidadOrg: number ): Observable<Resultado> {
     return this.httpClient.get<Resultado>(`${this.baseURL}/tipodocumento/${idUnidadOrg}`);
   }

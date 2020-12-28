@@ -7,3 +7,10 @@ export interface TipoDocumentoModel{
   descripcionDoc?: string;
   abreviacion?: string;
 }
+
+export interface TipoTramiteModel{
+  idTipoTramite?: number;
+  descripcionTramite?: string;
+  codigoRespuesta?: number;
+  mensaje?: string;
+}

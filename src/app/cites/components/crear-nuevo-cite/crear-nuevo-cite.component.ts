@@ -1,11 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select/public-api';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
-import { TipoDocumentoModel } from '../../../shared/models/parametricas.model';
+import { TipoDocumentoModel, TipoTramiteModel } from '../../../shared/models/parametricas.model';
 import { UsuarioModel } from '../../../shared/models/Usuario.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
@@ -33,6 +34,7 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
   // FECHA: LA PAZ {{fechaCreacionCite.getDate()}} de {{getFechaFormatoLiteral(fechaCreacionCite.getMonth())}} de {{fechaCreacionCite.getFullYear()}}
 
   listaTipoDocumento: Array<TipoDocumentoModel> = [];
+  listaTipotramite: Array<TipoTramiteModel> = [];
 
   listaVias: Array<UsuarioModel> = [];
   listaDestinatarios: Array<UsuarioModel> = [];
@@ -65,19 +67,35 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
       this.listaTipoDocumento = listaTipoDocs.data as Array<TipoDocumentoModel>;
     });
 
-    // Carga los usuarios del AD
-    this.usuarioService.getAllUsuarios().pipe( takeUntil( this.unsubscribe$ )).subscribe( respService => {
-      this.listaUsuarios = respService.data;
+    this.parametricaService.getTipoTramite().pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaTipoTramite => {
+      this.listaTipotramite = listaTipoTramite.data as Array<TipoTramiteModel>;
     });
 
+    // Carga los usuarios de la bd
+    const idTipoTramite = 1;
+    this.getAllusuarios(idTipoTramite);
+
+    const idTipoTramiteDefault = 1;
     this.formCrearCite = this.formBuilder.group({
+      tipoTramite       : [ idTipoTramiteDefault, Validators.compose([Validators.required])],
       tipoDocumento     : [undefined, Validators.compose([Validators.required])],
-      // listaVias         : [undefined],
       listaDestinatarios: [undefined, Validators.compose([Validators.required])],
       listaRemitentes   : [undefined, Validators.compose([Validators.required])],
       referencia        : [undefined, Validators.compose([Validators.required])]
     });
 
+  }
+
+  private getAllusuarios( idTipotramite: number ): void{
+
+    // Borra los datos de las listas
+    this.listaDestinatarios.length = 0 ;
+    this.listaVias.length =  0;
+    this.listaRemitentes.length = 0;
+
+    this.usuarioService.getAllUsuarios( idTipotramite ).pipe( takeUntil( this.unsubscribe$ )).subscribe( respService => {
+      this.listaUsuarios = respService.data;
+    });
   }
 
   getListaSeleccionadaVias($event): void {
@@ -140,11 +158,22 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
     }
   }
 
+  onTipoTramiteChange(event: MatSelectChange ): void{
+    this.formCrearCite.controls['tipoTramite'].setValue( event.value );
+    this.formCrearCite.controls['tipoTramite'].markAsTouched();
+    console.log( '----> ' + this.formCrearCite.controls['tipoTramite'].value );
+
+    this.getAllusuarios( event.value );
+
+
+  }
+
   onGenerateCiteTemplate(): void {
 
     // TODO:  Consumir el servicio de creacion de cites.
 
     const datoReporte: CiteTemplateJsReport = {
+      DescripcionTramite  : this.listaTipotramite.filter( x => x.idTipoTramite = this.formCrearCite.controls[ 'tipoTramite' ].value)[ 0 ].descripcionTramite,
       ListaRemitente      : this.listaRemitentes,
       ListaVias           : this.listaVias,
       ListaDestinatarios  : this.listaDestinatarios,

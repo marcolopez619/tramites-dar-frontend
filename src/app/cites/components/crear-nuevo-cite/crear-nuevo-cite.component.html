@@ -29,6 +29,18 @@
 
             <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
               <mat-form-field fxFlex>
+                <mat-label>{{langService.getLang(eModulo.Cites, 'lbl-tipo-tramite' )}} : </mat-label>
+                <mat-select formControlName="tipoTramite" (selectionChange)="onTipoTramiteChange($event)" >
+                  <mat-option *ngFor="let tipoTramite of listaTipotramite" [value]="tipoTramite.idTipoTramite">
+                    {{tipoTramite.descripcionTramite}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formCrearCite.controls['tipoTramite'].invalid">{{ langService.getLang(eModulo.Cites,'lbl-error-tipo-tramite') }}</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
+              <mat-form-field fxFlex>
                 <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-tipo-tramite' )}} : </mat-label>
                 <mat-select formControlName="tipoDocumento">
                   <mat-option *ngFor="let tipoDocumento of listaTipoDocumento" [value]="tipoDocumento.idDocumentoTipo">
@@ -39,24 +51,6 @@
               </mat-form-field>
             </div>
 
-            <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
-              <sh-autocomplete *ngIf="listaUsuarios?.length > 0"
-                [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-via' )"
-                [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-via' )"
-                [isRequired]="false"
-                [listaCompleta]="listaUsuarios"
-                (listaSeleccionadosEmiter)="getListaSeleccionadaVias($event)">
-              </sh-autocomplete>
-              <!-- <mat-form-field fxFlex>
-                  <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-via' )}} :</mat-label>
-                  <mat-select>
-                  <mat-option *ngFor="let via of listaVias" [value]="via.idRemitente">
-                    {{via.descripcionRemitente}}
-                  </mat-option>
-                </mat-select> -->
-                <!-- <mat-error *ngIf="formCrearCite.controls['listaVias'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-via') }}</mat-error> -->
-              <!-- </mat-form-field> -->
-            </div>
 
           </div>
 
@@ -85,6 +79,30 @@
 
             <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
               <sh-autocomplete *ngIf="listaUsuarios?.length > 0"
+                [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-via' )"
+                [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-via' )"
+                [isRequired]="false"
+                [listaCompleta]="listaUsuarios"
+                (listaSeleccionadosEmiter)="getListaSeleccionadaVias($event)">
+              </sh-autocomplete>
+              <!-- <mat-form-field fxFlex>
+                  <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-via' )}} :</mat-label>
+                  <mat-select>
+                  <mat-option *ngFor="let via of listaVias" [value]="via.idRemitente">
+                    {{via.descripcionRemitente}}
+                  </mat-option>
+                </mat-select> -->
+                <!-- <mat-error *ngIf="formCrearCite.controls['listaVias'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-via') }}</mat-error> -->
+              <!-- </mat-form-field> -->
+            </div>
+
+          </div>
+
+
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="10px" fxFlexFill>
+
+            <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
+              <sh-autocomplete *ngIf="listaUsuarios?.length > 0"
                 [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-remitente' )"
                 [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-remitente' )"
                 [isRequired]="true"
@@ -103,10 +121,6 @@
               </mat-form-field> -->
             </div>
 
-          </div>
-
-
-          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="10px" fxFlexFill>
             <mat-form-field fxFlex>
               <input
                 matInput

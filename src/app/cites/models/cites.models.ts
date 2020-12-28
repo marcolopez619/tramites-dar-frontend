@@ -10,6 +10,7 @@ export interface CiteModel {
 }
 
 export interface CiteTemplateJsReport {
+  DescripcionTramite?: string;
   ListaRemitente?: Array<UsuarioModel>;
   ListaVias?: Array<UsuarioModel>;
   ListaDestinatarios?: Array<UsuarioModel>;
