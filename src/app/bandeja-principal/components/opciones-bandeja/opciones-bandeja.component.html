@@ -40,15 +40,16 @@
               </div>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <span *ngFor="let child of item.children">
-            <mat-list-item routerLink="[child.route]">
-              <!-- Entradas de cada submenú  -->
-              <div fxLayout="row" fxLayoutAlign="space-between center" >
-                <mat-icon>{{child.icono}}</mat-icon>
-                {{child.displayName}}
-              </div>
-            </mat-list-item>
-          </span>
+
+          <div *ngFor="let child of item.children">
+              <mat-list-item fxLayout="column" fxLayoutAlign="center center" (click)="onSelectedButton(child)" >
+                <button mat-icon-button >
+                  <mat-icon>{{child.icono}}</mat-icon>
+                  {{child.displayName}}
+                </button>
+              </mat-list-item>
+          </div>
+
         </mat-expansion-panel>
       </mat-accordion>
     </span>

@@ -39,11 +39,25 @@ export class OpcionesBandejaComponent extends BaseComponent implements OnInit {
         displayName : 'Recibidos',
         icono : 'how_to_reg',
         children : undefined
-      },
-      {
+      },{
         id : 6,
         displayName : 'Enviados',
         icono : 'search',
+        children : undefined
+      },{
+        id : 7,
+        displayName : 'Pendientes',
+        icono : 'waves',
+        children : undefined
+      },{
+        id : 8,
+        displayName : 'En Proceso',
+        icono : 'edit',
+        children : undefined
+      },{
+        id : 9,
+        displayName : 'Finalizados',
+        icono : 'ballot',
         children : undefined
       }
      ]
@@ -60,7 +74,7 @@ export class OpcionesBandejaComponent extends BaseComponent implements OnInit {
   }
 
   onSelectedButton(pParam: any): void {
-    this.onOpcionClick.next( pParam );
+    this.onOpcionClick.next( pParam.displayName );
     // console.log( 'Opcione seleccionada : ' + pParam );
   }
 }
