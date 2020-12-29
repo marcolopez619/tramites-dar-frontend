@@ -7,7 +7,7 @@
  -->
   <mat-card-content>
     <span [ngSwitch]="valorCapturado">
-    <p *ngSwitchCase="'PRINCIPAL'">
+    <p *ngSwitchCase="'Creadas'">
 
       <!-- <mat-tab-group mat-align-tabs="center" dynamicHeight mat-stretch-tabs> -->
       <mat-tab-group mat-align-tabs="start" dynamicHeight >
@@ -34,10 +34,19 @@
       </mat-tab-group>
 
     </p>
-    <p *ngSwitchCase="'PENDIENTES'">
+    <p *ngSwitchCase="'Recibidos'">
 
     </p>
-    <p *ngSwitchCase="'EN PROCESO'">
+    <p *ngSwitchCase="'Enviados'">
+
+    </p>
+    <p *ngSwitchCase="'Pendientes'">
+
+    </p>
+    <p *ngSwitchCase="'En Proceso'">
+    </p>
+
+    <p *ngSwitchCase="'Finalizados'">
 
     </p>
     <p *ngSwitchDefault>

@@ -12,6 +12,7 @@ export const hojaDeRutaLang = {
     'lbl-tipo-tramite' : 'Tipo trámite',
     'lbl-error-tipo-tramite' : 'El tipo de trámite es necesario',
 
+
     'lbl-remitente' : 'Remitente(s)',
     'lbl-error-remitente' : 'El remitente es inválido',
 
@@ -46,8 +47,8 @@ export const hojaDeRutaLang = {
     'lbl-error-doc-adjuntos' : 'Este campo es obligatorio',
 
     'lbl-tipo-remitente' : 'Tipo remitente',
-    'lbl-nombre-remitente' : 'Nombre remitente',    
-    'lbl-destinatarios':'Destinatarios',   
+    'lbl-nombre-remitente' : 'Nombre remitente',
+    'lbl-destinatarios':'Destinatarios',
     'lbl-estado' : 'Estado',
     'lbl-tipo-documento': 'Tipo de documento',
     'lbl-hoja-de-ruta-mensaje': 'Mensaje',

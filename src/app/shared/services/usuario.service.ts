@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Resultado } from '../models/resultado.model';
@@ -19,14 +19,9 @@ export class UsuarioService {
     // this.getAllUsuarios();
    }
 
-  getAllUsuarios(): Observable<Resultado> {
+  getAllUsuarios(pIdtipoTramite: number): Observable<Resultado> {
+    const params = new HttpParams().set( 'idTipoTramite' , pIdtipoTramite.toString() );
 
-    // FIXME: ESTO NO DEBE SER QUEMADO.
-    const params = {
-      'Usuario' : 'direccion.tecnologia',
-      'Password': 'Segip2020'
-    };
-
-    return this.httpClient.get<Resultado>(`${this.baseURL}/usuario`, { params : params });
+    return this.httpClient.get<Resultado>(`${this.baseURL}/usuario`, { params: params});
   }
 }
