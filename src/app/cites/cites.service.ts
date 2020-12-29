@@ -1,20 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Resultado } from '../shared/models/resultado.model';
 import { ContextoService } from '../shared/services/contexto.service';
-import { CiteTemplateJsReport } from './models/cites.models';
+import { CiteModel } from './models/cites.models';
 
 @Injectable()
 export class CitesService {
 
-  readonly baseURL = this.contextoService.getConfig(`backendApi`);
+  readonly baseURL = this.contextoService.getConfig(`backendApi`).concat('/cite');
 
   constructor(
     private httpClient: HttpClient,
     private contextoService: ContextoService
   ) {}
 
- /*  getPlanillaCiteTemplate(pDatosReporte: CiteTemplateJsReport): Observable<any> {
-    return this.httpClient.post(`${this.baseURL}/reporte/cite`, pDatosReporte, { responseType : 'blob'} );
-  } */
+  insertCite( pCite: CiteModel): Observable<Resultado> {
+    return this.httpClient.post<Resultado>(`${this.baseURL}`, pCite );
+  }
 }

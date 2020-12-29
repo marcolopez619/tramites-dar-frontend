@@ -1,15 +1,26 @@
 import { UsuarioModel } from '../../shared/models/Usuario.model';
 export interface CiteModel {
-  idCiteModel?: number;
-  tipoDocumento?: string;
-  numeroCite?: string;
-  vias?: Array<string>;
-  destinatarios?: Array<string>;
+  IidPersonaGd?: number;
+  IidDocumentoEmite?: number;
+  IidPersonaGdSol?: number;
+  Ireferencia?: string;
+  IDestPara?: string;
+  IDestVia?: string;
+  IDestCopia?: string;
+  IUsuarioBitacora?: string;
+}
+
+export interface ResultCiteInst {
+  codigoRespuesta?: number;
+  mensaje?: string;
+  idDocumentoSolicitado?: number;
+  cite?: string;
   referencia?: string;
-  fechaCreacion?: Date;
+  gestion?: number;
 }
 
 export interface CiteTemplateJsReport {
+  Cite?: string;
   DescripcionTramite?: string;
   ListaRemitente?: Array<UsuarioModel>;
   ListaVias?: Array<UsuarioModel>;

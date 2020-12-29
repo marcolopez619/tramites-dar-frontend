@@ -42,7 +42,7 @@
             <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
               <mat-form-field fxFlex>
                 <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-tipo-tramite' )}} : </mat-label>
-                <mat-select formControlName="tipoDocumento">
+                <mat-select formControlName="tipoDocumento" (selectionChange)="onTipoDocumentoChange($event)">
                   <mat-option *ngFor="let tipoDocumento of listaTipoDocumento" [value]="tipoDocumento.idDocumentoTipo">
                     {{tipoDocumento.descripcionDoc}}
                   </mat-option>
@@ -148,8 +148,8 @@
 
 
 
-      <h1 class="alinear-columna-centro">NOTA INTERNAAA</h1>
-      <p class="alinear-columna-centro"><strong>CITE</strong>: a<em>qui viene mi citeeeeee </em></p>
+      <h1 class="alinear-columna-centro">{{descripcionTipoDocumento}}</h1>
+      <p class="alinear-columna-centro"><strong>CITE</strong>: <em>aqui viene mi citeeeeee </em></p>
 
       <table border="1" cellpadding="1" cellspacing="1" class="tabla-centro">
         <tbody>

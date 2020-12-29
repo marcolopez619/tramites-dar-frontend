@@ -14,8 +14,8 @@ import { ParametricaService } from '../../../shared/services/parametrica.service
 import { UsuarioService } from '../../../shared/services/usuario.service';
 import { UtilService } from '../../../shared/services/util.service';
 import { CitesService } from '../../cites.service';
-import { CiteTemplateJsReport } from '../../models/cites.models';
 import { ReporteService } from './../../../shared/services/reporte.service';
+import { CiteModel, CiteTemplateJsReport, ResultCiteInst } from '../../models/cites.models';
 
 @Component({
   selector: 'app-crear-nuevo-cite',
@@ -28,7 +28,7 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
   formCrearCite: FormGroup;
 
-  listaUsuarios: Array<UsuarioModel>;
+  listaUsuarios: Array<UsuarioModel> = [];
   fechaCreacionCite = new Date();
   fechaCreacionCiteLiteral = `LA PAZ ${this.fechaCreacionCite.getDate()} DE ${this.getFechaFormatoLiteral(this.fechaCreacionCite.getMonth())} DE ${this.fechaCreacionCite.getFullYear()}`;
   // FECHA: LA PAZ {{fechaCreacionCite.getDate()}} de {{getFechaFormatoLiteral(fechaCreacionCite.getMonth())}} de {{fechaCreacionCite.getFullYear()}}
@@ -39,6 +39,11 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
   listaVias: Array<UsuarioModel> = [];
   listaDestinatarios: Array<UsuarioModel> = [];
   listaRemitentes: Array<UsuarioModel> = [];
+
+  descripcionTramite: string;
+  descripcionTipoDocumento: string;
+
+  resultCiteInst: ResultCiteInst;
 
   private _isDestinatarioInvalid: boolean;
   private _isRemitenteInvalid: boolean;
@@ -59,6 +64,7 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
 
+    const idTipoTramiteDefault = 1;
     const idUnidadDir = this.contextService.getItemContexto('idUnidadDir');
     const idUnidadJef = this.contextService.getItemContexto('idUnidadJef');
     const idUnidadOrg = Number( idUnidadJef && idUnidadJef >= 0 ? idUnidadJef : idUnidadDir );
@@ -69,13 +75,13 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
     this.parametricaService.getTipoTramite().pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaTipoTramite => {
       this.listaTipotramite = listaTipoTramite.data as Array<TipoTramiteModel>;
+      this.descripcionTramite = this.listaTipotramite.filter( x => x.idTipoTramite === idTipoTramiteDefault )[ 0 ].descripcionTramite;
     });
 
     // Carga los usuarios de la bd
     const idTipoTramite = 1;
     this.getAllusuarios(idTipoTramite);
 
-    const idTipoTramiteDefault = 1;
     this.formCrearCite = this.formBuilder.group({
       tipoTramite       : [ idTipoTramiteDefault, Validators.compose([Validators.required])],
       tipoDocumento     : [undefined, Validators.compose([Validators.required])],
@@ -86,12 +92,10 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
   }
 
-  private getAllusuarios( idTipotramite: number ): void{
+  private getAllusuarios( idTipotramite: number ): void {
 
     // Borra los datos de las listas
-    this.listaDestinatarios.length = 0 ;
-    this.listaVias.length =  0;
-    this.listaRemitentes.length = 0;
+    this.listaDestinatarios.length = this.listaVias.length = this.listaRemitentes.length = this.listaUsuarios.length = 0;
 
     this.usuarioService.getAllUsuarios( idTipotramite ).pipe( takeUntil( this.unsubscribe$ )).subscribe( respService => {
       this.listaUsuarios = respService.data;
@@ -158,32 +162,60 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
     }
   }
 
-  onTipoTramiteChange(event: MatSelectChange ): void{
+  onTipoTramiteChange(event: MatSelectChange ): void {
     this.formCrearCite.controls['tipoTramite'].setValue( event.value );
     this.formCrearCite.controls['tipoTramite'].markAsTouched();
     console.log( '----> ' + this.formCrearCite.controls['tipoTramite'].value );
 
+    this.descripcionTramite = this.listaTipotramite.filter( x => x.idTipoTramite === event.value )[ 0 ].descripcionTramite;
+
     this.getAllusuarios( event.value );
 
+  }
 
+  onTipoDocumentoChange(event: MatSelectChange ): void {
+    this.formCrearCite.controls['tipoDocumento'].setValue( event.value );
+    this.formCrearCite.controls['tipoDocumento'].markAsTouched();
+    console.log( ' tipo documento : ----> ' + this.formCrearCite.controls['tipoDocumento'].value );
+    this.descripcionTipoDocumento = this.listaTipoDocumento.filter( x => x.idDocumentoTipo === event.value )[ 0 ].descripcionDoc;
   }
 
   onGenerateCiteTemplate(): void {
 
-    // TODO:  Consumir el servicio de creacion de cites.
-
-    const datoReporte: CiteTemplateJsReport = {
-      DescripcionTramite  : this.listaTipotramite.filter( x => x.idTipoTramite = this.formCrearCite.controls[ 'tipoTramite' ].value)[ 0 ].descripcionTramite,
-      ListaRemitente      : this.listaRemitentes,
-      ListaVias           : this.listaVias,
-      ListaDestinatarios  : this.listaDestinatarios,
-      Referencia          : this.formCrearCite.controls[ 'referencia' ].value,
-      FechaCreacionLiteral: this.fechaCreacionCiteLiteral
+    const informacionCite: CiteModel = {
+      IidPersonaGd     : this.contextService.getItemContexto(`idPersonaGd`),
+      IidDocumentoEmite: 1,
+      IidPersonaGdSol  : this.contextService.getItemContexto(`idPersonaGd`),
+      Ireferencia      : 'alguna huevada',
+      IDestPara        : JSON.stringify(this.listaDestinatarios),
+      IDestVia         : JSON.stringify(this.listaVias),
+      IDestCopia       : JSON.stringify(this.listaRemitentes),
+      IUsuarioBitacora : this.contextService.getItemContexto(`samActName`)
     };
 
-    this.reporteService.getPlanillaCiteTemplate(datoReporte).pipe(takeUntil(this.unsubscribe$)).subscribe( respTemplate => {
-      this.utilService.createDocumentFromBlob( respTemplate );
+    // Consumir el servicio de creacion de cites //
+    this.citesService.insertCite( informacionCite ).pipe(takeUntil(this.unsubscribe$)).subscribe( resp => {
+      this.resultCiteInst = resp.data as ResultCiteInst;
+      console.log( '---> ', this.resultCiteInst );
+
+      // Crea los datos para la generacion de la cabecera en formato word
+      const datoReporte: CiteTemplateJsReport = {
+        Cite                : this.resultCiteInst.cite,
+        DescripcionTramite  : this.descripcionTramite,
+        ListaRemitente      : this.listaRemitentes,
+        ListaVias           : this.listaVias,
+        ListaDestinatarios  : this.listaDestinatarios,
+        Referencia          : this.formCrearCite.controls[ 'referencia' ].value,
+        FechaCreacionLiteral: this.fechaCreacionCiteLiteral
+      };
+
+      // Genera el reporte en formato word
+      this.reporteService.getPlanillaCiteTemplate(datoReporte).pipe(takeUntil(this.unsubscribe$)).subscribe( respTemplate => {
+        this.utilService.createDocumentFromBlob( respTemplate );
+      });
+
     });
+
   }
 
   onClose(object?: any): void {
