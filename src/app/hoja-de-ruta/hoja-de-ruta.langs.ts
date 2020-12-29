@@ -53,6 +53,10 @@ export const hojaDeRutaLang = {
     'lbl-hoja-de-ruta-mensaje': 'Mensaje',
     'val-mensaje-hoja-ruta': 'Debe ingresar el mensaje.',
     'lbl-hoja-de-ruta-referencia-mensaje': 'Referencia de mensaje',
+    'lbl-seguimiento-detalle-remitente': 'Remitente(s) : ',
+    'lbl-seguimiento-detalle-estado': 'Estado de la HR',
+    'lbl-seguimiento-detalle-fecha':'Fecha',
+
     'tit-ventana-finaliza-tramite': 'Finalizar trámite',
     'tit-ventana-añadir-comentario': 'Añadir comentario'
 

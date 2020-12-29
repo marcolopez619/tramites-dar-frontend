@@ -15,7 +15,7 @@ import { LangService } from '../../../shared/services/lang.service';
   animations: [fadeInAnim, slideInLeftAnim],
   host: { class: 'container-fluid', '[@fadeInAnim]': 'true' }
 })
-export class ComentarioHojaDeRutaComponent extends BaseComponent implements OnInit {
+export class ComentarioComponent extends BaseComponent implements OnInit {
 
   longMaxDescripcion = 500;
   formComentarioHR: FormGroup;
@@ -39,18 +39,15 @@ export class ComentarioHojaDeRutaComponent extends BaseComponent implements OnIn
 
   }
   save(): void {
-        
+
     const datosFormulario: ComentarioModel = {
-      idDerivacion : 1,
-      comentario:this.formComentarioHR.value.comentario
+      idDerivacion: 1,
+      comentario: this.formComentarioHR.value.comentario
     };
     //datosFormulario.idDerivacion = 1;
     this.comentarioService.insertComentario(datosFormulario).pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
-      if (result) {
-        //..
-      }
+      
     });
-    
   }
 
   cancelar(): void {

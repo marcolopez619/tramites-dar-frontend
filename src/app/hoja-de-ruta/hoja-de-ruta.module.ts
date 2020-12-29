@@ -4,13 +4,13 @@ import { CommonModule } from '@angular/common';
 import { BandejaHojasDeRutaComponent } from './components/bandeja-hojas-de-ruta/bandeja-hojas-de-ruta.component';
 import { hojasDeRutaRoutes } from './hoja-de-ruta.routing';
 import { RouterModule } from '@angular/router';
-import { ComentarioHojaDeRutaComponent } from './components/comentario-hoja-de-ruta/comentario-hoja-de-ruta.component';
+import { ComentarioComponent } from './components/comentario-hoja-de-ruta/comentario-hoja-de-ruta.component';
 import { FinalizarTramiteComponent } from './components/finalizar-tramite/finalizar-tramite.component';
 
 @NgModule({
   declarations: [
     BandejaHojasDeRutaComponent,
-    ComentarioHojaDeRutaComponent,
+    ComentarioComponent,
     FinalizarTramiteComponent
   ],
   imports: [
