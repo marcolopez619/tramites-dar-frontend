@@ -54,6 +54,7 @@ import { AutocompleteComponent } from './components/autocomplete/autocomplete.co
 import { UsuarioService } from './services/usuario.service';
 import { DocumentoAdjuntoComponent } from './components/documento-adjunto/documento-adjunto.component';
 import { ParametricaService } from './services/parametrica.service';
+import { ComentarioService } from './services/comentario.service';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -182,7 +183,8 @@ import { ParametricaService } from './services/parametrica.service';
       UsuarioService,
       ReporteService,
       DocumentoAdjuntoService,
-      ParametricaService
+      ParametricaService,
+      ComentarioService
     ]
 })
 export class SharedModule { }

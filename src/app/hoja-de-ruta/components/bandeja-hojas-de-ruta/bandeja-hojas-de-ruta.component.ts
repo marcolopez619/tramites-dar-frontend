@@ -140,7 +140,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
  */
 
 crearHojadeRuta(): void {
-  const dlgNuevoCite = this.dialog.open( FinalizarTramiteComponent,  {
+  const dlgNuevoCite = this.dialog.open( ComentarioHojaDeRutaComponent,  {
     disableClose: false,
     width: '1000px',
     data: {

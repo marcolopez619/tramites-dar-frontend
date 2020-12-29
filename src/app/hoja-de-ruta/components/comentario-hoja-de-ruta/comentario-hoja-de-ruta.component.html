@@ -5,22 +5,18 @@
         <button mat-button mat-dialog-close matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}">
             <mat-icon>close</mat-icon>
         </button>
-
     </mat-toolbar>
 </div>
 
-<mat-dialog-content>
-    
+<mat-dialog-content>    
     <form [formGroup]="formComentarioHR">        
         <mat-form-field fxFlexFill>
             <textarea shUppercase matInput placeholder="{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-hoja-de-ruta-mensaje') }}"
-                formControlName="mensaje"></textarea>
-            <mat-error *ngIf="formComentarioHR.controls['mensaje'].errors?.required">{{langService.getLang(eModulo.HojaDeRuta,'val-mensaje-hoja-ruta')}}</mat-error>
+                formControlName="comentario"></textarea>
+            <mat-error *ngIf="formComentarioHR.controls['comentario'].errors?.required">{{langService.getLang(eModulo.HojaDeRuta,'val-mensaje-hoja-ruta')}}</mat-error>
         </mat-form-field>        
-    </form>
-    
+    </form>    
 </mat-dialog-content>
-
 
 <mat-dialog-actions fxLayout="row" fxLayoutGap="20px">
     <button fxFlex mat-raised-button color="accent" (click)="save()" [disabled]="!formComentarioHR.valid || formComentarioHR.pristine || contextService.isLoading">Guardar

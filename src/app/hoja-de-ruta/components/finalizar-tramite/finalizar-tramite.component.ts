@@ -45,6 +45,5 @@ export class FinalizarTramiteComponent extends BaseComponent implements OnInit {
 
     cancelar(): void {
         this.dialogRef.close(undefined);
-    }   
-
+    }
 }
