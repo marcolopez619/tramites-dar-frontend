@@ -1,4 +1,4 @@
 export interface ComentarioModel {
-    idDerivacion?: number;
-    comentario?: string;
+    //idDerivacion?: number;
+    //comentario?: string;
   }

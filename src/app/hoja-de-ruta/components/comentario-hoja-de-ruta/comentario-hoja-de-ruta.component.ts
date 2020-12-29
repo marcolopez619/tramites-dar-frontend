@@ -34,7 +34,7 @@ export class ComentarioComponent extends BaseComponent implements OnInit {
 
     const dataForm: ComentarioModel = {};
     this.formComentarioHR = this.formBuilder.group({
-      comentario: [dataForm.comentario, [Validators.required, Validators.maxLength(this.longMaxDescripcion)]]
+      //comentario: [dataForm.comentario, [Validators.required, Validators.maxLength(this.longMaxDescripcion)]]
     });
 
   }

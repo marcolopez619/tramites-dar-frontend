@@ -46,8 +46,8 @@ export const hojaDeRutaLang = {
     'lbl-error-doc-adjuntos' : 'Este campo es obligatorio',
 
     'lbl-tipo-remitente' : 'Tipo remitente',
-    'lbl-nombre-remitente' : 'Nombre remitente',    
-    'lbl-destinatarios':'Destinatarios',   
+    'lbl-nombre-remitente' : 'Nombre remitente',
+    'lbl-destinatarios':'Destinatarios',
     'lbl-estado' : 'Estado',
     'lbl-tipo-documento': 'Tipo de documento',
     'lbl-hoja-de-ruta-mensaje': 'Mensaje',
@@ -56,6 +56,10 @@ export const hojaDeRutaLang = {
     'lbl-seguimiento-detalle-remitente': 'Remitente(s) : ',
     'lbl-seguimiento-detalle-estado': 'Estado de la HR',
     'lbl-seguimiento-detalle-fecha':'Fecha',
+    'lbl-seguimiento-detalle-proveido': 'Proveido',
+    'lbl-seguimiento-hoja-ruta': 'Hoja de ruta : ',
+    'lbl-seguimiento-solicitud-listas-operativas': 'Solicitud de listas operativos',
+    'lbl-participante': 'Participante',
 
     'tit-ventana-finaliza-tramite': 'Finalizar trámite',
     'tit-ventana-añadir-comentario': 'Añadir comentario'
