@@ -1,4 +1,4 @@
-export interface TipoDocumentoModel{
+export interface TipoDocumentoModel {
   idUnidadOrg?: number;
   nombre?: string;
   sigla?: string;
@@ -6,4 +6,11 @@ export interface TipoDocumentoModel{
   idDocumentoTipo?: number;
   descripcionDoc?: string;
   abreviacion?: string;
+}
+
+export interface TipoTramiteModel {
+  idTipoTramite?: number;
+  descripcionTramite?: string;
+  codigoRespuesta?: number;
+  mensaje?: string;
 }

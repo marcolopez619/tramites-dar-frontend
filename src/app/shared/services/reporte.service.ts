@@ -8,7 +8,7 @@ import { ContextoService } from './contexto.service';
 @Injectable()
 export class ReporteService {
 
-  readonly baseURL = this.contextoService.getConfig(`backendApi`);
+  readonly baseURL = this.contextoService.getConfig(`backendApi`).concat('/reporte');
 
   constructor(
     private httpClient: HttpClient,
@@ -16,6 +16,6 @@ export class ReporteService {
   ) { }
 
   getPlanillaCiteTemplate(pDatosReporte: CiteTemplateJsReport): Observable<Blob> {
-    return this.httpClient.post(`${this.baseURL}/reporte/cite`, pDatosReporte, { responseType : 'blob'} );
+    return this.httpClient.post(`${this.baseURL}/cite`, pDatosReporte, { responseType : 'blob'} );
   }
 }

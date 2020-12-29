@@ -1,5 +1,9 @@
 export const citesLang = {
   'es' : {
+    'lbl-tipo-tramite' : 'Tipo destinatario',
+    'lbl-error-tipo-tramite' : 'El tipo de destinatario es necesario',
+
+    'lbl-tipo-destinatario' : 'Tipo documento',
     'lbl-tipo-documento' : 'Tipo documento',
     'lbl-nro-cite' : 'Numero cite',
     'lbl-destinatarios' : 'Destinatarios',

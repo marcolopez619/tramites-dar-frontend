@@ -12,6 +12,7 @@ export const hojaDeRutaLang = {
     'lbl-tipo-tramite' : 'Tipo trámite',
     'lbl-error-tipo-tramite' : 'El tipo de trámite es necesario',
 
+
     'lbl-remitente' : 'Remitente(s)',
     'lbl-error-remitente' : 'El remitente es inválido',
 
