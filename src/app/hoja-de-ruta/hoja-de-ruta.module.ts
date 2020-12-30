@@ -6,12 +6,14 @@ import { hojasDeRutaRoutes } from './hoja-de-ruta.routing';
 import { RouterModule } from '@angular/router';
 import { ComentarioComponent } from './components/comentario-hoja-de-ruta/comentario-hoja-de-ruta.component';
 import { FinalizarTramiteComponent } from './components/finalizar-tramite/finalizar-tramite.component';
+import { AdjuntarDocumentoComponent } from './components/adjuntar-documento/adjuntar-documento.component';
 
 @NgModule({
   declarations: [
     BandejaHojasDeRutaComponent,
     ComentarioComponent,
-    FinalizarTramiteComponent
+    FinalizarTramiteComponent,
+    AdjuntarDocumentoComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +21,8 @@ import { FinalizarTramiteComponent } from './components/finalizar-tramite/finali
     SharedModule
   ],
   exports : [
-    BandejaHojasDeRutaComponent
+    BandejaHojasDeRutaComponent,
+    AdjuntarDocumentoComponent
   ]
 })
 export class HojaDeRutaModule { }

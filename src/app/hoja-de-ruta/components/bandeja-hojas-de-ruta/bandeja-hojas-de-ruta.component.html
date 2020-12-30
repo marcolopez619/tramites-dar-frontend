@@ -2,22 +2,22 @@
 
 <mat-card>
   <mat-card-header class="alt-theme">
-  <mat-toolbar color="primary"> 
+  <mat-toolbar color="primary">
       <!-- <h3>{{ langService.getLang(eModulo.HojaDeRuta, 'tit-adm-hoja-de-ruta') }}</h3> -->
-      
+
       <a mat-button routerLink="/menu/index" matTooltip="{{ langService.getLang(eModulo.Base, 'tit-volver') }}">
         <mat-icon>keyboard_backspace</mat-icon>
       </a>
       <h3>{{ langService.getLang(eModulo.Base, 'tit-ventana-hoja-de-ruta') }}</h3>
       <span class="flex-spacer"></span>
-      <a mat-button matTooltip="{{ langService.getLang(eModulo.HojaDeRuta, 'btn-crear-nueva-hoja-ruta') }}" (click)="crearHojadeRuta()">
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.HojaDeRuta, 'btn-crear-nueva-hoja-ruta') }}" (click)="adjuntarDocumento()">
           <mat-icon>add_circle</mat-icon>
-      </a> 
+      </a>
       <span class="flex-spacer"></span>
       <a mat-button routerLink="/menu" matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}">
           <mat-icon>close</mat-icon>
       </a>
-      
+
   </mat-toolbar>
 </mat-card-header>
 
@@ -32,7 +32,7 @@
     <ng-container matColumnDef="nombreRemitente">
       <mat-header-cell *matHeaderCellDef fxFlex="15" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-nombre-remitente') }} </mat-header-cell>
       <mat-cell *matCellDef="let element" fxFlex="15"> {{element.nombreRemitente}} </mat-cell>
-    </ng-container>    
+    </ng-container>
 
     <ng-container matColumnDef="tipoDocumento">
       <mat-header-cell *matHeaderCellDef fxFlex="8" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-tipo-documento') }} </mat-header-cell>
@@ -42,7 +42,7 @@
     <ng-container matColumnDef="numeroCite">
       <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-numero-cite') }} </mat-header-cell>
       <mat-cell *matCellDef="let element" fxFlex="10"> {{element.numeroCite}} </mat-cell>
-    </ng-container>    
+    </ng-container>
 
     <ng-container matColumnDef="destinatarios" >
       <mat-header-cell *matHeaderCellDef fxFlex="20"  mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatarios') }} </mat-header-cell>
@@ -90,7 +90,7 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row shRowHover [ngClass]="{'row-action': idSeleccionado === row.idHojaRutaModel}" [@fadeInAnim]="true" *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
-  </mat-table>  
+  </mat-table>
       <!--
     <mat-tab-group dynamicHeight >
       <mat-tab label="{{langService.getLang(eModulo.HojaDeRuta, 'lbl-recibidos' )}}">

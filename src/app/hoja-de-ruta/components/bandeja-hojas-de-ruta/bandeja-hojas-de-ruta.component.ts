@@ -14,6 +14,7 @@ import { HojaDeRutaModule } from '../../hoja-de-ruta.module';
 import { HojaDeRutaModel } from '../../models/hoja-de-ruta.model';
 import { ComentarioComponent } from '../comentario-hoja-de-ruta/comentario-hoja-de-ruta.component';
 import { FinalizarTramiteComponent } from '../finalizar-tramite/finalizar-tramite.component';
+import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-documento.component';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -27,16 +28,16 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
   //////*
   tipoRemitente?: number;
   nombreRemitente?: string;
-  tipoDocumento?: string; 
+  tipoDocumento?: string;
   numeroCite?: string;
-  destinatarios?: Array<string>;  
+  destinatarios?: Array<string>;
   referencia?: string;
-  estado?: string;  
+  estado?: string;
   //*
 
   displayedColumns = ['tipoRemitente', 'nombreRemitente','tipoDocumento', 'numeroCite', 'destinatarios', 'referencia', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<any>([]);
-  
+
   datoComunicarPadre: string;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -62,7 +63,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
         numeroCite : 'SEGIP/DES/2334_2021',
         destinatarios : listaVias,
         referencia : 'REFERENCIA DE PRUEBA 1',
-        estado: 'PENDIENTE'        
+        estado: 'PENDIENTE'
       },
       {
         idHojaRutaModel: 2,
@@ -72,7 +73,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
         numeroCite : 'SEGIP/DES/2777_2021',
         destinatarios : listaVias2,
         referencia : 'REFERENCIA DE PRUEBA 2',
-        estado: 'EN PROCESO'         
+        estado: 'EN PROCESO'
       }
     ];
 
@@ -152,6 +153,19 @@ crearHojadeRuta(): void {
     }
   });
 }
- 
+adjuntarDocumento(): void {
+  const dlgNuevoCite = this.dialog.open( AdjuntarDocumentoComponent,  {
+    disableClose: false,
+    width: '1000px',
+    data: {
+    }
+  });
+  dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
+    if (result) {
+      //..
+    }
+  });
+}
+
 
 }
