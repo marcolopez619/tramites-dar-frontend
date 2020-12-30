@@ -3,8 +3,9 @@ export const citesLang = {
     'lbl-tipo-tramite' : 'Tipo destinatario',
     'lbl-error-tipo-tramite' : 'El tipo de destinatario es necesario',
 
-    'lbl-tipo-destinatario' : 'Tipo documento',
     'lbl-tipo-documento' : 'Tipo documento',
+    'lbl-error-tipo-documento' : 'El tipo de documento es obligatorio',
+
     'lbl-nro-cite' : 'Numero cite',
     'lbl-destinatarios' : 'Destinatarios',
     'lbl-referencia' : 'Referencia',
@@ -23,7 +24,7 @@ export const citesLang = {
     'lbl-finalizar-cite' : 'Finalizar',
     'lbl-confirmacion-finalizar-creacion-cite' : '¿SEGURO DE FINALIZAR LA CREACION DE CITE?',
     'msg-descarga-cite' : '* Se descargará el cite creado en formato word',
-    'lbl-finalizar-cite-confirmacion' : 'SI, DESEO FINALIZAR',
+    'lbl-finalizar-cite-confirmacion' : 'SI, DESEO FINALIZAR'
 
   }
 };

@@ -21,7 +21,7 @@ export interface ResultCiteInst {
 
 export interface CiteTemplateJsReport {
   Cite?: string;
-  DescripcionTramite?: string;
+  DescripcionTipoDocumento?: string;
   ListaRemitente?: Array<UsuarioModel>;
   ListaVias?: Array<UsuarioModel>;
   ListaDestinatarios?: Array<UsuarioModel>;
