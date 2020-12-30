@@ -15,9 +15,14 @@
 
         <mat-table #table [dataSource]="dataSource" matSort>
 
+          <ng-container matColumnDef="tipoTramite">
+            <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-tipo-destinatario-cite') }} </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="10"> {{element.tipoTramite}} </mat-cell>
+          </ng-container>
+
           <ng-container matColumnDef="tipoDocumento">
-            <mat-header-cell *matHeaderCellDef fxFlex="15" mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-tipo-documento') }} </mat-header-cell>
-            <mat-cell *matCellDef="let element" fxFlex="15"> {{element.tipoDocumento}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-tipo-documento') }} </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="10"> {{element.tipoDocumento}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="numeroCite" >
@@ -25,19 +30,28 @@
             <mat-cell *matCellDef="let element" fxFlex="15" > {{element.numeroCite}} </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="destinatarios" >
+          <ng-container matColumnDef="destinatario" >
             <mat-header-cell *matHeaderCellDef fxFlex="35"  mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-destinatarios') }} </mat-header-cell>
-            <mat-cell *matCellDef="let element" fxFlex="35" > {{element.destinatarios}} </mat-cell>
+            <mat-cell *matCellDef="let element" fxFlex="35" >
+              <span *ngFor="let item of element.destinatario">
+                {{ item.destinatario}},
+              </span>
+            </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="referencia" >
             <mat-header-cell *matHeaderCellDef fxFlex="35"  mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-referencia') }} </mat-header-cell>
-            <mat-cell *matCellDef="let element" fxFlex="35" > {{element.referencia}} </mat-cell>
+            <mat-cell *matCellDef="let element" fxFlex="35" > &nbsp;&nbsp;{{element.referencia}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="fechaCreacion" >
-            <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-fecha-creacion') }} </mat-header-cell>
-            <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaCreacion | date : 'dd/MM/yyyy' }} </mat-cell>
+            <mat-header-cell *matHeaderCellDef fxFlex="5"  mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-fecha-creacion') }} </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="5" > {{element.fechaCreacion | date : 'dd/MM/yyyy' }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="estado" >
+            <mat-header-cell *matHeaderCellDef fxFlex="5"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="5" > {{element.estado}} </mat-cell>
           </ng-container>
 
 
@@ -58,10 +72,11 @@
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row shRowHover [ngClass]="{'row-action': idSeleccionado === row.idCiteModel}" [@fadeInAnim]="true" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          <mat-row shRowHover [ngClass]="{'row-action': idSeleccionado === row.idCite}" [@fadeInAnim]="true" *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
         </mat-table>
         <shared-table-empty [datasource]="dataSource"></shared-table-empty>
+    <mat-paginator #paginator [pageSize]="config.paginatorSize" [pageSizeOptions]="config.paginatorOptions" [showFirstLastButtons]="true"></mat-paginator>
 
       </mat-card-content>
     </mat-card>

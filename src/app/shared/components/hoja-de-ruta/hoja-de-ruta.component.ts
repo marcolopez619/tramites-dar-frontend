@@ -1,7 +1,7 @@
-import { Component, Inject, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CCModel, DestinatarioModel, HojaDeRutaModel, RemitenteModel, TipoTramiteModel } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
+import { CCModel, HojaDeRutaModel, RemitenteModel, TipoTramiteModel } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
 import { slideInLeftAnim, zoomInAnim } from '../../animations/template.animation';
 import { BaseComponent } from '../../base.component';
 import { ContextoService } from '../../services/contexto.service';
@@ -30,11 +30,8 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
     { idRemitente: 1, descripcionRemitente: 'ZORRINNO CATARI ALBERTO' },
     { idRemitente: 2, descripcionRemitente: 'ZUNAGUA SARDINA LEILA' }
   ];
-  listaDestinatarios: Array<DestinatarioModel> = [
-    { idDestinatario: 1, descripcionDestinatario: 'CACHICATARI JUAN GONZALO' },
-    { idDestinatario: 2, descripcionDestinatario: 'SALMON HUALLPA OZUNA' }
-  ];
-  @Output('registraComponenteHojaDeRuta') 
+  listaDestinatarios: Array<unknown> = [];
+  @Output('registraComponenteHojaDeRuta')
   registraComponenteHojaDeRuta: EventEmitter<HojaDeRutaModel> = new EventEmitter<HojaDeRutaModel>();
 
   constructor(

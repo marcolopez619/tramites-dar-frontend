@@ -22,3 +22,8 @@ export interface UsuarioModel {
   codigoRespuesta?: number;
   mensaje?: string;
 }
+
+export interface DestinatarioModel {
+  idDestinatario?: number;
+  destinatario?: string;
+}

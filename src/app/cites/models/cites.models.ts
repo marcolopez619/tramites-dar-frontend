@@ -1,4 +1,4 @@
-import { UsuarioModel } from '../../shared/models/Usuario.model';
+import { UsuarioModel, DestinatarioModel } from '../../shared/models/Usuario.model';
 export interface CiteModel {
   IidPersonaGd?: number;
   IidDocumentoEmite?: number;
@@ -8,6 +8,17 @@ export interface CiteModel {
   IDestVia?: string;
   IDestCopia?: string;
   IUsuarioBitacora?: string;
+}
+
+export interface CiteModelByUsuario{
+  idCite?: number;
+  tipoTramite?: string;
+  tipoDocumento?: string;
+  numeroCite?: string;
+  destinatario?: Array<DestinatarioModel>;
+  referencia?: string;
+  fechaCreacion?: Date;
+  estado?: string;
 }
 
 export interface ResultCiteInst {

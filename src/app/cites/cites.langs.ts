@@ -3,6 +3,7 @@ export const citesLang = {
     'lbl-tipo-tramite' : 'Tipo destinatario',
     'lbl-error-tipo-tramite' : 'El tipo de destinatario es necesario',
 
+    'lbl-tipo-destinatario-cite' : 'Tipo destinatario',
     'lbl-tipo-documento' : 'Tipo documento',
     'lbl-error-tipo-documento' : 'El tipo de documento es obligatorio',
 

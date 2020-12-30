@@ -18,4 +18,8 @@ export class CitesService {
   insertCite( pCite: CiteModel): Observable<Resultado> {
     return this.httpClient.post<Resultado>(`${this.baseURL}`, pCite );
   }
+
+  getAllCitesFromPersona(idPersonaGd: number): Observable<Resultado> {
+    return this.httpClient.get<Resultado>( `${this.baseURL}/persona/${idPersonaGd}`);
+  }
 }
