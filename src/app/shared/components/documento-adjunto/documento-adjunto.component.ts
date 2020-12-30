@@ -1,6 +1,6 @@
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { DocumentoAdjuntoService } from './../../services/documento-adjunto.service';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -33,11 +33,23 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
     private documentoAdjuntoService: DocumentoAdjuntoService
   ) {
     super();
+
+    // Monitorea si se desea guardar los documentos adjuntos
+    this.documentoAdjuntoService.getFlagToSaveDocument().pipe( takeUntil(this.unsubscribe$)).subscribe( flagToSaveDocument => {
+      console.log( `SHARED DOCUMENTO ADJUNTO --> ${flagToSaveDocument}`);
+
+      if (flagToSaveDocument) {
+        console.log( `Subiendo Cantidad : ${this.listaDocumentosToUpload.length} archivos al servidor` );
+        // Sube los documentos al servidor de archivos.
+        // this.onSaveDocument();
+      }
+
+    });
   }
 
   ngOnInit(): void {
     // ...
-    this.listaDocumentosToUpload = [{
+   /*  this.listaDocumentosToUpload = [{
       id : 1,
       tipo : 'pdf',
       nombre : 'primer archivo',
@@ -50,7 +62,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
       nombre : 'Segundo archivo',
       fechaSubida : new Date(),
       informacion : undefined
-    }];
+    }]; */
 
     this.listaDocumentosToUpload = [];
 
