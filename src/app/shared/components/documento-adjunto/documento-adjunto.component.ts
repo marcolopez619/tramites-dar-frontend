@@ -1,6 +1,6 @@
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { DocumentoAdjuntoService } from './../../services/documento-adjunto.service';
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -27,9 +27,14 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
+  @Input()
+  isRequired = false;
+
+  @Output()
+  isValid = new  EventEmitter();
+
   constructor(
     public langService: LangService,
-    private formBuilder: FormBuilder,
     private documentoAdjuntoService: DocumentoAdjuntoService
   ) {
     super();
@@ -76,6 +81,18 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
     }
   }
 
+  private verifyisValid(): void {
+
+    const isListaVacia = this.listaDocumentosToUpload.length === 0;
+    let isValid = false;
+
+    if ( isListaVacia === false && this.isRequired) {
+      isValid = true;
+    }
+
+    return this.isValid.next( isValid );
+  }
+
   onUploadDocument($event): void {
 
     if ($event.target.files.length > 0 ) {
@@ -104,6 +121,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
 
     }
 
+    this.verifyisValid();
   }
 
   onDeleteDocument(pDocumento: DocumentoAdjuntoModel): void {
@@ -115,6 +133,8 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
     } else {
       alert('no se encontro el documento');
     }
+
+    this.verifyisValid();
   }
 
   onSaveDocument(): void {
@@ -133,6 +153,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
   onCancel(): void {
     this.listaDocumentosToUpload.length = 0;
     this.dataSource.data = this.listaDocumentosToUpload;
+    this.verifyisValid();
   }
 
   ngOnDestroy(): void {
