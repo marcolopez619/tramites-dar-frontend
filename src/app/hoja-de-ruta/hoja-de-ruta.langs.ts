@@ -61,9 +61,12 @@ export const hojaDeRutaLang = {
     'lbl-seguimiento-hoja-ruta': 'Hoja de ruta : ',
     'lbl-seguimiento-solicitud-listas-operativas': 'Solicitud de listas operativos',
     'lbl-participante': 'Participante',
+    'lbl-derivar': 'Derivar',
+    'lbl-buscar-cite': 'Buscar cite',
 
     'tit-ventana-finaliza-tramite': 'Finalizar trámite',
-    'tit-ventana-añadir-comentario': 'Añadir comentario'
+    'tit-ventana-añadir-comentario': 'Añadir comentario',
+    'tit-derivar-hoja-ruta': 'Derivar hoja de ruta'
 
   }
 };

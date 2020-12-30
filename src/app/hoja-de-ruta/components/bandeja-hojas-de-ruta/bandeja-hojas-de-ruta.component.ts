@@ -11,8 +11,10 @@ import { HojaDeRutaComponent } from '../../../shared/components/hoja-de-ruta/hoj
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { HojaDeRutaModule } from '../../hoja-de-ruta.module';
+import { DerivarModel } from '../../models/derivar.model';
 import { HojaDeRutaModel } from '../../models/hoja-de-ruta.model';
 import { ComentarioComponent } from '../comentario-hoja-de-ruta/comentario-hoja-de-ruta.component';
+import { DerivarComponent } from '../derivar/derivar.component';
 import { DetalleSeguimientoComponent } from '../detalle-seguimiento/detalle-seguimiento.component';
 import { FinalizarTramiteComponent } from '../finalizar-tramite/finalizar-tramite.component';
 import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
@@ -55,7 +57,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
     const listaVias: Array<string> = [ 'SARDINA GUMUCIO FLORIPONDIO', 'CONDORI MALPARTIDA TIRADO' ];
     const listaVias2: Array<string> = [ 'ZARZURI TIRADO ELBA', 'ARCE CATARI GONZALES' ];
 
-    const listaCites: Array<HojaDeRutaModel> = [
+    const listaHojaRuta: Array<HojaDeRutaModel> = [
       {
         idHojaRutaModel: 1,
         tipoRemitente: 'Externo',
@@ -78,7 +80,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
       }
     ];
 
-    this.dataSource.data = listaCites;
+    this.dataSource.data = listaHojaRuta;
   }
 
   ngAfterViewInit(): void {
@@ -114,6 +116,22 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
     this.datoComunicarPadre = event.elemento;
   }
 
+
+  onCompartir(pDerivarModel: DerivarModel): void {
+    const dlgNuevoCite = this.dialog.open( DerivarComponent,  {
+      disableClose: false,
+      width: '1000px',
+      data: {
+
+      }
+    });
+    dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
+      if (result) {
+        //..
+      }
+    });
+  }
+
   onEdit(pHojaDeRutaModel: HojaDeRutaModel): void {
     console.log( `EDITANDO ---> ${pHojaDeRutaModel}` );
   }
@@ -144,7 +162,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
 
 crearHojadeRuta(): void {
   //const dlgNuevoCite = this.dialog.open( ComentarioComponent,  {
-    const dlgNuevoCite = this.dialog.open( SeguimientoComponent,  {
+    const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
     disableClose: false,
     width: '1000px',
     data: {

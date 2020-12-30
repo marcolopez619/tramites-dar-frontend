@@ -1,6 +1,6 @@
 <div class="alt-theme">
-    <mat-toolbar color="primary">                
-        <h3>{{ langService.getLang(eModulo.HojaDeRuta, 'tit-ventana-añadir-comentario') }}</h3>             
+    <mat-toolbar color="primary">
+        <h3>{{ langService.getLang(eModulo.HojaDeRuta, 'tit-ventana-añadir-comentario') }}</h3>
         <span class="flex-spacer"></span>
         <button mat-button mat-dialog-close matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}">
             <mat-icon>close</mat-icon>
@@ -8,19 +8,19 @@
     </mat-toolbar>
 </div>
 
-<mat-dialog-content>    
-    <form [formGroup]="formComentarioHR">        
+<mat-dialog-content>
+    <form [formGroup]="formComentarioHR">
         <mat-form-field fxFlexFill>
             <textarea shUppercase matInput placeholder="{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-hoja-de-ruta-mensaje') }}"
                 formControlName="comentario"></textarea>
             <mat-error *ngIf="formComentarioHR.controls['comentario'].errors?.required">{{langService.getLang(eModulo.HojaDeRuta,'val-mensaje-hoja-ruta')}}</mat-error>
-        </mat-form-field>        
-    </form>    
+        </mat-form-field>
+    </form>
 </mat-dialog-content>
 
 <mat-dialog-actions fxLayout="row" fxLayoutGap="20px">
-    <button fxFlex mat-raised-button color="accent" (click)="save()" [disabled]="!formComentarioHR.valid || formComentarioHR.pristine || contextService.isLoading">Guardar
+    <button fxFlex mat-raised-button color="accent" (click)="save()" [disabled]="!formComentarioHR.valid || formComentarioHR.pristine || contextService.isLoading">{{langService.getLang(eModulo.Base, 'lbl-guardar')}}
     </button>
-    <button fxFlex mat-raised-button color="warn" (click)="cancelar()">Cancelar
+    <button fxFlex mat-raised-button color="warn" (click)="cancelar()">{{langService.getLang(eModulo.Base, 'btnCancel')}}
     </button>
 </mat-dialog-actions>

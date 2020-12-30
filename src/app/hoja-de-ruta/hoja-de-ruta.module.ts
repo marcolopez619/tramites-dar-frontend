@@ -8,6 +8,7 @@ import { ComentarioComponent } from './components/comentario-hoja-de-ruta/coment
 import { FinalizarTramiteComponent } from './components/finalizar-tramite/finalizar-tramite.component';
 import { DetalleSeguimientoComponent } from './components/detalle-seguimiento/detalle-seguimiento.component';
 import { SeguimientoComponent } from './components/seguimiento/seguimiento.component';
+import { DerivarComponent } from './components/derivar/derivar.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { SeguimientoComponent } from './components/seguimiento/seguimiento.compo
     ComentarioComponent,
     FinalizarTramiteComponent,
     DetalleSeguimientoComponent,
-    SeguimientoComponent
+    SeguimientoComponent,
+    DerivarComponent
   ],
   imports: [
     CommonModule,

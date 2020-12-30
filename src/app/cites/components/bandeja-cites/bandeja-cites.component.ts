@@ -39,22 +39,7 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
     const listaVias2: Array<string> = [ 'ZARZURI TIRADO ELBA', 'ARCE CATARI GONZALES' ];
 
     const listaCites: Array<CiteModel> = [
-      {
-        idCiteModel: 1,
-        tipoDocumento : 'MEMORANDUM',
-        numeroCite : 'SEGIP/DES/2334_2021',
-        destinatarios : listaVias,
-        referencia : 'ALGUNA REFERENCIA DE M....',
-        fechaCreacion : new Date()
-      },
-      {
-        idCiteModel: 2,
-        tipoDocumento : 'INFORME',
-        numeroCite : 'SEGIP/DES/77774_2021',
-        destinatarios : listaVias2,
-        referencia : 'Otra referencia....',
-        fechaCreacion : new Date(2000, 0, 15)
-      }
+
     ];
 
     this.dataSource.data = listaCites;
