@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Inject, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
@@ -12,33 +12,56 @@ import { DetalleSeguimientoModel } from '../../models/detalle-seguimiento.model'
 
 @Component({
   selector: 'detalle-seguimiento',
-  templateUrl: './detalle-seguimiento.html',
+  templateUrl: './detalle-seguimiento.component.html',
   animations: [fadeInAnim, slideInLeftAnim],
   host: { class: 'container-fluid', '[@fadeInAnim]': 'true' }
 })
 export class DetalleSeguimientoComponent extends BaseComponent implements OnInit {
 
+  @Input()
+  detalleSeguimiento: DetalleSeguimientoModel;
+
   longMaxDescripcion = 500;
-  formComentarioHR: FormGroup;
+  formSeguimientoDetalle: FormGroup;
   constructor(
-    public dialogRef: MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public langService: LangService,
-    private formBuilder: FormBuilder,    
+       public langService: LangService,
+    private formBuilder: FormBuilder,
   ) {
     super();
   }
 
   ngOnInit(): void {
+    /*
+    const dataForm: DetalleSeguimientoModel = {
+    };
+    */
 
-    const dataForm: DetalleSeguimientoModel = {};
-    this.formComentarioHR = this.formBuilder.group({    
+
+
+    this.formSeguimientoDetalle = this.formBuilder.group({
+
+      remitente : this.detalleSeguimiento.remitente,
+      estadoInicio: this.detalleSeguimiento.estadoInicio,
+      estadoFin: this.detalleSeguimiento.estadoFin,
+      fechaInicio: this.detalleSeguimiento.fechaInicio,
+      fechaFin: this.detalleSeguimiento.fechaFin,
+      proveido: this.detalleSeguimiento.proveido
+      /*remitente: 'Pepe perez, Juan Garcia, Maria del Carmen',
+      estadoInicio: 'Creado',
+      estadoFin: 'Enviado',
+      fechaInicio: new Date,
+      fechaFin: new Date,
+      proveido: 'Favor remitir las listas solicitadas'
+      */
     });
 
   }
+  administrarParticipante(object?: any): void {
+    //this.dialogRef.close(object);
+  }
 
-  
+
   onClose(object?: any): void {
-    this.dialogRef.close(object);
+    //this.dialogRef.close(object);
   }
 }

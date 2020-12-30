@@ -1,37 +1,55 @@
+<mat-card-content>
 
-<mat-dialog-content>    
-    <form [formGroup]="formSeguimientoDetalle"> 
-        <div fxLayout="row" fxLayoutGap="30px">
-            <mat-form-field shDisabled appearance="outline" fxFlex>
-                <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-remitente')}}</mat-label>
-                <input matInput formControlName="remitente" />
-            </mat-form-field>            
-        </div>
+  <form [formGroup]="formSeguimientoDetalle" fxFlex>
 
-        <div fxLayout="row" fxLayoutGap="30px">
-            <mat-form-field shDisabled appearance="outline" fxFlex>
-                <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-estado')}}</mat-label>
-                <input matInput formControlName="estadoInicio" />
-            </mat-form-field>            
-            <mat-form-field shDisabled appearance="outline" fxFlex>
-                <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-fecha')}}</mat-label>
-                <input matInput formControlName="fechaInicio" />
-            </mat-form-field>  
-        </div>
+    <div fxLayout="row" fxLayoutGap="30px">
+      <mat-icon>person</mat-icon>
+      <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-participante') }}"
+        (click)="administrarParticipante()">
+        <mat-icon>person_add</mat-icon>
+      </a>
+    </div>
 
-        <div fxLayout="row" fxLayoutGap="30px">
-            <mat-form-field shDisabled appearance="outline" fxFlex>
-                <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-estado')}}</mat-label>
-                <input matInput formControlName="estadoFin" />
-            </mat-form-field>            
-            <mat-form-field shDisabled appearance="outline" fxFlex>
-                <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-fecha')}}</mat-label>
-                <input matInput formControlName="fechaFin" />
-            </mat-form-field>  
-        </div>
+    <div fxLayout="row" fxLayoutGap="30px">
+      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-remitente')}}</mat-label>
+      <mat-form-field fxFlex>
+        <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.remitente" />
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="30px">
+      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-estado')}}</mat-label>
+      <!--<mat-form-field shDisabled appearance="outline" fxFlex>-->
+      <mat-form-field fxFlex>
+        <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.estadoInicio" />
+      </mat-form-field>
+      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-fecha')}}</mat-label>
+      <mat-form-field fxFlex>
+        <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.fechaInicio" />
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="30px">
+      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-estado')}}</mat-label>
+      <mat-form-field fxFlex>
+        <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.estadoFin" />
+      </mat-form-field>
+      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-fecha')}}</mat-label>
+      <mat-form-field fxFlex>
+        <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.fechaFin" />
+      </mat-form-field>
+    </div>
+
+    <!--<sh-documento-adjunto></sh-documento-adjunto>-->
+
+    <div fxLayout="row" fxLayoutGap="30px">
+      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-proveido')}}</mat-label>
+      <mat-form-field fxFlex>
+        <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.proveido" />
+      </mat-form-field>
+    </div>
 
 
-    </form>    
-</mat-dialog-content>
+  </form>
 
-
+</mat-card-content>

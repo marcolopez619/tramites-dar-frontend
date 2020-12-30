@@ -1,0 +1,34 @@
+<div class="alt-theme">
+  <mat-toolbar shToolbarModal color="primary">
+    <h3>{{data.titulo}}</h3>
+    <span class="flex-spacer"></span>
+
+    <button mat-button mat-dialog-close matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}">
+      <mat-icon>close</mat-icon>
+    </button>
+
+  </mat-toolbar>
+</div>
+<mat-dialog-content>
+  <fieldset>
+    <legend>Seguimiento del proceso</legend>
+    <form [formGroup]="formSeguimiento">
+
+      <div fxLayout="row" fxLayoutGap="30px">
+        <h3>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-hoja-ruta')}}</h3>
+        <mat-form-field>
+          <input  readonly="readonly" matInput formControlName="NroHojaRuta" />
+        </mat-form-field>
+        <h3>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-solicitud-listas-operativas')}}
+        </h3>
+      </div>
+
+      <div *ngFor="let detalleSeguimientoItem of listaDetalleSeguimiento; let indice=index">
+        <fieldset fxLayout="row" fxFlex="100">
+          <legend>{{indice+1}}</legend>
+          <detalle-seguimiento [detalleSeguimiento]="detalleSeguimientoItem"></detalle-seguimiento>
+        </fieldset>
+      </div>
+    </form>
+  </fieldset>
+</mat-dialog-content>

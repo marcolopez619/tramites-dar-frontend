@@ -11,9 +11,13 @@ import { HojaDeRutaComponent } from '../../../shared/components/hoja-de-ruta/hoj
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { HojaDeRutaModule } from '../../hoja-de-ruta.module';
+import { DerivarModel } from '../../models/derivar.model';
 import { HojaDeRutaModel } from '../../models/hoja-de-ruta.model';
 import { ComentarioComponent } from '../comentario-hoja-de-ruta/comentario-hoja-de-ruta.component';
+import { DerivarComponent } from '../derivar/derivar.component';
+import { DetalleSeguimientoComponent } from '../detalle-seguimiento/detalle-seguimiento.component';
 import { FinalizarTramiteComponent } from '../finalizar-tramite/finalizar-tramite.component';
+import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -27,16 +31,16 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
   //////*
   tipoRemitente?: number;
   nombreRemitente?: string;
-  tipoDocumento?: string; 
+  tipoDocumento?: string;
   numeroCite?: string;
-  destinatarios?: Array<string>;  
+  destinatarios?: Array<string>;
   referencia?: string;
-  estado?: string;  
+  estado?: string;
   //*
 
   displayedColumns = ['tipoRemitente', 'nombreRemitente','tipoDocumento', 'numeroCite', 'destinatarios', 'referencia', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<any>([]);
-  
+
   datoComunicarPadre: string;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -53,7 +57,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
     const listaVias: Array<string> = [ 'SARDINA GUMUCIO FLORIPONDIO', 'CONDORI MALPARTIDA TIRADO' ];
     const listaVias2: Array<string> = [ 'ZARZURI TIRADO ELBA', 'ARCE CATARI GONZALES' ];
 
-    const listaCites: Array<HojaDeRutaModel> = [
+    const listaHojaRuta: Array<HojaDeRutaModel> = [
       {
         idHojaRutaModel: 1,
         tipoRemitente: 'Externo',
@@ -62,7 +66,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
         numeroCite : 'SEGIP/DES/2334_2021',
         destinatarios : listaVias,
         referencia : 'REFERENCIA DE PRUEBA 1',
-        estado: 'PENDIENTE'        
+        estado: 'PENDIENTE'
       },
       {
         idHojaRutaModel: 2,
@@ -72,11 +76,11 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
         numeroCite : 'SEGIP/DES/2777_2021',
         destinatarios : listaVias2,
         referencia : 'REFERENCIA DE PRUEBA 2',
-        estado: 'EN PROCESO'         
+        estado: 'EN PROCESO'
       }
     ];
 
-    this.dataSource.data = listaCites;
+    this.dataSource.data = listaHojaRuta;
   }
 
   ngAfterViewInit(): void {
@@ -91,8 +95,9 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
   }
 
   onCrearNuevaHojaDeRuta(): void {
-
-    const dlgNuevaHojaRuta = this.dialog.open( HojaDeRutaComponent,  {
+//DetalleSeguimientoComponent
+    //const dlgNuevaHojaRuta = this.dialog.open( HojaDeRutaComponent,  {
+    const dlgNuevaHojaRuta = this.dialog.open( DetalleSeguimientoComponent,  {
       disableClose: true,
       width: '1000px',
       data: {
@@ -109,6 +114,22 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
   }
   realizaComunicacionHijo(event) {
     this.datoComunicarPadre = event.elemento;
+  }
+
+
+  onCompartir(pDerivarModel: DerivarModel): void {
+    const dlgNuevoCite = this.dialog.open( DerivarComponent,  {
+      disableClose: false,
+      width: '1000px',
+      data: {
+
+      }
+    });
+    dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
+      if (result) {
+        //..
+      }
+    });
   }
 
   onEdit(pHojaDeRutaModel: HojaDeRutaModel): void {
@@ -140,7 +161,8 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
  */
 
 crearHojadeRuta(): void {
-  const dlgNuevoCite = this.dialog.open( ComentarioComponent,  {
+  //const dlgNuevoCite = this.dialog.open( ComentarioComponent,  {
+    const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
     disableClose: false,
     width: '1000px',
     data: {
@@ -152,6 +174,6 @@ crearHojadeRuta(): void {
     }
   });
 }
- 
+
 
 }
