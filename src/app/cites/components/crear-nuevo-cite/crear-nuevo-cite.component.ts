@@ -184,9 +184,9 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
     const informacionCite: CiteModel = {
       IidPersonaGd     : this.contextService.getItemContexto(`idPersonaGd`),
-      IidDocumentoEmite: 1,
+      IidDocumentoEmite: this.formCrearCite.controls[ 'tipoDocumento' ].value,
       IidPersonaGdSol  : this.contextService.getItemContexto(`idPersonaGd`),
-      Ireferencia      : 'alguna huevada',
+      Ireferencia      : this.formCrearCite.controls[ 'referencia' ].value,
       IDestPara        : JSON.stringify(this.listaDestinatarios),
       IDestVia         : JSON.stringify(this.listaVias),
       IDestCopia       : JSON.stringify(this.listaRemitentes),
