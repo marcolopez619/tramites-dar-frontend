@@ -31,7 +31,7 @@ export interface CCModel {
   idCC?: number;
   descripcionCC?: string;
 }
-export interface DestinatarioModel {
+/* export interface DestinatarioModel {
   idDestinatario?: number;
   descripcionDestinatario?: string;
-}
+} */

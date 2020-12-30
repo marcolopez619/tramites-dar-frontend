@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ContextoService } from './contexto.service';
 import { Resultado } from '../models/resultado.model';
 import { DocumentoAdjuntoModel } from '../models/documento-adjunto.model';
@@ -9,10 +9,20 @@ import { DocumentoAdjuntoModel } from '../models/documento-adjunto.model';
 export class DocumentoAdjuntoService {
   readonly baseURL = this.contextoService.getConfig('backendApi').concat( '/documentoadjunto' );
 
+  saveDocumentoAdjuntos = new Subject();
+
   constructor(
     private httpClient: HttpClient,
     private contextoService: ContextoService
   ) { }
+
+  sendFlagToSaveDocument( startSaveDocuments: boolean): void {
+    this.saveDocumentoAdjuntos.next( startSaveDocuments );
+  }
+
+  getFlagToSaveDocument(): Observable<unknown> {
+    return  this.saveDocumentoAdjuntos.asObservable();
+  }
 
   uploadDocumentToServer(pDocumento: DocumentoAdjuntoModel): Observable<Resultado> {
 

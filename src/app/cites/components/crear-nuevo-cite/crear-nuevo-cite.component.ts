@@ -40,7 +40,7 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
   listaDestinatarios: Array<UsuarioModel> = [];
   listaRemitentes: Array<UsuarioModel> = [];
 
-  descripcionTramite: string;
+  // descripcionTramite: string;
   descripcionTipoDocumento: string;
 
   resultCiteInst: ResultCiteInst;
@@ -75,7 +75,7 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
     this.parametricaService.getTipoTramite().pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaTipoTramite => {
       this.listaTipotramite = listaTipoTramite.data as Array<TipoTramiteModel>;
-      this.descripcionTramite = this.listaTipotramite.filter( x => x.idTipoTramite === idTipoTramiteDefault )[ 0 ].descripcionTramite;
+      // this.descripcionTramite = this.listaTipotramite.filter( x => x.idTipoTramite === idTipoTramiteDefault )[ 0 ].descripcionTramite;
     });
 
     // Carga los usuarios de la bd
@@ -167,7 +167,7 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
     this.formCrearCite.controls['tipoTramite'].markAsTouched();
     console.log( '----> ' + this.formCrearCite.controls['tipoTramite'].value );
 
-    this.descripcionTramite = this.listaTipotramite.filter( x => x.idTipoTramite === event.value )[ 0 ].descripcionTramite;
+    // this.descripcionTramite = this.listaTipotramite.filter( x => x.idTipoTramite === event.value )[ 0 ].descripcionTramite;
 
     this.getAllusuarios( event.value );
 
@@ -184,9 +184,9 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
     const informacionCite: CiteModel = {
       IidPersonaGd     : this.contextService.getItemContexto(`idPersonaGd`),
-      IidDocumentoEmite: 1,
+      IidDocumentoEmite: this.formCrearCite.controls[ 'tipoDocumento' ].value,
       IidPersonaGdSol  : this.contextService.getItemContexto(`idPersonaGd`),
-      Ireferencia      : 'alguna huevada',
+      Ireferencia      : this.formCrearCite.controls[ 'referencia' ].value,
       IDestPara        : JSON.stringify(this.listaDestinatarios),
       IDestVia         : JSON.stringify(this.listaVias),
       IDestCopia       : JSON.stringify(this.listaRemitentes),
@@ -200,13 +200,13 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
       // Crea los datos para la generacion de la cabecera en formato word
       const datoReporte: CiteTemplateJsReport = {
-        Cite                : this.resultCiteInst.cite,
-        DescripcionTramite  : this.descripcionTramite,
-        ListaRemitente      : this.listaRemitentes,
-        ListaVias           : this.listaVias,
-        ListaDestinatarios  : this.listaDestinatarios,
-        Referencia          : this.formCrearCite.controls[ 'referencia' ].value,
-        FechaCreacionLiteral: this.fechaCreacionCiteLiteral
+        Cite                    : this.resultCiteInst.cite,
+        DescripcionTipoDocumento: this.descripcionTipoDocumento,
+        ListaRemitente          : this.listaRemitentes,
+        ListaVias               : this.listaVias,
+        ListaDestinatarios      : this.listaDestinatarios,
+        Referencia              : this.formCrearCite.controls[ 'referencia' ].value,
+        FechaCreacionLiteral    : this.fechaCreacionCiteLiteral
       };
 
       // Genera el reporte en formato word

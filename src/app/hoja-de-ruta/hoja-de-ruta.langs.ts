@@ -1,6 +1,7 @@
 export const hojaDeRutaLang = {
   'es' : {
     'tit-adm-hoja-de-ruta' : 'Administracion de hojas de ruta',
+    'tit-dlg-adjuntar-documento' : 'Adjuntar documentos',
     'btn-crear-nueva-hoja-ruta' : 'Crear nueva hoja de ruta',
 
     'lbl-recibidos' : 'Recibidos',
@@ -45,6 +46,9 @@ export const hojaDeRutaLang = {
 
     'lbl-doc-adjuntos' : 'Documentos adjuntos',
     'lbl-error-doc-adjuntos' : 'Este campo es obligatorio',
+
+    'lbl-comentario-adjuntar-documento' : 'Referencia o mensaje',
+    'lbl-error-comentario-adjuntar-documento' : 'La referencia o comentario es obligatorio',
 
     'lbl-tipo-remitente' : 'Tipo remitente',
     'lbl-nombre-remitente' : 'Nombre remitente',
