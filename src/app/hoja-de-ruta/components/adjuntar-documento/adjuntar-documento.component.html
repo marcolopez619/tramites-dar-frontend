@@ -22,7 +22,7 @@
           </mat-form-field>
       </form>
 
-      <sh-documento-adjunto [saveDocumentoAdjuntos]="saveDocumentoAdjuntos"></sh-documento-adjunto>
+      <sh-documento-adjunto [isRequired]="true" (isValid)="isDocumentoAdjuntoValid($event)"></sh-documento-adjunto>
 
     </mat-card-content>
   </mat-card>

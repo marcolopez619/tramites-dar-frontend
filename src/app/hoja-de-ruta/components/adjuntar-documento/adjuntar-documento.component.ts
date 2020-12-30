@@ -29,15 +29,24 @@ export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit
 
   ngOnInit(): void {
     this.formAdjuntarDocumento = this.formBuilder.group({
-      comentario: [ undefined, [Validators.required, Validators.maxLength(100)]]
+      comentario        : [ undefined, [Validators.required, Validators.maxLength(100)]],
+      documentosAdjuntos: [ undefined, [Validators.required]]
     });
   }
 
   onGuardarDocumentoAdjunto(): void {
     const comentario = this.formAdjuntarDocumento.controls[ 'comentario' ].value;
 
-    //Enviar el flag de inicio de subida de documentos al servidor de archivos ( true )
-    this.documentoAdjuntoService.sendFlagToSaveDocument( true );
+    if ( this.formAdjuntarDocumento.controls[ 'documentosAdjuntos' ].valid ) {
+      //Enviar el flag de inicio de subida de documentos al servidor de archivos ( true )
+      this.documentoAdjuntoService.sendFlagToSaveDocument( true );
+    }
+
+  }
+
+  isDocumentoAdjuntoValid(isValid: boolean): void{
+    console.log( `is required desde adjuntar documento : ${isValid}` );
+    this.formAdjuntarDocumento.controls[ 'documentosAdjuntos' ].setValue( isValid ? isValid : undefined );
   }
 
   onCancelar(): void {
