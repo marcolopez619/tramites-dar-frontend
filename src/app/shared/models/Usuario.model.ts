@@ -26,4 +26,5 @@ export interface UsuarioModel {
 export interface DestinatarioModel {
   idDestinatario?: number;
   destinatario?: string;
+  cargo?: string;
 }

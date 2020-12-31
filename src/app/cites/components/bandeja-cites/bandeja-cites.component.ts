@@ -23,7 +23,7 @@ import { CrearNuevoCiteComponent } from './../crear-nuevo-cite/crear-nuevo-cite.
 })
 export class BandejaCitesComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['tipoTramite', 'tipoDocumento', 'numeroCite', 'destinatario', 'referencia', 'fechaCreacion', 'estado'];
+  displayedColumns = ['tipoDestinatario', 'tipoDocumento', 'numeroCite', 'destinatario', 'referencia', 'fechaCreacion', 'estado'];
   dataSource = new MatTableDataSource<CiteModelByUsuario>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -38,7 +38,7 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
   ) {  super(); }
 
   ngOnInit(): void {
-    const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 543;
+    const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
     this.getAllCitesFromPersona( idPersonaGd );
   }
 
@@ -55,7 +55,9 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
 
   private getAllCitesFromPersona( idPersonaGd: number ): void {
     this.citesService.getAllCitesFromPersona( idPersonaGd ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaCitesPersona => {
-      listaCitesPersona.data.map( cite => cite.destinatario = JSON.parse( cite.destinatario) as Array<DestinatarioModel> );
+      listaCitesPersona.data.map( cite => cite.destinatarios = ( cite.destinatarios !== '' ) ? JSON.parse( cite.destinatarios ) as Array<DestinatarioModel> : cite.destinatarios );
+      listaCitesPersona.data.map( cite => cite.remitentes = ( cite.remitentes !== '' ) ? JSON.parse( cite.remitentes ) as Array<DestinatarioModel> : cite.remitentes );
+      listaCitesPersona.data.map( cite => cite.vias = ( cite.vias !== '' ) ? JSON.parse( cite.vias ) as Array<DestinatarioModel> : cite.vias );
       this.dataSource.data = listaCitesPersona.data as Array<CiteModelByUsuario>;
     });
   }
