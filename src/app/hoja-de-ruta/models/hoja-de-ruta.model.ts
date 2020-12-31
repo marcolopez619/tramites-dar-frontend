@@ -18,7 +18,7 @@ export interface HojaDeRutaModel {
   nombreCopiaCc?: string;
   // TODO : AÑADIR EL ATRIBUTO QUE MAPEE A LA LISTA DE DOCUMENTOS ADJUNTO
 }
-
+/*
 export interface TipoTramiteModel {
   idTipoTramite?: number;
   descripcionTipoTramite?: string;
@@ -31,6 +31,7 @@ export interface CCModel {
   idCC?: number;
   descripcionCC?: string;
 }
+*/
 /* export interface DestinatarioModel {
   idDestinatario?: number;
   descripcionDestinatario?: string;
