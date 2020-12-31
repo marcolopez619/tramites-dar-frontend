@@ -75,7 +75,6 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
     this.parametricaService.getTipoTramite().pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaTipoTramite => {
       this.listaTipotramite = listaTipoTramite.data as Array<TipoTramiteModel>;
-      // this.descripcionTramite = this.listaTipotramite.filter( x => x.idTipoTramite === idTipoTramiteDefault )[ 0 ].descripcionTramite;
     });
 
     // Carga los usuarios de la bd
@@ -212,6 +211,9 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
       // Genera el reporte en formato word
       this.reporteService.getPlanillaCiteTemplate(datoReporte).pipe(takeUntil(this.unsubscribe$)).subscribe( respTemplate => {
         this.utilService.createDocumentFromBlob( respTemplate );
+
+        // Cierra la modal y pasa el resultado de la creacion del cite al componente padre.
+        this.onClose( this.resultCiteInst );
       });
 
     });

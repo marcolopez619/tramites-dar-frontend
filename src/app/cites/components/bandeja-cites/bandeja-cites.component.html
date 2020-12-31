@@ -15,9 +15,9 @@
 
         <mat-table #table [dataSource]="dataSource" matSort>
 
-          <ng-container matColumnDef="tipoTramite">
+          <ng-container matColumnDef="tipoDestinatario">
             <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-tipo-destinatario-cite') }} </mat-header-cell>
-            <mat-cell *matCellDef="let element" fxFlex="10"> {{element.tipoTramite}} </mat-cell>
+            <mat-cell *matCellDef="let element" fxFlex="10"> {{element.tipoDestinatario}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="tipoDocumento">
@@ -33,8 +33,14 @@
           <ng-container matColumnDef="destinatario" >
             <mat-header-cell *matHeaderCellDef fxFlex="35"  mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-destinatarios') }} </mat-header-cell>
             <mat-cell *matCellDef="let element" fxFlex="35" >
-              <span *ngFor="let item of element.destinatario">
-                {{ item.destinatario}},
+              <span *ngFor="let item of element.destinatarios">
+                <div fxLayout="column" fxLayoutAlign=" stretch" *ngIf="item.destinatarios !== ''" >
+                  <!-- {{ (item.destinatarios !== '' ) ? item.destinatario : '' }} -->
+                  {{item.destinatario}}
+                  <div class="mat-option-cargo">
+                    {{item.cargo}}
+                  </div>
+                </div>
               </span>
             </mat-cell>
           </ng-container>
@@ -45,8 +51,8 @@
           </ng-container>
 
           <ng-container matColumnDef="fechaCreacion" >
-            <mat-header-cell *matHeaderCellDef fxFlex="5"  mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-fecha-creacion') }} </mat-header-cell>
-            <mat-cell *matCellDef="let element" fxFlex="5" > {{element.fechaCreacion | date : 'dd/MM/yyyy' }} </mat-cell>
+            <mat-header-cell *matHeaderCellDef fxFlex="6"  mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-fecha-creacion') }} </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="6" > {{element.fechaCreacion | date : 'dd/MM/yyyy' }} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="estado" >
