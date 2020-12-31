@@ -10,7 +10,7 @@ import { DestinatarioModel } from '../../../shared/models/Usuario.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { CitesService } from '../../cites.service';
-import { CiteModel, CiteModelByUsuario } from '../../models/cites.models';
+import { CiteModel, CiteModelByUsuario, ResultCiteInst } from '../../models/cites.models';
 import { BaseComponent } from './../../../shared/base.component';
 import { CrearNuevoCiteComponent } from './../crear-nuevo-cite/crear-nuevo-cite.component';
 
@@ -70,9 +70,11 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
 
       }
     });
-    dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
+    dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
-        //..
+        const resultCiteInst = result as ResultCiteInst;
+        const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
+        this.getAllCitesFromPersona(idPersonaGd);
       }
     });
 

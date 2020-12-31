@@ -51,8 +51,8 @@
           </ng-container>
 
           <ng-container matColumnDef="fechaCreacion" >
-            <mat-header-cell *matHeaderCellDef fxFlex="5"  mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-fecha-creacion') }} </mat-header-cell>
-            <mat-cell *matCellDef="let element" fxFlex="5" > {{element.fechaCreacion | date : 'dd/MM/yyyy' }} </mat-cell>
+            <mat-header-cell *matHeaderCellDef fxFlex="6"  mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-fecha-creacion') }} </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="6" > {{element.fechaCreacion | date : 'dd/MM/yyyy' }} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="estado" >
