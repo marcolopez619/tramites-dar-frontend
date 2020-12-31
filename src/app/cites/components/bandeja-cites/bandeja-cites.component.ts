@@ -1,16 +1,18 @@
-import { CrearNuevoCiteComponent } from './../crear-nuevo-cite/crear-nuevo-cite.component';
-import { BaseComponent } from './../../../shared/base.component';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { ContextoService } from '../../../shared/services/contexto.service';
-import { LangService } from '../../../shared/services/lang.service';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { CiteModel } from '../../models/cites.models';
-import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
+import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
+import { DestinatarioModel } from '../../../shared/models/Usuario.model';
+import { ContextoService } from '../../../shared/services/contexto.service';
+import { LangService } from '../../../shared/services/lang.service';
+import { CitesService } from '../../cites.service';
+import { CiteModel, CiteModelByUsuario, ResultCiteInst } from '../../models/cites.models';
+import { BaseComponent } from './../../../shared/base.component';
+import { CrearNuevoCiteComponent } from './../crear-nuevo-cite/crear-nuevo-cite.component';
 
 @Component({
   selector: 'app-bandeja-cites',
@@ -21,8 +23,8 @@ import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 })
 export class BandejaCitesComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['tipoDocumento', 'numeroCite', 'destinatarios', 'referencia', 'fechaCreacion', 'acciones'];
-  dataSource = new MatTableDataSource<CiteModel>([]);
+  displayedColumns = ['tipoDestinatario', 'tipoDocumento', 'numeroCite', 'destinatario', 'referencia', 'fechaCreacion', 'estado'];
+  dataSource = new MatTableDataSource<CiteModelByUsuario>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -31,18 +33,13 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
     public langService: LangService,
     public contextService: ContextoService,
     private router: Router,
+    private citesService: CitesService,
     private dialog: MatDialog
   ) {  super(); }
 
   ngOnInit(): void {
-    const listaVias: Array<string> = [ 'SARDINA GUMUCIO FLORIPONDIO', 'CONDORI MALPARTIDA TIRADO' ];
-    const listaVias2: Array<string> = [ 'ZARZURI TIRADO ELBA', 'ARCE CATARI GONZALES' ];
-
-    const listaCites: Array<CiteModel> = [
-
-    ];
-
-    this.dataSource.data = listaCites;
+    const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
+    this.getAllCitesFromPersona( idPersonaGd );
   }
 
   ngAfterViewInit(): void {
@@ -56,6 +53,15 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
     this.unsubscribe$.next(true);
   }
 
+  private getAllCitesFromPersona( idPersonaGd: number ): void {
+    this.citesService.getAllCitesFromPersona( idPersonaGd ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaCitesPersona => {
+      listaCitesPersona.data.map( cite => cite.destinatarios = ( cite.destinatarios !== '' ) ? JSON.parse( cite.destinatarios ) as Array<DestinatarioModel> : cite.destinatarios );
+      listaCitesPersona.data.map( cite => cite.remitentes = ( cite.remitentes !== '' ) ? JSON.parse( cite.remitentes ) as Array<DestinatarioModel> : cite.remitentes );
+      listaCitesPersona.data.map( cite => cite.vias = ( cite.vias !== '' ) ? JSON.parse( cite.vias ) as Array<DestinatarioModel> : cite.vias );
+      this.dataSource.data = listaCitesPersona.data as Array<CiteModelByUsuario>;
+    });
+  }
+
   onCrearNuevoCite(): void {
     const dlgNuevoCite = this.dialog.open( CrearNuevoCiteComponent,  {
       disableClose: false,
@@ -64,9 +70,11 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
 
       }
     });
-    dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
+    dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
-        //..
+        const resultCiteInst = result as ResultCiteInst;
+        const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
+        this.getAllCitesFromPersona(idPersonaGd);
       }
     });
 

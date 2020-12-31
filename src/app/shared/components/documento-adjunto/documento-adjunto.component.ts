@@ -1,6 +1,6 @@
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { DocumentoAdjuntoService } from './../../services/documento-adjunto.service';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -27,17 +27,34 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
+  @Input()
+  isRequired = false;
+
+  @Output()
+  isValid = new  EventEmitter();
+
   constructor(
     public langService: LangService,
-    private formBuilder: FormBuilder,
     private documentoAdjuntoService: DocumentoAdjuntoService
   ) {
     super();
+
+    // Monitorea si se desea guardar los documentos adjuntos
+    this.documentoAdjuntoService.getFlagToSaveDocument().pipe( takeUntil(this.unsubscribe$)).subscribe( flagToSaveDocument => {
+      console.log( `SHARED DOCUMENTO ADJUNTO --> ${flagToSaveDocument}`);
+
+      if (flagToSaveDocument) {
+        console.log( `Subiendo Cantidad : ${this.listaDocumentosToUpload.length} archivos al servidor` );
+        // Sube los documentos al servidor de archivos.
+        // this.onSaveDocument();
+      }
+
+    });
   }
 
   ngOnInit(): void {
     // ...
-    this.listaDocumentosToUpload = [{
+   /*  this.listaDocumentosToUpload = [{
       id : 1,
       tipo : 'pdf',
       nombre : 'primer archivo',
@@ -50,7 +67,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
       nombre : 'Segundo archivo',
       fechaSubida : new Date(),
       informacion : undefined
-    }];
+    }]; */
 
     this.listaDocumentosToUpload = [];
 
@@ -62,6 +79,18 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
+  }
+
+  private verifyisValid(): void {
+
+    const isListaVacia = this.listaDocumentosToUpload.length === 0;
+    let isValid = false;
+
+    if ( isListaVacia === false && this.isRequired) {
+      isValid = true;
+    }
+
+    return this.isValid.next( isValid );
   }
 
   onUploadDocument($event): void {
@@ -92,6 +121,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
 
     }
 
+    this.verifyisValid();
   }
 
   onDeleteDocument(pDocumento: DocumentoAdjuntoModel): void {
@@ -103,6 +133,8 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
     } else {
       alert('no se encontro el documento');
     }
+
+    this.verifyisValid();
   }
 
   onSaveDocument(): void {
@@ -121,6 +153,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
   onCancel(): void {
     this.listaDocumentosToUpload.length = 0;
     this.dataSource.data = this.listaDocumentosToUpload;
+    this.verifyisValid();
   }
 
   ngOnDestroy(): void {

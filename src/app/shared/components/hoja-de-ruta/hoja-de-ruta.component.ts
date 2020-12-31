@@ -1,9 +1,10 @@
-import { Component, Inject, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { takeUntil } from 'rxjs/operators';
-import { CCModel, DestinatarioModel, HojaDeRutaModel, RemitenteModel } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
+//import { CCModel, DestinatarioModel, HojaDeRutaModel, RemitenteModel } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
+import { HojaDeRutaModel  } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
 import { slideInLeftAnim, zoomInAnim } from '../../animations/template.animation';
 import { BaseComponent } from '../../base.component';
 import { TipoDocumentoModel, TipoTramiteModel } from '../../models/parametricas.model';

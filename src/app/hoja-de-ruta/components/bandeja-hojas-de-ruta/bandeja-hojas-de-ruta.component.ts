@@ -10,14 +10,11 @@ import { BaseComponent } from '../../../shared/base.component';
 import { HojaDeRutaComponent } from '../../../shared/components/hoja-de-ruta/hoja-de-ruta.component';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
-import { HojaDeRutaModule } from '../../hoja-de-ruta.module';
 import { DerivarModel } from '../../models/derivar.model';
 import { HojaDeRutaModel } from '../../models/hoja-de-ruta.model';
-import { ComentarioComponent } from '../comentario-hoja-de-ruta/comentario-hoja-de-ruta.component';
 import { DerivarComponent } from '../derivar/derivar.component';
 import { DetalleSeguimientoComponent } from '../detalle-seguimiento/detalle-seguimiento.component';
-import { FinalizarTramiteComponent } from '../finalizar-tramite/finalizar-tramite.component';
-import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
+import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-documento.component';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -28,15 +25,7 @@ import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
 })
 export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  //////*
-  tipoRemitente?: number;
-  nombreRemitente?: string;
-  tipoDocumento?: string;
-  numeroCite?: string;
-  destinatarios?: Array<string>;
-  referencia?: string;
-  estado?: string;
-  //*
+
 
   displayedColumns = ['tipoRemitente', 'nombreRemitente','tipoDocumento', 'numeroCite', 'destinatarios', 'referencia', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<any>([]);
@@ -163,6 +152,19 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
 crearHojadeRuta(): void {
   //const dlgNuevoCite = this.dialog.open( ComentarioComponent,  {
     const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
+    disableClose: false,
+    width: '1000px',
+    data: {
+    }
+  });
+  dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
+    if (result) {
+      //..
+    }
+  });
+}
+adjuntarDocumento(): void {
+  const dlgNuevoCite = this.dialog.open( AdjuntarDocumentoComponent,  {
     disableClose: false,
     width: '1000px',
     data: {

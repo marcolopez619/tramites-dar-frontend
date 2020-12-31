@@ -70,7 +70,8 @@ export const baseLang = {
             'lbl-extension-documento' : 'Tipo',
             'lbl-fecha-subida' : 'Fecha subida',
             'btn-subir-nuevo-ducumento' : 'Subir nuevo documento',
-            'tit-documentos-adjuntos' : 'Documentos adjuntos'
+            'tit-documentos-adjuntos' : 'Documentos adjuntos',
+            'lbl-estado' : 'Estado'
         },
         'en': {
             'lang-error': 'Lang not found',

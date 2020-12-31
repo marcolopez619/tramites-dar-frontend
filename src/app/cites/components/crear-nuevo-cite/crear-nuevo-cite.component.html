@@ -41,13 +41,13 @@
 
             <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
               <mat-form-field fxFlex>
-                <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-tipo-tramite' )}} : </mat-label>
+                <mat-label>{{langService.getLang(eModulo.Cites, 'lbl-tipo-documento' )}} : </mat-label>
                 <mat-select formControlName="tipoDocumento" (selectionChange)="onTipoDocumentoChange($event)">
                   <mat-option *ngFor="let tipoDocumento of listaTipoDocumento" [value]="tipoDocumento.idDocumentoTipo">
                     {{tipoDocumento.descripcionDoc}}
                   </mat-option>
                 </mat-select>
-                <mat-error *ngIf="formCrearCite.controls['tipoDocumento'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-tipo-tramite') }}</mat-error>
+                <mat-error *ngIf="formCrearCite.controls['tipoDocumento'].invalid">{{ langService.getLang(eModulo.Cites,'lbl-error-tipo-documento') }}</mat-error>
               </mat-form-field>
             </div>
 

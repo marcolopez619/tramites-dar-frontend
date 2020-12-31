@@ -9,6 +9,7 @@ import { FinalizarTramiteComponent } from './components/finalizar-tramite/finali
 import { DetalleSeguimientoComponent } from './components/detalle-seguimiento/detalle-seguimiento.component';
 import { SeguimientoComponent } from './components/seguimiento/seguimiento.component';
 import { DerivarComponent } from './components/derivar/derivar.component';
+import { AdjuntarDocumentoComponent } from './components/adjuntar-documento/adjuntar-documento.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { DerivarComponent } from './components/derivar/derivar.component';
     FinalizarTramiteComponent,
     DetalleSeguimientoComponent,
     SeguimientoComponent,
-    DerivarComponent
+    DerivarComponent,
+    AdjuntarDocumentoComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import { DerivarComponent } from './components/derivar/derivar.component';
     SharedModule
   ],
   exports : [
-    BandejaHojasDeRutaComponent
+    BandejaHojasDeRutaComponent,
+    AdjuntarDocumentoComponent
   ]
 })
 export class HojaDeRutaModule { }
