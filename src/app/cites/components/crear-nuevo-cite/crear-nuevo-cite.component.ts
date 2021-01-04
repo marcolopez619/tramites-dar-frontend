@@ -98,6 +98,8 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
     this.usuarioService.getAllUsuarios( idTipotramite ).pipe( takeUntil( this.unsubscribe$ )).subscribe( respService => {
       this.listaUsuarios = respService.data;
+      const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`);
+      this.listaRemitentes = this.listaUsuarios.filter( x => x.idPersonaGd === idPersonaGd);
     });
   }
 
@@ -140,6 +142,11 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
   getEstatusFormRemitente($event): void {
     this._isRemitenteInvalid = $event;
+
+    if (!this._isRemitenteInvalid) {
+      this.formCrearCite.controls['listaRemitentes'].setValue(this.listaRemitentes)
+    }
+
     console.log( ' is Invalid Remitente : ' + $event );
   }
 

@@ -66,15 +66,6 @@
                 (isFormularioInvalid) = "getEstatusFormDestinatario($event)"
                 (listaSeleccionadosEmiter)="getListaSeleccionadaDestinatarios($event)">
               </sh-autocomplete>
-              <!-- <mat-form-field fxFlex>
-                <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatario' )}} : </mat-label>
-                <mat-select formControlName="listaDestinatarios" required placeholder="Seleccione">
-                  <mat-option *ngFor="let destinatario of listaDestinatarios" [value]="destinatario.idDestinatario">
-                    {{destinatario.descripcionDestinatario}}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="formCrearCite.controls['listaDestinatarios'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-destinatario') }}</mat-error>
-              </mat-form-field> -->
             </div>
 
             <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
@@ -85,15 +76,6 @@
                 [listaCompleta]="listaUsuarios"
                 (listaSeleccionadosEmiter)="getListaSeleccionadaVias($event)">
               </sh-autocomplete>
-              <!-- <mat-form-field fxFlex>
-                  <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-via' )}} :</mat-label>
-                  <mat-select>
-                  <mat-option *ngFor="let via of listaVias" [value]="via.idRemitente">
-                    {{via.descripcionRemitente}}
-                  </mat-option>
-                </mat-select> -->
-                <!-- <mat-error *ngIf="formCrearCite.controls['listaVias'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-via') }}</mat-error> -->
-              <!-- </mat-form-field> -->
             </div>
 
           </div>
@@ -107,18 +89,10 @@
                 [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-remitente' )"
                 [isRequired]="true"
                 [listaCompleta]="listaUsuarios"
+                [listaInicial]="this.listaRemitentes"
                 (isFormularioInvalid) = "getEstatusFormRemitente($event)"
                 (listaSeleccionadosEmiter)="getListaSeleccionadaRemitentes($event)">
               </sh-autocomplete>
-              <!-- <mat-form-field fxFlex>
-                <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-remitente' )}} :</mat-label>
-                <mat-select formControlName="listaRemitentes" required placeholder="Seleccione">
-                  <mat-option *ngFor="let via of listaVias" [value]="via.idRemitente">
-                    {{via.descripcionRemitente}}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="formCrearCite.controls['listaRemitentes'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-remitente') }}</mat-error>
-              </mat-form-field> -->
             </div>
 
             <mat-form-field fxFlex>

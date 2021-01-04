@@ -1,14 +1,14 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { BaseComponent } from './../../base.component';
-import { Component, ElementRef, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
-import { fadeInAnim, slideInLeftAnim } from '../../animations/template.animation';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
-import { LangService } from '../../services/lang.service';
+import { map, startWith } from 'rxjs/operators';
+import { fadeInAnim, slideInLeftAnim } from '../../animations/template.animation';
 import { UsuarioModel } from '../../models/Usuario.model';
+import { LangService } from '../../services/lang.service';
+import { BaseComponent } from './../../base.component';
 
 @Component({
   selector: 'sh-autocomplete',
@@ -37,6 +37,9 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
   listaCompleta: Array<UsuarioModel>;
 
   @Input()
+  listaInicial: Array<UsuarioModel> = [];
+
+  @Input()
   isRequired: boolean;
 
   @Output()
@@ -56,10 +59,16 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
   }
   ngOnInit(): void {
 
+    // Para cargar la lista inicial en caso de que se le envie uno desde el componente padre.
+    this.listaSeleccionados = this.listaInicial;
+
     if (this.isRequired) {
       this.formAutocomplete = this.formBuilder.group({
-        autoCompleteData : [ undefined, Validators.compose([ Validators.required ])]
+        autoCompleteData : [ this.listaSeleccionados.length > 0 ? this.listaSeleccionados : undefined, Validators.compose([ Validators.required ])]
       });
+
+      this._emitIsFormularioInvalid();
+
     } else {
       this.formAutocomplete = this.formBuilder.group({
         autoCompleteData : [ undefined ]
@@ -128,9 +137,6 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
   selected(event: MatAutocompleteSelectedEvent): void {
     this.listaSeleccionados.push(event.option.value as UsuarioModel);
     this.input.nativeElement.value = '';
-    // this.formAutocomplete.setValue('');
-    // this.formAutocomplete.controls[ 'autoCompleteData' ].setValue('');
-    // this.isFormularioInvalid.emit( this.formAutocomplete.controls['autoCompleteData'].invalid );
     this._emitIsFormularioInvalid();
     this.listaSeleccionadosEmiter.next( this.listaSeleccionados );
   }
