@@ -176,7 +176,7 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
     this.formCrearCite.controls['tipoDocumento'].setValue( event.value );
     this.formCrearCite.controls['tipoDocumento'].markAsTouched();
     console.log( ' tipo documento : ----> ' + this.formCrearCite.controls['tipoDocumento'].value );
-    this.descripcionTipoDocumento = this.listaTipoDocumento.filter( x => x.idDocumentoTipo === event.value )[ 0 ].descripcionDoc;
+    this.descripcionTipoDocumento = this.listaTipoDocumento.filter( x => x.idDocumentoEmite === event.value )[ 0 ].descripcionDoc;
   }
 
   onGenerateCiteTemplate(): void {

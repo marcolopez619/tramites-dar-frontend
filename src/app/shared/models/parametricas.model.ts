@@ -6,6 +6,7 @@ export interface TipoDocumentoModel {
   idDocumentoTipo?: number;
   descripcionDoc?: string;
   abreviacion?: string;
+  idDocumentoEmite?: number;
 }
 
 export interface TipoTramiteModel {
