@@ -7,8 +7,6 @@ import { ContainerBandejaComponent } from './components/container-bandeja/contai
 import { OpcionesBandejaComponent } from './components/opciones-bandeja/opciones-bandeja.component';
 import { DetalleBandejaComponent } from './components/detalle-bandeja/detalle-bandeja.component';
 
-
-
 @NgModule({
   declarations: [ContainerBandejaComponent, OpcionesBandejaComponent, DetalleBandejaComponent],
   imports: [
@@ -17,7 +15,7 @@ import { DetalleBandejaComponent } from './components/detalle-bandeja/detalle-ba
     CitesModule,
     HojaDeRutaModule
   ],
-  exports:[
+  exports: [
     ContainerBandejaComponent, OpcionesBandejaComponent, DetalleBandejaComponent
   ]
 })
