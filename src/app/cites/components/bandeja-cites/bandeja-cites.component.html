@@ -56,33 +56,57 @@
           </ng-container>
 
           <ng-container matColumnDef="estado" >
-            <mat-header-cell *matHeaderCellDef fxFlex="5"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
-            <mat-cell *matCellDef="let element" fxFlex="5" > {{element.estado}} </mat-cell>
-          </ng-container>
+            <mat-header-cell *matHeaderCellDef fxFlex="6"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="7" >
 
+              <div *ngIf="showMouseOverActions && element.isRowMouseOver" fxLayout="row" fxLayoutAlign="start center">
+                <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}" (click)="onEdit(element)" >
+                  <mat-icon>mode_edit</mat-icon>
+                </a>
+                <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-generar-hoja-ruta') }}" (click)="onGenerateHojaRuta(element)"   >
+                  <mat-icon>file_copy</mat-icon>
+                </a>
+                <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-imprimir-hoja-ruta') }}" (click)="onPrintHojaRuta(element)" >
+                  <mat-icon>print</mat-icon>
+                </a>
+              </div>
 
-
-          <ng-container matColumnDef="acciones">
-            <mat-header-cell *matHeaderCellDef fxFlex="15" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
-            <mat-cell *matCellDef="let element;  let i = index;" fxFlex="15" fxLayoutAlign="center center">
-              <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}"  (click)="onEdit(element)">
-                <mat-icon>mode_edit</mat-icon>
-              </a>
-              <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-generar-hoja-ruta') }}"  (click)="onGenerateHojaRuta(element)">
-                <mat-icon>file_copy</mat-icon>
-              </a>
-              <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-imprimir-hoja-ruta') }}" (click)="onPrintHojaRuta(element)">
-                <mat-icon>print</mat-icon>
-              </a>
+              <div *ngIf="!element.isRowMouseOver">
+                {{element.estado}}
+              </div>
             </mat-cell>
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row shRowHover [ngClass]="{'row-action': idSeleccionado === row.idCite}" [@fadeInAnim]="true" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+          <mat-row
+            shRowHover
+            [ngClass]="{'row-action': idSeleccionado === row.idCite}"
+            [@fadeInAnim]="true"
+            *matRowDef="let row; columns: displayedColumns;"
+            (mouseover)="onMouseOver(row)"
+            (mouseleave)="onMouseLeave(row)">
+          </mat-row>
+
 
         </mat-table>
         <shared-table-empty [datasource]="dataSource"></shared-table-empty>
     <mat-paginator #paginator [pageSize]="config.paginatorSize" [pageSizeOptions]="config.paginatorOptions" [showFirstLastButtons]="true"></mat-paginator>
+
+
+
+    <!-- <div  fxLayout="row" fxLayoutAlign="start center">
+      <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}" (click)="onEdit(row)" >
+        <mat-icon>mode_edit</mat-icon>
+      </a>
+      <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-generar-hoja-ruta') }}" (click)="onGenerateHojaRuta(row)"   >
+        <mat-icon>file_copy</mat-icon>
+      </a>
+      <a  mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-imprimir-hoja-ruta') }}" (click)="onPrintHojaRuta(row)" >
+        <mat-icon>print</mat-icon>
+      </a>
+    </div> -->
+
 
       </mat-card-content>
     </mat-card>

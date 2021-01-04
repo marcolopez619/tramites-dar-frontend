@@ -19,6 +19,7 @@ export interface CiteModelByUsuario{
   referencia?: string;
   fechaCreacion?: Date;
   estado?: string;
+  isRowMouseOver?: boolean;
 }
 
 export interface ResultCiteInst {

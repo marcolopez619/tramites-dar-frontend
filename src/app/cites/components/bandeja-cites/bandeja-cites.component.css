@@ -1,3 +1,8 @@
 .mat-option-cargo{
   font-size: 10px;
 }
+
+
+div > a {
+  width: 25px;
+}

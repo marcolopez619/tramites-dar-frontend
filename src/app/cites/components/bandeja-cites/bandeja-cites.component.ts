@@ -10,7 +10,7 @@ import { DestinatarioModel } from '../../../shared/models/Usuario.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { CitesService } from '../../cites.service';
-import { CiteModel, CiteModelByUsuario, ResultCiteInst } from '../../models/cites.models';
+import { CiteModelByUsuario, ResultCiteInst } from '../../models/cites.models';
 import { BaseComponent } from './../../../shared/base.component';
 import { CrearNuevoCiteComponent } from './../crear-nuevo-cite/crear-nuevo-cite.component';
 
@@ -28,6 +28,8 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+  showMouseOverActions = false;
 
   constructor(
     public langService: LangService,
@@ -62,6 +64,15 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
     });
   }
 
+  onMouseOver(row: CiteModelByUsuario): void{
+    row.isRowMouseOver = true;
+    this.showMouseOverActions = true;
+  }
+  onMouseLeave(row: CiteModelByUsuario): void{
+    row.isRowMouseOver = false;
+    this.showMouseOverActions = false;
+  }
+
   onCrearNuevoCite(): void {
     const dlgNuevoCite = this.dialog.open( CrearNuevoCiteComponent,  {
       disableClose: false,
@@ -80,16 +91,18 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
 
   }
 
-  onEdit(pCiteModel: CiteModel): void {
-    console.log( `EDITANDO ---> ${pCiteModel}` );
+  onEdit(pCiteModel: CiteModelByUsuario): void {
+    console.log( `EDITANDO ---> ${pCiteModel.idCite}` );
   }
 
-  onGenerateHojaRuta(pCiteModel: CiteModel): void {
-    console.log( `GENERANDO ---> ${pCiteModel}` );
+  onGenerateHojaRuta(pCiteModel: CiteModelByUsuario): void {
+    console.log( `GENERANDO ---> ${pCiteModel.idCite}` );
   }
 
-  onPrintHojaRuta(pCiteModel: CiteModel): void {
-    console.log( `IMPRIMIENDO ---> ${pCiteModel}` );
+  onPrintHojaRuta(pCiteModel: CiteModelByUsuario): void {
+    console.log( `IMPRIMIENDO ---> ${pCiteModel.idCite}` );
   }
+
+
 
 }
