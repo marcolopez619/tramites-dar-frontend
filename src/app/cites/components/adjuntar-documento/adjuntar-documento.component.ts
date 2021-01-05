@@ -1,12 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
-import { ContextoService } from '../../../shared/services/contexto.service';
-import { LangService } from '../../../shared/services/lang.service';
-import { DocumentoAdjuntoService } from '../../../shared/services/documento-adjunto.service';
-import { CiteModelByUsuario } from '../../models/cites.models';
 import { DataDocumentoAdjunto } from '../../../shared/models/documento-adjunto.model';
+import { ContextoService } from '../../../shared/services/contexto.service';
+import { DocumentoAdjuntoService } from '../../../shared/services/documento-adjunto.service';
+import { LangService } from '../../../shared/services/lang.service';
+import { CiteModelByUsuario } from '../../models/cites.models';
 
 @Component({
   selector: 'app-adjuntar-documento',

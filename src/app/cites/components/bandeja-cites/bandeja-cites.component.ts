@@ -32,6 +32,7 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   showMouseOverActions = false;
+  idPersonaGd = 0;
 
   constructor(
     public langService: LangService,
@@ -42,8 +43,8 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
   ) {  super(); }
 
   ngOnInit(): void {
-    const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
-    this.getAllCitesFromPersona( idPersonaGd );
+    this.idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
+    this.getAllCitesFromPersona( this.idPersonaGd );
   }
 
   ngAfterViewInit(): void {
@@ -119,6 +120,7 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
         /* const resultCiteInst = result as ResultCiteInst;
         const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
         this.getAllCitesFromPersona(idPersonaGd); */
+        this.getAllCitesFromPersona(this.idPersonaGd);
       }
     });
   }

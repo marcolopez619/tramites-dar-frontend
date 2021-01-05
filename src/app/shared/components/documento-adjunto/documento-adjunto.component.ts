@@ -5,11 +5,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { fadeInAnim, slideInLeftAnim } from '../../animations/template.animation';
 import { BaseComponent } from '../../base.component';
+import { eModulo } from '../../enums/modulo.enum';
 import { DataDocumentoAdjunto, DocumentoAdjuntoModel } from '../../models/documento-adjunto.model';
 import { LangService } from '../../services/lang.service';
 import { DocumentoAdjuntoService } from './../../services/documento-adjunto.service';
-import { eModulo } from '../../enums/modulo.enum';
-import { CiteModelByUsuario } from '../../../cites/models/cites.models';
 
 @Component({
   selector: 'sh-documento-adjunto',
@@ -170,6 +169,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
     this.listaDocumentosToUpload.forEach(element => {
       this.documentoAdjuntoService.uploadDocumentToServer( element ).pipe( takeUntil ( this.unsubscribe$ ) ).subscribe( respSave => {
         console.log( '----> ', respSave.data );
+        // this.documentoAdjuntoService.sendFlagIsDocumentoAdjuntoUploaded( true );
       });
     });
   }
