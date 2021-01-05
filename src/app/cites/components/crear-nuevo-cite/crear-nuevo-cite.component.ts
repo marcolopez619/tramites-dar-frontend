@@ -29,6 +29,11 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
   formCrearCite: FormGroup;
 
   listaUsuarios: Array<UsuarioModel> = [];
+
+  listaUsuariosVias: Array<UsuarioModel> = [];
+  listaUsuariosDestinatarios: Array<UsuarioModel> = [];
+  listaUsuariosRemitentes: Array<UsuarioModel> = [];
+
   fechaCreacionCite = new Date();
   fechaCreacionCiteLiteral = `LA PAZ ${this.fechaCreacionCite.getDate()} DE ${this.getFechaFormatoLiteral(this.fechaCreacionCite.getMonth())} DE ${this.fechaCreacionCite.getFullYear()}`;
   // FECHA: LA PAZ {{fechaCreacionCite.getDate()}} de {{getFechaFormatoLiteral(fechaCreacionCite.getMonth())}} de {{fechaCreacionCite.getFullYear()}}
@@ -91,16 +96,19 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
 
   }
 
-  private getAllusuarios( idTipotramite: number ): void {
+  private async getAllusuarios( idTipotramite: number ) {
 
-    // Borra los datos de las listas
-    this.listaDestinatarios.length = this.listaVias.length = this.listaRemitentes.length = this.listaUsuarios.length = 0;
+    const respService =  await this.usuarioService.getAllUsuarios( idTipotramite ).toPromise();
 
-    this.usuarioService.getAllUsuarios( idTipotramite ).pipe( takeUntil( this.unsubscribe$ )).subscribe( respService => {
-      this.listaUsuarios = respService.data;
+    if (idTipotramite === 1 ) {
+      // TRAMITE INTERNO
+      this.listaUsuarios = this.listaUsuariosDestinatarios = this.listaUsuariosVias = this.listaUsuariosRemitentes = respService.data;
       const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`);
       this.listaRemitentes = this.listaUsuarios.filter( x => x.idPersonaGd === idPersonaGd);
-    });
+    } else {
+      // TRAMITE EXTERNO
+      this.listaUsuariosDestinatarios = respService.data;
+    }
   }
 
   getListaSeleccionadaVias($event): void {

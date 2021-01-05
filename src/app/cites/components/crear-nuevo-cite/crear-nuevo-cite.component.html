@@ -58,22 +58,22 @@
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
 
             <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
-              <sh-autocomplete *ngIf="listaUsuarios?.length > 0"
+              <sh-autocomplete *ngIf="listaUsuariosDestinatarios?.length > 0"
                 [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatario' )"
                 [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-destinatario' )"
                 [isRequired]="true"
-                [listaCompleta]="listaUsuarios"
+                [listaCompleta]="listaUsuariosDestinatarios"
                 (isFormularioInvalid) = "getEstatusFormDestinatario($event)"
                 (listaSeleccionadosEmiter)="getListaSeleccionadaDestinatarios($event)">
               </sh-autocomplete>
             </div>
 
             <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
-              <sh-autocomplete *ngIf="listaUsuarios?.length > 0"
+              <sh-autocomplete *ngIf="listaUsuariosVias?.length > 0"
                 [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-via' )"
                 [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-via' )"
                 [isRequired]="false"
-                [listaCompleta]="listaUsuarios"
+                [listaCompleta]="listaUsuariosVias"
                 (listaSeleccionadosEmiter)="getListaSeleccionadaVias($event)">
               </sh-autocomplete>
             </div>
@@ -84,12 +84,12 @@
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="10px" fxFlexFill>
 
             <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
-              <sh-autocomplete *ngIf="listaUsuarios?.length > 0"
+              <sh-autocomplete *ngIf="listaUsuariosRemitentes?.length > 0"
                 [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-remitente' )"
                 [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-remitente' )"
                 [isRequired]="true"
-                [listaCompleta]="listaUsuarios"
-                [listaInicial]="this.listaRemitentes"
+                [listaCompleta]="listaUsuariosRemitentes"
+                [listaInicial]="listaRemitentes"
                 (isFormularioInvalid) = "getEstatusFormRemitente($event)"
                 (listaSeleccionadosEmiter)="getListaSeleccionadaRemitentes($event)">
               </sh-autocomplete>
@@ -123,7 +123,7 @@
 
 
       <h1 class="alinear-columna-centro">{{descripcionTipoDocumento}}</h1>
-      <p class="alinear-columna-centro"><strong>CITE</strong>: <em>aqui viene mi citeeeeee </em></p>
+      <!-- <p class="alinear-columna-centro"><strong>CITE</strong>: <em>aqui viene mi citeeeeee </em></p> -->
 
       <table border="1" cellpadding="1" cellspacing="1" class="tabla-centro">
         <tbody>
