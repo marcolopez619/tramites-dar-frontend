@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { takeUntil } from 'rxjs/operators';
-//import { CCModel, DestinatarioModel, HojaDeRutaModel, RemitenteModel } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
 import { HojaDeRutaModel  } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
 import { slideInLeftAnim, zoomInAnim } from '../../animations/template.animation';
 import { BaseComponent } from '../../base.component';
@@ -32,14 +31,6 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
   listaDestinatarios: Array<UsuarioModel> = [];
   listaCc: Array<UsuarioModel> = [];
 
-
-
-/*
-  listaDestinatarios: Array<DestinatarioModel> = [
-    { idDestinatario: 1, descripcionDestinatario: 'CACHICATARI JUAN GONZALO' },
-    { idDestinatario: 2, descripcionDestinatario: 'SALMON HUALLPA OZUNA' }
-  ];
-*/
   @Output('registraComponenteHojaDeRuta')
   registraComponenteHojaDeRuta: EventEmitter<HojaDeRutaModel> = new EventEmitter<HojaDeRutaModel>();
 
@@ -93,38 +84,18 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
   }
 
   onGuardarHojaDeRuta(): void {
-    // TODO: GUARDAR LA INFORMACION EN LA BD.
-    /*
-    console.log('============================================');
-    console.log(` tipoTramite       : ${this.formHojaDeRuta.controls['tipoTramite'].value}`);
-    console.log(` listaRemitente    : ${this.formHojaDeRuta.controls['listaRemitentes'].value}`);
-    console.log(` listaDestinatario : ${this.formHojaDeRuta.controls['listaDestinatarios'].value}`);
-    console.log(` listaCC           : ${this.formHojaDeRuta.controls['listaCC'].value}`);
-    console.log(`numeroCite         : ${this.formHojaDeRuta.controls['numeroCite'].value}`);
-    console.log(`referencia         : ${this.formHojaDeRuta.controls['referencia'].value}`);
-    console.log(`numeroFojas        : ${this.formHojaDeRuta.controls['numeroFojas'].value}`);
-    console.log(`plazoDias          : ${this.formHojaDeRuta.controls['plazoDias'].value}`);
-    console.log(`isUrgente          : ${this.formHojaDeRuta.controls['isUrgente'].value}`);
-    console.log(`isConCopiaFisica   : ${this.formHojaDeRuta.controls['isConCopiaFisica'].value}`);*/
     this.registraComponenteHojaDeRuta.emit();
   }
-  /*
-  realizaComunicacionHojaRuta(event) {
-    this.datoComunicarPadre = event.elemento;
-  }*/
+
   onTipoTramiteChange(event: MatSelectChange ): void {
     this.formHojaDeRuta.controls['tipoTramite'].setValue( event.value );
     this.formHojaDeRuta.controls['tipoTramite'].markAsTouched();
     console.log( '----> ' + this.formHojaDeRuta.controls['tipoTramite'].value );
-
     this.descripcionTramite = this.listaTipoTramite.filter( x => x.idTipoTramite === event.value )[ 0 ].descripcionTramite;
-
     this.getAllusuarios( event.value );
-
   }
 
   private getAllusuarios( idTipotramite: number ): void {
-
     // Borra los datos de las listas
     this.listaDestinatarios.length = this.listaRemitentes.length = this.listaUsuarios.length = 0;
 
@@ -133,19 +104,21 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
     });
   }
 
-
   getEstatusFormRemitente($event): void {
     this._isRemitenteInvalid = $event;
     console.log( ' is Invalid Remitente : ' + $event );
   }
+
   getEstatusFormDestinatario($event): void {
     this._isDestinatarioInvalid = $event;
     console.log( ' is Invalid Destinatario : ' + $event );
   }
+
   getEstatusFormcC($event): void {
     this._isCcInvalid = $event;
     console.log( ' is Invalid Remitente : ' + $event );
   }
+
   getListaSeleccionadaRemitentes($event): void {
     console.log('----------------------');
     this.listaRemitentes = $event as Array<UsuarioModel>;
@@ -153,28 +126,24 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
     this.listaRemitentes.forEach( element => {
       console.log( 'Remitente ---> ' + element.nombreCompleto );
     });
-
     this.formHojaDeRuta.controls['listaRemitentes'].setValue( (this._isRemitenteInvalid) ? undefined : this.listaRemitentes );
   }
+
   getListaSeleccionadaDestinatarios($event): void {
     console.log('----------------------');
     this.listaDestinatarios = $event as Array<UsuarioModel>;
-
     this.listaDestinatarios.forEach( element => {
       console.log( ' Destinatario ---> ' + element.nombreCompleto );
     });
-
     this.formHojaDeRuta.controls['listaDestinatarios'].setValue( (this._isDestinatarioInvalid) ? undefined : this.listaDestinatarios );
   }
 
   getListaSeleccionadaCc($event): void {
     console.log('----------------------');
     this.listaCc = $event as Array<UsuarioModel>;
-
     this.listaCc.forEach( element => {
       console.log( ' Destinatario ---> ' + element.nombreCompleto );
     });
-
     this.formHojaDeRuta.controls['listaCc'].setValue( (this._isCcInvalid) ? undefined : this.listaCc );
   }
 

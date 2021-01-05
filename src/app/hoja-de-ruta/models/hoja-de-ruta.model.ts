@@ -16,6 +16,7 @@ export interface HojaDeRutaModel {
   //nombreRemitente?: string;
   nombreDestinatario?: string;
   nombreCopiaCc?: string;
+  numeroHojaRuta?: string;
   // TODO : AÑADIR EL ATRIBUTO QUE MAPEE A LA LISTA DE DOCUMENTOS ADJUNTO
 }
 /*

@@ -15,3 +15,9 @@ export interface TipoTramiteModel {
   codigoRespuesta?: number;
   mensaje?: string;
 }
+
+export interface TipoBandejaModel {
+  idTipoBandeja?: number;
+  descripcionTipoBandeja?: string;
+}
+

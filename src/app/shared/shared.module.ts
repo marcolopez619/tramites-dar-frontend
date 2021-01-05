@@ -55,6 +55,7 @@ import { UsuarioService } from './services/usuario.service';
 import { DocumentoAdjuntoComponent } from './components/documento-adjunto/documento-adjunto.component';
 import { ParametricaService } from './services/parametrica.service';
 import { ComentarioService } from './services/comentario.service';
+import { BusquedaAvanzadaComponent } from './components/busqueda-avanzada/busqueda-avanzada.component';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -84,7 +85,8 @@ import { ComentarioService } from './services/comentario.service';
         TableEmptyComponent,
         HojaDeRutaComponent,
         AutocompleteComponent,
-        DocumentoAdjuntoComponent
+        DocumentoAdjuntoComponent,
+        BusquedaAvanzadaComponent
     ],
     imports: [
         CommonModule,
@@ -174,7 +176,8 @@ import { ComentarioService } from './services/comentario.service';
         TableEmptyComponent,
         HojaDeRutaComponent,
         AutocompleteComponent,
-        DocumentoAdjuntoComponent
+        DocumentoAdjuntoComponent,
+        BusquedaAvanzadaComponent
     ],
     entryComponents: [
         ConfirmDialogComponent
