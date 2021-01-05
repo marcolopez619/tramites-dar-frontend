@@ -15,6 +15,7 @@ import { HojaDeRutaModel } from '../../models/hoja-de-ruta.model';
 import { DerivarComponent } from '../derivar/derivar.component';
 import { DetalleSeguimientoComponent } from '../detalle-seguimiento/detalle-seguimiento.component';
 import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-documento.component';
+import { BusquedaAvanzadaComponent } from '../../../shared/components/busqueda-avanzada/busqueda-avanzada.component';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -86,7 +87,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
   onCrearNuevaHojaDeRuta(): void {
 //DetalleSeguimientoComponent
     //const dlgNuevaHojaRuta = this.dialog.open( HojaDeRutaComponent,  {
-    const dlgNuevaHojaRuta = this.dialog.open( DetalleSeguimientoComponent,  {
+    const dlgNuevaHojaRuta = this.dialog.open( HojaDeRutaComponent,  {
       disableClose: true,
       width: '1000px',
       data: {
@@ -150,7 +151,8 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
  */
 
 crearHojadeRuta(): void {
-  //const dlgNuevoCite = this.dialog.open( ComentarioComponent,  {
+  //const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
+    //const dlgNuevoCite = this.dialog.open( BusquedaAvanzadaComponent,  {
     const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
     disableClose: false,
     width: '1000px',

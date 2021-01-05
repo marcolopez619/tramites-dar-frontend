@@ -3,6 +3,8 @@ export const hojaDeRutaLang = {
     'tit-adm-hoja-de-ruta' : 'Administracion de hojas de ruta',
     'tit-dlg-adjuntar-documento' : 'Adjuntar documentos',
     'btn-crear-nueva-hoja-ruta' : 'Crear nueva hoja de ruta',
+    'Btn-Buscar': 'Buscar',
+    'Btn-Limpiar': 'Limpiar',
 
     'lbl-recibidos' : 'Recibidos',
     'lbl-pendientes' : 'Pendientes',
@@ -67,6 +69,12 @@ export const hojaDeRutaLang = {
     'lbl-participante': 'Participante',
     'lbl-derivar': 'Derivar',
     'lbl-buscar-cite': 'Buscar cite',
+    'lbl-busqueda-hoja-ruta': 'Búsqueda avanzada',
+    'lbl-hoja-de-ruta': 'Hoja de ruta',
+    'lbl-rango-fecha': 'Rango de fechas',
+    'lbl-bucar-en': 'Buscar en',
+    'lbl-hoja-ruta': 'Hoja de ruta',
+    'lbl-nombre-destinatario': 'Destinatario',
 
     'tit-ventana-finaliza-tramite': 'Finalizar trámite',
     'tit-ventana-añadir-comentario': 'Añadir comentario',
