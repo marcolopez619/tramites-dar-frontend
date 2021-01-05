@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ContextoService } from './contexto.service';
 import { Resultado } from '../models/resultado.model';
-import { DocumentoAdjuntoModel } from '../models/documento-adjunto.model';
+import { DataDocumentoAdjunto, DocumentoAdjuntoModel } from '../models/documento-adjunto.model';
 
 @Injectable()
 export class DocumentoAdjuntoService {
@@ -16,8 +16,8 @@ export class DocumentoAdjuntoService {
     private contextoService: ContextoService
   ) { }
 
-  sendFlagToSaveDocument( startSaveDocuments: boolean): void {
-    this.saveDocumentoAdjuntos.next( startSaveDocuments );
+  sendFlagToSaveDocument( pDataDocumentoAdjunto: DataDocumentoAdjunto): void {
+    this.saveDocumentoAdjuntos.next( pDataDocumentoAdjunto );
   }
 
   getFlagToSaveDocument(): Observable<unknown> {
@@ -28,8 +28,13 @@ export class DocumentoAdjuntoService {
 
     const formData = new FormData();
     formData.append('file', pDocumento.informacion );
-    formData.append('BucketName', `prueba`);
-    formData.append('PathDestinoOnServer',  `nivel1/nivel2`);
+    formData.append('Id', `${pDocumento.id}`);
+    formData.append('Nombre', `${pDocumento.nombre}`);
+    formData.append('BucketName', `${pDocumento.bucketName}`);
+    formData.append('PathDestinoOnServer',  `${pDocumento.pathDestinoOnServer}`);
+    formData.append('Tipo', `${pDocumento.tipo}`);
+    formData.append('FechaSubida', `${pDocumento.fechaSubida}`);
+    formData.append('UsuarioBitacora', `${this.contextoService.getItemContexto(`samActName`)}`);
 
     const options = {
       params: new HttpParams().set('isMultipart', 'true'),

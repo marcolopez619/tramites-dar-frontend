@@ -6,6 +6,7 @@ import { BaseComponent } from '../../../shared/base.component';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { DocumentoAdjuntoService } from '../../../shared/services/documento-adjunto.service';
 import { LangService } from '../../../shared/services/lang.service';
+import { DataDocumentoAdjunto } from '../../../shared/models/documento-adjunto.model';
 
 @Component({
   selector: 'app-adjuntar-documento',
@@ -39,7 +40,11 @@ export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit
 
     if ( this.formAdjuntarDocumento.controls[ 'documentosAdjuntos' ].valid ) {
       //Enviar el flag de inicio de subida de documentos al servidor de archivos ( true )
-      this.documentoAdjuntoService.sendFlagToSaveDocument( true );
+      const data: DataDocumentoAdjunto = {
+        startSaveDocuments : true
+      };
+
+      this.documentoAdjuntoService.sendFlagToSaveDocument( data );
     }
 
   }

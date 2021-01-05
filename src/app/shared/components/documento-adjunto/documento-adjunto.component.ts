@@ -5,10 +5,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { fadeInAnim, slideInLeftAnim } from '../../animations/template.animation';
 import { BaseComponent } from '../../base.component';
-import { DocumentoAdjuntoModel } from '../../models/documento-adjunto.model';
+import { DataDocumentoAdjunto, DocumentoAdjuntoModel } from '../../models/documento-adjunto.model';
 import { LangService } from '../../services/lang.service';
 import { DocumentoAdjuntoService } from './../../services/documento-adjunto.service';
 import { eModulo } from '../../enums/modulo.enum';
+import { CiteModelByUsuario } from '../../../cites/models/cites.models';
 
 @Component({
   selector: 'sh-documento-adjunto',
@@ -23,6 +24,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
   dataSource = new MatTableDataSource<DocumentoAdjuntoModel>([]);
 
   listaDocumentosToUpload: Array<DocumentoAdjuntoModel> = [];
+  dataDocumentoAdjunto: any;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -43,13 +45,21 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
     super();
 
     // Monitorea si se desea guardar los documentos adjuntos
-    this.documentoAdjuntoService.getFlagToSaveDocument().pipe( takeUntil(this.unsubscribe$)).subscribe( flagToSaveDocument => {
-      console.log( `SHARED DOCUMENTO ADJUNTO --> ${flagToSaveDocument}`);
+    this.documentoAdjuntoService.getFlagToSaveDocument().pipe( takeUntil(this.unsubscribe$)).subscribe( data => {
 
-      if (flagToSaveDocument) {
+      // Asigna los datos necesarios para guardar la informacion del doc adjunto.
+      this.dataDocumentoAdjunto = this.dataDocumentoAdjunto ?? (data as DataDocumentoAdjunto).datosAdicionales;
+
+      console.log( `SHARED DOCUMENTO ADJUNTO --> ${data.startSaveDocuments}`);
+
+      if (data.startSaveDocuments) {
         console.log( `Subiendo Cantidad : ${this.listaDocumentosToUpload.length} archivos al servidor` );
-        // Sube los documentos al servidor de archivos.
-        // this.onSaveDocument();
+        console.log( `Informacion adicional :  ${ JSON.stringify(this.dataDocumentoAdjunto) }` );
+
+        if (this.dataDocumentoAdjunto) {
+          // Sube los documentos al servidor de archivos.
+          this.onSaveDocument();
+        }
       }
 
     });
@@ -107,12 +117,22 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
 
         const indexInicioExtensionFile = fileTemporal.name.lastIndexOf( '.' );
 
+        let idFile = 0;
+
+         // Verifica que tipo es dataDocumentoAdjunto
+        if ( 'idCite' in this.dataDocumentoAdjunto   ) {
+          // => es de tipo: idCite
+          idFile = this.dataDocumentoAdjunto.idCite;
+        }
+
         const documentoAdjuntoToUpload: DocumentoAdjuntoModel = {
-          id         : ( Math.random() * 10 ) / 100,
-          tipo       : fileTemporal.name.substring( indexInicioExtensionFile + 1 ),
-          nombre     : fileTemporal.name.substring( 0, indexInicioExtensionFile ),
-          fechaSubida: new Date(),
-          informacion: fileTemporal
+          id                 : idFile,
+          bucketName         : 'prueba', // FIXME: DATO QUEMADO
+          pathDestinoOnServer: 'nivel1/nivel2/', // FIXME: DATO QUEMADO
+          tipo               : fileTemporal.name.substring( indexInicioExtensionFile + 1 ),
+          nombre             : fileTemporal.name.substring( 0, indexInicioExtensionFile ),
+          fechaSubida        : new Date().toISOString(),
+          informacion        : fileTemporal
         };
 
         this.listaDocumentosToUpload.push( documentoAdjuntoToUpload );
