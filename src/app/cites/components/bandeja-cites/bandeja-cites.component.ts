@@ -13,6 +13,8 @@ import { CitesService } from '../../cites.service';
 import { CiteModelByUsuario, ResultCiteInst } from '../../models/cites.models';
 import { BaseComponent } from './../../../shared/base.component';
 import { CrearNuevoCiteComponent } from './../crear-nuevo-cite/crear-nuevo-cite.component';
+import { DocumentoAdjuntoComponent } from '../../../shared/components/documento-adjunto/documento-adjunto.component';
+import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-documento.component';
 
 @Component({
   selector: 'app-bandeja-cites',
@@ -104,7 +106,21 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
   }
 
   onUploadArchivo(pCiteModel: CiteModelByUsuario): void {
-    console.log( `SUBIENDOOOOOOOOO DOCUMENTO ---> ${pCiteModel.idCite}` );
+
+    const dlgUploadArchivo = this.dialog.open( AdjuntarDocumentoComponent,  {
+      disableClose: false,
+      width: '1000px',
+      data: {
+        citeSelected : pCiteModel
+      }
+    });
+    dlgUploadArchivo.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
+      if (result) {
+        /* const resultCiteInst = result as ResultCiteInst;
+        const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
+        this.getAllCitesFromPersona(idPersonaGd); */
+      }
+    });
   }
 
 

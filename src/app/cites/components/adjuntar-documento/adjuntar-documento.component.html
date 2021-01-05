@@ -1,0 +1,27 @@
+<shared-loader-spinner></shared-loader-spinner>
+
+<mat-card>
+  <mat-card-header class="alt-theme">
+  <mat-toolbar shToolbarModal color="primary">
+      <h3>{{ langService.getLang(eModulo.Base, 'tit-documentos-adjuntos') }}</h3>
+      <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
+          <mat-icon>close</mat-icon>
+      </a>
+  </mat-toolbar>
+ </mat-card-header>
+
+ <mat-dialog-content>
+   <sh-documento-adjunto [titleToolbar]="''" [isRequired]="true" (isValid)="verifyDocsAdjuntos($event)"></sh-documento-adjunto>
+ </mat-dialog-content>
+
+ <mat-dialog-actions fxLayout="row" fxLayoutGap="20px">
+  <button fxFlex mat-raised-button color="accent" (click)="onSaveDocAdjuntos()" [disabled]="!this.isValid || contextService.isLoading">
+    {{langService.getLang(eModulo.Base, 'lbl-guardar' )}}
+  </button>
+  <button fxFlex mat-raised-button color="warn" (click)="onClose()">
+    {{langService.getLang(eModulo.Base, 'btnCancel' )}}
+  </button>
+</mat-dialog-actions>
+
+</mat-card>

@@ -6,11 +6,12 @@ import { SharedModule } from '../shared/shared.module';
 import { citesRoutes } from './cites.routing';
 import { CrearNuevoCiteComponent } from './components/crear-nuevo-cite/crear-nuevo-cite.component';
 import { CitesService } from './cites.service';
+import { AdjuntarDocumentoComponent } from './components/adjuntar-documento/adjuntar-documento.component';
 
 
 
 @NgModule({
-  declarations: [BandejaCitesComponent, CrearNuevoCiteComponent],
+  declarations: [BandejaCitesComponent, CrearNuevoCiteComponent, AdjuntarDocumentoComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(citesRoutes),
