@@ -19,6 +19,8 @@ export interface CiteModelByUsuario{
   referencia?: string;
   fechaCreacion?: Date;
   estado?: string;
+  poseeDocAdjunto?: boolean;
+  pathArchivo?: string;
   isRowMouseOver?: boolean;
 }
 

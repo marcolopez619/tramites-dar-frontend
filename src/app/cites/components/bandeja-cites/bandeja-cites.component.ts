@@ -103,6 +103,10 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
     console.log( `IMPRIMIENDO ---> ${pCiteModel.idCite}` );
   }
 
+  onUploadArchivo(pCiteModel: CiteModelByUsuario): void {
+    console.log( `SUBIENDOOOOOOOOO DOCUMENTO ---> ${pCiteModel.idCite}` );
+  }
+
 
 
 }
