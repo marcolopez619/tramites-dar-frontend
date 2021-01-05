@@ -1,14 +1,14 @@
-import { takeUntil } from 'rxjs/internal/operators/takeUntil';
-import { DocumentoAdjuntoService } from './../../services/documento-adjunto.service';
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { fadeInAnim, slideInLeftAnim } from '../../animations/template.animation';
 import { BaseComponent } from '../../base.component';
 import { DocumentoAdjuntoModel } from '../../models/documento-adjunto.model';
 import { LangService } from '../../services/lang.service';
+import { DocumentoAdjuntoService } from './../../services/documento-adjunto.service';
+import { eModulo } from '../../enums/modulo.enum';
 
 @Component({
   selector: 'sh-documento-adjunto',
@@ -29,6 +29,9 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
 
   @Input()
   isRequired = false;
+
+  @Input()
+  titleToolbar: string;
 
   @Output()
   isValid = new  EventEmitter();
@@ -53,6 +56,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
   }
 
   ngOnInit(): void {
+    this.titleToolbar = this.titleToolbar ?? this.langService.getLang(eModulo.Base, 'tit-documentos-adjuntos');
     // ...
    /*  this.listaDocumentosToUpload = [{
       id : 1,
