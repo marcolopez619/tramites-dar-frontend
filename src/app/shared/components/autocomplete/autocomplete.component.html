@@ -17,7 +17,7 @@
             formControlName="autoCompleteData"
             [matAutocomplete]="auto"
             [matChipInputFor]="chipList"
-            [disabled]="this.listaSeleccionados?.length >= this.cantidadPermitida"
+            [disabled]="listaSeleccionados?.length >= cantidadPermitida"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
             <!-- (matChipInputTokenEnd)="add($event)"> -->
           </mat-chip-list>
@@ -34,5 +34,5 @@
         </mat-form-field>
       </div>
       <mat-error *ngIf="formAutocomplete.controls['autoCompleteData'].invalid">{{matLabelError}}</mat-error>
-      <mat-error *ngIf="this.listaSeleccionados?.length > this.cantidadPermitida">{{langService.getLang(eModulo.Base, 'lbl-error-supero-cantidad-maxima-permitida' ).replace('$cantidadUsuario', this.cantidadPermitida)}}</mat-error>
+      <!-- <mat-error *ngIf="listaSeleccionados?.length > cantidadPermitida">{{langService.getLang(eModulo.Base, 'lbl-error-supero-cantidad-maxima-permitida' ).replace('$cantidadUsuario', this.cantidadPermitida)}}</mat-error> -->
   </form>

@@ -138,7 +138,15 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.listaSeleccionados.push(event.option.value as UsuarioModel);
+
+    const nuevoUsuarioSeleccionado = event.option.value as UsuarioModel;
+
+    // Verifica si el usuario ya se añadio a la lista con anterioridad
+    if ( this.listaSeleccionados.findIndex( p => p.idPersonaGd === nuevoUsuarioSeleccionado.idPersonaGd) < 0 )  {
+      // No se encontro la persona ==> la añade
+      this.listaSeleccionados.push(event.option.value as UsuarioModel);
+    }
+
     this.input.nativeElement.value = '';
     this._emitIsFormularioInvalid();
     this.listaSeleccionadosEmiter.next( this.listaSeleccionados );
