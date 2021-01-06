@@ -12,7 +12,7 @@
  </mat-card-header>
 
  <mat-dialog-content>
-   <sh-documento-adjunto [titleToolbar]="''" [isRequired]="true" (isValid)="verifyDocsAdjuntos($event)"></sh-documento-adjunto>
+   <sh-documento-adjunto [titleToolbar]="''" [isRequired]="true" [cantidadPermitidaSubida]="data.cantidadPermitidaSubidaArchivos" (isValid)="verifyDocsAdjuntos($event)"></sh-documento-adjunto>
  </mat-dialog-content>
 
  <mat-dialog-actions fxLayout="row" fxLayoutGap="20px">

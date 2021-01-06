@@ -11,6 +11,7 @@ import { LangService } from '../../services/lang.service';
 import { DocumentoAdjuntoService } from './../../services/documento-adjunto.service';
 import { tap } from 'rxjs/operators';
 import { NotificacionService } from '../../services/notificacion.service';
+import { eTipoNotificacion } from '../../enums/tipo-notificacion.enum';
 
 @Component({
   selector: 'sh-documento-adjunto',
@@ -35,6 +36,9 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
 
   @Input()
   titleToolbar: string;
+
+  @Input()
+  cantidadPermitidaSubida ? = 100;
 
   @Output()
   isValid = new  EventEmitter();
@@ -68,7 +72,11 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
   }
 
   ngOnInit(): void {
-    this.titleToolbar = this.titleToolbar ?? this.langService.getLang(eModulo.Base, 'tit-documentos-adjuntos');
+    if (this.cantidadPermitidaSubida !== 100 ) {
+      this.titleToolbar = this.langService.getLang(eModulo.Base, 'tit-cantidad-documentos-adjuntos').replace('$cantidadPermitida', this.cantidadPermitidaSubida.toString() );
+    } else {
+      this.titleToolbar = this.titleToolbar ?? this.langService.getLang(eModulo.Base, 'tit-documentos-adjuntos');
+    }
     this.listaDocumentosToUpload = [];
   }
 
@@ -93,7 +101,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
 
   onUploadDocument($event): void {
 
-    if ($event.target.files.length > 0 ) {
+    if ($event.target.files.length > 0 && $event.target.files.length <= this.cantidadPermitidaSubida && this.listaDocumentosToUpload.length < this.cantidadPermitidaSubida) {
 
       const listaTemporalDocumentosUpload: Array<File> = Array.from($event.target.files);
 
@@ -127,7 +135,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
       this.dataSource.data = this.listaDocumentosToUpload;
 
     } else {
-      //..
+      this.notificacionService.showSnackbarMensaje(`SOLO SE PERMITE SUBIR ${this.cantidadPermitidaSubida} ARCHIVOS`, 3500, eTipoNotificacion.Advertencia);
     }
 
     this.verifyisValid();
@@ -155,11 +163,11 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
     this.listaDocumentosToUpload.forEach(element => {
       this.documentoAdjuntoService.uploadDocumentToServer( element ).pipe( takeUntil ( this.unsubscribe$ ) ).subscribe( respSave => {
 
-        this.notificacionService.progressSubject.asObservable().subscribe( porcentajeUpload =>{
+        this.notificacionService.progressSubject.asObservable().subscribe( porcentajeUpload => {
           if (porcentajeUpload.progress) {
             element.porcentajeUploaded = 100;
           }
-        })
+        });
         console.log( '----> ', respSave.message );
       });
     });
