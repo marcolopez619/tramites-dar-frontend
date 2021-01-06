@@ -66,25 +66,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
 
   ngOnInit(): void {
     this.titleToolbar = this.titleToolbar ?? this.langService.getLang(eModulo.Base, 'tit-documentos-adjuntos');
-    // ...
-   /*  this.listaDocumentosToUpload = [{
-      id : 1,
-      tipo : 'pdf',
-      nombre : 'primer archivo',
-      fechaSubida : new Date(),
-      informacion : undefined
-    },
-    {
-      id : 2,
-      tipo : 'docx',
-      nombre : 'Segundo archivo',
-      fechaSubida : new Date(),
-      informacion : undefined
-    }]; */
-
     this.listaDocumentosToUpload = [];
-
-    // this.dataSource.data = this.listaDocumentosToUpload;
   }
 
   ngAfterViewInit(): void {
@@ -141,7 +123,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
       this.dataSource.data = this.listaDocumentosToUpload;
 
     } else {
-
+      //..
     }
 
     this.verifyisValid();

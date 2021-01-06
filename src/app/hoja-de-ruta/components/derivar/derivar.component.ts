@@ -1,40 +1,32 @@
-import { Component, Inject, OnInit, Output, EventEmitter } from "@angular/core";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { MatTableDataSource } from "@angular/material/table";
-import { takeUntil } from "rxjs/internal/operators/takeUntil";
-import { CitesService } from "../../../cites/cites.service";
-import { CiteModelByUsuario } from "../../../cites/models/cites.models";
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
+import { CitesService } from '../../../cites/cites.service';
+import { CiteModelByUsuario } from '../../../cites/models/cites.models';
 import {
   fadeInAnim,
-  slideInLeftAnim,
-} from "../../../shared/animations/template.animation";
-import { BaseComponent } from "../../../shared/base.component";
-import { ComentarioModel } from "../../../shared/models/comentario.model";
-import { DestinatarioModel, UsuarioModel } from "../../../shared/models/Usuario.model";
-import { ComentarioService } from "../../../shared/services/comentario.service";
-import { ContextoService } from "../../../shared/services/contexto.service";
-import { DocumentoAdjuntoService } from "../../../shared/services/documento-adjunto.service";
-import { LangService } from "../../../shared/services/lang.service";
-import { UsuarioService } from "../../../shared/services/usuario.service";
-import { DerivarModel } from "../../models/derivar.model";
+  slideInLeftAnim
+} from '../../../shared/animations/template.animation';
+import { BaseComponent } from '../../../shared/base.component';
+import { DataDocumentoAdjunto } from '../../../shared/models/documento-adjunto.model';
+import { UsuarioModel } from '../../../shared/models/Usuario.model';
+import { ContextoService } from '../../../shared/services/contexto.service';
+import { DocumentoAdjuntoService } from '../../../shared/services/documento-adjunto.service';
+import { LangService } from '../../../shared/services/lang.service';
+import { UsuarioService } from '../../../shared/services/usuario.service';
+import { DerivarModel } from '../../models/derivar.model';
 
 @Component({
-  selector: "derivar",
-  templateUrl: "./derivar.component.html",
+  selector: 'derivar',
+  templateUrl: './derivar.component.html',
   animations: [fadeInAnim, slideInLeftAnim],
-  host: { class: "container-fluid", "[@fadeInAnim]": "true" },
+  host: { class: 'container-fluid', '[@fadeInAnim]': 'true' }
 })
 export class DerivarComponent extends BaseComponent implements OnInit {
   listaUsuarios: Array<UsuarioModel> = [];
   listaCite: Array<CiteModelByUsuario> = [];
-
-
 
   longMaxDescripcion = 500;
   formDerivarHR: FormGroup;
@@ -51,15 +43,14 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     private usuarioService: UsuarioService,
     private citesService: CitesService,
     private documentoAdjuntoService: DocumentoAdjuntoService
-  )
-  {
+  ) {
     super();
   }
 
   ngOnInit(): void {
 
     const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
-    this.getAllCitesFromPersona( idPersonaGd )
+    this.getAllCitesFromPersona( idPersonaGd );
     const dataForm: DerivarModel = {};
 
     // Carga los usuarios de la bd
@@ -67,7 +58,7 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     this.getAllusuarios(idTipoTramite);
 
     this.formDerivarHR = this.formBuilder.group({
-      listaDestinatarios: [undefined, Validators.compose([Validators.required])],
+      listaDestinatarios: [undefined, Validators.compose([Validators.required])]
     });
   }
 
@@ -85,18 +76,18 @@ export class DerivarComponent extends BaseComponent implements OnInit {
 
   getEstatusFormDestinatario($event): void {
     this._isDestinatarioInvalid = $event;
-    console.log(" is Invalid Destinatario : " + $event);
+    console.log(' is Invalid Destinatario : ' + $event);
   }
 
   getListaSeleccionadaDestinatarios($event): void {
-    console.log("----------------------");
+    console.log('----------------------');
     this.listaDestinatarios = $event as Array<UsuarioModel>;
 
     this.listaDestinatarios.forEach((element) => {
-      console.log(" Destinatario ---> " + element.nombreCompleto);
+      console.log(' Destinatario ---> ' + element.nombreCompleto);
     });
 
-    this.formDerivarHR.controls["listaDestinatarios"].setValue(
+    this.formDerivarHR.controls['listaDestinatarios'].setValue(
       this._isDestinatarioInvalid ? undefined : this.listaDestinatarios
     );
   }
@@ -108,7 +99,11 @@ export class DerivarComponent extends BaseComponent implements OnInit {
   }
 
   save(): void {
-    this.documentoAdjuntoService.sendFlagToSaveDocument(true);
+    const data: DataDocumentoAdjunto = {
+      startSaveDocuments : true,
+      datosAdicionales : undefined
+    };
+    this.documentoAdjuntoService.sendFlagToSaveDocument( data );
     const datosFormulario: DerivarModel = { };
 
   }

@@ -12,5 +12,5 @@ export interface DocumentoAdjuntoModel{
 
 export interface DataDocumentoAdjunto{
   startSaveDocuments?: boolean;
-  datosAdicionales?: unknown;
+  datosAdicionales?: any;
 }
