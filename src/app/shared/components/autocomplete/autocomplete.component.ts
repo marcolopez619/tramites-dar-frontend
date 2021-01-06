@@ -42,6 +42,9 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
   @Input()
   isRequired: boolean;
 
+  @Input()
+  cantidadPermitida: number;
+
   @Output()
   listaSeleccionadosEmiter = new EventEmitter();
 
