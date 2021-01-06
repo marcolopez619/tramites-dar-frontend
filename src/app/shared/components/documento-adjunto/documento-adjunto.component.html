@@ -1,4 +1,4 @@
-<shared-loader-spinner></shared-loader-spinner>
+<!-- <shared-loader-spinner></shared-loader-spinner> -->
 
 <mat-card>
   <mat-card-header class="alt-theme">
@@ -23,13 +23,20 @@
       </ng-container>
 
       <ng-container matColumnDef="tipo">
-        <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-extension-documento') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10"> {{element.tipo}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="5" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-extension-documento') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="5"> {{element.tipo}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="fechaSubida" >
+        <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-subida') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaSubida | date : 'dd/MM/yyyy' }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="progreso" >
         <mat-header-cell *matHeaderCellDef fxFlex="20"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-subida') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="20" > {{element.fechaSubida | date : 'dd/MM/yyyy' }} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="20" >
+          <mat-progress-bar mode="determinate" value="{{ (notificacionService.progressSubject | async)?.progress ? (notificacionService.progressSubject | async)?.progress : element.porcentajeUploaded }}"></mat-progress-bar>
+        </mat-cell>
       </ng-container>
 
 

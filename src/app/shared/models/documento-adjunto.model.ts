@@ -7,6 +7,7 @@ export interface DocumentoAdjuntoModel{
   fechaSubida?: unknown;
   informacion?: File;
   usuarioBitacora?: string;
+  porcentajeUploaded?: number;
 }
 
 

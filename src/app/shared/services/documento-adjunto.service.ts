@@ -37,7 +37,7 @@ export class DocumentoAdjuntoService {
     formData.append('UsuarioBitacora', `${this.contextoService.getItemContexto(`samActName`)}`);
 
     const options = {
-      params: new HttpParams().set('isMultipart', 'true'),
+      params: new HttpParams().set('isMultipart', 'true').set('filename', pDocumento.informacion.name),
       reportProgress: true
     };
 

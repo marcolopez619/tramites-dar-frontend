@@ -9,6 +9,8 @@ import { eModulo } from '../../enums/modulo.enum';
 import { DataDocumentoAdjunto, DocumentoAdjuntoModel } from '../../models/documento-adjunto.model';
 import { LangService } from '../../services/lang.service';
 import { DocumentoAdjuntoService } from './../../services/documento-adjunto.service';
+import { tap } from 'rxjs/operators';
+import { NotificacionService } from '../../services/notificacion.service';
 
 @Component({
   selector: 'sh-documento-adjunto',
@@ -19,7 +21,7 @@ import { DocumentoAdjuntoService } from './../../services/documento-adjunto.serv
 })
 export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['nombre', 'tipo', 'fechaSubida', 'acciones'];
+  displayedColumns = ['nombre', 'tipo', 'fechaSubida', 'progreso', 'acciones'];
   dataSource = new MatTableDataSource<DocumentoAdjuntoModel>([]);
 
   listaDocumentosToUpload: Array<DocumentoAdjuntoModel> = [];
@@ -39,6 +41,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
 
   constructor(
     public langService: LangService,
+    public notificacionService: NotificacionService,
     private documentoAdjuntoService: DocumentoAdjuntoService
   ) {
     super();
@@ -113,7 +116,8 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
           tipo               : fileTemporal.name.substring( indexInicioExtensionFile + 1 ),
           nombre             : fileTemporal.name.substring( 0, indexInicioExtensionFile ),
           fechaSubida        : new Date().toISOString(),
-          informacion        : fileTemporal
+          informacion        : fileTemporal,
+          porcentajeUploaded : 0
         };
 
         this.listaDocumentosToUpload.push( documentoAdjuntoToUpload );
@@ -150,8 +154,13 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
 
     this.listaDocumentosToUpload.forEach(element => {
       this.documentoAdjuntoService.uploadDocumentToServer( element ).pipe( takeUntil ( this.unsubscribe$ ) ).subscribe( respSave => {
-        console.log( '----> ', respSave.data );
-        // this.documentoAdjuntoService.sendFlagIsDocumentoAdjuntoUploaded( true );
+
+        this.notificacionService.progressSubject.asObservable().subscribe( porcentajeUpload =>{
+          if (porcentajeUpload.progress) {
+            element.porcentajeUploaded = 100;
+          }
+        })
+        console.log( '----> ', respSave.message );
       });
     });
   }

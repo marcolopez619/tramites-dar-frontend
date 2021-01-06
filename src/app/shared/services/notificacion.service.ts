@@ -28,7 +28,7 @@ export class NotificacionService {
      * @type {(Subject<number | null>)}
      * @memberof NotificacionService
      */
-    progressSubject: Subject<number | null>;
+    progressSubject: Subject<any | null>;
 
     /**
      * Creates an instance of NotificacionService.

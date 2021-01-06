@@ -53,6 +53,7 @@ export class BackendInterceptor extends BaseComponent implements HttpInterceptor
         this.langService = this.inj.get(LangService);
 
         const isMultipart: boolean =  req.params.get('isMultipart') === 'true'  ;
+        const fileName: string = req.params.get('filename');
 
         // Verifica si existen los parametros para ocultar el progressbar/notificador.
         const showProgressBar = !req.headers.has(this.config.headerProgressbar);
@@ -85,10 +86,14 @@ export class BackendInterceptor extends BaseComponent implements HttpInterceptor
                             }
                             break;
                         case HttpEventType.UploadProgress:
-                            // No se notifica el upload.
-                            // if (event.total) {
-                            // 	this.notificacionService.progressSubject.next(Math.round((event.loaded / event.total) * 100));
-                            // }
+                            this.contextoService.isLoading = true;
+
+                            if (event.total) {
+                              this.notificacionService.progressSubject.next({
+                                fileName : fileName,
+                                progress : Math.round((event.loaded / event.total) * 100)
+                              });
+                            }
                             break;
                         case HttpEventType.Response:
                             // Notifica mensaje.
