@@ -71,7 +71,8 @@ export const baseLang = {
             'lbl-fecha-subida' : 'Fecha subida',
             'btn-subir-nuevo-ducumento' : 'Subir nuevo documento',
             'tit-documentos-adjuntos' : 'Documentos adjuntos',
-            'lbl-estado' : 'Estado'
+            'lbl-estado' : 'Estado',
+            'lbl-error-supero-cantidad-maxima-permitida' : 'Solo se permite $cantidadUsuario usuarios'
         },
         'en': {
             'lang-error': 'Lang not found',
