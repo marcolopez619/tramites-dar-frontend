@@ -16,6 +16,7 @@ import { DerivarComponent } from '../derivar/derivar.component';
 import { DetalleSeguimientoComponent } from '../detalle-seguimiento/detalle-seguimiento.component';
 import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-documento.component';
 import { BusquedaAvanzadaComponent } from '../../../shared/components/busqueda-avanzada/busqueda-avanzada.component';
+import { NuevoParticipanteComponent } from '../nuevo-participante/nuevo-participante.component';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -26,9 +27,7 @@ import { BusquedaAvanzadaComponent } from '../../../shared/components/busqueda-a
 })
 export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
-
-
-  displayedColumns = ['tipoRemitente', 'nombreRemitente','tipoDocumento', 'numeroCite', 'destinatarios', 'referencia', 'estado', 'acciones'];
+  displayedColumns = ['tipoRemitente', 'nombreRemitente', 'tipoDocumento', 'numeroCite', 'destinatarios', 'referencia', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<any>([]);
 
   datoComunicarPadre: string;
@@ -106,7 +105,6 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
     this.datoComunicarPadre = event.elemento;
   }
 
-
   onCompartir(pDerivarModel: DerivarModel): void {
     const dlgNuevoCite = this.dialog.open( DerivarComponent,  {
       disableClose: false,
@@ -159,7 +157,7 @@ crearHojadeRuta(): void {
     data: {
     }
   });
-  dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
+    dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
     if (result) {
       //..
     }
@@ -179,5 +177,22 @@ adjuntarDocumento(): void {
   });
 }
 
+  onAnadirParticipante(): void {
+  //const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
+    //const dlgNuevoCite = this.dialog.open( BusquedaAvanzadaComponent,  {
+    const dlgNuevoParticipante = this.dialog.open( NuevoParticipanteComponent,  {
+    disableClose: false,
+    width: '1000px',
+    data: {
+      idHojaRuta : 1,
+
+    }
+  });
+    dlgNuevoParticipante.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
+    if (result) {
+      //..
+    }
+  });
+}
 
 }
