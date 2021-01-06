@@ -49,9 +49,9 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
       // Asigna los datos necesarios para guardar la informacion del doc adjunto.
       this.dataDocumentoAdjunto = this.dataDocumentoAdjunto ?? (data as DataDocumentoAdjunto).datosAdicionales;
 
-      console.log( `SHARED DOCUMENTO ADJUNTO --> ${data.startSaveDocuments}`);
+      console.log( `SHARED DOCUMENTO ADJUNTO --> ${(data as DataDocumentoAdjunto).startSaveDocuments}`);
 
-      if (data.startSaveDocuments) {
+      if ((data as DataDocumentoAdjunto).startSaveDocuments) {
         console.log( `Subiendo Cantidad : ${this.listaDocumentosToUpload.length} archivos al servidor` );
         console.log( `Informacion adicional :  ${ JSON.stringify(this.dataDocumentoAdjunto) }` );
 

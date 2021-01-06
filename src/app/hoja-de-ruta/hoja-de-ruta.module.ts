@@ -10,6 +10,7 @@ import { DetalleSeguimientoComponent } from './components/detalle-seguimiento/de
 import { SeguimientoComponent } from './components/seguimiento/seguimiento.component';
 import { DerivarComponent } from './components/derivar/derivar.component';
 import { AdjuntarDocumentoComponent } from './components/adjuntar-documento/adjuntar-documento.component';
+import { NuevoParticipanteComponent } from './components/nuevo-participante/nuevo-participante.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { AdjuntarDocumentoComponent } from './components/adjuntar-documento/adju
     DetalleSeguimientoComponent,
     SeguimientoComponent,
     DerivarComponent,
-    AdjuntarDocumentoComponent
+    AdjuntarDocumentoComponent,
+    NuevoParticipanteComponent
   ],
   imports: [
     CommonModule,

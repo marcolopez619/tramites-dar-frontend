@@ -1,0 +1,48 @@
+<div class="alt-theme">
+  <mat-toolbar color="primary">
+      <h3>{{ langService.getLang(eModulo.HojaDeRuta, 'tit-anadir-participante') }}</h3>
+      <span class="flex-spacer"></span>
+
+  <button mat-button mat-dialog-close matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}">
+      <mat-icon>close</mat-icon>
+  </button>
+
+  </mat-toolbar>
+</div>
+
+<mat-dialog-content>
+  <form [formGroup]="formAnadirNuevoParticipante"  fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
+
+      <div fxLayout="column" fxLayout.lt-sm="column" fxLayoutAlign="space-around stretch" fxLayoutGap="20px" fxFlexFill>
+
+        <div  fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
+          <sh-autocomplete *ngIf="listaUsuarios?.length > 0"
+            [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-participante' )"
+            [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-urgente' )"
+            [isRequired]="true"
+            [listaCompleta]="listaUsuarios"
+            (isFormularioInvalid) = "getEstatusFormDestinatario($event)"
+            (listaSeleccionadosEmiter)="getListaSeleccionadaDestinatarios($event)">
+          </sh-autocomplete>
+        </div>
+
+        <mat-form-field fxFlexFill>
+          <input
+            matInput
+            required
+            shUppercase
+            maxlength="100"
+            placeholder="{{langService.getLang(eModulo.HojaDeRuta,'lbl-referencia')}}"
+            formControlName="descripcion">
+          <mat-error *ngIf="formAnadirNuevoParticipante.controls['descripcion'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-referencia') }}</mat-error>
+        </mat-form-field>
+
+      </div>
+  </form>
+</mat-dialog-content>
+
+
+<mat-dialog-actions fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center stretch" fxFlexFill>
+  <button fxFlex mat-raised-button color="accent" (click)="onSave()" [disabled]="formAnadirNuevoParticipante.invalid || contextService.isLoading">{{this.langService.getLang(eModulo.Base, 'lbl-guardar')}}</button>
+  <button fxFlex mat-raised-button color="warn" (click)="onCancel()">{{this.langService.getLang(eModulo.Base, 'btn-no')}}</button>
+</mat-dialog-actions>
