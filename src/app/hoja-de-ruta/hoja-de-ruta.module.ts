@@ -11,6 +11,7 @@ import { SeguimientoComponent } from './components/seguimiento/seguimiento.compo
 import { DerivarComponent } from './components/derivar/derivar.component';
 import { AdjuntarDocumentoComponent } from './components/adjuntar-documento/adjuntar-documento.component';
 import { NuevoParticipanteComponent } from './components/nuevo-participante/nuevo-participante.component';
+import { HojaDeRutaService } from './hoja-de-ruta.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,11 @@ import { NuevoParticipanteComponent } from './components/nuevo-participante/nuev
   exports : [
     BandejaHojasDeRutaComponent,
     AdjuntarDocumentoComponent
+  ],
+  providers : [
+    HojaDeRutaService
   ]
+
 })
 export class HojaDeRutaModule { }
 

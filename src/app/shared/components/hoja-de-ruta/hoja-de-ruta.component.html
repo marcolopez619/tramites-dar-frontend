@@ -51,6 +51,7 @@
               [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-remitente' )"
               [isRequired]="true"
               [listaCompleta]="listaUsuarios"
+              [cantidadPermitida]="1"
               (isFormularioInvalid) = "getEstatusFormRemitente($event)"
               (listaSeleccionadosEmiter)="getListaSeleccionadaRemitentes($event)">
             </sh-autocomplete>
@@ -75,6 +76,7 @@
                 [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatario' )"
                 [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-destinatario' )" [isRequired]="true"
                 [listaCompleta]="listaUsuarios"
+                [cantidadPermitida]="1"
                 (isFormularioInvalid)="getEstatusFormDestinatario($event)"
                 (listaSeleccionadosEmiter)="getListaSeleccionadaDestinatarios($event)">
               </sh-autocomplete>
@@ -94,6 +96,7 @@
                 [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-cc' )"
                 [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-cc' )" [isRequired]="true"
                 [listaCompleta]="listaUsuarios"
+                [cantidadPermitida]="1"
                 (isFormularioInvalid)="getEstatusFormcC($event)"
                 (listaSeleccionadosEmiter)="getListaSeleccionadaCc($event)">
               </sh-autocomplete>

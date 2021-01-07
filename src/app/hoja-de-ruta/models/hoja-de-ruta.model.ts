@@ -1,3 +1,5 @@
+import { LoginComponent } from "../../base/login/login.component";
+
 export interface HojaDeRutaModel {
   idHojaRutaModel?: number;
   tipoRemitente?: string;
@@ -19,21 +21,21 @@ export interface HojaDeRutaModel {
   numeroHojaRuta?: string;
   // TODO : AÑADIR EL ATRIBUTO QUE MAPEE A LA LISTA DE DOCUMENTOS ADJUNTO
 }
-/*
-export interface TipoTramiteModel {
-  idTipoTramite?: number;
-  descripcionTipoTramite?: string;
+export interface HojaRutaBandejaModel{
+  codigoRespuesta?: number;
+  mensaje?: string;
+  idHojaRuta?: number;
+  idDerivacion?: number;
+  numero?: number;
+  referencia?:string;
+  gestion?: number;
+  urgente?: number;
+  plazoTotal?: number;
+  tipoTramite?: number;
+  tipoTramiteDes?:string;
+  fechaDeriva?: Date;
+  fechaAcepta?: Date;
+  asunto?:string;
+  fisico?: number;
+  plazo?: number;
 }
-export interface RemitenteModel {
-  idRemitente?: number;
-  descripcionRemitente?: string;
-}
-export interface CCModel {
-  idCC?: number;
-  descripcionCC?: string;
-}
-*/
-/* export interface DestinatarioModel {
-  idDestinatario?: number;
-  descripcionDestinatario?: string;
-} */

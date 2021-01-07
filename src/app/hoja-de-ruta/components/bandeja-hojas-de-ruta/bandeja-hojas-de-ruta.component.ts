@@ -11,12 +11,13 @@ import { HojaDeRutaComponent } from '../../../shared/components/hoja-de-ruta/hoj
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { DerivarModel } from '../../models/derivar.model';
-import { HojaDeRutaModel } from '../../models/hoja-de-ruta.model';
+import { HojaDeRutaModel, HojaRutaBandejaModel } from '../../models/hoja-de-ruta.model';
 import { DerivarComponent } from '../derivar/derivar.component';
 import { DetalleSeguimientoComponent } from '../detalle-seguimiento/detalle-seguimiento.component';
 import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-documento.component';
 import { BusquedaAvanzadaComponent } from '../../../shared/components/busqueda-avanzada/busqueda-avanzada.component';
 import { NuevoParticipanteComponent } from '../nuevo-participante/nuevo-participante.component';
+import { HojaDeRutaService } from '../../hoja-de-ruta.service';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -34,18 +35,25 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  idPersonaGd = 0;
+  tipoBandeja="";
 
   constructor(
     public langService: LangService,
     public contextService: ContextoService,
+    private hojaRutaService: HojaDeRutaService,
     private router: Router,
     private dialog: MatDialog
   ) {  super(); }
 
   ngOnInit(): void {
+    this.idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
+    this.tipoBandeja="PRINCIPAL";
+    this.getAllHojaRutaBandeja( this.idPersonaGd, this.tipoBandeja);
+
+    /*
     const listaVias: Array<string> = [ 'SARDINA GUMUCIO FLORIPONDIO', 'CONDORI MALPARTIDA TIRADO' ];
     const listaVias2: Array<string> = [ 'ZARZURI TIRADO ELBA', 'ARCE CATARI GONZALES' ];
-
     const listaHojaRuta: Array<HojaDeRutaModel> = [
       {
         idHojaRutaModel: 1,
@@ -67,9 +75,17 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
         referencia : 'REFERENCIA DE PRUEBA 2',
         estado: 'EN PROCESO'
       }
-    ];
+    ];*/
 
-    this.dataSource.data = listaHojaRuta;
+    //this.dataSource.data = listaHojaRuta;
+  }
+  private getAllHojaRutaBandeja( idPersonaGd: number, tipoBandeja ): void {
+    this.hojaRutaService.getAllHojaRutaBandeja( idPersonaGd, tipoBandeja ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaHojaRutaBandeja => {
+      //listaCitesPersona.data.map( cite => cite.destinatarios = ( cite.destinatarios !== '' ) ? JSON.parse( cite.destinatarios ) as Array<DestinatarioModel> : cite.destinatarios );
+      //listaCitesPersona.data.map( cite => cite.remitentes = ( cite.remitentes !== '' ) ? JSON.parse( cite.remitentes ) as Array<DestinatarioModel> : cite.remitentes );
+      //listaCitesPersona.data.map( cite => cite.vias = ( cite.vias !== '' ) ? JSON.parse( cite.vias ) as Array<DestinatarioModel> : cite.vias );
+      this.dataSource.data = listaHojaRutaBandeja.data as Array<HojaRutaBandejaModel>;
+    });
   }
 
   ngAfterViewInit(): void {
