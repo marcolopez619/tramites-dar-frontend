@@ -78,6 +78,8 @@ export const hojaDeRutaLang = {
     'lbl-bucar-en': 'Buscar en',
     'lbl-hoja-ruta': 'Hoja de ruta',
     'lbl-nombre-destinatario': 'Destinatario',
+    'lbl-detalle': 'Detalle',
+    'lbl-seguimiento': 'Seguimiento',
 
     'tit-ventana-finaliza-tramite': 'Finalizar trámite',
     'tit-ventana-añadir-comentario': 'Añadir comentario',

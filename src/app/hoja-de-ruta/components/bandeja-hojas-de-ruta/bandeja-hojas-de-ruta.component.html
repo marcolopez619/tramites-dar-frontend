@@ -60,59 +60,35 @@
     </ng-container>
 
     <ng-container matColumnDef="acciones">
-      <mat-header-cell *matHeaderCellDef fxFlex="10" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element;  let i = index;" fxFlex="10" fxLayoutAlign="center center">
+      <mat-header-cell *matHeaderCellDef fxFlex="15" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element;  let i = index;" fxFlex="15" fxLayoutAlign="center center">
         <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-derivar') }}"  (click)="onCompartir(element)">
           <mat-icon>share</mat-icon>
         </a>
-        <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}"  (click)="onEdit(element)">
-          <mat-icon>mode_edit</mat-icon>
+        <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento') }}"  (click)="onDetalle(element)">
+          <mat-icon>view_list</mat-icon>
         </a>
         <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-enviar') }}"  (click)="onEnviarHojaRuta(element)">
           <mat-icon>send</mat-icon>
         </a>
+        <!--
         <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-imprimir-hoja-ruta') }}" (click)="onPrintHojaRuta(element)">
           <mat-icon>print</mat-icon>
         </a>
         <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.HojaDeRuta, 'tit-anadir-participante') }}" (click)="onAnadirParticipante(element)">
           <mat-icon>home</mat-icon>
         </a>
+      -->
       </mat-cell>
     </ng-container>
-    <!---------------------->
-    <!--
-    <div class="container-fluid top-space" style="background: #FFECB3">
-      <h2>Elemento padre</h2>
-      <p>
-          {{datoComunicarPadre}}
-      </p>
-
-      <app-hijo-dos (eventoComunicar)="realizaComunicacionHijo($event)"></app-hijo-dos>
-      <br/>
-    </div>
-    -->
-    <!---------------------->
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row shRowHover [ngClass]="{'row-action': idSeleccionado === row.idHojaRutaModel}" [@fadeInAnim]="true" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row shRowHover [ngClass]="{'row-action': idSeleccionado === row.idHojaRuta}" [@fadeInAnim]="true" *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
   </mat-table>
-      <!--
-    <mat-tab-group dynamicHeight >
-      <mat-tab label="{{langService.getLang(eModulo.HojaDeRuta, 'lbl-recibidos' )}}">
-        Recibidos
-      </mat-tab>
-      <mat-tab label="{{langService.getLang(eModulo.HojaDeRuta, 'lbl-pendientes' )}}">
-        pendientesssssssss
-      </mat-tab>
-      <mat-tab label="{{langService.getLang(eModulo.HojaDeRuta, 'lbl-en-proceso' )}}">
-        En procesossssssss
-      </mat-tab>
-      <mat-tab label="{{langService.getLang(eModulo.HojaDeRuta, 'lbl-finalizados' )}}">
-        Finalizadossssssss
-      </mat-tab>
-    </mat-tab-group>
-  -->
+  <shared-table-empty [datasource]="dataSource"></shared-table-empty>
+  <mat-paginator #paginator [pageSize]="config.paginatorSize" [pageSizeOptions]="config.paginatorOptions" [showFirstLastButtons]="true"></mat-paginator>
+
   </mat-card-content>
 </mat-card>
 

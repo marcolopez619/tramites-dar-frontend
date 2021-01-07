@@ -18,6 +18,7 @@ import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-docum
 import { BusquedaAvanzadaComponent } from '../../../shared/components/busqueda-avanzada/busqueda-avanzada.component';
 import { NuevoParticipanteComponent } from '../nuevo-participante/nuevo-participante.component';
 import { HojaDeRutaService } from '../../hoja-de-ruta.service';
+import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -29,7 +30,7 @@ import { HojaDeRutaService } from '../../hoja-de-ruta.service';
 export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   displayedColumns = ['tipoRemitente', 'nombreRemitente', 'tipoDocumento', 'numeroCite', 'destinatarios', 'referencia', 'estado', 'acciones'];
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource = new MatTableDataSource<HojaRutaBandejaModel>([]);
 
   datoComunicarPadre: string;
 
@@ -117,6 +118,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
 
     console.log( 'CREANDO UNA NUEVA HOJA DE RUTA' );
   }
+
   realizaComunicacionHijo(event) {
     this.datoComunicarPadre = event.elemento;
   }
@@ -136,9 +138,24 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
     });
   }
 
-  onEdit(pHojaDeRutaModel: HojaDeRutaModel): void {
-    console.log( `EDITANDO ---> ${pHojaDeRutaModel}` );
-  }
+  onDetalle(): void {
+    //DetalleSeguimientoComponent
+        //const dlgNuevaHojaRuta = this.dialog.open( HojaDeRutaComponent,  {
+        const dlgNuevaHojaRuta = this.dialog.open( SeguimientoComponent,  {
+          disableClose: true,
+          width: '1000px',
+          data: {
+
+          }
+        });
+        dlgNuevaHojaRuta.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
+          if (result) {
+            //..
+          }
+        });
+
+        console.log( 'CREANDO UNA NUEVA HOJA DE RUTA' );
+      }
 
   onEnviarHojaRuta(pHojaDeRutaModel: HojaDeRutaModel): void {
     console.log( `RNVIANDO ---> ${pHojaDeRutaModel}` );
@@ -147,22 +164,6 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
   onPrintHojaRuta(pHojaDeRutaModel: HojaDeRutaModel): void {
     console.log( `IMPRIMIENDO ---> ${pHojaDeRutaModel}` );
   }
-  /*
-  crearHojadeRuta(): void {
-    const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
-      disableClose: false,
-      width: '1000px',
-      data: {
-
-      }
-    });
-    dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
-      if (result) {
-        //..
-      }
-    });
-  }
- */
 
 crearHojadeRuta(): void {
   //const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
