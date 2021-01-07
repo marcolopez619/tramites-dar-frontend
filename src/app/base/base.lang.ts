@@ -73,7 +73,8 @@ export const baseLang = {
             'tit-documentos-adjuntos' : 'Documentos adjuntos',
             'tit-cantidad-documentos-adjuntos' : 'Cantidad permitida: $cantidadPermitida archivos',
             'lbl-estado' : 'Estado',
-            'lbl-error-supero-cantidad-maxima-permitida' : 'Solo se permite $cantidadUsuario usuarios'
+            'lbl-error-supero-cantidad-maxima-permitida' : 'Solo se permite $cantidadUsuario usuarios',
+            'lbl-progreso-subida' : 'Progreso'
         },
         'en': {
             'lang-error': 'Lang not found',

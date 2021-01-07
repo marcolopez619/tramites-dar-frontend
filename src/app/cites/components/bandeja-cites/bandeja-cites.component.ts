@@ -111,7 +111,8 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
       disableClose: false,
       width: '1000px',
       data: {
-        citeSelected : pCiteModel
+        citeSelected                   : pCiteModel,
+        cantidadPermitidaSubidaArchivos: 1
       }
     });
     dlgUploadArchivo.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
@@ -119,8 +120,8 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
         /* const resultCiteInst = result as ResultCiteInst;
         const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
         this.getAllCitesFromPersona(idPersonaGd); */
-        this.getAllCitesFromPersona(this.idPersonaGd);
       }
+      this.getAllCitesFromPersona(this.idPersonaGd);
     });
   }
 

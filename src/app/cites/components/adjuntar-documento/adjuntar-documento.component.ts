@@ -18,6 +18,7 @@ import { CiteModelByUsuario } from '../../models/cites.models';
 export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit {
 
   isValid: boolean;
+  isFileUploadedCompleted: boolean;
   citeSelected : CiteModelByUsuario;
 
   constructor(
@@ -50,6 +51,10 @@ export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit
 
   verifyDocsAdjuntos(isValidDocAdj: boolean): void{
     this.isValid = isValidDocAdj;
+  }
+
+  isUploadesAllFiles(event: boolean) : void{
+    this.isFileUploadedCompleted = event;
   }
 
   onClose(object?: any): void {
