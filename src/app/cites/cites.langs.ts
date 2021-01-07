@@ -1,5 +1,6 @@
 export const citesLang = {
   'es' : {
+    'tit-toolbar-cites-cradas' : 'Cites creadas',
     'lbl-tipo-tramite' : 'Tipo destinatario',
     'lbl-error-tipo-tramite' : 'El tipo de destinatario es necesario',
 

@@ -2,8 +2,8 @@
 
     <mat-card>
       <mat-card-header class="alt-theme">
-      <mat-toolbar>
-          <!-- <h3>{{ langService.getLang(eModulo.HojaDeRuta, 'tit-adm-hoja-de-ruta') }}</h3> -->
+      <mat-toolbar color="primary">
+          {{ langService.getLang(eModulo.Cites, 'tit-toolbar-cites-cradas') }}
           <span class="flex-spacer"></span>
           <a mat-button matTooltip="{{ langService.getLang(eModulo.Cites, 'btn-crear-nuevo-cite') }}" (click)="onCrearNuevoCite()">
               <mat-icon>add_circle</mat-icon>
