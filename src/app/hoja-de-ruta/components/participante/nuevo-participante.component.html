@@ -33,8 +33,8 @@
             shUppercase
             maxlength="100"
             placeholder="{{langService.getLang(eModulo.HojaDeRuta,'lbl-referencia')}}"
-            formControlName="descripcion">
-          <mat-error *ngIf="formAnadirNuevoParticipante.controls['descripcion'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-referencia') }}</mat-error>
+            formControlName="mensaje">
+          <mat-error *ngIf="formAnadirNuevoParticipante.controls['mensaje'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-referencia') }}</mat-error>
         </mat-form-field>
 
       </div>
@@ -44,5 +44,5 @@
 
 <mat-dialog-actions fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center stretch" fxFlexFill>
   <button fxFlex mat-raised-button color="accent" (click)="onSave()" [disabled]="formAnadirNuevoParticipante.invalid || contextService.isLoading">{{this.langService.getLang(eModulo.Base, 'lbl-guardar')}}</button>
-  <button fxFlex mat-raised-button color="warn" (click)="onCancel()">{{this.langService.getLang(eModulo.Base, 'btn-no')}}</button>
+  <button fxFlex mat-raised-button color="warn" (click)="onClose()">{{this.langService.getLang(eModulo.Base, 'btn-no')}}</button>
 </mat-dialog-actions>

@@ -16,7 +16,7 @@ import { DerivarComponent } from '../derivar/derivar.component';
 import { DetalleSeguimientoComponent } from '../detalle-seguimiento/detalle-seguimiento.component';
 import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-documento.component';
 import { BusquedaAvanzadaComponent } from '../../../shared/components/busqueda-avanzada/busqueda-avanzada.component';
-import { NuevoParticipanteComponent } from '../nuevo-participante/nuevo-participante.component';
+import { NuevoParticipanteComponent } from '../participante/nuevo-participante.component';
 import { HojaDeRutaService } from '../../hoja-de-ruta.service';
 
 @Component({
@@ -193,15 +193,14 @@ adjuntarDocumento(): void {
   });
 }
 
-  onAnadirParticipante(): void {
+  onAnadirParticipante(pHojaRuta: HojaRutaBandejaModel): void {
   //const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
     //const dlgNuevoCite = this.dialog.open( BusquedaAvanzadaComponent,  {
     const dlgNuevoParticipante = this.dialog.open( NuevoParticipanteComponent,  {
     disableClose: false,
     width: '1000px',
     data: {
-      idHojaRuta : 1,
-
+      idHojaRuta : pHojaRuta.idHojaRuta
     }
   });
     dlgNuevoParticipante.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {

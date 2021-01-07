@@ -1,4 +1,3 @@
-import { LoginComponent } from "../../base/login/login.component";
 
 export interface HojaDeRutaModel {
   idHojaRutaModel?: number;
@@ -39,3 +38,4 @@ export interface HojaRutaBandejaModel{
   fisico?: number;
   plazo?: number;
 }
+

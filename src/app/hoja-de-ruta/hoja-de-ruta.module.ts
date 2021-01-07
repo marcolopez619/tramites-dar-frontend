@@ -10,7 +10,7 @@ import { DetalleSeguimientoComponent } from './components/detalle-seguimiento/de
 import { SeguimientoComponent } from './components/seguimiento/seguimiento.component';
 import { DerivarComponent } from './components/derivar/derivar.component';
 import { AdjuntarDocumentoComponent } from './components/adjuntar-documento/adjuntar-documento.component';
-import { NuevoParticipanteComponent } from './components/nuevo-participante/nuevo-participante.component';
+import { NuevoParticipanteComponent } from './components/participante/nuevo-participante.component';
 import { HojaDeRutaService } from './hoja-de-ruta.service';
 
 @NgModule({
@@ -39,4 +39,3 @@ import { HojaDeRutaService } from './hoja-de-ruta.service';
 
 })
 export class HojaDeRutaModule { }
-

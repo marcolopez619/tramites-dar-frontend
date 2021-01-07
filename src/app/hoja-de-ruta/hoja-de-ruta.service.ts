@@ -1,8 +1,9 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { Resultado } from "../shared/models/resultado.model";
-import { ContextoService } from "../shared/services/contexto.service";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Resultado } from '../shared/models/resultado.model';
+import { ContextoService } from '../shared/services/contexto.service';
+import { ParticipanteInsertModel } from './models/participante.model';
 
 @Injectable()
 export class HojaDeRutaService {
@@ -16,5 +17,9 @@ export class HojaDeRutaService {
 
   getAllHojaRutaBandeja(idPersonaGd: number, tipoBandeja: string): Observable<Resultado> {
     return this.httpClient.get<Resultado>( `${this.baseURL}/bandeja/${idPersonaGd}/${tipoBandeja}`);
+  }
+
+  createParticipante(pParticipanteInsert: ParticipanteInsertModel ): Observable<Resultado> {
+    return this.httpClient.post<Resultado>(`${this.baseURL}/participante`, pParticipanteInsert );
   }
 }
