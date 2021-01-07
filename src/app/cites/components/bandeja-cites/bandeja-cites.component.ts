@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -11,10 +11,9 @@ import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { CitesService } from '../../cites.service';
 import { CiteModelByUsuario, ResultCiteInst } from '../../models/cites.models';
+import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-documento.component';
 import { BaseComponent } from './../../../shared/base.component';
 import { CrearNuevoCiteComponent } from './../crear-nuevo-cite/crear-nuevo-cite.component';
-import { DocumentoAdjuntoComponent } from '../../../shared/components/documento-adjunto/documento-adjunto.component';
-import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-documento.component';
 
 @Component({
   selector: 'app-bandeja-cites',
@@ -112,7 +111,8 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
       disableClose: false,
       width: '1000px',
       data: {
-        citeSelected : pCiteModel
+        citeSelected                   : pCiteModel,
+        cantidadPermitidaSubidaArchivos: 1
       }
     });
     dlgUploadArchivo.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
@@ -120,8 +120,8 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
         /* const resultCiteInst = result as ResultCiteInst;
         const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
         this.getAllCitesFromPersona(idPersonaGd); */
-        this.getAllCitesFromPersona(this.idPersonaGd);
       }
+      this.getAllCitesFromPersona(this.idPersonaGd);
     });
   }
 

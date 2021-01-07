@@ -9,8 +9,10 @@
     <span [ngSwitch]="valorCapturado">
     <p *ngSwitchCase="'Creadas'">
 
+      <app-bandeja-cites></app-bandeja-cites>
+
       <!-- <mat-tab-group mat-align-tabs="center" dynamicHeight mat-stretch-tabs> -->
-      <mat-tab-group mat-align-tabs="start" dynamicHeight >
+      <!-- <mat-tab-group mat-align-tabs="start" dynamicHeight >
         <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon class="icono-tab">folder</mat-icon>
@@ -31,22 +33,22 @@
 
         </mat-tab>
 
-      </mat-tab-group>
+      </mat-tab-group> -->
 
     </p>
-    <p *ngSwitchCase="'Recibidos'">
+    <p *ngSwitchCase="'Recibido'">
 
     </p>
-    <p *ngSwitchCase="'Enviados'">
+    <p *ngSwitchCase="'Enviado'">
 
     </p>
-    <p *ngSwitchCase="'Pendientes'">
+    <p *ngSwitchCase="'Pendiente'">
 
     </p>
-    <p *ngSwitchCase="'En Proceso'">
+    <p *ngSwitchCase="'Proceso'">
     </p>
 
-    <p *ngSwitchCase="'Finalizados'">
+    <p *ngSwitchCase="'Finalizado'">
 
     </p>
     <p *ngSwitchDefault>

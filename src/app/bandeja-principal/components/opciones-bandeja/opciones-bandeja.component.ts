@@ -12,12 +12,14 @@ import { OpcionBandeja } from '../../models/bandeja-principal.model';
 })
 export class OpcionesBandejaComponent extends BaseComponent implements OnInit {
 
-  listaOpcionesBandeja : Array<OpcionBandeja> = [{
+  listaOpcionesBandeja : Array<OpcionBandeja> = [
+    /* {
     id : 1,
     displayName: 'PRINCIPAL',
     icono: 'home',
     children: undefined
-   },{
+   }, */
+   {
      id : 2,
      displayName : 'CITES',
      icono : 'folder_open',
@@ -35,34 +37,42 @@ export class OpcionesBandejaComponent extends BaseComponent implements OnInit {
      icono : 'description',
      children: [
       {
-        id : 5,
-        displayName : 'Recibidos',
+        id : 6,
+        displayName : 'Principal',
+        icono : 'home',
+        children : undefined
+      },
+      {
+        id : 7,
+        displayName : 'Recibido',
         icono : 'how_to_reg',
         children : undefined
       },{
-        id : 6,
-        displayName : 'Enviados',
+        id : 8,
+        displayName : 'Enviado',
         icono : 'search',
         children : undefined
       },{
-        id : 7,
-        displayName : 'Pendientes',
+        id : 9,
+        displayName : 'Pendiente',
         icono : 'waves',
         children : undefined
       },{
-        id : 8,
-        displayName : 'En Proceso',
+        id : 10,
+        displayName : 'Proceso',
         icono : 'edit',
         children : undefined
       },{
-        id : 9,
-        displayName : 'Finalizados',
+        id : 11,
+        displayName : 'Finalizado',
         icono : 'ballot',
         children : undefined
       }
      ]
    }
   ];
+
+  isOpenSidenav = false;
 
   @Output()
   onOpcionClick = new EventEmitter();

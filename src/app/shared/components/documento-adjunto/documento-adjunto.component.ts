@@ -6,12 +6,11 @@ import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { fadeInAnim, slideInLeftAnim } from '../../animations/template.animation';
 import { BaseComponent } from '../../base.component';
 import { eModulo } from '../../enums/modulo.enum';
+import { eTipoNotificacion } from '../../enums/tipo-notificacion.enum';
 import { DataDocumentoAdjunto, DocumentoAdjuntoModel } from '../../models/documento-adjunto.model';
 import { LangService } from '../../services/lang.service';
-import { DocumentoAdjuntoService } from './../../services/documento-adjunto.service';
-import { tap } from 'rxjs/operators';
 import { NotificacionService } from '../../services/notificacion.service';
-import { eTipoNotificacion } from '../../enums/tipo-notificacion.enum';
+import { DocumentoAdjuntoService } from './../../services/documento-adjunto.service';
 
 @Component({
   selector: 'sh-documento-adjunto',
@@ -27,6 +26,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
 
   listaDocumentosToUpload: Array<DocumentoAdjuntoModel> = [];
   dataDocumentoAdjunto: any;
+  isUploadedFile: boolean;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -38,10 +38,13 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
   titleToolbar: string;
 
   @Input()
-  cantidadPermitidaSubida ? = 100;
+  cantidadPermitidaSubida;
 
   @Output()
   isValid = new  EventEmitter();
+
+  @Output()
+  isUploadedAllFiles = new  EventEmitter();
 
   constructor(
     public langService: LangService,
@@ -72,6 +75,8 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
   }
 
   ngOnInit(): void {
+    this.cantidadPermitidaSubida = this.cantidadPermitidaSubida ?? 100;
+
     if (this.cantidadPermitidaSubida !== 100 ) {
       this.titleToolbar = this.langService.getLang(eModulo.Base, 'tit-cantidad-documentos-adjuntos').replace('$cantidadPermitida', this.cantidadPermitidaSubida.toString() );
     } else {
@@ -166,6 +171,8 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
         this.notificacionService.progressSubject.asObservable().subscribe( porcentajeUpload => {
           if (porcentajeUpload.progress) {
             element.porcentajeUploaded = 100;
+            this.isUploadedFile = element.porcentajeUploaded >= 100;
+            this.isUploadedAllFiles.emit( this.isUploadedFile );
           }
         });
         console.log( '----> ', respSave.message );

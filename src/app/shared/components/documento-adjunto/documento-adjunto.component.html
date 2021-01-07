@@ -5,7 +5,7 @@
   <mat-toolbar style="font-size: medium;" >
       {{ titleToolbar }}
       <span class="flex-spacer"></span>
-      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-subir-nuevo-ducumento') }}" (click)="file.click()">
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-subir-nuevo-ducumento') }}" [disabled]="isUploadedFile" (click)="isUploadedFile ? undefined: file.click()">
           <mat-icon>cloud_upload</mat-icon>
       </a>
       <input #file type="file" id="file" (change)="onUploadDocument($event)" style="display:none;" multiple>
@@ -33,7 +33,7 @@
       </ng-container>
 
       <ng-container matColumnDef="progreso" >
-        <mat-header-cell *matHeaderCellDef fxFlex="20"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-subida') }} </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="20"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-progreso-subida') }} </mat-header-cell>
         <mat-cell *matCellDef="let element" fxFlex="20" >
           <mat-progress-bar mode="determinate" value="{{ (notificacionService.progressSubject | async)?.progress ? (notificacionService.progressSubject | async)?.progress : element.porcentajeUploaded }}"></mat-progress-bar>
         </mat-cell>
@@ -43,7 +43,7 @@
       <ng-container matColumnDef="acciones">
         <mat-header-cell *matHeaderCellDef fxFlex="10" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
         <mat-cell *matCellDef="let element;" fxFlex="10" fxLayoutAlign="center center">
-          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}"  (click)="onDeleteDocument(element)" >
+          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}" [disabled]="element.porcentajeUploaded >= 100"  (click)="element.porcentajeUploaded >= 100 ? undefined : onDeleteDocument(element)" >
             <mat-icon>delete_forever</mat-icon>
           </a>
           <!-- <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}"  (click)="onSaveDocument()" >
