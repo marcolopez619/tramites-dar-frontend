@@ -24,9 +24,9 @@
 <mat-card-content>
   <mat-table #table [dataSource]="dataSource" matSort>
 
-    <ng-container matColumnDef="tipoRemitente">
+    <ng-container matColumnDef="tipoTramiteDes">
       <mat-header-cell *matHeaderCellDef fxFlex="7" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-tipo-remitente') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="7"> {{element.tipoRemitente}} </mat-cell>
+      <mat-cell *matCellDef="let element" fxFlex="7"> {{element.tipoTramiteDes}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="nombreRemitente">
@@ -34,19 +34,19 @@
       <mat-cell *matCellDef="let element" fxFlex="15"> {{element.nombreRemitente}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="tipoDocumento">
+    <ng-container matColumnDef="descripcionDoc">
       <mat-header-cell *matHeaderCellDef fxFlex="8" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-tipo-documento') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="8"> {{element.tipoDocumento}} </mat-cell>
+      <mat-cell *matCellDef="let element" fxFlex="8"> {{element.descripcionDoc}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="numeroCite">
+    <ng-container matColumnDef="cite">
       <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-numero-cite') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="10"> {{element.numeroCite}} </mat-cell>
+      <mat-cell *matCellDef="let element" fxFlex="10"> {{element.cite}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="destinatarios" >
+    <ng-container matColumnDef="nombreDestinatario" >
       <mat-header-cell *matHeaderCellDef fxFlex="20"  mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatarios') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="20" > {{element.destinatarios}} </mat-cell>
+      <mat-cell *matCellDef="let element" fxFlex="20" > {{element.nombreDestinatario}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="referencia" >

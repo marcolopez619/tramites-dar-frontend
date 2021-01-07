@@ -29,7 +29,7 @@ import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
 })
 export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['tipoRemitente', 'nombreRemitente', 'tipoDocumento', 'numeroCite', 'destinatarios', 'referencia', 'estado', 'acciones'];
+  displayedColumns = ['tipoTramiteDes', 'nombreRemitente', 'descripcionDoc', 'cite', 'nombreDestinatario', 'referencia', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<HojaRutaBandejaModel>([]);
 
   datoComunicarPadre: string;
@@ -51,32 +51,6 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
     this.idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
     this.tipoBandeja="PRINCIPAL";
     this.getAllHojaRutaBandeja( this.idPersonaGd, this.tipoBandeja);
-
-    /*
-    const listaVias: Array<string> = [ 'SARDINA GUMUCIO FLORIPONDIO', 'CONDORI MALPARTIDA TIRADO' ];
-    const listaVias2: Array<string> = [ 'ZARZURI TIRADO ELBA', 'ARCE CATARI GONZALES' ];
-    const listaHojaRuta: Array<HojaDeRutaModel> = [
-      {
-        idHojaRutaModel: 1,
-        tipoRemitente: 'Externo',
-        nombreRemitente: 'Ministerio de Economia',
-        tipoDocumento : 'MEMORANDUM',
-        numeroCite : 'SEGIP/DES/2334_2021',
-        destinatarios : listaVias,
-        referencia : 'REFERENCIA DE PRUEBA 1',
-        estado: 'PENDIENTE'
-      },
-      {
-        idHojaRutaModel: 2,
-        tipoRemitente: 'Externo',
-        nombreRemitente: 'Ministerio de Salud',
-        tipoDocumento : 'INFORME',
-        numeroCite : 'SEGIP/DES/2777_2021',
-        destinatarios : listaVias2,
-        referencia : 'REFERENCIA DE PRUEBA 2',
-        estado: 'EN PROCESO'
-      }
-    ];*/
 
     //this.dataSource.data = listaHojaRuta;
   }
