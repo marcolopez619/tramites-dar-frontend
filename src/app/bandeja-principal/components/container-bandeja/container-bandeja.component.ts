@@ -16,6 +16,8 @@ export class ContainerBandejaComponent extends BaseComponent implements OnInit {
   @Input()
   isOpenSidenav: boolean;
 
+  opened = true;
+
   constructor() { super(); }
 
   ngOnInit(): void {

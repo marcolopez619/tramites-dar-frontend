@@ -1,8 +1,11 @@
 <mat-sidenav-container class="example-container">
-  <mat-sidenav mode="side" opened="{{isOpenSidenav}}" class="example-sidenav-container">
+  <mat-sidenav mode="side" [(opened)]="opened"  class="example-sidenav-container">
     <app-opciones-bandeja (onOpcionClick)="captureValueFromEmiter($event)"></app-opciones-bandeja>
   </mat-sidenav>
   <mat-sidenav-content fxFlexFill>
+    <a mat-icon-button matTooltip="{{opened?'Cerrar menu' : 'Abrir menu'}}" (click)="opened=!opened">
+      <mat-icon>{{opened?'keyboard_arrow_left':'keyboard_arrow_right'}}</mat-icon>
+    </a>
     <app-detalle-bandeja [valorCapturado]="opcionSelectedFromEmiter"></app-detalle-bandeja>
   </mat-sidenav-content>
 </mat-sidenav-container>

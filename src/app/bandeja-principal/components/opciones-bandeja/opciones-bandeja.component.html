@@ -30,7 +30,7 @@
   <span *ngFor="let item of listaOpcionesBandeja">
     <span *ngIf="item.children && item.children.length > 0">
       <mat-accordion>
-        <mat-expansion-panel>
+        <mat-expansion-panel [expanded]="true" >
           <mat-expansion-panel-header>
             <mat-panel-title>
               <!-- Cabeceras del submenu -->

@@ -1,19 +1,19 @@
 <mat-card>
     <mat-card-header class="alt-theme">
       <mat-toolbar color="primary">
-        <a mat-button (click)="openSideNav=!openSideNav">
+        <!-- <a mat-button (click)="openSideNav=!openSideNav">
           <mat-icon>menu</mat-icon>
-        </a>
+        </a> -->
         <h3>{{ langService.getLang(eModulo.Base, 'lbl-menu-principal') }}</h3>
       </mat-toolbar>
     </mat-card-header>
 
     <mat-card-content>
 
-      <!-- <app-container-bandeja [isOpenSidenav]="openSideNav"></app-container-bandeja>-->
+      <app-container-bandeja [isOpenSidenav]="openSideNav"></app-container-bandeja>
       <!-- <sh-documento-adjunto></sh-documento-adjunto> -->
       <!-- <app-adjuntar-documento></app-adjuntar-documento> -->
-      <app-bandeja-hojas-de-ruta></app-bandeja-hojas-de-ruta>
+      <!-- <app-bandeja-hojas-de-ruta></app-bandeja-hojas-de-ruta> -->
 
     <!--<busqueda-avanzada></busqueda-avanzada>-->
 
@@ -25,7 +25,7 @@
       >
       </sh-autocomplete>-->
 
-      <app-bandeja-cites></app-bandeja-cites>
+      <!-- <app-bandeja-cites></app-bandeja-cites> -->
 
     </mat-card-content>
 </mat-card>
