@@ -1,15 +1,15 @@
-import { Validators } from '@angular/forms';
-import { FormGroup } from '@angular/forms';
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, Inject, OnInit, Type } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
+import { UsuarioModel } from '../../../shared/models/Usuario.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { UsuarioService } from '../../../shared/services/usuario.service';
-import { UsuarioModel } from '../../../shared/models/Usuario.model';
-import { takeUntil } from 'rxjs/operators';
+import { HojaDeRutaService } from '../../hoja-de-ruta.service';
+import { ParticipanteInsertModel } from '../../models/participante.model';
 
 @Component({
   selector: 'app-nuevo-participante',
@@ -22,32 +22,37 @@ export class NuevoParticipanteComponent extends BaseComponent implements OnInit 
 
   formAnadirNuevoParticipante: FormGroup;
   listaUsuarios: Array<UsuarioModel> = [];
-  listaParcitipantesSelected : Array<UsuarioModel> = [];
-
+  listaParcitipantesSelected: Array<UsuarioModel> = [];
 
   private _isParticipanteInvalid: boolean;
+  private _idHojaRuta: number;
+
   constructor(
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public contextService: ContextoService,
     public langService: LangService,
     private usuarioService: UsuarioService,
+    private hojaDeRutaService: HojaDeRutaService,
     private formBuilder: FormBuilder
   ) { super(); }
 
   ngOnInit(): void {
+
+    this._idHojaRuta = this.data.idHojaRuta ?? -1;
+
     // Carga los usuarios de la bd
     const idTipoTramite = 1;
     this.getAllusuarios( idTipoTramite );
 
     this.formAnadirNuevoParticipante = this.formBuilder.group({
       listaParticipantes: [undefined, [Validators.compose([ Validators.required])]],
-      descripcion       : [ undefined, [Validators.compose( [ Validators.required, Validators.minLength(5), Validators.maxLength(50) ])] ]
+      mensaje       : [ undefined, [Validators.compose( [ Validators.required, Validators.minLength(5), Validators.maxLength(50) ])] ]
     });
   }
 
   private getAllusuarios( idTipotramite: number ): void {
-    this.usuarioService.getAllUsuarios( idTipotramite ).pipe( takeUntil(this.unsubscribe$)).subscribe( usuarios => {;
+    this.usuarioService.getAllUsuarios( idTipotramite ).pipe( takeUntil(this.unsubscribe$)).subscribe( usuarios => {
       this.listaUsuarios = usuarios.data;
     });
   }
@@ -68,10 +73,29 @@ export class NuevoParticipanteComponent extends BaseComponent implements OnInit 
   }
 
   onSave(): void {
-    console.log(`GUARDANDO PARTICIPANTESSSSSSSSSSSSS`);
-    const listaIdParticipantes = this.listaParcitipantesSelected.map( x => x.idPersonaGd );
-    console.log( `lista participantes : ${JSON.stringify(listaIdParticipantes)}`);
-    console.log( `lista participantes : ${this.formAnadirNuevoParticipante.controls['descripcion'].value}`);
+    const listaIdPersonaGd = this.listaParcitipantesSelected.map( x => x.idPersonaGd );
+    const listaIdParticipantes: Array<any> = [];
+
+    listaIdPersonaGd.forEach(idPersonagd => {
+
+      listaIdParticipantes.push({
+        'idPersonaGd' : idPersonagd
+      });
+
+    });
+
+    const participanteInsertModel: ParticipanteInsertModel = {
+      idHojaRuta       : this._idHojaRuta,
+      listParticipantes: JSON.stringify( listaIdParticipantes ),
+      mensaje          : `${this.formAnadirNuevoParticipante.controls['mensaje'].value}`,
+      usuarioBitacora  : `${this.contextService.getItemContexto('samActName')}`
+    };
+
+    this.hojaDeRutaService.createParticipante( participanteInsertModel ).pipe( takeUntil(this.unsubscribe$)).subscribe( respCreateParticipante => {
+      console.log( `${respCreateParticipante.data}` );
+      this.onClose();
+    });
+
   }
 
   onEdit(): void {
@@ -79,7 +103,7 @@ export class NuevoParticipanteComponent extends BaseComponent implements OnInit 
 
   }
 
-  onCancel(): void {
+  onClose(): void {
       this.dialogRef.close();
   }
 
