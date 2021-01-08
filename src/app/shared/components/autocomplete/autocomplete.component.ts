@@ -45,6 +45,9 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
   @Input()
   cantidadPermitida: number;
 
+  @Input()
+  disabled: boolean;
+
   @Output()
   listaSeleccionadosEmiter = new EventEmitter();
 
@@ -61,6 +64,10 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
     super();
   }
   ngOnInit(): void {
+
+    if (this.disabled) {
+      this.removable = false;
+    }
 
     // Para cargar la lista inicial en caso de que se le envie uno desde el componente padre.
     this.listaSeleccionados = this.listaInicial;
