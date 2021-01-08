@@ -4,10 +4,11 @@
 
     <div fxLayout="row" fxLayoutGap="30px">
       <mat-icon>person</mat-icon>
+      <!--
       <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-participante') }}"
         (click)="administrarParticipante()">
         <mat-icon>person_add</mat-icon>
-      </a>
+      </a>-->
     </div>
 
     <div fxLayout="row" fxLayoutGap="30px">
@@ -15,11 +16,14 @@
       <mat-form-field fxFlex>
         <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.remitente" />
       </mat-form-field>
+      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-cargo')}}</mat-label>
+      <mat-form-field fxFlex>
+        <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.cargo" />
+      </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutGap="30px">
       <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-estado')}}</mat-label>
-      <!--<mat-form-field shDisabled appearance="outline" fxFlex>-->
       <mat-form-field fxFlex>
         <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.estadoInicio" />
       </mat-form-field>
@@ -43,9 +47,9 @@
     <!--<sh-documento-adjunto></sh-documento-adjunto>-->
 
     <div fxLayout="row" fxLayoutGap="30px">
-      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-proveido')}}</mat-label>
+      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-asunto')}}</mat-label>
       <mat-form-field fxFlex>
-        <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.proveido" />
+        <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.asunto" />
       </mat-form-field>
     </div>
 

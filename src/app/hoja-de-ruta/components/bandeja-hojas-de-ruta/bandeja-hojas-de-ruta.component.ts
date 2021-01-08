@@ -10,14 +10,12 @@ import { BaseComponent } from '../../../shared/base.component';
 import { HojaDeRutaComponent } from '../../../shared/components/hoja-de-ruta/hoja-de-ruta.component';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
+import { HojaDeRutaService } from '../../hoja-de-ruta.service';
 import { DerivarModel } from '../../models/derivar.model';
 import { HojaDeRutaModel, HojaRutaBandejaModel } from '../../models/hoja-de-ruta.model';
-import { DerivarComponent } from '../derivar/derivar.component';
-import { DetalleSeguimientoComponent } from '../detalle-seguimiento/detalle-seguimiento.component';
 import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-documento.component';
-import { BusquedaAvanzadaComponent } from '../../../shared/components/busqueda-avanzada/busqueda-avanzada.component';
+import { DerivarComponent } from '../derivar/derivar.component';
 import { NuevoParticipanteComponent } from '../participante/nuevo-participante.component';
-import { HojaDeRutaService } from '../../hoja-de-ruta.service';
 import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
 
 @Component({
@@ -27,9 +25,19 @@ import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
   animations: [fadeInAnim, slideInLeftAnim],
   host: { class: 'container-fluid', '[@fadeInAnim]': 'true' }
 })
-export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
-
-  displayedColumns = ['tipoTramiteDes', 'nombreRemitente', 'descripcionDoc', 'cite', 'nombreDestinatario', 'referencia', 'estado', 'acciones'];
+export class BandejaHojasDeRutaComponent
+  extends BaseComponent
+  implements OnInit, AfterViewInit, OnDestroy {
+  displayedColumns = [
+    'tipoTramiteDes',
+    'nombreRemitente',
+    'descripcionDoc',
+    'cite',
+    'nombreDestinatario',
+    'referencia',
+    'estado',
+    'acciones'
+  ];
   dataSource = new MatTableDataSource<HojaRutaBandejaModel>([]);
 
   listaBandeja: Array<HojaRutaBandejaModel> = [];
@@ -41,7 +49,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   idPersonaGd = 0;
-  tipoBandeja="";
+  tipoBandeja = '';
 
   constructor(
     public langService: LangService,
@@ -49,12 +57,15 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
     private hojaRutaService: HojaDeRutaService,
     private router: Router,
     private dialog: MatDialog
-  ) {  super(); }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
-    this.idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
-    this.tipoBandeja="PRINCIPAL";
-    this.getAllHojaRutaBandeja( this.idPersonaGd, this.tipoBandeja);
+    this.idPersonaGd =
+      this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
+    this.tipoBandeja = 'PRINCIPAL';
+    this.getAllHojaRutaBandeja(this.idPersonaGd, this.tipoBandeja);
 
     //this.dataSource.data = listaHojaRuta;
   }
@@ -78,116 +89,103 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
   ngOnDestroy(): void {
     this.unsubscribe$.next(true);
   }
+  onCompartir(pDerivarModel: DerivarModel): void {
+    const dlgNuevoCite = this.dialog.open(DerivarComponent, {
+      disableClose: false,
+      width: '1000px',
+      data: {}
+    });
+    dlgNuevoCite
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          //..
+        }
+      });
+  }
 
-  onCrearNuevaHojaDeRuta(): void {
-//DetalleSeguimientoComponent
+  onSeguimiento(objHojaRuta: HojaRutaBandejaModel): void {
+    //DetalleSeguimientoComponent
     //const dlgNuevaHojaRuta = this.dialog.open( HojaDeRutaComponent,  {
-    const dlgNuevaHojaRuta = this.dialog.open( HojaDeRutaComponent,  {
+    const dlgHojaRutaSeguimiento = this.dialog.open(SeguimientoComponent, {
       disableClose: true,
       width: '1000px',
       data: {
-
+        //idHojarutaSelected : objHojaRuta.idHojaRuta
+        idHojarutaSelected : 49
       }
     });
-    dlgNuevaHojaRuta.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
-      if (result) {
-        //..
-      }
-    });
+    dlgHojaRutaSeguimiento
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          //..
+        }
+      });
 
-    console.log( 'CREANDO UNA NUEVA HOJA DE RUTA' );
+    console.log('CREANDO UNA NUEVA HOJA DE RUTA');
   }
-
-  realizaComunicacionHijo(event) {
-    this.datoComunicarPadre = event.elemento;
-  }
-
-  onCompartir(pDerivarModel: DerivarModel): void {
-    const dlgNuevoCite = this.dialog.open( DerivarComponent,  {
-      disableClose: false,
-      width: '1000px',
-      data: {
-
-      }
-    });
-    dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
-      if (result) {
-        //..
-      }
-    });
-  }
-
-  onDetalle(): void {
-    //DetalleSeguimientoComponent
-        //const dlgNuevaHojaRuta = this.dialog.open( HojaDeRutaComponent,  {
-        const dlgNuevaHojaRuta = this.dialog.open( SeguimientoComponent,  {
-          disableClose: true,
-          width: '1000px',
-          data: {
-
-          }
-        });
-        dlgNuevaHojaRuta.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
-          if (result) {
-            //..
-          }
-        });
-
-        console.log( 'CREANDO UNA NUEVA HOJA DE RUTA' );
-      }
 
   onEnviarHojaRuta(pHojaDeRutaModel: HojaDeRutaModel): void {
-    console.log( `RNVIANDO ---> ${pHojaDeRutaModel}` );
+    console.log(`RNVIANDO ---> ${pHojaDeRutaModel}`);
   }
 
   onPrintHojaRuta(pHojaDeRutaModel: HojaDeRutaModel): void {
-    console.log( `IMPRIMIENDO ---> ${pHojaDeRutaModel}` );
+    console.log(`IMPRIMIENDO ---> ${pHojaDeRutaModel}`);
   }
 
-crearHojadeRuta(): void {
-  //const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
+  crearHojadeRuta(): void {
+    //const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
     //const dlgNuevoCite = this.dialog.open( BusquedaAvanzadaComponent,  {
-    const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
-    disableClose: false,
-    width: '1000px',
-    data: {
-    }
-  });
-    dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
-    if (result) {
-      //..
-    }
-  });
-}
-adjuntarDocumento(): void {
-  const dlgNuevoCite = this.dialog.open( AdjuntarDocumentoComponent,  {
-    disableClose: false,
-    width: '1000px',
-    data: {
-    }
-  });
-  dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
-    if (result) {
-      //..
-    }
-  });
-}
+    const dlgNuevoCite = this.dialog.open(HojaDeRutaComponent, {
+      disableClose: false,
+      width: '1000px',
+      data: {}
+    });
+    dlgNuevoCite
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          //..
+        }
+      });
+  }
+  adjuntarDocumento(): void {
+    const dlgNuevoCite = this.dialog.open(AdjuntarDocumentoComponent, {
+      disableClose: false,
+      width: '1000px',
+      data: {}
+    });
+    dlgNuevoCite
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          //..
+        }
+      });
+  }
 
   onAnadirParticipante(pHojaRuta: HojaRutaBandejaModel): void {
-  //const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
+    //const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
     //const dlgNuevoCite = this.dialog.open( BusquedaAvanzadaComponent,  {
-    const dlgNuevoParticipante = this.dialog.open( NuevoParticipanteComponent,  {
-    disableClose: false,
-    width: '1000px',
-    data: {
-      idHojaRuta : pHojaRuta.idHojaRuta
-    }
-  });
-    dlgNuevoParticipante.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
-    if (result) {
-      //..
-    }
-  });
-}
-
+    const dlgNuevoParticipante = this.dialog.open(NuevoParticipanteComponent, {
+      disableClose: false,
+      width: '1000px',
+      data: {
+        idHojaRuta: pHojaRuta.idHojaRuta
+      }
+    });
+    dlgNuevoParticipante
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          //..
+        }
+      });
+  }
 }

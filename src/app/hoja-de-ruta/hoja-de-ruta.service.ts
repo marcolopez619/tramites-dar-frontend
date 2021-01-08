@@ -22,4 +22,8 @@ export class HojaDeRutaService {
   createParticipante(pParticipanteInsert: ParticipanteInsertModel ): Observable<Resultado> {
     return this.httpClient.post<Resultado>(`${this.baseURL}/participante`, pParticipanteInsert );
   }
+
+  getAllHojaRutaSeguimiento(idHojaRuta: number): Observable<Resultado> {
+    return this.httpClient.get<Resultado>( `${this.baseURL}/seguimiento/${idHojaRuta}`);
+  }
 }
