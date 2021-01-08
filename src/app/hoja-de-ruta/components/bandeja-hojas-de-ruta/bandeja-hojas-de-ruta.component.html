@@ -23,7 +23,7 @@
 
 <mat-card-content>
   <div *ngIf="listaBandeja?.length > 0">
-    <sh-data-table-hoja-de-ruta [listaBandejaHojaRuta]="listaBandeja"> </sh-data-table-hoja-de-ruta>
+    <sh-data-table-hoja-de-ruta [listaBandejaHojaRuta]="listaBandeja" [bandeja]="valorBandejaSelected"> </sh-data-table-hoja-de-ruta>
   </div>
   </mat-card-content>
 </mat-card>

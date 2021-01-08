@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -33,8 +33,10 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
   dataSource = new MatTableDataSource<HojaRutaBandejaModel>([]);
 
   listaBandeja: Array<HojaRutaBandejaModel> = [];
-
   datoComunicarPadre: string;
+
+  @Input()
+  valorBandejaSelected: string;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;

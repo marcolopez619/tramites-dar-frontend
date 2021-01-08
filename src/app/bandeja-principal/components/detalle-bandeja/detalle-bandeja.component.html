@@ -11,7 +11,7 @@
       <app-bandeja-cites></app-bandeja-cites>
     </p>
     <p *ngSwitchCase="'Principal'">
-      <app-bandeja-hojas-de-ruta></app-bandeja-hojas-de-ruta>
+      <app-bandeja-hojas-de-ruta [valorBandejaSelected]="valorCapturado" ></app-bandeja-hojas-de-ruta>
     </p>
     <p *ngSwitchCase="'Recibido'">
 

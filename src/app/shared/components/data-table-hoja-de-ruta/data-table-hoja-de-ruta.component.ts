@@ -7,6 +7,7 @@ import { fadeInAnim, slideInLeftAnim, zoomInAnim } from '../../animations/templa
 import { BaseComponent } from '../../base.component';
 import { ContextoService } from '../../services/contexto.service';
 import { LangService } from '../../services/lang.service';
+import { DataTableHRMouseModel, Estado, Accion } from '../../models/data-table-hr-mouse.model';
 
 @Component({
   selector: 'sh-data-table-hoja-de-ruta',
@@ -20,8 +21,13 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
   displayedColumns = ['tipoTramiteDes', 'nombreRemitente', 'descripcionDoc', 'cite', 'nombreDestinatario', 'referencia', 'estado'];
   dataSource = new MatTableDataSource<HojaRutaBandejaModel>([]);
 
+  mouseOverModel: DataTableHRMouseModel = {};
+
   @Input()
   listaBandejaHojaRuta: Array<HojaRutaBandejaModel>;
+
+  @Input()
+  bandeja: string;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -37,6 +43,7 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
 
   ngOnInit(): void {
     this.dataSource.data = this.listaBandejaHojaRuta;
+    this.crearAccionesMouseOver();
   }
 
   ngAfterViewInit(): void {
@@ -50,11 +57,47 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
     this.unsubscribe$.next(true);
   }
 
-  onMouseOver(row: HojaRutaBandejaModel): void{
+  private crearAccionesMouseOver(): void {
+
+    switch (this.bandeja.toUpperCase()) {
+      case 'PRINCIPAL': {
+        const acciones : Array<Accion> = [{
+          descAccion : 'enviar',
+          tooltipText : 'Enviar',
+          icono : 'send'
+        },
+        {
+          descAccion : 'editar',
+          tooltipText : 'Editar',
+          icono : 'edit'
+        },
+        {
+          descAccion : 'adjuntar_documento',
+          tooltipText : 'Adjuntar documento',
+          icono : 'attachment'
+        }
+      ];
+
+        const estados: Array<Estado> = [{
+          descEstado : 'creado',
+          acciones : acciones
+        }];
+
+        this.mouseOverModel.descBandeja = this.bandeja;
+        this.mouseOverModel.estados = estados;
+        break;
+      }
+
+      default:
+        break;
+    }
+  }
+
+  onMouseOver(row: HojaRutaBandejaModel): void {
     row.isRowMouseOver = true;
     this.showMouseOverActions = true;
   }
-  onMouseLeave(row: HojaRutaBandejaModel): void{
+  onMouseLeave(row: HojaRutaBandejaModel): void {
     row.isRowMouseOver = false;
     this.showMouseOverActions = false;
   }
@@ -72,6 +115,5 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
       }
     }); */
   }
-
 
 }
