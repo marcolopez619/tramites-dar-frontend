@@ -21,21 +21,25 @@ export interface HojaDeRutaModel {
   // TODO : AÑADIR EL ATRIBUTO QUE MAPEE A LA LISTA DE DOCUMENTOS ADJUNTO
 }
 export interface HojaRutaBandejaModel{
-  codigoRespuesta?: number;
-  mensaje?: string;
   idHojaRuta?: number;
   idDerivacion?: number;
   numero?: number;
-  referencia?:string;
+  referencia?: string;
   gestion?: number;
   urgente?: number;
   plazoTotal?: number;
   tipoTramite?: number;
-  tipoTramiteDes?:string;
+  tipoTramiteDes?: string;
   fechaDeriva?: Date;
   fechaAcepta?: Date;
-  asunto?:string;
+  asunto?: string;
   fisico?: number;
   plazo?: number;
+  nombreRemitente?: string;
+  nombreDestinatario?: string;
+  descripcionDoc?: string;
+  cite?: string;
+  estado?: string;
+  codigoRespuesta?: number;
+  mensaje?: string;
 }
-

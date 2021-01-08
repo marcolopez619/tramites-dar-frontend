@@ -1,0 +1,45 @@
+<!-- <shared-loader-spinner></shared-loader-spinner> -->
+
+  <mat-table #table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="tipoTramiteDes">
+      <mat-header-cell *matHeaderCellDef fxFlex="7" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-tipo-remitente') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="7"> {{element.tipoTramiteDes}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="nombreRemitente">
+      <mat-header-cell *matHeaderCellDef fxFlex="15" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-nombre-remitente') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="15"> {{element.nombreRemitente}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="descripcionDoc">
+      <mat-header-cell *matHeaderCellDef fxFlex="8" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-tipo-documento') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="8"> {{element.descripcionDoc}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="cite">
+      <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-numero-cite') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="10"> {{element.cite}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="nombreDestinatario" >
+      <mat-header-cell *matHeaderCellDef fxFlex="20"  mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatarios') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="20" > {{element.nombreDestinatario}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="referencia" >
+      <mat-header-cell *matHeaderCellDef fxFlex="15"  mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-referencia') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="15" > {{element.referencia}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="estado" >
+      <mat-header-cell *matHeaderCellDef fxFlex="5"  mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-estado') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="5" > {{element.estado}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row shRowHover [ngClass]="{'row-action': idSeleccionado === row.idHojaRuta}" [@fadeInAnim]="true" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+  </mat-table>
+  <shared-table-empty [datasource]="dataSource"></shared-table-empty>
+  <mat-paginator #paginator [pageSize]="config.paginatorSize" [pageSizeOptions]="config.paginatorOptions" [showFirstLastButtons]="true"></mat-paginator>
