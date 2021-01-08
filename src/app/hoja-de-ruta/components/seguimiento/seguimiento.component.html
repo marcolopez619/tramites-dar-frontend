@@ -15,15 +15,15 @@
     <form [formGroup]="formSeguimiento">
 
       <div fxLayout="row" fxLayoutGap="30px">
-        <h3>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-hoja-ruta')}}</h3>
-        <mat-form-field>
-          <input  readonly="readonly" matInput formControlName="NroHojaRuta" />
-        </mat-form-field>
-        <h3>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-solicitud-listas-operativas')}}
+        <h3 fxFlex="12">{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-hoja-ruta')}}</h3>
+
+        <mat-label fxFlex="15">{{numeroHojaRuta}}</mat-label>
+        <h3>
+          <mat-label fxFlex="72" >{{referencia}}</mat-label>
         </h3>
       </div>
 
-      <div *ngFor="let detalleSeguimientoItem of listaDetalleSeguimiento; let indice=index">
+      <div *ngFor="let detalleSeguimientoItem of listaAux; let indice=index">
         <fieldset fxLayout="row" fxFlex="100">
           <legend>{{indice+1}}</legend>
           <detalle-seguimiento [detalleSeguimiento]="detalleSeguimientoItem"></detalle-seguimiento>
