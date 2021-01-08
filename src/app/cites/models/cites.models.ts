@@ -12,15 +12,20 @@ export interface CiteModel {
 
 export interface CiteModelByUsuario{
   idCite?: number;
-  tipoTramite?: string;
+  tipoDestinatario?: string;
+  idTipoDocumento?: number;
   tipoDocumento?: string;
   numeroCite?: string;
-  destinatario?: Array<DestinatarioModel>;
+  destinatarios?: Array<DestinatarioModel>;
+  remitentes?: Array<DestinatarioModel>;
+  vias?: Array<DestinatarioModel>;
   referencia?: string;
   fechaCreacion?: Date;
   estado?: string;
   poseeDocAdjunto?: boolean;
   pathArchivo?: string;
+
+  tipoTramite?: string;
   isRowMouseOver?: boolean;
 }
 

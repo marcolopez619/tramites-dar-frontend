@@ -14,6 +14,8 @@ import { CiteModelByUsuario, ResultCiteInst } from '../../models/cites.models';
 import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-documento.component';
 import { BaseComponent } from './../../../shared/base.component';
 import { CrearNuevoCiteComponent } from './../crear-nuevo-cite/crear-nuevo-cite.component';
+import { HojaDeRutaComponent } from '../../../shared/components/hoja-de-ruta/hoja-de-ruta.component';
+import { HojaDeRutaRespInsert } from '../../../shared/models/hoja-de-ruta.model';
 
 @Component({
   selector: 'app-bandeja-cites',
@@ -99,6 +101,22 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
 
   onGenerateHojaRuta(pCiteModel: CiteModelByUsuario): void {
     console.log( `GENERANDO ---> ${pCiteModel.idCite}` );
+
+    const dlgNuevaHojaDeRuta = this.dialog.open( HojaDeRutaComponent,  {
+      disableClose: false,
+      width: '1000px',
+      data: {
+        citeSelected : pCiteModel
+      }
+    });
+    dlgNuevaHojaDeRuta.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
+      if (result) {
+        const resultHRInsert = result as HojaDeRutaRespInsert;
+        this.getAllCitesFromPersona(this.idPersonaGd ?? 542);
+      }
+    });
+
+
   }
 
   onPrintHojaRuta(pCiteModel: CiteModelByUsuario): void {

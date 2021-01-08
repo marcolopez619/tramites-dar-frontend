@@ -11,6 +11,20 @@ export interface HojaDeRutaInsertModel {
   Referencia?: string;
   PlazoDias?: number;
   Urgente?: number;
+  ConCopiaFisica?: number;
   UsuarioBitacora?: string;
   RegistroBitacora?: string;
+}
+
+
+export interface HojaDeRutaRespInsert{
+  codigoRespuesta?:number;
+  gestion?:number;
+  hojaRuta?:string;
+  idHojaRuta?:number;
+  mensaje?:string;
+  numero?:number;
+  plazoDias?:number;
+  referencia?:string;
+  urgente?:number;
 }
