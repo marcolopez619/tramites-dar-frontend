@@ -82,7 +82,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
 
     if (this.citeSelected) {
       this.formHojaDeRuta = this.formBuilder.group({
-        tipoTramite       : [ this.citeSelected.idTipoDocumento, Validators.compose([Validators.required])],
+        tipoTramite       : [ this.citeSelected.idTipoTramite, Validators.compose([Validators.required])],
         listaRemitentes   : [this.citeSelected.remitentes, Validators.compose([Validators.required])],
         listaDestinatarios: [ this.citeSelected.destinatarios, Validators.compose([Validators.required])],
         listaCc           : [undefined],                                                                     numeroCite: [this.citeSelected.numeroCite, Validators.compose([Validators.required])],

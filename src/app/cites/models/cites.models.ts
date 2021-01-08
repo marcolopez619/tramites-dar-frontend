@@ -12,6 +12,7 @@ export interface CiteModel {
 
 export interface CiteModelByUsuario{
   idCite?: number;
+  idTipoTramite?:number;
   tipoDestinatario?: string;
   idTipoDocumento?: number;
   tipoDocumento?: string;
