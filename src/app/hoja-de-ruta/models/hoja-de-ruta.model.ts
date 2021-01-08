@@ -42,4 +42,5 @@ export interface HojaRutaBandejaModel{
   estado?: string;
   codigoRespuesta?: number;
   mensaje?: string;
+  isRowMouseOver?: boolean;
 }

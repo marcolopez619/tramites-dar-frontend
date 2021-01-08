@@ -26,6 +26,8 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
+  showMouseOverActions = false;
+
   constructor(
     public contextService: ContextoService,
     public langService: LangService
@@ -46,6 +48,15 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(true);
+  }
+
+  onMouseOver(row: HojaRutaBandejaModel): void{
+    row.isRowMouseOver = true;
+    this.showMouseOverActions = true;
+  }
+  onMouseLeave(row: HojaRutaBandejaModel): void{
+    row.isRowMouseOver = false;
+    this.showMouseOverActions = false;
   }
 
   onCrearHojadeRuta(): void {

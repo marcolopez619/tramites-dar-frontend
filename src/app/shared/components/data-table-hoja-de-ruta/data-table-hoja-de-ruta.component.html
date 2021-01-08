@@ -34,11 +34,46 @@
 
     <ng-container matColumnDef="estado" >
       <mat-header-cell *matHeaderCellDef fxFlex="5"  mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-estado') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="5" > {{element.estado}} </mat-cell>
+      <mat-cell *matCellDef="let element" fxFlex="5" >
+
+        <div *ngIf="showMouseOverActions && element.isRowMouseOver" fxLayout="row" fxLayoutAlign="start center">
+          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}" (click)="onEdit(element)" >
+            <mat-icon>mode_edit</mat-icon>
+          </a>
+
+          <div *ngIf="element.poseeDocAdjunto;else subirDocumento">
+            <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-generar-hoja-ruta') }}" (click)="onGenerateHojaRuta(element)"   >
+              <mat-icon>file_copy</mat-icon>
+            </a>
+          </div>
+
+          <ng-template #subirDocumento>
+            <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-subir-nuevo-ducumento') }}" (click)="onUploadArchivo(element)"   >
+              <mat-icon>cloud_upload</mat-icon>
+            </a>
+          </ng-template>
+
+          <!-- <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-imprimir-hoja-ruta') }}" (click)="onPrintHojaRuta(element)" >
+            <mat-icon>print</mat-icon>
+          </a> -->
+        </div>
+
+        <div *ngIf="!element.isRowMouseOver">
+          {{element.estado}}
+        </div>
+
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row shRowHover [ngClass]="{'row-action': idSeleccionado === row.idHojaRuta}" [@fadeInAnim]="true" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row
+      shRowHover
+      [ngClass]="{'row-action': idSeleccionado === row.idHojaRuta}"
+      [@fadeInAnim]="true"
+      *matRowDef="let row; columns: displayedColumns;"
+      (mouseover)="onMouseOver(row)"
+      (mouseleave)="onMouseLeave(row)"
+      ></mat-row>
 
   </mat-table>
   <shared-table-empty [datasource]="dataSource"></shared-table-empty>
