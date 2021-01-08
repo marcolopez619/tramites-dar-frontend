@@ -80,6 +80,8 @@ export const hojaDeRutaLang = {
     'lbl-nombre-destinatario': 'Destinatario',
     'lbl-detalle': 'Detalle',
     'lbl-seguimiento': 'Seguimiento',
+    'lbl-seguimiento-detalle-cargo': 'Cargo',
+    'lbl-seguimiento-detalle-asunto': 'Asunto',
 
     'tit-ventana-finaliza-tramite': 'Finalizar trámite',
     'tit-ventana-añadir-comentario': 'Añadir comentario',

@@ -31,12 +31,6 @@ export class DetalleSeguimientoComponent extends BaseComponent implements OnInit
   }
 
   ngOnInit(): void {
-    /*
-    const dataForm: DetalleSeguimientoModel = {
-    };
-    */
-
-
 
     this.formSeguimientoDetalle = this.formBuilder.group({
 
@@ -45,14 +39,7 @@ export class DetalleSeguimientoComponent extends BaseComponent implements OnInit
       estadoFin: this.detalleSeguimiento.estadoFin,
       fechaInicio: this.detalleSeguimiento.fechaInicio,
       fechaFin: this.detalleSeguimiento.fechaFin,
-      proveido: this.detalleSeguimiento.proveido
-      /*remitente: 'Pepe perez, Juan Garcia, Maria del Carmen',
-      estadoInicio: 'Creado',
-      estadoFin: 'Enviado',
-      fechaInicio: new Date,
-      fechaFin: new Date,
-      proveido: 'Favor remitir las listas solicitadas'
-      */
+      proveido: this.detalleSeguimiento.asunto
     });
 
   }
