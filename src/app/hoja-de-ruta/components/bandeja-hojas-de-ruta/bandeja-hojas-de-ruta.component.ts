@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -62,9 +62,8 @@ export class BandejaHojasDeRutaComponent
   }
 
   ngOnInit(): void {
-    this.idPersonaGd =
-      this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
-    this.tipoBandeja = 'PRINCIPAL';
+    this.idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
+    this.tipoBandeja = this.valorBandejaSelected;
     this.getAllHojaRutaBandeja(this.idPersonaGd, this.tipoBandeja);
 
     //this.dataSource.data = listaHojaRuta;
@@ -88,6 +87,12 @@ export class BandejaHojasDeRutaComponent
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(true);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes.valorBandejaSelected.firstChange) {
+      this.getAllHojaRutaBandeja(this.idPersonaGd, this.valorBandejaSelected);
+    }
   }
   onCompartir(pDerivarModel: DerivarModel): void {
     const dlgNuevoCite = this.dialog.open(DerivarComponent, {

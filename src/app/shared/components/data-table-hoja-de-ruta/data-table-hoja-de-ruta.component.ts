@@ -8,6 +8,7 @@ import { BaseComponent } from '../../base.component';
 import { ContextoService } from '../../services/contexto.service';
 import { LangService } from '../../services/lang.service';
 import { DataTableHRMouseModel, Estado, Accion } from '../../models/data-table-hr-mouse.model';
+import { SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'sh-data-table-hoja-de-ruta',
@@ -16,7 +17,7 @@ import { DataTableHRMouseModel, Estado, Accion } from '../../models/data-table-h
   animations: [fadeInAnim, zoomInAnim, slideInLeftAnim],
   host: { class: 'container-fluid', '[@zoomInAnim]': 'true', 'fadeInAnim' : 'true' }
 })
-export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
+export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnInit, AfterViewInit,  OnDestroy {
 
   displayedColumns = ['tipoTramiteDes', 'nombreRemitente', 'descripcionDoc', 'cite', 'nombreDestinatario', 'referencia', 'estado'];
   dataSource = new MatTableDataSource<HojaRutaBandejaModel>([]);
@@ -40,7 +41,6 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
   ) {
     super();
   }
-
   ngOnInit(): void {
     this.dataSource.data = this.listaBandejaHojaRuta;
     this.crearAccionesMouseOver();
@@ -57,6 +57,13 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
     this.unsubscribe$.next(true);
   }
 
+  /* ngOnChanges(changes: SimpleChanges): void {
+    if (!changes.listaBandejaHojaRuta.firstChange) {
+      this.dataSource.data = changes.listaBandejaHojaRuta.currentValue;
+      console.log(`--> ${changes.listaBandejaHojaRuta.currentValue}`);
+    }
+  } */
+
   private crearAccionesMouseOver(): void {
 
     let estados: Array<Estado> = [];
@@ -68,11 +75,11 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
           tooltipText : 'Enviar',
           icono : 'send'
         },
-        {
+        /* {
           descAccion : 'editar',
           tooltipText : 'Editar',
           icono : 'edit'
-        },
+        }, */
         {
           descAccion : 'adjuntar_documento',
           tooltipText : 'Adjuntar documento',
@@ -129,11 +136,11 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
           tooltipText : 'Enviar',
           icono : 'send'
         },
-        {
+        /* {
           descAccion : 'editar',
           tooltipText : 'Editar',
           icono : 'edit'
-        },
+        }, */
         {
           descAccion : 'adjuntar_documento',
           tooltipText : 'Adjuntar documento',

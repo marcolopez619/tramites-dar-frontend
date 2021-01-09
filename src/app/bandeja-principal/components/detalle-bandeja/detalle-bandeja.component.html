@@ -6,30 +6,15 @@
   </mat-card-header>
  -->
   <mat-card-content>
+
+    ---> {{valorCapturado}}
+
     <span [ngSwitch]="valorCapturado">
     <p *ngSwitchCase="'Creadas'">
       <app-bandeja-cites></app-bandeja-cites>
     </p>
-    <p *ngSwitchCase="'Principal'">
-      <app-bandeja-hojas-de-ruta [valorBandejaSelected]="valorCapturado" ></app-bandeja-hojas-de-ruta>
-    </p>
-    <p *ngSwitchCase="'Recibido'">
-
-    </p>
-    <p *ngSwitchCase="'Enviado'">
-
-    </p>
-    <p *ngSwitchCase="'Pendiente'">
-
-    </p>
-    <p *ngSwitchCase="'Proceso'">
-    </p>
-
-    <p *ngSwitchCase="'Finalizado'">
-
-    </p>
     <p *ngSwitchDefault>
-
+      <app-bandeja-hojas-de-ruta [valorBandejaSelected]="valorCapturado" ></app-bandeja-hojas-de-ruta>
     </p>
     </span>
 
