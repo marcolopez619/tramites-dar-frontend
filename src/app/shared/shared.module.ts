@@ -57,6 +57,7 @@ import { ParametricaService } from './services/parametrica.service';
 import { ComentarioService } from './services/comentario.service';
 import { BusquedaAvanzadaComponent } from './components/busqueda-avanzada/busqueda-avanzada.component';
 import { HojaRutaService } from './services/hoja-ruta.service';
+import { DataTableHojaDeRutaComponent } from './components/data-table-hoja-de-ruta/data-table-hoja-de-ruta.component';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -87,7 +88,8 @@ import { HojaRutaService } from './services/hoja-ruta.service';
         HojaDeRutaComponent,
         AutocompleteComponent,
         DocumentoAdjuntoComponent,
-        BusquedaAvanzadaComponent
+        BusquedaAvanzadaComponent,
+        DataTableHojaDeRutaComponent
     ],
     imports: [
         CommonModule,
@@ -178,7 +180,8 @@ import { HojaRutaService } from './services/hoja-ruta.service';
         HojaDeRutaComponent,
         AutocompleteComponent,
         DocumentoAdjuntoComponent,
-        BusquedaAvanzadaComponent
+        BusquedaAvanzadaComponent,
+        DataTableHojaDeRutaComponent
     ],
     entryComponents: [
         ConfirmDialogComponent
