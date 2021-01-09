@@ -11,10 +11,10 @@ export interface SeguimientoModel {
     remitente?: string;
     cargo?: string;
     idEstado?: number;
-    estadoInicio?: string;
-    estadoFin?: string;
-    fechaInicio?: Date;
-    fechaFin?: Date;
+    estado_entrada?: string;
+    estado_proceso?: string;
+    fecha_entrada?: Date;
+    fecha_proceso?: Date;
     asunto?: string;
     plazoDias?: number;
     participantes?: string;

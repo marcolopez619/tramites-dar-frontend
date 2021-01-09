@@ -35,10 +35,11 @@ export class DetalleSeguimientoComponent extends BaseComponent implements OnInit
     this.formSeguimientoDetalle = this.formBuilder.group({
 
       remitente : this.detalleSeguimiento.remitente,
-      estadoInicio: this.detalleSeguimiento.estadoInicio,
-      estadoFin: this.detalleSeguimiento.estadoFin,
-      fechaInicio: this.detalleSeguimiento.fechaInicio,
-      fechaFin: this.detalleSeguimiento.fechaFin,
+      cargo: this.detalleSeguimiento.cargo,
+      estado_entrada: this.detalleSeguimiento.estado_entrada,
+      estado_proceso: this.detalleSeguimiento.estado_proceso,
+      fecha_entrada: this.detalleSeguimiento.fecha_entrada,
+      fecha_proceso: this.detalleSeguimiento.fecha_proceso,
       proveido: this.detalleSeguimiento.asunto
     });
 

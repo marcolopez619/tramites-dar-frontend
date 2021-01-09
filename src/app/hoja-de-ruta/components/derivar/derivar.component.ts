@@ -11,12 +11,15 @@ import {
 } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
 import { DataDocumentoAdjunto } from '../../../shared/models/documento-adjunto.model';
+import { HojaDeRutaInsertModel } from '../../../shared/models/hoja-de-ruta.model';
 import { UsuarioModel } from '../../../shared/models/Usuario.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { DocumentoAdjuntoService } from '../../../shared/services/documento-adjunto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { UsuarioService } from '../../../shared/services/usuario.service';
+import { HojaDeRutaService } from '../../hoja-de-ruta.service';
 import { DerivarModel } from '../../models/derivar.model';
+import { HojaRutaDerivaModel } from '../../models/hoja-ruta-deriva.model';
 
 @Component({
   selector: 'derivar',
@@ -42,7 +45,8 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private usuarioService: UsuarioService,
     private citesService: CitesService,
-    private documentoAdjuntoService: DocumentoAdjuntoService
+    private documentoAdjuntoService: DocumentoAdjuntoService,
+    private hojaRutaService: HojaDeRutaService
   ) {
     super();
   }
@@ -58,7 +62,8 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     this.getAllusuarios(idTipoTramite);
 
     this.formDerivarHR = this.formBuilder.group({
-      listaDestinatarios: [undefined, Validators.compose([Validators.required])]
+      listaDestinatarios: [undefined, Validators.compose([Validators.required])],
+      DescripcionReferencia: [undefined, Validators.compose([Validators.required])],
     });
   }
 
@@ -98,13 +103,25 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     });
   }
 
-  save(): void {
-    const data: DataDocumentoAdjunto = {
-      startSaveDocuments : true,
-      datosAdicionales : undefined
-    };
-    this.documentoAdjuntoService.sendFlagToSaveDocument( data );
-    const datosFormulario: DerivarModel = { };
+  saveDerivar(): void {
+    const objDatosFormulario: any = this.formDerivarHR.value;
+    var vObjHojaRuta                         = this.data.hojaRutaSelected;
+    let datosFormulario: HojaRutaDerivaModel = {};
+        datosFormulario.IdHojaDeRuta         = vObjHojaRuta.idHojaRuta;
+        //datosFormulario.IdPersonaGb          = objDatosFormulario.listaDestinatarios[0].idPersonaGd;
+        datosFormulario.IdPersonaGb          = 542;
+        datosFormulario.Asunto               = this.formDerivarHR.controls['DescripcionReferencia'].value;
+        datosFormulario.PlazoDias            = vObjHojaRuta.plazo;
+        datosFormulario.Urgente              = vObjHojaRuta.urgente;
+        datosFormulario.UsuarioBitacora      = this.contextService.getItemContexto('samActName');
+        datosFormulario.RegistroBitacora     = undefined;
+
+    this.hojaRutaService
+      .createHojaRutaDeriva(datosFormulario)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        this.dialogRef.close(result);
+      });
 
   }
 

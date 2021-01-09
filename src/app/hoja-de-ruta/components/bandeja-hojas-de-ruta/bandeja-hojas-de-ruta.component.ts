@@ -76,8 +76,6 @@ export class BandejaHojasDeRutaComponent
       this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
     this.tipoBandeja = "PRINCIPAL";
     this.getAllHojaRutaBandeja(this.idPersonaGd, this.tipoBandeja);
-
-    //this.dataSource.data = listaHojaRuta;
   }
   private getAllHojaRutaBandeja(idPersonaGd: number, tipoBandeja): void {
     this.hojaRutaService
@@ -98,13 +96,15 @@ export class BandejaHojasDeRutaComponent
   ngOnDestroy(): void {
     this.unsubscribe$.next(true);
   }
-  onCompartir(pDerivarModel: DerivarModel): void {
-    const dlgNuevoCite = this.dialog.open(DerivarComponent, {
+  onDerivar(pObjHojaRuta: HojaRutaBandejaModel): void {
+    const dlgHojaRutaDerivar = this.dialog.open(DerivarComponent, {
       disableClose: false,
       width: "1000px",
-      data: {},
+      data: {
+        hojaRutaSelected:pObjHojaRuta
+      },
     });
-    dlgNuevoCite
+    dlgHojaRutaDerivar
       .afterClosed()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((result) => {
@@ -115,8 +115,6 @@ export class BandejaHojasDeRutaComponent
   }
 
   onSeguimiento(objHojaRuta: HojaRutaBandejaModel): void {
-    //DetalleSeguimientoComponent
-    //const dlgNuevaHojaRuta = this.dialog.open( HojaDeRutaComponent,  {
     const dlgHojaRutaSeguimiento = this.dialog.open(SeguimientoComponent, {
       disableClose: true,
       width: "1000px",

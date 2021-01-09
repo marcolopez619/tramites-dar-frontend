@@ -62,7 +62,7 @@
     <ng-container matColumnDef="acciones">
       <mat-header-cell *matHeaderCellDef fxFlex="15" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
       <mat-cell *matCellDef="let element;  let i = index;" fxFlex="15" fxLayoutAlign="center center">
-        <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-derivar') }}"  (click)="onCompartir(element)">
+        <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-derivar') }}"  (click)="onDerivar(element)">
           <mat-icon>share</mat-icon>
         </a>
         <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento') }}"  (click)="onSeguimiento(element)">

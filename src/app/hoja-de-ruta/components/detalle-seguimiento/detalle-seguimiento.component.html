@@ -13,44 +13,33 @@
 
     <div fxLayout="row" fxLayoutGap="30px">
       <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-remitente')}}</mat-label>
-      <mat-form-field fxFlex>
-        <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.remitente" />
-      </mat-form-field>
-      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-cargo')}}</mat-label>
-      <mat-form-field fxFlex>
-        <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.cargo" />
-      </mat-form-field>
+      <mat-label fxFlex>{{this.detalleSeguimiento.remitente}}</mat-label>
+      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-cargo')}} :</mat-label>
+      <mat-label fxFlex>{{this.detalleSeguimiento.cargo}}</mat-label>
     </div>
+    <br>
 
     <div fxLayout="row" fxLayoutGap="30px">
-      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-estado')}}</mat-label>
-      <mat-form-field fxFlex>
-        <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.estadoInicio" />
-      </mat-form-field>
-      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-fecha')}}</mat-label>
-      <mat-form-field fxFlex>
-        <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.fechaInicio" />
-      </mat-form-field>
+      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-estado')}} :</mat-label>
+      <mat-label fxFlex>{{this.detalleSeguimiento.estado_entrada}}</mat-label>
+      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-fecha')}} :</mat-label>
+      <mat-label fxFlex>{{this.detalleSeguimiento.fecha_entrada}}</mat-label>
     </div>
+    <br>
 
     <div fxLayout="row" fxLayoutGap="30px">
-      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-estado')}}</mat-label>
-      <mat-form-field fxFlex>
-        <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.estadoFin" />
-      </mat-form-field>
-      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-fecha')}}</mat-label>
-      <mat-form-field fxFlex>
-        <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.fechaFin" />
-      </mat-form-field>
+      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-estado')}} :</mat-label>
+      <mat-label fxFlex>{{this.detalleSeguimiento.estado_proceso}}</mat-label>
+      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-fecha')}} :</mat-label>
+      <mat-label fxFlex>{{this.detalleSeguimiento.fecha_proceso}}</mat-label>
     </div>
+    <br>
 
     <!--<sh-documento-adjunto></sh-documento-adjunto>-->
 
     <div fxLayout="row" fxLayoutGap="30px">
-      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-asunto')}}</mat-label>
-      <mat-form-field fxFlex>
-        <input readonly="readonly" matInput shDisabled [value]="this.detalleSeguimiento.asunto" />
-      </mat-form-field>
+      <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-asunto')}} :</mat-label>
+      <mat-label fxFlex>{{this.detalleSeguimiento.asunto}}</mat-label>
     </div>
 
 
