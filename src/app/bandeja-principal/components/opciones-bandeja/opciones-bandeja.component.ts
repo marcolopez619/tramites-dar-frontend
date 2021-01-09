@@ -54,16 +54,21 @@ export class OpcionesBandejaComponent extends BaseComponent implements OnInit {
         children : undefined
       },{
         id : 9,
+        displayName : 'Rechazado',
+        icono : 'swap_horiz',
+        children : undefined
+      }, {
+        id : 10,
         displayName : 'Pendiente',
         icono : 'waves',
         children : undefined
       },{
-        id : 10,
+        id : 11,
         displayName : 'Proceso',
         icono : 'edit',
         children : undefined
       },{
-        id : 11,
+        id : 12,
         displayName : 'Finalizado',
         icono : 'ballot',
         children : undefined

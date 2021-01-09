@@ -8,6 +8,7 @@ import { BaseComponent } from '../../base.component';
 import { ContextoService } from '../../services/contexto.service';
 import { LangService } from '../../services/lang.service';
 import { DataTableHRMouseModel, Estado, Accion } from '../../models/data-table-hr-mouse.model';
+import { SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'sh-data-table-hoja-de-ruta',
@@ -16,7 +17,7 @@ import { DataTableHRMouseModel, Estado, Accion } from '../../models/data-table-h
   animations: [fadeInAnim, zoomInAnim, slideInLeftAnim],
   host: { class: 'container-fluid', '[@zoomInAnim]': 'true', 'fadeInAnim' : 'true' }
 })
-export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
+export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnInit, AfterViewInit,  OnDestroy {
 
   displayedColumns = ['tipoTramiteDes', 'nombreRemitente', 'descripcionDoc', 'cite', 'nombreDestinatario', 'referencia', 'estado'];
   dataSource = new MatTableDataSource<HojaRutaBandejaModel>([]);
@@ -40,7 +41,6 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
   ) {
     super();
   }
-
   ngOnInit(): void {
     this.dataSource.data = this.listaBandejaHojaRuta;
     this.crearAccionesMouseOver();
@@ -57,20 +57,29 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
     this.unsubscribe$.next(true);
   }
 
+  /* ngOnChanges(changes: SimpleChanges): void {
+    if (!changes.listaBandejaHojaRuta.firstChange) {
+      this.dataSource.data = changes.listaBandejaHojaRuta.currentValue;
+      console.log(`--> ${changes.listaBandejaHojaRuta.currentValue}`);
+    }
+  } */
+
   private crearAccionesMouseOver(): void {
+
+    let estados: Array<Estado> = [];
 
     switch (this.bandeja.toUpperCase()) {
       case 'PRINCIPAL': {
-        const acciones : Array<Accion> = [{
+        const acciones: Array<Accion> = [{
           descAccion : 'enviar',
           tooltipText : 'Enviar',
           icono : 'send'
         },
-        {
+        /* {
           descAccion : 'editar',
           tooltipText : 'Editar',
           icono : 'edit'
-        },
+        }, */
         {
           descAccion : 'adjuntar_documento',
           tooltipText : 'Adjuntar documento',
@@ -78,19 +87,159 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
         }
       ];
 
-        const estados: Array<Estado> = [{
+        estados = [{
           descEstado : 'creado',
           acciones : acciones
         }];
 
-        this.mouseOverModel.descBandeja = this.bandeja;
-        this.mouseOverModel.estados = estados;
         break;
       }
+      case 'RECIBIDO': {
+        const acciones: Array<Accion> = [{
+          descAccion : 'aceptar',
+          tooltipText : 'Aceptar envío',
+          icono : 'done'
+        }, {
+          descAccion : 'rechazar',
+          tooltipText : 'Rechazar envío',
+          icono : 'highlight_off'
+        }, {
+          descAccion : 'ver_informacion',
+          tooltipText : 'Ver información',
+          icono : 'visibility'
+        }];
 
-      default:
+        estados = [{
+          descEstado : 'espera',
+          acciones : acciones
+        }];
+
         break;
-    }
+      }
+      case 'ENVIADO': {
+        const acciones: Array<Accion> = [{
+          descAccion : 'cancelar',
+          tooltipText : 'Cancelar envío',
+          icono : 'cancel_schedule_send'
+        }];
+
+        estados = [{
+          descEstado : 'enviado',
+          acciones : acciones
+        }];
+
+        break;
+      }
+      case 'RECHAZADO': {
+        const acciones: Array<Accion> = [{
+          descAccion : 'enviar',
+          tooltipText : 'Enviar',
+          icono : 'send'
+        },
+        /* {
+          descAccion : 'editar',
+          tooltipText : 'Editar',
+          icono : 'edit'
+        }, */
+        {
+          descAccion : 'adjuntar_documento',
+          tooltipText : 'Adjuntar documento',
+          icono : 'attachment'
+        }
+      ];
+
+        estados = [{
+          descEstado : 'enviado',
+          acciones : acciones
+        }];
+
+        break;
+      }
+      case 'PENDIENTE': {
+        const accionesAEnAtencion: Array<Accion> = [{
+          descAccion : 'derivar',
+          tooltipText : 'Derivar',
+          icono : 'near_me'
+        }, {
+          descAccion : 'adjuntar_documento',
+          tooltipText : 'Adjuntar documento',
+          icono : 'attachment'
+        }, {
+          descAccion : 'anadir_participante',
+          tooltipText : 'Añadir participante',
+          icono : 'person_add'
+        }, {
+          descAccion : 'anadir_comentario',
+          tooltipText : 'Añadir comentario',
+          icono : 'add_comment'
+        }, {
+          descAccion : 'ver_informacion',
+          tooltipText : 'Ver información',
+          icono : 'remove_red_eye'
+        }, {
+          descAccion : 'finalizar',
+          tooltipText : 'Finalizar trámite',
+          icono : 'offline_pin'
+        }];
+
+        const accionesParticipante: Array<Accion> = [{
+          descAccion : 'adjuntar_documento',
+          tooltipText : 'Adjuntar documento',
+          icono : 'attachment'
+        }, {
+          descAccion : 'anadir_comentario',
+          tooltipText : 'Añadir comentario',
+          icono : 'add_comment'
+        }, {
+          descAccion : 'finalizar_participacion',
+          tooltipText : 'Finalizar participación',
+          icono : 'person_off'
+        }, {
+          descAccion : 'ver_informacion',
+          tooltipText : 'Ver información',
+          icono : 'remove_red_eye'
+        }];
+
+        estados = [{
+          descEstado : 'atencion',
+          acciones : accionesAEnAtencion.concat(accionesParticipante)
+        }];
+
+        break;
+      }
+      case 'PROCESO': {
+        const acciones: Array<Accion> = [{
+          descAccion : 'ver_informacion',
+          tooltipText : 'Ver información',
+          icono : 'remove_red_eye'
+        }];
+
+        estados = [{
+          descEstado : 'atendido',
+          acciones : acciones
+        }];
+
+        break;
+      }
+      case 'FINALIZADO': {
+        const acciones: Array<Accion> = [{
+          descAccion : 'ver_informacion',
+          tooltipText : 'Ver información',
+          icono : 'remove_red_eye'
+        }];
+
+        estados = [{
+          descEstado : 'finalizado',
+          acciones : acciones
+        }];
+
+        break;
+      }
+      default: break;
+      }
+
+    this.mouseOverModel.estados = estados;
+    this.mouseOverModel.descBandeja = this.bandeja;
   }
 
   onMouseOver(row: HojaRutaBandejaModel): void {

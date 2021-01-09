@@ -61,18 +61,22 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
 
   private getAllCitesFromPersona( idPersonaGd: number ): void {
     this.citesService.getAllCitesFromPersona( idPersonaGd ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaCitesPersona => {
-      listaCitesPersona.data.map( cite => cite.destinatarios = ( cite.destinatarios !== '' ) ? JSON.parse( cite.destinatarios ) as Array<DestinatarioModel> : cite.destinatarios );
-      listaCitesPersona.data.map( cite => cite.remitentes = ( cite.remitentes !== '' ) ? JSON.parse( cite.remitentes ) as Array<DestinatarioModel> : cite.remitentes );
-      listaCitesPersona.data.map( cite => cite.vias = ( cite.vias !== '' ) ? JSON.parse( cite.vias ) as Array<DestinatarioModel> : cite.vias );
-      this.dataSource.data = listaCitesPersona.data as Array<CiteModelByUsuario>;
+
+      if (listaCitesPersona.data?.legth > 0 && listaCitesPersona.data != null ) {
+        listaCitesPersona.data.map( cite => cite.destinatarios = ( cite.destinatarios !== '' ) ? JSON.parse( cite.destinatarios ) as Array<DestinatarioModel> : cite.destinatarios );
+        listaCitesPersona.data.map( cite => cite.remitentes = ( cite.remitentes !== '' ) ? JSON.parse( cite.remitentes ) as Array<DestinatarioModel> : cite.remitentes );
+        listaCitesPersona.data.map( cite => cite.vias = ( cite.vias !== '' ) ? JSON.parse( cite.vias ) as Array<DestinatarioModel> : cite.vias );
+        this.dataSource.data = listaCitesPersona.data as Array<CiteModelByUsuario>;
+      }
+
     });
   }
 
-  onMouseOver(row: CiteModelByUsuario): void{
+  onMouseOver(row: CiteModelByUsuario): void {
     row.isRowMouseOver = true;
     this.showMouseOverActions = true;
   }
-  onMouseLeave(row: CiteModelByUsuario): void{
+  onMouseLeave(row: CiteModelByUsuario): void {
     row.isRowMouseOver = false;
     this.showMouseOverActions = false;
   }
@@ -116,7 +120,6 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
       }
     });
 
-
   }
 
   onPrintHojaRuta(pCiteModel: CiteModelByUsuario): void {
@@ -142,7 +145,5 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
       this.getAllCitesFromPersona(this.idPersonaGd);
     });
   }
-
-
 
 }
