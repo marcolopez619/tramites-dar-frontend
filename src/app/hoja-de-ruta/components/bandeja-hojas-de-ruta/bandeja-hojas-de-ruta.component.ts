@@ -56,7 +56,7 @@ export class BandejaHojasDeRutaComponent
     public contextService: ContextoService,
     private hojaRutaService: HojaDeRutaService,
     private router: Router,
-    private dialog: MatDialog
+    public dialog: MatDialog
   ) {
     super();
   }
