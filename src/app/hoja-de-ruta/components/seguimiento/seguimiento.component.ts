@@ -81,7 +81,7 @@ export class SeguimientoComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.hojaRutaService
-      .getAllHojaRutaSeguimiento(this.data.idHojarutaSelected)
+      .getAllHojaRutaSeguimiento(this.data.idHojaRuta)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((vObjSeguimiento) => {
 
