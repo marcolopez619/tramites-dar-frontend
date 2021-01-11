@@ -11,6 +11,8 @@ import { DataDocumentoAdjunto, DocumentoAdjuntoModel } from '../../models/docume
 import { LangService } from '../../services/lang.service';
 import { NotificacionService } from '../../services/notificacion.service';
 import { DocumentoAdjuntoService } from './../../services/documento-adjunto.service';
+import { HojaRutaBandejaModel } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
+import { ContextoService } from '../../services/contexto.service';
 
 @Component({
   selector: 'sh-documento-adjunto',
@@ -48,24 +50,36 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
 
   constructor(
     public langService: LangService,
+    public contextService: ContextoService,
     public notificacionService: NotificacionService,
     private documentoAdjuntoService: DocumentoAdjuntoService
   ) {
     super();
 
     // Monitorea si se desea guardar los documentos adjuntos
-    this.documentoAdjuntoService.getFlagToSaveDocument().pipe( takeUntil(this.unsubscribe$)).subscribe( data => {
+    this.documentoAdjuntoService.getFlagToSaveDocument().pipe( takeUntil(this.unsubscribe$)).subscribe( dataSUbscriber => {
+
+      const data = dataSUbscriber as DataDocumentoAdjunto;
 
       // Asigna los datos necesarios para guardar la informacion del doc adjunto.
-      this.dataDocumentoAdjunto = this.dataDocumentoAdjunto ?? (data as DataDocumentoAdjunto).datosAdicionales;
+      this.dataDocumentoAdjunto = data.datosAdicionales ?? this.dataDocumentoAdjunto;
 
-      console.log( `SHARED DOCUMENTO ADJUNTO --> ${(data as DataDocumentoAdjunto).startSaveDocuments}`);
+      console.log( `SHARED DOCUMENTO ADJUNTO --> ${data.startSaveDocuments}`);
 
-      if ((data as DataDocumentoAdjunto).startSaveDocuments) {
+      if (data.startSaveDocuments) {
         console.log( `Subiendo Cantidad : ${this.listaDocumentosToUpload.length} archivos al servidor` );
         console.log( `Informacion adicional :  ${ JSON.stringify(this.dataDocumentoAdjunto) }` );
 
-        if (this.dataDocumentoAdjunto) {
+        if (data.datosAdicionales) {
+          // Si es la subida desde la hoja de ruta, => asigna el id del file al id de la hoja de ruta.
+          // Verifica que tipo es dataDocumentoAdjunto
+          if ( 'idHojaRuta' in data.datosAdicionales ) {
+
+            this.listaDocumentosToUpload.forEach(element => {
+              element.id = ( data.datosAdicionales as HojaRutaBandejaModel).idHojaRuta;
+            });
+          }
+
           // Sube los documentos al servidor de archivos.
           this.onSaveDocument();
         }
@@ -117,7 +131,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
         let idFile = 0;
 
          // Verifica que tipo es dataDocumentoAdjunto
-        if ( 'idCite' in this.dataDocumentoAdjunto   ) {
+        if ( this.dataDocumentoAdjunto && 'idCite' in this.dataDocumentoAdjunto   ) {
           // => es de tipo: idCite
           idFile = this.dataDocumentoAdjunto.idCite;
         }
