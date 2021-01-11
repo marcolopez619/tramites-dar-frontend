@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild, Injector } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,7 +8,12 @@ import { BaseComponent } from '../../base.component';
 import { ContextoService } from '../../services/contexto.service';
 import { LangService } from '../../services/lang.service';
 import { DataTableHRMouseModel, Estado, Accion } from '../../models/data-table-hr-mouse.model';
-import { SimpleChanges } from '@angular/core';
+import { DerivarModel } from '../../../hoja-de-ruta/models/derivar.model';
+import { DerivarComponent } from '../../../hoja-de-ruta/components/derivar/derivar.component';
+import { MatDialog } from '@angular/material/dialog';
+import { takeUntil } from 'rxjs/operators';
+import { HojaDeRutaComponent } from '../hoja-de-ruta/hoja-de-ruta.component';
+import { AdjuntarDocumentoComponent } from '../../../hoja-de-ruta/components/adjuntar-documento/adjuntar-documento.component';
 
 @Component({
   selector: 'sh-data-table-hoja-de-ruta',
@@ -37,13 +42,16 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
 
   constructor(
     public contextService: ContextoService,
-    public langService: LangService
+    public langService: LangService,
+    public dialog: MatDialog
   ) {
     super();
   }
   ngOnInit(): void {
     this.dataSource.data = this.listaBandejaHojaRuta;
     this.crearAccionesMouseOver();
+    console.log('ENTRO AL ONINITTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
+
   }
 
   ngAfterViewInit(): void {
@@ -57,13 +65,13 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
     this.unsubscribe$.next(true);
   }
 
-  /* ngOnChanges(changes: SimpleChanges): void {
-    if (!changes.listaBandejaHojaRuta.firstChange) {
-      this.dataSource.data = changes.listaBandejaHojaRuta.currentValue;
-      console.log(`--> ${changes.listaBandejaHojaRuta.currentValue}`);
-    }
-  } */
-
+  /**
+   * METODO QUE CREA LAS ACCIONES DEL MOUSEOVER EN FUNCION A LOS ESTADOS
+   * Y ASIGNA LO QUE DEBE HACER CUANDO SE PRECIONA UN CLICK DEL ICONO CORRESPONDIENTE
+   *
+   * @private
+   * @memberof DataTableHojaDeRutaComponent
+   */
   private crearAccionesMouseOver(): void {
 
     let estados: Array<Estado> = [];
@@ -73,7 +81,8 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
         const acciones: Array<Accion> = [{
           descAccion : 'enviar',
           tooltipText : 'Enviar',
-          icono : 'send'
+          icono : 'send',
+          onClick : this.onDerivar
         },
         /* {
           descAccion : 'editar',
@@ -83,7 +92,8 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
         {
           descAccion : 'adjuntar_documento',
           tooltipText : 'Adjuntar documento',
-          icono : 'attachment'
+          icono : 'attachment',
+          onClick : this.onAdjuntarDocumento
         }
       ];
 
@@ -242,6 +252,38 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
     this.mouseOverModel.descBandeja = this.bandeja;
   }
 
+  private onDerivar(pDerivarModel: DerivarModel, pDialog?: MatDialog): void {
+
+    const dlgDerivar = pDialog.open(DerivarComponent, {
+      disableClose: false,
+      width: '1000px',
+      data: {}
+    });
+    dlgDerivar
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          //..
+        }
+    });
+  }
+  private onAdjuntarDocumento(pParametro: HojaRutaBandejaModel, pDialog?: MatDialog): void {
+    const dlgDerivar = pDialog.open(AdjuntarDocumentoComponent, {
+      disableClose: false,
+      width: '1000px',
+      data: {}
+    });
+    dlgDerivar
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          //..
+        }
+    });
+  }
+
   onMouseOver(row: HojaRutaBandejaModel): void {
     row.isRowMouseOver = true;
     this.showMouseOverActions = true;
@@ -250,19 +292,4 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
     row.isRowMouseOver = false;
     this.showMouseOverActions = false;
   }
-
-  onCrearHojadeRuta(): void {
-    /* const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
-      disableClose: false,
-      width: '1000px',
-      data: {
-      }
-    });
-      dlgNuevoCite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
-      if (result) {
-        //..
-      }
-    }); */
-  }
-
 }

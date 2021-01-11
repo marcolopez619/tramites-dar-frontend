@@ -42,7 +42,7 @@
           <div *ngFor="let estado of mouseOverModel.estados">
 
             <div *ngIf="estado.descEstado == 'creado'">
-              <a *ngFor="let accion of estado.acciones" mat-icon-button matTooltip="{{accion.tooltipText}}"  > <!-- (click)="onEdit(element)" -->
+              <a *ngFor="let accion of estado.acciones" mat-icon-button matTooltip="{{accion.tooltipText}}" (click)="accion.onClick(element, this.dialog)" >
                 <mat-icon> {{accion.icono}} </mat-icon>
               </a>
             </div>
