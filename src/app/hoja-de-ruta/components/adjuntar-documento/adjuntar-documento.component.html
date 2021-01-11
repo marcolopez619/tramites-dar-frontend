@@ -1,3 +1,5 @@
+<shared-loader-spinner></shared-loader-spinner>
+
 <div class="alt-theme">
   <mat-toolbar color="primary">
       <h3>{{ langService.getLang(eModulo.HojaDeRuta, 'tit-dlg-adjuntar-documento') }}</h3>
@@ -14,25 +16,27 @@
 
       <form [formGroup]="formAdjuntarDocumento">
           <mat-form-field fxFlexFill>
-              <!-- <textarea shUppercase shAutofocus matInput placeholder="{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-comentario-adjuntar-documento') }}"
-                  formControlName="comentario"></textarea> -->
               <input shUppercase matInput placeholder="{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-comentario-adjuntar-documento') }}"
                   formControlName="comentario">
               <mat-error *ngIf="formAdjuntarDocumento.controls['comentario'].errors?.required">{{langService.getLang(eModulo.HojaDeRuta,'lbl-error-comentario-adjuntar-documento')}}</mat-error>
           </mat-form-field>
       </form>
 
-      <sh-documento-adjunto [isRequired]="true" (isValid)="isDocumentoAdjuntoValid($event)"></sh-documento-adjunto>
+      <sh-documento-adjunto
+        [isRequired]="true"
+        (isValid)="isDocumentoAdjuntoValid($event)"
+        (isUploadedAllFiles)="isUploadesAllFiles($event)"
+        ></sh-documento-adjunto>
 
     </mat-card-content>
   </mat-card>
 </mat-dialog-content>
 
 <mat-dialog-actions fxLayout="row" fxLayoutGap="20px">
-  <button fxFlex mat-raised-button color="accent" (click)="onGuardarDocumentoAdjunto()" [disabled]="!this.formAdjuntarDocumento.valid || contextService.isLoading">
+  <button fxFlex mat-raised-button color="accent" (click)="onGuardarDocumentoAdjunto()" [disabled]="!this.formAdjuntarDocumento.valid || isFileUploadedCompleted || contextService.isLoading">
     {{langService.getLang(eModulo.Base, 'lbl-guardar' )}}
   </button>
   <button fxFlex mat-raised-button color="warn" (click)="onCancelar()">
-    {{langService.getLang(eModulo.Base, 'btnCancel' )}}
+    {{langService.getLang(eModulo.Base, 'btn-cerrar' )}}
   </button>
 </mat-dialog-actions>

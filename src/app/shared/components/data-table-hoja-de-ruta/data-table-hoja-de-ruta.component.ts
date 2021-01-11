@@ -272,7 +272,9 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
     const dlgDerivar = pDialog.open(AdjuntarDocumentoComponent, {
       disableClose: false,
       width: '1000px',
-      data: {}
+      data: {
+        hojaRutaSelected: pParametro
+      }
     });
     dlgDerivar
       .afterClosed()

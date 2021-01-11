@@ -7,6 +7,7 @@ import { ContextoService } from '../../../shared/services/contexto.service';
 import { DocumentoAdjuntoService } from '../../../shared/services/documento-adjunto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { DataDocumentoAdjunto } from '../../../shared/models/documento-adjunto.model';
+import { HojaRutaBandejaModel } from '../../models/hoja-de-ruta.model';
 
 @Component({
   selector: 'app-adjuntar-documento',
@@ -19,6 +20,9 @@ export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit
 
   formAdjuntarDocumento: FormGroup;
 
+  hojaRutaSelected: HojaRutaBandejaModel;
+  isFileUploadedCompleted: boolean;
+
   constructor(
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -29,6 +33,8 @@ export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit
   ) { super(); }
 
   ngOnInit(): void {
+    this.hojaRutaSelected = this.data.hojaRutaSelected as HojaRutaBandejaModel;
+
     this.formAdjuntarDocumento = this.formBuilder.group({
       comentario        : [ undefined, [Validators.required, Validators.maxLength(100)]],
       documentosAdjuntos: [ undefined, [Validators.required]]
@@ -41,12 +47,18 @@ export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit
     if ( this.formAdjuntarDocumento.controls[ 'documentosAdjuntos' ].valid ) {
       //Enviar el flag de inicio de subida de documentos al servidor de archivos ( true )
       const data: DataDocumentoAdjunto = {
-        startSaveDocuments : true
+        startSaveDocuments : true,
+        datosAdicionales : this.hojaRutaSelected
+
       };
 
       this.documentoAdjuntoService.sendFlagToSaveDocument( data );
     }
 
+  }
+
+  isUploadesAllFiles(event: boolean) : void{
+    this.isFileUploadedCompleted = event;
   }
 
   isDocumentoAdjuntoValid(isValid: boolean): void{
