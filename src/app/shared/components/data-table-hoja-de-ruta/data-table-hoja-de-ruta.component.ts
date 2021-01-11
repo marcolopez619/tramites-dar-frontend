@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild, Injector } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild, Injector, SimpleChanges } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -50,8 +50,7 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
   ngOnInit(): void {
     this.dataSource.data = this.listaBandejaHojaRuta;
     this.crearAccionesMouseOver();
-    console.log('ENTRO AL ONINITTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
-
+    console.log(' on init del componente compartidooooooooo');
   }
 
   ngAfterViewInit(): void {
@@ -65,6 +64,13 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
     this.unsubscribe$.next(true);
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes.listaBandejaHojaRuta?.firstChange) {
+      this.dataSource = new MatTableDataSource(this.listaBandejaHojaRuta);
+    }
+  }
+
+
   /**
    * METODO QUE CREA LAS ACCIONES DEL MOUSEOVER EN FUNCION A LOS ESTADOS
    * Y ASIGNA LO QUE DEBE HACER CUANDO SE PRECIONA UN CLICK DEL ICONO CORRESPONDIENTE
@@ -77,6 +83,7 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
     let estados: Array<Estado> = [];
 
     switch (this.bandeja.toUpperCase()) {
+
       case 'PRINCIPAL': {
         const acciones: Array<Accion> = [{
           descAccion : 'enviar',
@@ -159,7 +166,7 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
       ];
 
         estados = [{
-          descEstado : 'enviado',
+          descEstado : 'rechazado',
           acciones : acciones
         }];
 
@@ -211,7 +218,7 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
         }];
 
         estados = [{
-          descEstado : 'atencion',
+          descEstado : 'en atencion',
           acciones : accionesAEnAtencion.concat(accionesParticipante)
         }];
 
@@ -225,7 +232,7 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
         }];
 
         estados = [{
-          descEstado : 'atendido',
+          descEstado : 'proceso',
           acciones : acciones
         }];
 

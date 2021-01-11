@@ -72,7 +72,13 @@ export class BandejaHojasDeRutaComponent
       //listaCitesPersona.data.map( cite => cite.remitentes = ( cite.remitentes !== '' ) ? JSON.parse( cite.remitentes ) as Array<DestinatarioModel> : cite.remitentes );
       //listaCitesPersona.data.map( cite => cite.vias = ( cite.vias !== '' ) ? JSON.parse( cite.vias ) as Array<DestinatarioModel> : cite.vias );
       // this.dataSource.data = listaHojaRutaBandeja.data as Array<HojaRutaBandejaModel>;
-      this.listaBandeja = listaHojaRutaBandeja.data as Array<HojaRutaBandejaModel>;
+
+      if (listaHojaRutaBandeja.data !== null) {
+        this.listaBandeja = listaHojaRutaBandeja.data as Array<HojaRutaBandejaModel>;
+      } else {
+        this.listaBandeja = [];
+        this.listaBandeja.length = 0;
+      }
     });
   }
 
@@ -93,15 +99,14 @@ export class BandejaHojasDeRutaComponent
     }
   }
 
-
   onDerivar(pObjHojaRuta: HojaRutaBandejaModel): void {
     const dlgHojaRutaDerivar = this.dialog.open(DerivarComponent, {
 
       disableClose: false,
-      width: "1000px",
+      width: '1000px',
       data: {
-        hojaRutaSelected:pObjHojaRuta
-      },
+        hojaRutaSelected: pObjHojaRuta
+      }
     });
     dlgHojaRutaDerivar
       .afterClosed()
