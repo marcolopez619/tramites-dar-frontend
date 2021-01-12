@@ -73,7 +73,6 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((listaTipoTramite) => {
         this.listaTipoTramite = listaTipoTramite.data as Array<TipoTramiteModel>;
-        this.descripcionTramite = this.listaTipoTramite.filter( x => x.idTipoTramite === idTipoTramiteDefault ) [0].descripcionTramite;
       });
 
     // Carga los usuarios de la bd
@@ -85,7 +84,8 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
         tipoTramite       : [ this.citeSelected.idTipoTramite, Validators.compose([Validators.required])],
         listaRemitentes   : [this.citeSelected.remitentes, Validators.compose([Validators.required])],
         listaDestinatarios: [ this.citeSelected.destinatarios, Validators.compose([Validators.required])],
-        listaCc           : [undefined],                                                                     numeroCite: [this.citeSelected.numeroCite, Validators.compose([Validators.required])],
+        listaCc           : [undefined],
+        numeroCite        : [this.citeSelected.numeroCite, Validators.compose([Validators.required])],
         referencia        : [ this.citeSelected.referencia, Validators.compose([Validators.required])],
         numeroFojas       : [undefined, Validators.compose([Validators.required])],
         plazoDias         : [undefined, Validators.compose([Validators.required])],
@@ -94,9 +94,9 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
       });
     } else {
       this.formHojaDeRuta = this.formBuilder.group({
-        tipoTramite       : [undefined, Validators.compose([Validators.required])],
+        tipoTramite       : [ 1 , Validators.compose([Validators.required])],
         listaRemitentes   : [undefined, Validators.compose([Validators.required])],
-        listaDestinatarios: [ undefined, Validators.compose([Validators.required])],
+        listaDestinatarios: [undefined, Validators.compose([Validators.required])],
         listaCc           : [undefined],
         numeroCite        : [undefined, Validators.compose([Validators.required])],
         referencia        : [undefined, Validators.compose([Validators.required])],
@@ -167,7 +167,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
       });
   }
 
-  private prepareArrayAsJSONString( lista: Array<any>,nombreKey: string ): Array<any> {
+  private prepareArrayAsJSONString( lista: Array<any>, nombreKey: string ): Array<any> {
     const listaJSON = [];
     const listaIdPersona = lista.map((cc) => cc.idPersonaGd);
 
@@ -179,6 +179,8 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
 
     return listaJSON;
   }
+
+
   private getAllusuarios(idTipotramite: number): void {
     // Borra los datos de las listas
     this.listaDestinatarios.length = this.listaRemitentes.length = this.listaUsuarios.length = 0;
@@ -191,19 +193,26 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
 
         // Recupera la data del usuario loggeado como remitente.
         const idPersonaGDLoggeado = this.contextService.getItemContexto('idPersonaGd');
-        const usuario = this.listaUsuarios.find( x => x.idPersonaGd === idPersonaGDLoggeado );
-        this.listaInicialRemitentes.push(usuario);
-        this.formHojaDeRuta.controls['listaRemitentes'].setValue(usuario);
+        this.setListaInicialRemitente(idPersonaGDLoggeado);
+
       });
+    }
+
+  private setListaInicialRemitente( idPersonaGD: number ): void {
+    const usuario = this.listaUsuarios.find( x => x.idPersonaGd === idPersonaGD );
+    this.listaInicialRemitentes.push(usuario);
+    this.formHojaDeRuta.controls['listaRemitentes'].setValue(usuario);
   }
 
   onTipoTramiteChange(event: MatSelectChange): void {
+
+    // Borra la lista inicial de remitentes
+    this.listaInicialRemitentes.length = 0;
+    this.listaInicialRemitentes = [];
+
     this.formHojaDeRuta.controls['tipoTramite'].setValue(event.value);
     this.formHojaDeRuta.controls['tipoTramite'].markAsTouched();
     console.log('----> ' + this.formHojaDeRuta.controls['tipoTramite'].value);
-    this.descripcionTramite = this.listaTipoTramite.filter(
-      (x) => x.idTipoTramite === event.value
-    )[0].descripcionTramite;
     this.getAllusuarios(event.value);
   }
 
