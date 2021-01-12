@@ -180,8 +180,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
     return listaJSON;
   }
 
-
-  private getAllusuarios(idTipotramite: number): void {
+  private getAllusuarios(idTipotramite: number, isChangeFromTramiteChange?: boolean): void {
     // Borra los datos de las listas
     this.listaDestinatarios.length = this.listaRemitentes.length = this.listaUsuarios.length = 0;
 
@@ -191,9 +190,14 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
       .subscribe((respService) => {
         this.listaUsuarios = respService.data;
 
-        // Recupera la data del usuario loggeado como remitente.
-        const idPersonaGDLoggeado = this.contextService.getItemContexto('idPersonaGd');
-        this.setListaInicialRemitente(idPersonaGDLoggeado);
+        if ( isChangeFromTramiteChange ) {
+          this.listaInicialRemitentes = [];
+          this.listaInicialRemitentes.length = 0;
+        } else {
+          // Recupera la data del usuario loggeado como remitente.
+          const idPersonaGDLoggeado = this.contextService.getItemContexto('idPersonaGd');
+          this.setListaInicialRemitente(idPersonaGDLoggeado);
+        }
 
       });
     }
@@ -213,7 +217,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
     this.formHojaDeRuta.controls['tipoTramite'].setValue(event.value);
     this.formHojaDeRuta.controls['tipoTramite'].markAsTouched();
     console.log('----> ' + this.formHojaDeRuta.controls['tipoTramite'].value);
-    this.getAllusuarios(event.value);
+    this.getAllusuarios(event.value, true);
   }
 
   getEstatusFormRemitente($event): void {
