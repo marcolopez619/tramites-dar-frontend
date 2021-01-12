@@ -85,7 +85,9 @@ export const hojaDeRutaLang = {
 
     'tit-ventana-finaliza-tramite': 'Finalizar trámite',
     'tit-ventana-añadir-comentario': 'Añadir comentario',
-    'tit-derivar-hoja-ruta': 'Derivar hoja de ruta'
+    'tit-derivar-hoja-ruta': 'Derivar hoja de ruta',
+
+    'lbl-fecha-registro' : 'Fecha registro'
 
   }
 };

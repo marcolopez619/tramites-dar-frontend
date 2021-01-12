@@ -1,42 +1,45 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { MatSelectChange } from "@angular/material/select";
-import { MatTableDataSource } from "@angular/material/table";
-import { takeUntil } from "rxjs/internal/operators/takeUntil";
-import { HojaDeRutaModel } from "../../../hoja-de-ruta/models/hoja-de-ruta.model";
-import { slideInLeftAnim, zoomInAnim } from "../../animations/template.animation";
-import { BaseComponent } from "../../base.component";
-import { TipoBandejaModel, TipoDocumentoModel, TipoTramiteModel } from "../../models/parametricas.model";
-import { UsuarioModel } from "../../models/Usuario.model";
-import { ContextoService } from "../../services/contexto.service";
-import { LangService } from "../../services/lang.service";
-import { ParametricaService } from "../../services/parametrica.service";
-import { UsuarioService } from "../../services/usuario.service";
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
+import { slideInLeftAnim, zoomInAnim, fadeInAnim } from '../../animations/template.animation';
+import { BaseComponent } from '../../base.component';
+import { BusquedaAvanzadaModel, BusquedaAvanzadaResult } from '../../models/busqueda-avanzada.model';
+import { OpcionesBandejaDefault } from '../../models/opciones-bandeja.model';
+import { TipoDocumentoModel, TipoTramiteModel } from '../../models/parametricas.model';
+import { UsuarioModel } from '../../models/Usuario.model';
+import { ContextoService } from '../../services/contexto.service';
+import { LangService } from '../../services/lang.service';
+import { ParametricaService } from '../../services/parametrica.service';
+import { UsuarioService } from '../../services/usuario.service';
+import { BusquedaService } from '../../services/busqueda.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'sh-busqueda-avanzada',
   templateUrl: './busqueda-avanzada.component.html',
-  animations: [zoomInAnim, slideInLeftAnim],
-  host: { class: 'container-fluid', '[@zoomInAnim]': '' }
+  animations: [zoomInAnim, slideInLeftAnim, fadeInAnim],
+  host: { class: 'container-fluid', '[@zoomInAnim]': 'true', '[@fadeInAnim]': 'true'}
 })
 
-export class BusquedaAvanzadaComponent extends BaseComponent implements OnInit{
+export class BusquedaAvanzadaComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  displayedColumns = ['hojaRuta', 'tipoRemitente', 'remitente', 'tipoDocumento', 'numeroCite', 'destinatario', 'referencia', 'fecha', 'estado'];
+  dataSource = new MatTableDataSource<BusquedaAvanzadaResult>([]);
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
   formBusquedaAvanzada: FormGroup;
-  //displayedColumns = ['tipoRemitente', 'nombreRemitente','tipoDocumento', 'numeroCite', 'destinatarios', 'referencia', 'estado', 'acciones'];
-  displayedColumns = ['numeroHojaRuta','tipoRemitente', 'nombreRemitente', 'tipoDocumento', 'numeroCite', 'nombreDestinatario','referencia', 'estado'];
-  dataSource = new MatTableDataSource<any>([]);
+
   listaTipoDocumento: Array<TipoDocumentoModel> = [];
   listaDestinatarios: Array<UsuarioModel> = [];
   listaRemitentes: Array<UsuarioModel> = [];
   listaTipoTramite: Array<TipoTramiteModel> = [];
   listaUsuarios: Array<UsuarioModel> = [];
-  listaTipoBandeja : Array<TipoBandejaModel>=[];
-  minValue = new Date(); maxValue = new Date();
-  rangoFecha=Date();
-  fechaNacimiento= Date();
 
-  descripcionTipoDocumento: string;
+  listaTipobandeja: Array<string> = [ 'Todos' ];
 
   constructor(
     public contextService: ContextoService,
@@ -44,15 +47,16 @@ export class BusquedaAvanzadaComponent extends BaseComponent implements OnInit{
     private formBuilder: FormBuilder,
     private parametricaService: ParametricaService,
     private usuarioService: UsuarioService,
+    private busquedaService: BusquedaService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    const idTipoTramiteDefault = 1;
     const idUnidadDir = this.contextService.getItemContexto('idUnidadDir');
     const idUnidadJef = this.contextService.getItemContexto('idUnidadJef');
     const idUnidadOrg = Number( idUnidadJef && idUnidadJef >= 0 ? idUnidadJef : idUnidadDir );
+    const idPersonaGD = this.contextService.getItemContexto('idPersonaGd') ?? 542;
 
     this.parametricaService.getTipoDocumentos( idUnidadOrg ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaTipoDocs => {
       this.listaTipoDocumento = listaTipoDocs.data as Array<TipoDocumentoModel>;
@@ -62,19 +66,47 @@ export class BusquedaAvanzadaComponent extends BaseComponent implements OnInit{
     const idTipoTramite = 1;
     this.getAllusuarios(idTipoTramite);
 
+    this.fillTipoBandejaOptions();
+
     this.formBusquedaAvanzada = this.formBuilder.group({
-      hojaRuta          : [ undefined ],
-      numeroCite        : [ undefined ],
-      tipoDocumento     : [undefined, Validators.compose([Validators.required])],
-      referencia        : [undefined ],
-      listaDestinatarios: [ undefined ],
-      listaRemitentes   : [ undefined ],
-      rangoFechaGroup   : this.formBuilder.group({
+      idPersonaLogin : [ idPersonaGD ],
+      hojaRuta       : [ undefined ],
+      numeroCite     : [ undefined ],
+      idTipoDocumento: [ 0, Validators.compose([Validators.required])],
+      referencia     : [ undefined ],
+      idDestinatario : [ 0 ],
+      idRemitente    : [ 0 ],
+      rangoFechaGroup: this.formBuilder.group({
         fechaInicial: [ new Date() ],
         fechaFinal  : [ new Date() ]
       }),
-      listaTipoBandeja: [ undefined ]
+      idTipoBandeja: [ 0 ]
     });
+  }
+
+  ngAfterViewInit(): void {
+    if (this.dataSource !== undefined) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next(true);
+  }
+
+  private setFormDefaultValues(): void{
+    const idPersonaGD = this.contextService.getItemContexto('idPersonaGd') ?? 542;
+
+    this.formBusquedaAvanzada.controls[ 'idPersonaLogin' ].setValue( idPersonaGD );
+    this.formBusquedaAvanzada.controls[ 'idTipoDocumento' ].setValue( 0 );
+    this.formBusquedaAvanzada.controls[ 'idDestinatario' ].setValue( 0 );
+    this.formBusquedaAvanzada.controls[ 'idRemitente' ].setValue( 0 );
+    this.formBusquedaAvanzada.controls[ 'rangoFechaGroup' ].setValue( {
+      fechaInicial : new Date(),
+      fechaFinal : new Date()
+    } );
+    this.formBusquedaAvanzada.controls[ 'idTipoBandeja' ].setValue( 0 );
 
   }
 
@@ -87,74 +119,73 @@ export class BusquedaAvanzadaComponent extends BaseComponent implements OnInit{
     });
   }
 
-  onTipoDocumentoChange(event: MatSelectChange ): void {
-    this.formBusquedaAvanzada.controls['tipoDocumento'].setValue( event.value );
-    this.formBusquedaAvanzada.controls['tipoDocumento'].markAsTouched();
-    console.log( ' tipo documento : ----> ' + this.formBusquedaAvanzada.controls['tipoDocumento'].value );
-    this.descripcionTipoDocumento = this.listaTipoDocumento.filter( x => x.idDocumentoTipo === event.value )[ 0 ].descripcionDoc;
-  }
-  getEstatusFormDestinatario($event): void {
-    console.log( ' is Invalid Destinatario : ' + $event );
-  }
-  getListaSeleccionadaDestinatarios($event): void {
-    console.log('----------------------');
-    this.listaDestinatarios = $event as Array<UsuarioModel>;
-    this.listaDestinatarios.forEach( element => {
-      console.log( ' Destinatario ---> ' + element.nombreCompleto );
+  private fillTipoBandejaOptions(): void {
+    OpcionesBandejaDefault.LISTA_OPCIONES_BANDEJA.forEach(element => {
+      element.children.forEach(children => {
+
+        if (element.displayName !== 'CITES' && element.displayName !== 'OPCIONES' && children.children === undefined  ) {
+          this.listaTipobandeja.push( children.displayName );
+        }
+      });
     });
-    //this.formBusquedaAvanzada.controls['listaDestinatarios'].setValue( (true) ? undefined : this.listaDestinatarios );
+
   }
 
+  getEstatusFormDestinatario(event: any): void {
+    console.log( ' is Invalid Destinatario : ' + event );
+  }
+
+  getListaSeleccionadaDestinatarios(event): void {
+    this.listaDestinatarios = event as Array<UsuarioModel>;
+    const idDestinatario = this.listaDestinatarios.map( x => x.idPersonaGd )[ 0 ];
+    this.formBusquedaAvanzada.controls[ 'idDestinatario' ].setValue( idDestinatario );
+  }
 
   getListaSeleccionadaRemitentes($event): void {
-    console.log('----------------------');
     this.listaRemitentes = $event as Array<UsuarioModel>;
-
-    this.listaRemitentes.forEach( element => {
-      console.log( 'Remitente ---> ' + element.nombreCompleto );
-    });
-    //this.formBusquedaAvanzada.controls['listaRemitentes'].setValue( (this._isRemitenteInvalid) ? undefined : this.listaRemitentes );
+    const idRemitente = this.listaRemitentes.map( x => x.idPersonaGd )[ 0 ];
+    this.formBusquedaAvanzada.controls[ 'idRemitente' ].setValue( idRemitente );
   }
 
-  busquedaCiudadano(): void {
-    const listaHojaRuta: Array<HojaDeRutaModel> = [
-      {
-        numeroHojaRuta: 'SEGIP/12345/2020',
-        idHojaRutaModel: 1,
-        tipoRemitente: 'Externo',
-        nombreRemitente: 'Ministerio de Economia',
-        tipoDocumento : 'MEMORANDUM',
-        numeroCite : 'SEGIP/DES/2334_2021',
-        nombreDestinatario : 'Victor Apaza',
-        referencia : 'REFERENCIA DE PRUEBA 1',
-        estado: 'PENDIENTE'
-      },
-      {
-        idHojaRutaModel: 2,
-        tipoRemitente: 'Externo',
-        nombreRemitente: 'Ministerio de Salud',
-        tipoDocumento : 'INFORME',
-        numeroCite : 'SEGIP/DES/2777_2021',
-        nombreDestinatario : 'Pepito perez Suarez',
-        referencia : 'REFERENCIA DE PRUEBA 2',
-        estado: 'EN PROCESO'
+  onBuscar(): void {
+    const idPersonaGD = this.contextService.getItemContexto('idPersonaGd') ?? 542; // FIXME: DATO QUEMADO CUANDO ES NULL.
+    const rangoFechas = this.formBusquedaAvanzada.controls['rangoFechaGroup'].value;
+    const fechaIncialRecuperada = rangoFechas.fechaInicial;
+    const fechaFinalRecuperada  = rangoFechas.fechaFinal;
+
+    const criterioBusqueda: BusquedaAvanzadaModel = {
+      idPersonaLogin : this.formBusquedaAvanzada.controls['idPersonaLogin'].value ?? idPersonaGD,
+      hojaRuta       : this.formBusquedaAvanzada.controls['hojaRuta'].value,
+      numeroCite     : this.formBusquedaAvanzada.controls['numeroCite'].value,
+      idDocumentoTipo: this.formBusquedaAvanzada.controls['idTipoDocumento'].value,
+      referencia     : this.formBusquedaAvanzada.controls['referencia'].value,
+      idDestinatario : this.formBusquedaAvanzada.controls['idDestinatario'].value,
+      idRemitente    : this.formBusquedaAvanzada.controls['idRemitente'].value,
+      fechaInicio    : fechaIncialRecuperada,
+      fechaFinal     : fechaFinalRecuperada
+      // idBandeja      : this.formBusquedaAvanzada.controls['idTipoBandeja'].value
+    };
+
+    console.log(` Criterios de busqueda: --> ${JSON.stringify(criterioBusqueda)}`);
+
+    this.busquedaService.buscar(criterioBusqueda).pipe( takeUntil(this.unsubscribe$)).subscribe( respBusqueda => {
+      console.log(`${respBusqueda.data}`);
+
+      if (respBusqueda.data !== null ) {
+        this.dataSource.data = respBusqueda.data as Array<BusquedaAvanzadaResult>;
+      } else {
+        this.dataSource.data.length = 0;
       }
-    ];
+    });
 
-    this.dataSource.data = listaHojaRuta;
   }
 
-  limpiarFormulario(): void {
+  onLimpiarFormulario(): void {
+    this.dataSource.data = [];
+    this.dataSource.data.length = 0;
     this.formBusquedaAvanzada.reset();
-    //this.dataSource.data = [];
-    // this.clearCheckBoxMaster();
-    // this.btnGuardar.disabled = true;
+    this.formBusquedaAvanzada.updateValueAndValidity();
+    this.setFormDefaultValues();
   }
-
-  getTipoBandeja(idDocumentoSelect: any): void {
-
-  }
-
-
 
 }

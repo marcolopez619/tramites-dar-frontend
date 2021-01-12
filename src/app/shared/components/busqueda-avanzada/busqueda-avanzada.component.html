@@ -40,8 +40,8 @@
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="33">
               <mat-form-field fxFlex>
                 <mat-label>{{langService.getLang(eModulo.Cites, 'lbl-tipo-documento' )}} : </mat-label>
-                <mat-select formControlName="tipoDocumento" (selectionChange)="onTipoDocumentoChange($event)">
-                  <mat-option *ngFor="let tipoDocumento of listaTipoDocumento" [value]="tipoDocumento.idDocumentoEmite">
+                <mat-select formControlName="idTipoDocumento">
+                  <mat-option *ngFor="let tipoDocumento of listaTipoDocumento" [value]="tipoDocumento.idDocumentoTipo">
                     {{tipoDocumento.descripcionDoc}}
                   </mat-option>
                 </mat-select>
@@ -100,9 +100,9 @@
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="50">
               <mat-form-field fxFlexFill>
                 <mat-select placeholder="{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-bucar-en') }}"
-                  formControlName="idTipoBandeja" (selectionChange)="getTipoBandeja($event)">
-                  <mat-option *ngFor="let tipoBandeja of listaTipoBandeja" [value]="tipoBandeja.idTipoBandeja">
-                    {{tipoBandeja.descripcionTipoBandeja}}
+                  formControlName="idTipoBandeja">
+                  <mat-option *ngFor="let tipoBandeja of listaTipobandeja" [value]="tipoBandeja">
+                    {{tipoBandeja}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -115,49 +115,63 @@
       </form>
     </div>
   </mat-card>
+
+
+  <mat-card>
+
   <mat-table #table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="numeroHojaRuta">
-      <mat-header-cell *matHeaderCellDef fxFlex="12" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-hoja-ruta') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="12"> {{element.numeroHojaRuta}} </mat-cell>
+    <ng-container matColumnDef="hojaRuta">
+      <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-hoja-ruta') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="10"> {{element.hojaRuta}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="tipoRemitente">
       <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-tipo-remitente') }} </mat-header-cell>
       <mat-cell *matCellDef="let element" fxFlex="10"> {{element.tipoRemitente}} </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="nombreRemitente">
-      <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-remitente') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="10"> {{element.nombreRemitente}} </mat-cell>
+    <ng-container matColumnDef="remitente">
+      <mat-header-cell *matHeaderCellDef fxFlex="15" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-remitente') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="15"> {{element.remitente}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="tipoDocumento">
-      <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-tipo-documento') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="10"> {{element.tipoDocumento}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef fxFlex="7" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-tipo-documento') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="7"> {{element.tipoDocumento}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="numeroCite">
       <mat-header-cell *matHeaderCellDef fxFlex="12" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-numero-cite') }} </mat-header-cell>
       <mat-cell *matCellDef="let element" fxFlex="12"> {{element.numeroCite}} </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="nombreDestinatario">
-      <mat-header-cell *matHeaderCellDef fxFlex="12" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-nombre-destinatario') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="12"> {{element.nombreDestinatario}} </mat-cell>
+    <ng-container matColumnDef="destinatario">
+      <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-nombre-destinatario') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="10"> {{element.destinatario}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="referencia">
       <mat-header-cell *matHeaderCellDef fxFlex="15" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-referencia') }} </mat-header-cell>
       <mat-cell *matCellDef="let element" fxFlex="15"> {{element.referencia}} </mat-cell>
     </ng-container>
+
+    <ng-container matColumnDef="fecha">
+      <mat-header-cell *matHeaderCellDef fxFlex="6" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-fecha-registro') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="6"> {{element.fecha | date: 'dd-MM-yyyy' }} </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="estado">
-      <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-estado') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="10"> {{element.estado}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef fxFlex="5" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-estado') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="5"> {{element.estado}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row shRowHover [ngClass]="{'row-action': idSeleccionado === row.idHojaRutaModel}" [@fadeInAnim]="true" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row shRowHover [ngClass]="{'row-action': idSeleccionado === row.idHojaRuta}" [@fadeInAnim]="true" *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
   <mat-paginator #paginator [pageSize]="config.paginatorSize" [pageSizeOptions]="config.paginatorOptions" [showFirstLastButtons]="true"></mat-paginator>
+
+  <shared-table-empty [datasource]="dataSource"></shared-table-empty>
+
+</mat-card>
 
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button fxFlex mat-raised-button color="accent" (click)="busquedaCiudadano()">{{langService.getLang(eModulo.HojaDeRuta, 'Btn-Buscar')}}</button>
-  <button fxFlex mat-raised-button color="warn" (click)="limpiarFormulario()">{{langService.getLang(eModulo.HojaDeRuta, 'Btn-Limpiar')}}</button>
+  <button fxFlex mat-raised-button color="accent" (click)="onBuscar()">{{langService.getLang(eModulo.HojaDeRuta, 'Btn-Buscar')}}</button>
+  <button fxFlex mat-raised-button color="warn" (click)="onLimpiarFormulario()">{{langService.getLang(eModulo.HojaDeRuta, 'Btn-Limpiar')}}</button>
 </mat-dialog-actions>
