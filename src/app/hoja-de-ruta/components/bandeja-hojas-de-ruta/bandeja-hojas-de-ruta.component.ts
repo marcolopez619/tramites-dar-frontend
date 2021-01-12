@@ -68,10 +68,6 @@ export class BandejaHojasDeRutaComponent
   }
   private getAllHojaRutaBandeja( idPersonaGd: number, tipoBandeja ): void {
     this.hojaRutaService.getAllHojaRutaBandeja( idPersonaGd, tipoBandeja ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaHojaRutaBandeja => {
-      //listaCitesPersona.data.map( cite => cite.destinatarios = ( cite.destinatarios !== '' ) ? JSON.parse( cite.destinatarios ) as Array<DestinatarioModel> : cite.destinatarios );
-      //listaCitesPersona.data.map( cite => cite.remitentes = ( cite.remitentes !== '' ) ? JSON.parse( cite.remitentes ) as Array<DestinatarioModel> : cite.remitentes );
-      //listaCitesPersona.data.map( cite => cite.vias = ( cite.vias !== '' ) ? JSON.parse( cite.vias ) as Array<DestinatarioModel> : cite.vias );
-      // this.dataSource.data = listaHojaRutaBandeja.data as Array<HojaRutaBandejaModel>;
       this.listaBandeja = listaHojaRutaBandeja.data as Array<HojaRutaBandejaModel>;
     });
   }

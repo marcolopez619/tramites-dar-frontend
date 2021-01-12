@@ -30,4 +30,7 @@ export class HojaDeRutaService {
   createHojaRutaDeriva(pHojaRutaDeriva: HojaRutaDerivaModel): Observable<Resultado> {
     return this.httpClient.post<Resultado>( `${this.baseURL}/derivar`, pHojaRutaDeriva);
   }
+  getHojaRutaInstructiva(): Observable<Resultado> {
+    return this.httpClient.get<Resultado>( `${this.baseURL}/instructiva`)
+  }
 }
