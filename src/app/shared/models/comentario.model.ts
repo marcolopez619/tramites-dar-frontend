@@ -1,4 +1,5 @@
 export interface ComentarioModel {
-    //idDerivacion?: number;
-    //comentario?: string;
-  }
+  idHojaRuta?: number;
+  comentario?: string;
+  usuarioBitacora?: string;
+}

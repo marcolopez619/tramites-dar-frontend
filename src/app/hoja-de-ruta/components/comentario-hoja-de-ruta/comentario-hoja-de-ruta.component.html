@@ -2,7 +2,7 @@
     <mat-toolbar color="primary">
         <h3>{{ langService.getLang(eModulo.HojaDeRuta, 'tit-ventana-añadir-comentario') }}</h3>
         <span class="flex-spacer"></span>
-        <button mat-button mat-dialog-close matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}">
+        <button mat-button mat-dialog-close matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
             <mat-icon>close</mat-icon>
         </button>
     </mat-toolbar>
@@ -21,6 +21,6 @@
 <mat-dialog-actions fxLayout="row" fxLayoutGap="20px">
     <button fxFlex mat-raised-button color="accent" (click)="save()" [disabled]="!formComentarioHR.valid || formComentarioHR.pristine || contextService.isLoading">{{langService.getLang(eModulo.Base, 'lbl-guardar')}}
     </button>
-    <button fxFlex mat-raised-button color="warn" (click)="cancelar()">{{langService.getLang(eModulo.Base, 'btnCancel')}}
+    <button fxFlex mat-raised-button color="warn" (click)="onClose()">{{langService.getLang(eModulo.Base, 'btnCancel')}}
     </button>
 </mat-dialog-actions>

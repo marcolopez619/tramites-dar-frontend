@@ -1,35 +1,25 @@
-import { LoginComponent } from "../../base/login/login.component";
-
 export interface BusquedaAvanzadaModel {
-  NumeroHojaRuta?: string;
-  NumeroCiteDocumento?: string;
-  IdTipoDocumento?: number;
-  Referencia?: string;
-  IdDestinatario?: number;
-  IdRemitente?: number;
-  FechaRango?: Date;
-  IdTipoBandeja?:number;
-  IdTipoTramite?: number;
-  fechaNacimiento?: Date;
-
-  //comentario?: string;
-}
-/*
-  idHojaRutaModel?: number;
-  tipoRemitente?: string;
-  nombreRemitente?: string;
-  tipoDocumento?: string;
+  idPersonaLogin?: number;
+  hojaRuta?: string;
   numeroCite?: string;
-  destinatarios?: Array<string>;
+  idDocumentoTipo?: number;
   referencia?: string;
-  estado?: string;
-
-  idTipoRemitente?: number;
+  idDestinatario?: number;
   idRemitente?: number;
-  idDestinatario?:number;
-  idCopiaCc?:number;
-  nombreTipoRemitente?: string;
-  //nombreRemitente?: string;
-  nombreDestinatario?: string;
-  nombreCopiaCc?: string;
- */
+  fechaInicio?: Date;
+  fechaFinal?: Date;
+  idBandeja?: number;
+}
+
+export interface BusquedaAvanzadaResult {
+  idHojaRuta?: number;
+  HojaRuta?: string;
+  TipoRemitente?: string;
+  Remitente?: string;
+  TipoDocumento?: string;
+  NumeroCite?: string;
+  Destinatario?: string;
+  Referencia?: string;
+  Fecha?: Date;
+  Estado?: string;
+}

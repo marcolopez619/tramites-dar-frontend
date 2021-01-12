@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
+import { HojaDeRutaComponent } from '../../../shared/components/hoja-de-ruta/hoja-de-ruta.component';
+import { HojaDeRutaRespInsert } from '../../../shared/models/hoja-de-ruta.model';
 import { DestinatarioModel } from '../../../shared/models/Usuario.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
@@ -14,8 +16,6 @@ import { CiteModelByUsuario, ResultCiteInst } from '../../models/cites.models';
 import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-documento.component';
 import { BaseComponent } from './../../../shared/base.component';
 import { CrearNuevoCiteComponent } from './../crear-nuevo-cite/crear-nuevo-cite.component';
-import { HojaDeRutaComponent } from '../../../shared/components/hoja-de-ruta/hoja-de-ruta.component';
-import { HojaDeRutaRespInsert } from '../../../shared/models/hoja-de-ruta.model';
 
 @Component({
   selector: 'app-bandeja-cites',
@@ -62,11 +62,15 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
   private getAllCitesFromPersona( idPersonaGd: number ): void {
     this.citesService.getAllCitesFromPersona( idPersonaGd ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaCitesPersona => {
 
-      if (listaCitesPersona.data?.legth > 0 && listaCitesPersona.data != null ) {
+      if (listaCitesPersona.data?.length > 0 && listaCitesPersona.data !== null ) {
         listaCitesPersona.data.map( cite => cite.destinatarios = ( cite.destinatarios !== '' ) ? JSON.parse( cite.destinatarios ) as Array<DestinatarioModel> : cite.destinatarios );
         listaCitesPersona.data.map( cite => cite.remitentes = ( cite.remitentes !== '' ) ? JSON.parse( cite.remitentes ) as Array<DestinatarioModel> : cite.remitentes );
         listaCitesPersona.data.map( cite => cite.vias = ( cite.vias !== '' ) ? JSON.parse( cite.vias ) as Array<DestinatarioModel> : cite.vias );
         this.dataSource.data = listaCitesPersona.data as Array<CiteModelByUsuario>;
+      } else {
+        // Borra la lista porque no existe ninguna data para mostrar
+        this.dataSource.data = [];
+        this.dataSource.data.length = 0;
       }
 
     });
@@ -115,7 +119,7 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
     });
     dlgNuevaHojaDeRuta.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
-        const resultHRInsert = result as HojaDeRutaRespInsert;
+        const resultHRInsert = result.data as HojaDeRutaRespInsert;
         this.getAllCitesFromPersona(this.idPersonaGd ?? 542);
       }
     });

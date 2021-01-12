@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -58,6 +59,7 @@ import { ComentarioService } from './services/comentario.service';
 import { BusquedaAvanzadaComponent } from './components/busqueda-avanzada/busqueda-avanzada.component';
 import { HojaRutaService } from './services/hoja-ruta.service';
 import { DataTableHojaDeRutaComponent } from './components/data-table-hoja-de-ruta/data-table-hoja-de-ruta.component';
+import { BusquedaService } from './services/busqueda.service';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -98,6 +100,7 @@ import { DataTableHojaDeRutaComponent } from './components/data-table-hoja-de-ru
         MatProgressBarModule,
         MatCheckboxModule,
         MatDatepickerModule,
+        MatNativeDateModule,
         MatFormFieldModule,
         MatInputModule,
         MatRadioModule,
@@ -130,6 +133,7 @@ import { DataTableHojaDeRutaComponent } from './components/data-table-hoja-de-ru
         MatAutocompleteModule,
         MatCheckboxModule,
         MatDatepickerModule,
+        MatNativeDateModule,
         MatFormFieldModule,
         MatInputModule,
         MatRadioModule,
@@ -192,7 +196,8 @@ import { DataTableHojaDeRutaComponent } from './components/data-table-hoja-de-ru
       DocumentoAdjuntoService,
       ParametricaService,
       ComentarioService,
-      HojaRutaService
+      HojaRutaService,
+      BusquedaService
     ]
 })
 export class SharedModule { }

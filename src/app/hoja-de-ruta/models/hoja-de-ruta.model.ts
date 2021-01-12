@@ -1,3 +1,6 @@
+export interface Bitacora{
+  usuarioBitacora?: string;
+}
 
 export interface HojaDeRutaModel {
   idHojaRutaModel?: number;
@@ -43,4 +46,10 @@ export interface HojaRutaBandejaModel{
   codigoRespuesta?: number;
   mensaje?: string;
   isRowMouseOver?: boolean;
+}
+
+
+export interface HojaRutaFinalizarPatch extends Bitacora{
+  idHojaRuta?: number;
+  motivo?: string;
 }

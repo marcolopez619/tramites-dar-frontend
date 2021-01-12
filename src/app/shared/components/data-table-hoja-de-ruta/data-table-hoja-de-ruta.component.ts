@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild, Injector } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild, Injector, SimpleChanges } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,6 +14,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { takeUntil } from 'rxjs/operators';
 import { HojaDeRutaComponent } from '../hoja-de-ruta/hoja-de-ruta.component';
 import { AdjuntarDocumentoComponent } from '../../../hoja-de-ruta/components/adjuntar-documento/adjuntar-documento.component';
+import { NuevoParticipanteComponent } from '../../../hoja-de-ruta/components/participante/nuevo-participante.component';
+import { ComentarioComponent } from '../../../hoja-de-ruta/components/comentario-hoja-de-ruta/comentario-hoja-de-ruta.component';
+import { FinalizarComponent } from '../../../hoja-de-ruta/components/finalizar/finalizar.component';
+import { SeguimientoComponent } from '../../../hoja-de-ruta/components/seguimiento/seguimiento.component';
 
 @Component({
   selector: 'sh-data-table-hoja-de-ruta',
@@ -50,8 +54,7 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
   ngOnInit(): void {
     this.dataSource.data = this.listaBandejaHojaRuta;
     this.crearAccionesMouseOver();
-    console.log('ENTRO AL ONINITTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
-
+    console.log(' on init del componente compartidooooooooo');
   }
 
   ngAfterViewInit(): void {
@@ -65,6 +68,14 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
     this.unsubscribe$.next(true);
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes.listaBandejaHojaRuta?.firstChange) {
+      this.dataSource = new MatTableDataSource(this.listaBandejaHojaRuta);
+      this.crearAccionesMouseOver();
+    }
+  }
+
+
   /**
    * METODO QUE CREA LAS ACCIONES DEL MOUSEOVER EN FUNCION A LOS ESTADOS
    * Y ASIGNA LO QUE DEBE HACER CUANDO SE PRECIONA UN CLICK DEL ICONO CORRESPONDIENTE
@@ -77,6 +88,7 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
     let estados: Array<Estado> = [];
 
     switch (this.bandeja.toUpperCase()) {
+
       case 'PRINCIPAL': {
         const acciones: Array<Accion> = [{
           descAccion : 'enviar',
@@ -114,8 +126,8 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
           tooltipText : 'Rechazar envío',
           icono : 'highlight_off'
         }, {
-          descAccion : 'ver_informacion',
-          tooltipText : 'Ver información',
+          descAccion : 'ver_seguimiento',
+          tooltipText : 'Ver seguimiento',
           icono : 'visibility'
         }];
 
@@ -159,7 +171,7 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
       ];
 
         estados = [{
-          descEstado : 'enviado',
+          descEstado : 'rechazado',
           acciones : acciones
         }];
 
@@ -169,27 +181,34 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
         const accionesAEnAtencion: Array<Accion> = [{
           descAccion : 'derivar',
           tooltipText : 'Derivar',
-          icono : 'near_me'
+          icono : 'near_me',
+          onClick: this.onDerivar
         }, {
           descAccion : 'adjuntar_documento',
           tooltipText : 'Adjuntar documento',
-          icono : 'attachment'
+          icono : 'attachment',
+          onClick: this.onAdjuntarDocumento
         }, {
           descAccion : 'anadir_participante',
           tooltipText : 'Añadir participante',
-          icono : 'person_add'
+          icono : 'person_add',
+          onClick: this.onAnadirParticipante
         }, {
           descAccion : 'anadir_comentario',
           tooltipText : 'Añadir comentario',
-          icono : 'add_comment'
+          icono : 'add_comment',
+          onClick: this.onAnadirComentario
         }, {
-          descAccion : 'ver_informacion',
-          tooltipText : 'Ver información',
-          icono : 'remove_red_eye'
+          descAccion : 'ver_seguimiento',
+          tooltipText : 'Ver seguimiento',
+          icono : 'remove_red_eye',
+          onClick: this.onVerSeguimiento
+
         }, {
           descAccion : 'finalizar',
           tooltipText : 'Finalizar trámite',
-          icono : 'offline_pin'
+          icono : 'offline_pin',
+          onClick: this.onFinalizar
         }];
 
         const accionesParticipante: Array<Accion> = [{
@@ -205,27 +224,30 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
           tooltipText : 'Finalizar participación',
           icono : 'person_off'
         }, {
-          descAccion : 'ver_informacion',
-          tooltipText : 'Ver información',
+          descAccion : 'ver_seguimiento',
+          tooltipText : 'Ver seguimiento',
           icono : 'remove_red_eye'
         }];
 
         estados = [{
-          descEstado : 'atencion',
-          acciones : accionesAEnAtencion.concat(accionesParticipante)
-        }];
+          descEstado : 'en atencion',
+          acciones : accionesAEnAtencion
+        }/* ,{
+          descEstado : 'participante',
+          acciones : accionesParticipante
+        } */];
 
         break;
       }
       case 'PROCESO': {
         const acciones: Array<Accion> = [{
-          descAccion : 'ver_informacion',
-          tooltipText : 'Ver información',
+          descAccion : 'ver_seguimiento',
+          tooltipText : 'Ver seguimiento',
           icono : 'remove_red_eye'
         }];
 
         estados = [{
-          descEstado : 'atendido',
+          descEstado : 'proceso',
           acciones : acciones
         }];
 
@@ -233,9 +255,10 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
       }
       case 'FINALIZADO': {
         const acciones: Array<Accion> = [{
-          descAccion : 'ver_informacion',
-          tooltipText : 'Ver información',
-          icono : 'remove_red_eye'
+          descAccion : 'ver_seguimiento',
+          tooltipText : 'Ver seguimiento',
+          icono : 'remove_red_eye',
+          onClick: this.onVerSeguimiento
         }];
 
         estados = [{
@@ -270,11 +293,13 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
     });
   }
 
-  private onAdjuntarDocumento(pParametro: HojaRutaBandejaModel, pDialog?: MatDialog): void {
+  private onAdjuntarDocumento(pHojaRuta: HojaRutaBandejaModel, pDialog?: MatDialog): void {
     const dlgDerivar = pDialog.open(AdjuntarDocumentoComponent, {
       disableClose: false,
       width: '1000px',
-      data: {}
+      data: {
+        hojaRutaSelected: pHojaRuta
+      }
     });
     dlgDerivar
       .afterClosed()
@@ -284,6 +309,79 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
           //..
         }
     });
+  }
+
+  private onAnadirParticipante(pHojaRuta: HojaRutaBandejaModel, pDialog?: MatDialog): void {
+
+    const dlgNuevoParticipante = pDialog.open(NuevoParticipanteComponent, {
+      disableClose: false,
+      width: '1000px',
+      data: {
+        idHojaRuta: pHojaRuta.idHojaRuta
+      }
+    });
+    dlgNuevoParticipante
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          //..
+        }
+      });
+  }
+  private onAnadirComentario(pHojaRuta: HojaRutaBandejaModel, pDialog?: MatDialog): void {
+
+    const dlgAnadirComentario = pDialog.open(ComentarioComponent, {
+      disableClose: false,
+      width: '1000px',
+      data: {
+        idHojaRuta: pHojaRuta.idHojaRuta
+      }
+    });
+    dlgAnadirComentario
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          //..
+        }
+      });
+  }
+  private onFinalizar(pHojaRuta: HojaRutaBandejaModel, pDialog?: MatDialog): void {
+
+    const dlgFinalizar = pDialog.open(FinalizarComponent, {
+      disableClose: false,
+      width: '1000px',
+      data: {
+        idHojaRuta: pHojaRuta.idHojaRuta
+      }
+    });
+    dlgFinalizar
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          //..
+        }
+      });
+  }
+  private onVerSeguimiento(pHojaRuta: HojaRutaBandejaModel, pDialog?: MatDialog): void {
+
+    const dlgVerSeguimiento = pDialog.open(SeguimientoComponent, {
+      disableClose: false,
+      width: '1000px',
+      data: {
+        idHojaRuta: pHojaRuta.idHojaRuta
+      }
+    });
+    dlgVerSeguimiento
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          //..
+        }
+      });
   }
 
   onMouseOver(row: HojaRutaBandejaModel): void {

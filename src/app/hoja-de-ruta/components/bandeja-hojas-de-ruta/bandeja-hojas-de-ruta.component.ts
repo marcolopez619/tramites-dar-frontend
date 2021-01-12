@@ -89,15 +89,14 @@ export class BandejaHojasDeRutaComponent
     }
   }
 
-
   onDerivar(pObjHojaRuta: HojaRutaBandejaModel): void {
     const dlgHojaRutaDerivar = this.dialog.open(DerivarComponent, {
 
       disableClose: false,
-      width: "1000px",
+      width: '1000px',
       data: {
-        hojaRutaSelected:pObjHojaRuta
-      },
+        hojaRutaSelected: pObjHojaRuta
+      }
     });
     dlgHojaRutaDerivar
       .afterClosed()

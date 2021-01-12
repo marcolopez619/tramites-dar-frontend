@@ -1,5 +1,3 @@
-<!-- <shared-loader-spinner></shared-loader-spinner> -->
-
 <mat-card>
   <mat-card-header class="alt-theme">
   <mat-toolbar style="font-size: medium;" >
@@ -43,7 +41,7 @@
       <ng-container matColumnDef="acciones">
         <mat-header-cell *matHeaderCellDef fxFlex="10" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
         <mat-cell *matCellDef="let element;" fxFlex="10" fxLayoutAlign="center center">
-          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}" [disabled]="element.porcentajeUploaded >= 100"  (click)="element.porcentajeUploaded >= 100 ? undefined : onDeleteDocument(element)" >
+          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}" [disabled]="element.porcentajeUploaded >= 100 || contextService.isLoading"  (click)="element.porcentajeUploaded >= 100 ? undefined : onDeleteDocument(element)" >
             <mat-icon>delete_forever</mat-icon>
           </a>
           <!-- <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}"  (click)="onSaveDocument()" >
@@ -56,27 +54,8 @@
       <mat-row shRowHover [ngClass]="{'row-action': idSeleccionado === row.id}" [@fadeInAnim]="true" *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
     </mat-table>
-    <!-- <shared-table-empty [datasource]="dataSource"></shared-table-empty> -->
     <mat-paginator #paginator [pageSize]="config.paginatorSize" [pageSizeOptions]="config.paginatorOptions" [showFirstLastButtons]="true"></mat-paginator>
 
-    <!-- <div fxLayout="row" fxLayoutAlign="space-evenly none" fxFlexFill>
-      <button
-        mat-raised-button
-        color="accent"
-        fxFlex="50"
-        (click)="onSaveDocument()"
-        disabled="{{listaDocumentosToUpload?.length <= 0 }}">
-        {{ langService.getLang(eModulo.Base, 'lbl-guardar') }}
-      </button>
-      <button mat-raised-button
-        fxFlex="50"
-        color="warn"
-        (click)="onCancel()"
-        disabled="{{listaDocumentosToUpload?.length <= 0 }}"
-        >
-        {{ langService.getLang(eModulo.Base,'btn-no') }}
-      </button>
-    </div> -->
 
   </mat-card-content>
 </mat-card>

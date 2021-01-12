@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
@@ -34,24 +34,22 @@ export class ComentarioComponent extends BaseComponent implements OnInit {
 
     const dataForm: ComentarioModel = {};
     this.formComentarioHR = this.formBuilder.group({
-      //comentario: [dataForm.comentario, [Validators.required, Validators.maxLength(this.longMaxDescripcion)]]
+      comentario: [undefined, [Validators.required, Validators.maxLength(this.longMaxDescripcion)]]
     });
 
   }
   save(): void {
+    const usuarioBitacora = this.contextService.getItemContexto('samActName');
 
     const datosFormulario: ComentarioModel = {
-      idDerivacion: 1,
-      comentario: this.formComentarioHR.value.comentario
+      idHojaRuta     : this.data.idHojaRuta,
+      comentario     : this.formComentarioHR.value.comentario,
+      usuarioBitacora: usuarioBitacora
     };
-    //datosFormulario.idDerivacion = 1;
-    this.comentarioService.insertComentario(datosFormulario).pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
-      
-    });
-  }
 
-  cancelar(): void {
-    this.dialogRef.close(undefined);
+    this.comentarioService.insertComentario(datosFormulario).pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
+      this.onClose();
+    });
   }
 
   onClose(object?: any): void {

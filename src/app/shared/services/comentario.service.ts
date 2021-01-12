@@ -15,15 +15,9 @@ export class ComentarioService {
     constructor(
         private httpClient: HttpClient,
         private contextoService: ContextoService
-    ) {
-        // this.getAllUsuarios();
-    }
+    ) {}
 
     insertComentario(pDatosComentario: ComentarioModel): Observable<Resultado> {
-        const algo=1;
-         //TODO: verificar el httpClient
         return this.httpClient.post<Resultado>(`${this.baseURL}`, pDatosComentario);
-        //return this.httpClient.post<Resultado>(`${this.baseURL}`, pDatosComentario);
-        //this.http.post<Resultado>(`${this.contextoService.getConfig('backendApi')}/Autentificacion/login`, params)
     }
 }

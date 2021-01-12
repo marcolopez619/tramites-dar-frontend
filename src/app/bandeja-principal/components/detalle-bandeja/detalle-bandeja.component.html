@@ -9,9 +9,12 @@
 
     ---> {{valorCapturado}}
 
-    <span [ngSwitch]="valorCapturado">
-    <p *ngSwitchCase="'Creadas'">
+    <span [ngSwitch]="valorCapturado.toUpperCase()">
+    <p *ngSwitchCase="'Creadas'.toUpperCase()">
       <app-bandeja-cites></app-bandeja-cites>
+    </p>
+    <p *ngSwitchCase="'Busqueda'.toUpperCase()">
+      <sh-busqueda-avanzada></sh-busqueda-avanzada>
     </p>
     <p *ngSwitchDefault>
       <app-bandeja-hojas-de-ruta [valorBandejaSelected]="valorCapturado" ></app-bandeja-hojas-de-ruta>
