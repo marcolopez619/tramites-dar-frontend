@@ -28,8 +28,7 @@ export class OpcionesBandejaComponent extends BaseComponent implements OnInit {
         displayName : 'Creadas',
         icono : 'folder',
         children: undefined
-      }
-     ]
+     }]
    },
    {
      id : 4,
@@ -74,6 +73,17 @@ export class OpcionesBandejaComponent extends BaseComponent implements OnInit {
         children : undefined
       }
      ]
+   },
+   {
+     id : 13,
+     displayName : 'OPCIONES',
+     icono : 'filter_list',
+     children : [{
+      id : 14,
+      displayName : 'Busqueda',
+      icono : 'search',
+      children: undefined
+   }]
    }
   ];
 

@@ -1,10 +1,10 @@
 <mat-card-header class="alt-theme">
   <mat-toolbar shToolbarModal color="primary">
     <h3>{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-busqueda-hoja-ruta') }}</h3>
-    <span class="flex-spacer"></span>
+    <!-- <span class="flex-spacer"></span>
     <a (click)="onClose()" mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}">
       <mat-icon>close</mat-icon>
-    </a>
+    </a> -->
   </mat-toolbar>
 </mat-card-header>
 
@@ -17,15 +17,21 @@
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="33">
               <mat-form-field fxFlex>
-                <input matInput shUppercase maxlength="20"
+                <input
+                  matInput
+                  shUppercase
+                  maxlength="20"
                   placeholder="{{langService.getLang(eModulo.HojaDeRuta,'lbl-hoja-de-ruta')}}"
-                  formControlName="numeroHojaRuta">
+                  formControlName="hojaRuta">
               </mat-form-field>
             </div>
 
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="33">
               <mat-form-field fxFlex>
-                <input matInput shUppercase maxlength="20"
+                <input
+                  matInput
+                  shUppercase
+                  maxlength="20"
                   placeholder="{{langService.getLang(eModulo.HojaDeRuta,'lbl-numero-cite')}}"
                   formControlName="numeroCite">
               </mat-form-field>
@@ -35,7 +41,7 @@
               <mat-form-field fxFlex>
                 <mat-label>{{langService.getLang(eModulo.Cites, 'lbl-tipo-documento' )}} : </mat-label>
                 <mat-select formControlName="tipoDocumento" (selectionChange)="onTipoDocumentoChange($event)">
-                  <mat-option *ngFor="let tipoDocumento of listaTipoDocumento" [value]="tipoDocumento.idDocumentoTipo">
+                  <mat-option *ngFor="let tipoDocumento of listaTipoDocumento" [value]="tipoDocumento.idDocumentoEmite">
                     {{tipoDocumento.descripcionDoc}}
                   </mat-option>
                 </mat-select>
@@ -47,30 +53,51 @@
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="33">
               <mat-form-field fxFlex>
-                <input matInput shUppercase maxlength="100"
+                <input
+                  matInput
+                  shUppercase
+                  maxlength="100"
                   placeholder="{{langService.getLang(eModulo.HojaDeRuta,'lbl-referencia')}}"
                   formControlName="referencia">
               </mat-form-field>
             </div>
+
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="33">
               <sh-autocomplete *ngIf="listaUsuarios?.length > 0"
                 [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatario' )"
-                [listaCompleta]="listaUsuarios" (listaSeleccionadosEmiter)="getListaSeleccionadaDestinatarios($event)">
+                [listaCompleta]="listaUsuarios"
+                [cantidadPermitida]="1"
+                (listaSeleccionadosEmiter)="getListaSeleccionadaDestinatarios($event)">
               </sh-autocomplete>
             </div>
+
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="33">
               <sh-autocomplete *ngIf="listaUsuarios?.length > 0"
                 [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-remitente' )"
-                [listaCompleta]="listaUsuarios" (listaSeleccionadosEmiter)="getListaSeleccionadaRemitentes($event)">
+                [listaCompleta]="listaUsuarios"
+                [cantidadPermitida]="1"
+                (listaSeleccionadosEmiter)="getListaSeleccionadaRemitentes($event)">
               </sh-autocomplete>
             </div>
           </div>
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
 
-            <div fxLayout="row" fxLayoutAlign="center center" fxFlex="33">
+            <div fxLayout="row" fxLayoutAlign="center center" fxFlex="50">
+              <div formGroupName="rangoFechaGroup" fxFill>
+                <mat-form-field fxFill>
+                  <mat-label>Rango :</mat-label>
+                  <mat-date-range-input [rangePicker]="picker" fxFill>
+                    <input matStartDate formControlName="fechaInicial" placeholder="Fecha inicial">
+                    <input matEndDate formControlName="fechaFinal" placeholder="Fecha final">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+                  <!-- <p>Selected range: {{formBusquedaAvanzada.controls['rangoFechaGroup'].value | json}}</p> -->
+                </mat-form-field>
+              </div>
             </div>
 
-            <div fxLayout="row" fxLayoutAlign="center center" fxFlex="33">
+            <div fxLayout="row" fxLayoutAlign="center center" fxFlex="50">
               <mat-form-field fxFlexFill>
                 <mat-select placeholder="{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-bucar-en') }}"
                   formControlName="idTipoBandeja" (selectionChange)="getTipoBandeja($event)">
@@ -131,8 +158,6 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <!-- Botones-->
-  <!--<button fxFlex mat-raised-button color="accent" (click)="busquedaCiudadano()" [disabled]="!formBusquedaAvanzada.valid">{{langService.getLang(eModulo.HojaDeRuta, 'Btn-Buscar')}}</button>-->
   <button fxFlex mat-raised-button color="accent" (click)="busquedaCiudadano()">{{langService.getLang(eModulo.HojaDeRuta, 'Btn-Buscar')}}</button>
   <button fxFlex mat-raised-button color="warn" (click)="limpiarFormulario()">{{langService.getLang(eModulo.HojaDeRuta, 'Btn-Limpiar')}}</button>
 </mat-dialog-actions>

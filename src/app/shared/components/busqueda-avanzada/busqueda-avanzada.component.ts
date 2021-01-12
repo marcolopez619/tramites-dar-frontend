@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSelectChange } from "@angular/material/select";
 import { MatTableDataSource } from "@angular/material/table";
@@ -15,7 +15,7 @@ import { ParametricaService } from "../../services/parametrica.service";
 import { UsuarioService } from "../../services/usuario.service";
 
 @Component({
-  selector: 'busqueda-avanzada',
+  selector: 'sh-busqueda-avanzada',
   templateUrl: './busqueda-avanzada.component.html',
   animations: [zoomInAnim, slideInLeftAnim],
   host: { class: 'container-fluid', '[@zoomInAnim]': '' }
@@ -39,8 +39,6 @@ export class BusquedaAvanzadaComponent extends BaseComponent implements OnInit{
   descripcionTipoDocumento: string;
 
   constructor(
-    public dialogRef: MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
     public contextService: ContextoService,
     public langService: LangService,
     private formBuilder: FormBuilder,
@@ -60,22 +58,35 @@ export class BusquedaAvanzadaComponent extends BaseComponent implements OnInit{
       this.listaTipoDocumento = listaTipoDocs.data as Array<TipoDocumentoModel>;
     });
 
-    //rangoFecha = new Date();
     // Carga los usuarios de la bd
     const idTipoTramite = 1;
     this.getAllusuarios(idTipoTramite);
 
     this.formBusquedaAvanzada = this.formBuilder.group({
-      tipoTramite       : [ idTipoTramiteDefault, Validators.compose([Validators.required])],
+      hojaRuta          : [ undefined ],
+      numeroCite        : [ undefined ],
       tipoDocumento     : [undefined, Validators.compose([Validators.required])],
-      listaDestinatarios: [undefined, Validators.compose([Validators.required])],
-      listaRemitentes   : [undefined, Validators.compose([Validators.required])],
-      listaTipoBandeja   : [undefined, Validators.compose([Validators.required])],
-      referencia        : [undefined, Validators.compose([Validators.required])],
-      fechaNacimiento: Date()
+      referencia        : [undefined ],
+      listaDestinatarios: [ undefined ],
+      listaRemitentes   : [ undefined ],
+      rangoFechaGroup   : this.formBuilder.group({
+        fechaInicial: [ new Date() ],
+        fechaFinal  : [ new Date() ]
+      }),
+      listaTipoBandeja: [ undefined ]
     });
 
   }
+
+  private getAllusuarios( idTipotramite: number ): void {
+    // Borra los datos de las listas
+    this.listaDestinatarios.length = this.listaRemitentes.length = this.listaUsuarios.length = 0;
+
+    this.usuarioService.getAllUsuarios( idTipotramite ).pipe( takeUntil( this.unsubscribe$ )).subscribe( respService => {
+      this.listaUsuarios = respService.data;
+    });
+  }
+
   onTipoDocumentoChange(event: MatSelectChange ): void {
     this.formBusquedaAvanzada.controls['tipoDocumento'].setValue( event.value );
     this.formBusquedaAvanzada.controls['tipoDocumento'].markAsTouched();
@@ -93,14 +104,7 @@ export class BusquedaAvanzadaComponent extends BaseComponent implements OnInit{
     });
     //this.formBusquedaAvanzada.controls['listaDestinatarios'].setValue( (true) ? undefined : this.listaDestinatarios );
   }
-  private getAllusuarios( idTipotramite: number ): void {
-    // Borra los datos de las listas
-    this.listaDestinatarios.length = this.listaRemitentes.length = this.listaUsuarios.length = 0;
 
-    this.usuarioService.getAllUsuarios( idTipotramite ).pipe( takeUntil( this.unsubscribe$ )).subscribe( respService => {
-      this.listaUsuarios = respService.data;
-    });
-  }
 
   getListaSeleccionadaRemitentes($event): void {
     console.log('----------------------');
@@ -152,8 +156,5 @@ export class BusquedaAvanzadaComponent extends BaseComponent implements OnInit{
   }
 
 
-  onClose(object?: any): void {
-    this.dialogRef.close(object);
-  }
 
 }
