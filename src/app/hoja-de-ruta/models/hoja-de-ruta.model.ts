@@ -38,8 +38,10 @@ export interface HojaRutaBandejaModel{
   asunto?: string;
   fisico?: number;
   plazo?: number;
+  idRemitente?:number;
   nombreRemitente?: string;
   nombreDestinatario?: string;
+  idDestinatario?: number;
   descripcionDoc?: string;
   cite?: string;
   estado?: string;
