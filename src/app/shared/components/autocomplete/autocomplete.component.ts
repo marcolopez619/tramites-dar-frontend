@@ -9,6 +9,7 @@ import { fadeInAnim, slideInLeftAnim } from '../../animations/template.animation
 import { UsuarioModel } from '../../models/Usuario.model';
 import { LangService } from '../../services/lang.service';
 import { BaseComponent } from './../../base.component';
+import { AutocompleteData } from '../../models/autocomplete.model';
 
 @Component({
   selector: 'sh-autocomplete',
@@ -140,7 +141,13 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
       }
       // this.isFormularioInvalid.emit( this.formAutocomplete.controls['autoCompleteData'].invalid );
       this._emitIsFormularioInvalid();
-      this.listaSeleccionadosEmiter.next( this.listaSeleccionados );
+
+      const autocompleteData: AutocompleteData = {
+        listaSeleccionados : this.listaSeleccionados,
+        itemEliminado      : item
+      };
+
+      this.listaSeleccionadosEmiter.next( autocompleteData );
     }
   }
 
@@ -156,7 +163,13 @@ export class AutocompleteComponent extends BaseComponent implements OnInit {
 
     this.input.nativeElement.value = '';
     this._emitIsFormularioInvalid();
-    this.listaSeleccionadosEmiter.next( this.listaSeleccionados );
+
+    const autocompleteData: AutocompleteData = {
+      listaSeleccionados : this.listaSeleccionados,
+      itemEliminado      : undefined
+    };
+
+    this.listaSeleccionadosEmiter.next( autocompleteData );
   }
 
 }

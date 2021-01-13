@@ -16,6 +16,7 @@ import { UtilService } from '../../../shared/services/util.service';
 import { CitesService } from '../../cites.service';
 import { ReporteService } from './../../../shared/services/reporte.service';
 import { CiteModel, CiteTemplateJsReport, ResultCiteInst } from '../../models/cites.models';
+import { AutocompleteData } from '../../../shared/models/autocomplete.model';
 
 @Component({
   selector: 'app-crear-nuevo-cite',
@@ -35,8 +36,7 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
   listaUsuariosRemitentes: Array<UsuarioModel> = [];
 
   fechaCreacionCite = new Date();
-  fechaCreacionCiteLiteral = `LA PAZ ${this.fechaCreacionCite.getDate()} DE ${this.getFechaFormatoLiteral(this.fechaCreacionCite.getMonth())} DE ${this.fechaCreacionCite.getFullYear()}`;
-  // FECHA: LA PAZ {{fechaCreacionCite.getDate()}} de {{getFechaFormatoLiteral(fechaCreacionCite.getMonth())}} de {{fechaCreacionCite.getFullYear()}}
+  fechaCreacionCiteLiteral = `LA PAZ ${this.fechaCreacionCite.getDate()} DE ${this.getFechaFormatoLiteral(this.fechaCreacionCite.getMonth())} DE ${this.fechaCreacionCite.getFullYear()}`; // FIXME: ALGUNOS TEXTOS ESTAN QUEMADOS
 
   listaTipoDocumento: Array<TipoDocumentoModel> = [];
   listaTipotramite: Array<TipoTramiteModel> = [];
@@ -105,42 +105,54 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
       this.listaUsuarios = this.listaUsuariosDestinatarios = this.listaUsuariosVias = this.listaUsuariosRemitentes = respService.data;
       const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`);
       this.listaRemitentes = this.listaUsuarios.filter( x => x.idPersonaGd === idPersonaGd);
+
+      this.deleteSelectedUsersFromAnotherLists( this.listaRemitentes );
+
     } else {
       // TRAMITE EXTERNO
       this.listaUsuariosDestinatarios = respService.data;
     }
   }
 
-  getListaSeleccionadaVias($event): void {
-    console.log('----------------------');
-
-    this.listaVias = $event as Array<UsuarioModel>;
-
-    this.listaVias.forEach( element => {
-      console.log( ' VIAS : ---> ' + ( element as UsuarioModel ).nombreCompleto );
-    });
+  private deleteSelectedUsersFromAnotherLists( arrayItemsToDelete: Array<UsuarioModel>  ): void {
+    this.listaUsuariosDestinatarios = this.listaUsuariosDestinatarios.filter( x => !arrayItemsToDelete.includes( x ) );
+    this.listaUsuariosVias          = this.listaUsuariosVias.filter( x => !arrayItemsToDelete.includes( x ) );
+    this.listaUsuariosRemitentes    = this.listaUsuariosRemitentes.filter( x => !arrayItemsToDelete.includes( x ) );
   }
 
-  getListaSeleccionadaDestinatarios($event): void {
-    console.log('----------------------');
-    this.listaDestinatarios = $event as Array<UsuarioModel>;
+  getListaSeleccionadaVias(event: AutocompleteData): void {
+    this.listaVias = event.listaSeleccionados;
+    this.deleteSelectedUsersFromAnotherLists(this.listaVias);
 
-    this.listaDestinatarios.forEach( element => {
-      console.log( ' Destinatario ---> ' + element.nombreCompleto );
-    });
+    if (event.itemEliminado) {
+      // Añadir el item eliminado a las demas lista complementarias
+      this.listaUsuariosDestinatarios.push( event.itemEliminado );
+      this.listaUsuariosRemitentes.push( event.itemEliminado );
+    }
+  }
 
+  getListaSeleccionadaDestinatarios(event: AutocompleteData): void {
+    this.listaDestinatarios = event.listaSeleccionados;
     this.formCrearCite.controls['listaDestinatarios'].setValue( (this._isDestinatarioInvalid) ? undefined : this.listaDestinatarios );
+    this.deleteSelectedUsersFromAnotherLists(this.listaDestinatarios);
+
+    if (event.itemEliminado) {
+      // Añadir el item eliminado a las demas lista complementarias
+      this.listaUsuariosRemitentes.push( event.itemEliminado );
+      this.listaUsuariosVias.push( event.itemEliminado );
+    }
   }
 
-  getListaSeleccionadaRemitentes($event): void {
-    console.log('----------------------');
-    this.listaRemitentes = $event as Array<UsuarioModel>;
-
-    this.listaRemitentes.forEach( element => {
-      console.log( 'Remitente ---> ' + element.nombreCompleto );
-    });
-
+  getListaSeleccionadaRemitentes(event: AutocompleteData): void {
+    this.listaRemitentes = event.listaSeleccionados;
     this.formCrearCite.controls['listaRemitentes'].setValue( (this._isRemitenteInvalid) ? undefined : this.listaRemitentes );
+    this.deleteSelectedUsersFromAnotherLists(this.listaRemitentes);
+
+    if (event.itemEliminado) {
+      // Añadir el item eliminado a las demas lista complementarias
+      this.listaUsuariosDestinatarios.push( event.itemEliminado );
+      this.listaUsuariosVias.push( event.itemEliminado );
+    }
   }
 
   getEstatusFormDestinatario($event): void {
@@ -152,7 +164,7 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
     this._isRemitenteInvalid = $event;
 
     if (!this._isRemitenteInvalid) {
-      this.formCrearCite.controls['listaRemitentes'].setValue(this.listaRemitentes)
+      this.formCrearCite.controls['listaRemitentes'].setValue(this.listaRemitentes);
     }
 
     console.log( ' is Invalid Remitente : ' + $event );
