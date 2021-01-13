@@ -32,8 +32,10 @@ export class DocumentoAdjuntoService {
     formData.append('Nombre', `${pDocumento.nombre}`);
     formData.append('BucketName', `${pDocumento.bucketName}`);
     formData.append('PathDestinoOnServer',  `${pDocumento.pathDestinoOnServer}`);
+    formData.append('descripcion',  `${pDocumento.descripcion}`);
     formData.append('Tipo', `${pDocumento.tipo}`);
     formData.append('FechaSubida', `${pDocumento.fechaSubida}`);
+    formData.append('IsCiteOrHR', `${pDocumento.isCiteOrHR}`);
     formData.append('UsuarioBitacora', `${this.contextoService.getItemContexto(`samActName`)}`);
 
     const options = {

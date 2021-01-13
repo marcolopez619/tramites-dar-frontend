@@ -60,9 +60,9 @@
             <mat-cell *matCellDef="let element" fxFlex="7" >
 
               <div *ngIf="showMouseOverActions && element.isRowMouseOver" fxLayout="row" fxLayoutAlign="start center">
-                <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}" (click)="onEdit(element)" >
+                <!-- <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}" (click)="onEdit(element)" >
                   <mat-icon>mode_edit</mat-icon>
-                </a>
+                </a> -->
 
                 <div *ngIf="element.poseeDocAdjunto;else subirDocumento">
                   <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-generar-hoja-ruta') }}" (click)="onGenerateHojaRuta(element)"   >

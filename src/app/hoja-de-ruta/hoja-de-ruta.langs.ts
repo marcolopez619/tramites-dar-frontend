@@ -90,7 +90,8 @@ export const hojaDeRutaLang = {
     'tit-derivar-hoja-ruta': 'Derivar hoja de ruta',
     'lbl-fecha-bandeja': 'Fecha',
 
-    'lbl-fecha-registro' : 'Fecha registro'
+    'lbl-fecha-registro' : 'Fecha registro',
+    'tit-bandeja-seleccionada' : 'Bandeja: $bandejaSeleccionada'
 
   }
 };

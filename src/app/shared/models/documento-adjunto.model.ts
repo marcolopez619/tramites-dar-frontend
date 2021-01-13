@@ -3,11 +3,13 @@ export interface DocumentoAdjuntoModel{
   nombre?: string;
   bucketName?: string;
   pathDestinoOnServer?: string;
+  descripcion?: string;
   tipo?: string;
   fechaSubida?: unknown;
   informacion?: File;
   usuarioBitacora?: string;
   porcentajeUploaded?: number;
+  isCiteOrHR?: number;
 }
 
 

@@ -3,12 +3,7 @@
 <mat-card>
   <mat-card-header class="alt-theme">
   <mat-toolbar color="primary">
-      <!-- <h3>{{ langService.getLang(eModulo.HojaDeRuta, 'tit-adm-hoja-de-ruta') }}</h3> -->
-
-      <a mat-button routerLink="/menu/index" matTooltip="{{ langService.getLang(eModulo.Base, 'tit-volver') }}">
-        <mat-icon>keyboard_backspace</mat-icon>
-      </a>
-      <h3>{{ langService.getLang(eModulo.Base, 'tit-ventana-hoja-de-ruta') }}</h3>
+      <h3>{{ langService.getLang(eModulo.HojaDeRuta, 'tit-bandeja-seleccionada').replace('$bandejaSeleccionada', valorBandejaSelected)  }}</h3>
       <span class="flex-spacer"></span>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.HojaDeRuta, 'btn-crear-nueva-hoja-ruta') }}" (click)="crearHojadeRuta()">
           <mat-icon>add_circle</mat-icon>
