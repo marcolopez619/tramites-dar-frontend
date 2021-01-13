@@ -110,7 +110,7 @@
 
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
             <mat-form-field fxFlex>
-              <input type="number" autocomplete="off" matInput required
+              <input type="number" min="0" max="50" autocomplete="off" matInput required
                 placeholder="{{langService.getLang(eModulo.HojaDeRuta,'lbl-numero-fojas')}}"
                 formControlName="numeroFojas">
               <mat-error *ngIf="formHojaDeRuta.controls['numeroFojas'].invalid">{{
@@ -118,7 +118,7 @@
             </mat-form-field>
 
             <mat-form-field fxFlex>
-              <input type="number" autocomplete="off" matInput required
+              <input type="number" min="0" max="50" autocomplete="off" matInput required
                 placeholder="{{langService.getLang(eModulo.HojaDeRuta,'lbl-plazo-dias')}}" formControlName="plazoDias">
               <mat-error *ngIf="formHojaDeRuta.controls['plazoDias'].invalid">{{
                 langService.getLang(eModulo.HojaDeRuta,'lbl-error-plazo-dias') }}</mat-error>
