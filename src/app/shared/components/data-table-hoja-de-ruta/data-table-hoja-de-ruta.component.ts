@@ -274,13 +274,14 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
     this.mouseOverModel.estados = estados;
     this.mouseOverModel.descBandeja = this.bandeja;
   }
-
-  private onDerivar(pDerivarModel: DerivarModel, pDialog?: MatDialog): void {
+  private onDerivar(pObjHojaRuta: HojaRutaBandejaModel, pDialog?: MatDialog): void {
 
     const dlgDerivar = pDialog.open(DerivarComponent, {
       disableClose: false,
       width: '1000px',
-      data: {}
+      data: {
+        hojaRutaSelected:pObjHojaRuta
+      }
     });
     dlgDerivar
       .afterClosed()
@@ -291,6 +292,7 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
         }
     });
   }
+
   private onAdjuntarDocumento(pHojaRuta: HojaRutaBandejaModel, pDialog?: MatDialog): void {
     const dlgDerivar = pDialog.open(AdjuntarDocumentoComponent, {
       disableClose: false,

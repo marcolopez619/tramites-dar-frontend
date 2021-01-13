@@ -2,13 +2,12 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
+import { map, startWith } from 'rxjs/operators';
 import { CitesService } from '../../../cites/cites.service';
 import { CiteModelByUsuario } from '../../../cites/models/cites.models';
-import {
-  fadeInAnim,
-  slideInLeftAnim
-} from '../../../shared/animations/template.animation';
+import { fadeInAnim, slideInLeftAnim} from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
 import { DataDocumentoAdjunto } from '../../../shared/models/documento-adjunto.model';
 import { HojaDeRutaInsertModel } from '../../../shared/models/hoja-de-ruta.model';
@@ -20,6 +19,9 @@ import { UsuarioService } from '../../../shared/services/usuario.service';
 import { HojaDeRutaService } from '../../hoja-de-ruta.service';
 import { DerivarModel } from '../../models/derivar.model';
 import { HojaRutaDerivaModel } from '../../models/hoja-ruta-deriva.model';
+import { InstructivaModel } from '../../models/instructiva.model';
+//import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+
 
 @Component({
   selector: 'derivar',
@@ -30,12 +32,18 @@ import { HojaRutaDerivaModel } from '../../models/hoja-ruta-deriva.model';
 export class DerivarComponent extends BaseComponent implements OnInit {
   listaUsuarios: Array<UsuarioModel> = [];
   listaCite: Array<CiteModelByUsuario> = [];
+  //myControl = new FormControl();
 
   longMaxDescripcion = 500;
   formDerivarHR: FormGroup;
   private _isDestinatarioInvalid: boolean;
   listaDestinatarios: Array<UsuarioModel> = [];
   dataSource = new MatTableDataSource<CiteModelByUsuario>([]);
+  vListaInstructiva: Array<InstructivaModel>=[];
+  vListaInstructivaAux: Array<InstructivaModel>=[];
+  listaInicialDestinatarios: Array<UsuarioModel> = [];
+  instructiva: string;
+  //vListaInstructiva: InstructivaModel;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -50,22 +58,45 @@ export class DerivarComponent extends BaseComponent implements OnInit {
   ) {
     super();
   }
-
+  filteredOptions: Observable<string[]>;
   ngOnInit(): void {
+    var vObjHojaRuta = this.data.hojaRutaSelected;
 
     const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
     this.getAllCitesFromPersona( idPersonaGd );
-    const dataForm: DerivarModel = {};
 
+    //filteredOptions: new Observable<User[]>();
+    this.getHojaRutaInstructiva();
+    //this.getAllInstructiva();
+    const dataForm: DerivarModel = {};
+    //this.hojaRutaService.getHojaRutaInstructiva().pipe(takeUntil(this.unsubscribe$)).subscribe((resultado)=>{this.vListaInstructiva=resultado.data});
     // Carga los usuarios de la bd
     const idTipoTramite = 1;
     this.getAllusuarios(idTipoTramite);
 
+    /////////////////////////
+    // Recupera la data del usuario loggeado como remitente.
+    const idPersonaGDLoggeado = this.contextService.getItemContexto('idPersonaGd');
+    //const usuario = this.listaUsuarios.find( x => x.idPersonaGd === idPersonaGDLoggeado );
+
+    this.listaInicialDestinatarios = [{ nombreCompleto: vObjHojaRuta.nombreDestinatario,
+                                        idPersonaGd: vObjHojaRuta.idDestinatario }];
+    //this.listaInicialDestinatarios.push(usuario);
+    //this.formHojaDeRuta.controls['listaRemitentes'].setValue(usuario);
+    /////////////////////////
+
     this.formDerivarHR = this.formBuilder.group({
-      listaDestinatarios: [undefined, Validators.compose([Validators.required])],
-      DescripcionReferencia: [undefined, Validators.compose([Validators.required])],
+      //listaDestinatarios: [this.vObjHojaRuta.Destinatario, Validators.compose([Validators.required])],
+      //listaRemitentes   : [this.citeSelected.remitentes, Validators.compose([Validators.required])],
+      listaCite        : [undefined, Validators.compose([Validators.required])],
+      vListaInstructiva: [undefined, Validators.compose([Validators.required])],
+      instructiva      : [vObjHojaRuta.asunto, Validators.compose([Validators.required])],
     });
   }
+/*
+  displayFn(user: InstructivaModel): string {
+    return user && user.instructiva ? user.instructiva : '';
+  }*/
 
   private getAllusuarios(idTipotramite: number): void {
     // Borra los datos de las listas
@@ -77,6 +108,24 @@ export class DerivarComponent extends BaseComponent implements OnInit {
       .subscribe((respService) => {
         this.listaUsuarios = respService.data;
       });
+  }
+  getListaSeleccionadaInstructiva($event): void {
+    console.log('----------------------');
+    this.vListaInstructivaAux = $event as Array<InstructivaModel>;
+
+    this.vListaInstructivaAux.forEach((element) => {
+      console.log('Remitente ---> ' + element.instructiva);
+    });
+    this.formDerivarHR.controls['vListaInstructivaAux'].setValue(
+      this.vListaInstructivaAux
+    );
+  }
+
+  private getHojaRutaInstructiva(): void {
+    this.hojaRutaService.getHojaRutaInstructiva().pipe( takeUntil( this.unsubscribe$ )).subscribe( vResultado => {
+      this.vListaInstructiva = vResultado.data as Array<InstructivaModel>;
+      var algo=this.vListaInstructiva;
+    });
   }
 
   getEstatusFormDestinatario($event): void {
@@ -108,13 +157,11 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     var vObjHojaRuta                         = this.data.hojaRutaSelected;
     let datosFormulario: HojaRutaDerivaModel = {};
         datosFormulario.IdHojaDeRuta         = vObjHojaRuta.idHojaRuta;
-        //datosFormulario.IdPersonaGb          = objDatosFormulario.listaDestinatarios[0].idPersonaGd;
-        datosFormulario.IdPersonaGb          = 542;
-        datosFormulario.Asunto               = this.formDerivarHR.controls['DescripcionReferencia'].value;
+        datosFormulario.IdPersonaGb          = vObjHojaRuta.idDestinatario;
+        datosFormulario.Asunto               = this.formDerivarHR.controls['instructiva'].value;
         datosFormulario.PlazoDias            = vObjHojaRuta.plazo;
         datosFormulario.Urgente              = vObjHojaRuta.urgente;
         datosFormulario.UsuarioBitacora      = this.contextService.getItemContexto('samActName');
-        datosFormulario.RegistroBitacora     = undefined;
 
     this.hojaRutaService
       .createHojaRutaDeriva(datosFormulario)

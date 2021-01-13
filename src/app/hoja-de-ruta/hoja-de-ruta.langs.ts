@@ -82,6 +82,8 @@ export const hojaDeRutaLang = {
     'lbl-seguimiento': 'Seguimiento',
     'lbl-seguimiento-detalle-cargo': 'Cargo',
     'lbl-seguimiento-detalle-asunto': 'Asunto',
+    'tit-enviar-hoja-ruta': 'Enviar hoja de ruta',
+    'tit-enviar-hoja-ruta-seguro': '¿Esta seguro de enviar la hoja de ruta.?',
 
     'tit-ventana-finaliza-tramite': 'Finalizar trámite',
     'tit-ventana-añadir-comentario': 'Añadir comentario',

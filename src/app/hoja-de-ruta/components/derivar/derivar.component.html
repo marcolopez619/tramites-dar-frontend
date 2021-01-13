@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-header class="alt-theme">
     <mat-toolbar shToolbarModal color="primary">
-      <h3>{{ langService.getLang(eModulo.HojaDeRuta, 'tit-derivar-hoja-ruta') }}</h3>
+      <h3>{{ langService.getLang(eModulo.HojaDeRuta, 'tit-enviar-hoja-ruta') }}</h3>
       <span class="flex-spacer"></span>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
         <mat-icon>close</mat-icon>
@@ -14,9 +14,14 @@
         <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
-              <sh-autocomplete [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatario' )"
-                [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-destinatario' )" [isRequired]="true"
-                [listaCompleta]="listaUsuarios" (isFormularioInvalid)="getEstatusFormDestinatario($event)"
+              <sh-autocomplete
+                [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatario' )"
+                [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-destinatario' )"
+                [isRequired]="true"
+                [listaInicial]="listaInicialDestinatarios"
+                [listaCompleta]="listaUsuarios"
+                [cantidadPermitida]="1"
+                (isFormularioInvalid)="getEstatusFormDestinatario($event)"
                 (listaSeleccionadosEmiter)="getListaSeleccionadaDestinatarios($event)">
               </sh-autocomplete>
             </div>
@@ -29,16 +34,32 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
+
+              <!--
+              <mat-form-field fxFlex>
+                <input
+                  matInput
+                  required
+                  shUppercase
+                  maxlength="100"
+                  [readonly]="citeSelected"
+                  placeholder="{{langService.getLang(eModulo.HojaDeRuta,'lbl-numero-cite')}}"
+                  formControlName="numeroCite">
+                <mat-error *ngIf="formHojaDeRuta.controls['numeroCite'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-error-numero-cite') }}</mat-error>
+              </mat-form-field>-->
+
+
             </div>
           </div>
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex>
+
               <mat-form-field fxFlex>
                 <input matInput required shUppercase maxlength="100"
                   placeholder="{{langService.getLang(eModulo.HojaDeRuta,'lbl-referencia')}}"
-                  formControlName="DescripcionReferencia">
-                <!--<mat-error *ngIf="formDerivarHR.controls['DescripcionReferencia'].invalid">{{ langService.getLang(eModulo.HojaDeRuta,'lbl-error-referencia') }}</mat-error>-->
+                  formControlName="instructiva">
               </mat-form-field>
+
             </div>
           </div>
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
@@ -52,12 +73,13 @@
 
     </mat-card-content>
   </mat-dialog-content>
+
+  <h3 style="text-align: center;">{{ langService.getLang(eModulo.HojaDeRuta, 'tit-enviar-hoja-ruta-seguro') }}</h3>
   <mat-dialog-actions fxLayout="row" fxLayoutGap="20px">
     <!--<button fxFlex mat-raised-button color="accent" (click)="save()" [disabled]="!formDerivarHR.valid || formDerivarHR.pristine || contextService.isLoading">Guardar-->
-    <button fxFlex mat-raised-button color="accent" (click)="saveDerivar()">{{langService.getLang(eModulo.Base, 'lbl-guardar')}}</button>
-    <button fxFlex mat-raised-button color="warn" (click)="cancelar()">{{langService.getLang(eModulo.Base, 'btnCancel')}}</button>
+    <button fxFlex mat-raised-button color="accent" (click)="saveDerivar()">{{langService.getLang(eModulo.Base,
+      'lbl-enviar')}}</button>
+    <button fxFlex mat-raised-button color="warn" (click)="cancelar()">{{langService.getLang(eModulo.Base,
+      'btnCancel')}}</button>
   </mat-dialog-actions>
 </mat-card>
-
-
-
