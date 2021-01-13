@@ -7,8 +7,6 @@
  -->
   <mat-card-content>
 
-    ---> {{valorCapturado}}
-
     <span [ngSwitch]="valorCapturado.toUpperCase()">
     <p *ngSwitchCase="'Creadas'.toUpperCase()">
       <app-bandeja-cites></app-bandeja-cites>

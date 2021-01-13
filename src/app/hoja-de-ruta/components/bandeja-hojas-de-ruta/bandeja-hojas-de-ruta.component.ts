@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -11,7 +11,6 @@ import { HojaDeRutaComponent } from '../../../shared/components/hoja-de-ruta/hoj
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { HojaDeRutaService } from '../../hoja-de-ruta.service';
-import { DerivarModel } from '../../models/derivar.model';
 import { HojaDeRutaModel, HojaRutaBandejaModel } from '../../models/hoja-de-ruta.model';
 import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-documento.component';
 import { DerivarComponent } from '../derivar/derivar.component';

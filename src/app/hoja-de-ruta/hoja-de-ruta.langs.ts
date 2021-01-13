@@ -87,7 +87,8 @@ export const hojaDeRutaLang = {
     'tit-ventana-añadir-comentario': 'Añadir comentario',
     'tit-derivar-hoja-ruta': 'Derivar hoja de ruta',
 
-    'lbl-fecha-registro' : 'Fecha registro'
+    'lbl-fecha-registro' : 'Fecha registro',
+    'tit-bandeja-seleccionada' : 'Bandeja: $bandejaSeleccionada'
 
   }
 };
