@@ -78,6 +78,7 @@
 
 
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+            <!--
             <mat-form-field fxFlex>
               <input
                 matInput
@@ -88,6 +89,14 @@
                 placeholder="{{langService.getLang(eModulo.HojaDeRuta,'lbl-numero-cite')}}"
                 formControlName="numeroCite">
               <mat-error *ngIf="formHojaDeRuta.controls['numeroCite'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-error-numero-cite') }}</mat-error>
+            </mat-form-field>-->
+            <mat-form-field fxFlex>
+              <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-buscar-cite' )}} : </mat-label>
+              <mat-select formControlName="listaCite" required placeholder="Seleccione">
+                <mat-option *ngFor="let cite of listaCite" [value]="cite.idCite">
+                  {{cite.numeroCite}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
 
             <mat-form-field fxFlex>

@@ -21,6 +21,7 @@ import { LangService } from '../../services/lang.service';
 import { ParametricaService } from '../../services/parametrica.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { CiteModelByUsuario } from '../../../cites/models/cites.models';
+import { CitesService } from '../../../cites/cites.service';
 
 @Component({
   selector: 'app-hoja-de-ruta',
@@ -42,7 +43,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
   listaInicialRemitentes: Array<UsuarioModel> = [];
   listaInicialDestinatarios: Array<UsuarioModel> = [];
   listaInicialCC: Array<UsuarioModel> = [];
-
+  listaCite: Array<CiteModelByUsuario> = [];
   citeSelected: CiteModelByUsuario;
 
   descripcionTramite: string;
@@ -58,7 +59,8 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private parametricaService: ParametricaService,
     private usuarioService: UsuarioService,
-    private hojaRutaService: HojaRutaService
+    private hojaRutaService: HojaRutaService,
+    private citesService: CitesService,
   ) {
     super();
   }
@@ -78,6 +80,9 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
     // Carga los usuarios de la bd
     const idTipoTramite = 1;
     this.getAllusuarios(idTipoTramite);
+
+    const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
+    this.getAllCitesFromPersona( idPersonaGd );
 
     if (this.citeSelected) {
       this.formHojaDeRuta = this.formBuilder.group({
@@ -167,6 +172,30 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
       });
   }
 
+  selectionChangeCite(objEventCite: any): void {
+    var algo=1;
+    const objUbiGeo: CiteModelByUsuario = {
+        idCite: objEventCite.value
+    };
+    const objUbiCiud: UsuarioModel = {
+      idPersonaGd: objEventCite.value
+    };
+
+    /*
+    this.idPaisSelect = Number(objUbiGeo.idPais);
+    this.gabineteService.getDepartamento(objUbiGeo.idPais)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((response) => {
+        this.comboDepartamento = response.data;
+    }, (err) => {
+        // if (err.status === 404) {
+        //     this.comboDepartamento = [];
+        //     this.formFuncionarioCargo.get('idFuncion').markAsTouched({ onlySelf: true });
+        // }
+    });*/
+
+  }
+
   private prepareArrayAsJSONString( lista: Array<any>, nombreKey: string ): Array<any> {
     const listaJSON = [];
     const listaIdPersona = lista.map((cc) => cc.idPersonaGd);
@@ -178,6 +207,13 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
     });
 
     return listaJSON;
+  }
+
+  private getAllCitesFromPersona( idPersonaGd: number ): void {
+    this.citesService.getAllCitesFromPersona( idPersonaGd ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaCitesPersona => {
+      this.listaCite = listaCitesPersona.data as Array<CiteModelByUsuario>;
+      var algo=this.listaCite;
+    });
   }
 
   private getAllusuarios(idTipotramite: number, isChangeFromTramiteChange?: boolean): void {
@@ -245,6 +281,8 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
     this.formHojaDeRuta.controls['listaRemitentes'].setValue(
       this._isRemitenteInvalid ? undefined : this.listaRemitentes
     );
+    const idPersonaGd = this.listaRemitentes[0].idPersonaGd
+    this.getAllCitesFromPersona( idPersonaGd );
   }
 
   getListaSeleccionadaDestinatarios($event): void {
