@@ -28,7 +28,7 @@ import { SeguimientoComponent } from '../../../hoja-de-ruta/components/seguimien
 })
 export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnInit, AfterViewInit,  OnDestroy {
 
-  displayedColumns = ['tipoTramiteDes', 'nombreRemitente', 'descripcionDoc', 'cite', 'nombreDestinatario', 'referencia', 'estado'];
+  displayedColumns = ['tipoTramiteDes', 'nombreRemitente', 'descripcionDoc', 'cite', 'nombreDestinatario', 'referencia', 'fechaBandeja', 'estado'];
   dataSource = new MatTableDataSource<HojaRutaBandejaModel>([]);
 
   mouseOverModel: DataTableHRMouseModel = {};

@@ -149,6 +149,7 @@ export class DerivarComponent extends BaseComponent implements OnInit {
   private getAllCitesFromPersona( idPersonaGd: number ): void {
     this.citesService.getAllCitesFromPersona( idPersonaGd ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaCitesPersona => {
       this.listaCite = listaCitesPersona.data as Array<CiteModelByUsuario>;
+      var algo=this.listaCite;
     });
   }
 
