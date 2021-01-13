@@ -70,6 +70,8 @@ export const baseLang = {
             'lbl-extension-documento' : 'Tipo',
             'lbl-fecha-subida' : 'Fecha subida',
             'btn-subir-nuevo-ducumento' : 'Subir nuevo documento',
+            'btn-descargar-ducumento' : 'Descargar documento',
+            'lbl-no-existe-ducumento-from-cite' : 'No existe en el servidor el archivo perteneciente al cite',
             'tit-documentos-adjuntos' : 'Documentos adjuntos',
             'tit-cantidad-documentos-adjuntos' : 'Cantidad permitida: $cantidadPermitida archivos',
             'lbl-estado' : 'Estado',

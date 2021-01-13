@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ContextoService } from './contexto.service';
 import { Resultado } from '../models/resultado.model';
-import { DataDocumentoAdjunto, DocumentoAdjuntoModel } from '../models/documento-adjunto.model';
+import { DataDocumentoAdjunto, DocumentoAdjuntoDownloadParam, DocumentoAdjuntoModel } from '../models/documento-adjunto.model';
 
 @Injectable()
 export class DocumentoAdjuntoService {
@@ -44,5 +44,15 @@ export class DocumentoAdjuntoService {
     };
 
     return this.httpClient.post<Resultado>( `${this.baseURL}/upload`, formData, options );
+  }
+
+  downloadDocumentFromServer( docAdjParams: DocumentoAdjuntoDownloadParam): Observable<Blob> {
+
+    const params = new HttpParams()
+                  .set('BucketName', docAdjParams.bucketName)
+                  .set('NombreArchivoDownload', docAdjParams.nombreArchivoDownload )
+                  .set('NivelBucketName', docAdjParams.NivelBucketName );
+
+    return this.httpClient.get( `${this.baseURL}/download`, {params : params, responseType : 'blob' } );
   }
 }

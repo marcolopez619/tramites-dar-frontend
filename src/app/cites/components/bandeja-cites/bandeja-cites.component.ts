@@ -3,14 +3,20 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { HojaDeRutaComponent } from '../../../shared/components/hoja-de-ruta/hoja-de-ruta.component';
+import { eModulo } from '../../../shared/enums/modulo.enum';
+import { eTipoArchivo } from '../../../shared/enums/tipo-archivo.enum';
+import { eTipoNotificacion } from '../../../shared/enums/tipo-notificacion.enum';
+import { DocumentoAdjuntoDownloadParam } from '../../../shared/models/documento-adjunto.model';
 import { HojaDeRutaRespInsert } from '../../../shared/models/hoja-de-ruta.model';
 import { DestinatarioModel } from '../../../shared/models/Usuario.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
+import { DocumentoAdjuntoService } from '../../../shared/services/documento-adjunto.service';
 import { LangService } from '../../../shared/services/lang.service';
+import { NotificacionService } from '../../../shared/services/notificacion.service';
+import { UtilService } from '../../../shared/services/util.service';
 import { CitesService } from '../../cites.service';
 import { CiteModelByUsuario, ResultCiteInst } from '../../models/cites.models';
 import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-documento.component';
@@ -38,9 +44,11 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
   constructor(
     public langService: LangService,
     public contextService: ContextoService,
-    private router: Router,
     private citesService: CitesService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private notificacionService: NotificacionService,
+    private utilService: UtilService,
+    private documentoAdjuntoService: DocumentoAdjuntoService
   ) {  super(); }
 
   ngOnInit(): void {
@@ -74,6 +82,28 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
       }
 
     });
+  }
+
+  private getTipoArchivo(pExtensionArchivo: string): eTipoArchivo {
+
+    let tipoArchivo: eTipoArchivo;
+
+    switch (pExtensionArchivo) {
+
+      case 'pdf': tipoArchivo = eTipoArchivo.Pdf; break;
+
+      case 'doc':
+      case 'docx':
+      tipoArchivo = eTipoArchivo.Word; break;
+
+      case 'xls':
+      case 'xlsx': tipoArchivo = eTipoArchivo.Excel; break;
+
+      default:
+        break;
+    }
+
+    return tipoArchivo;
   }
 
   onMouseOver(row: CiteModelByUsuario): void {
@@ -147,6 +177,32 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
         this.getAllCitesFromPersona(idPersonaGd); */
       }
       this.getAllCitesFromPersona(this.idPersonaGd);
+    });
+  }
+
+  onDownloadDocumentoFromCite(pCiteModel: CiteModelByUsuario): void {
+
+    const index                     = pCiteModel.pathArchivo.lastIndexOf('/');
+    const nombreArchivoConExtension = pCiteModel.pathArchivo.substr( index + 1 );
+    const extensionArchivo          = nombreArchivoConExtension.substr( nombreArchivoConExtension.lastIndexOf( '.' ) + 1 );
+    const nombreAchivoSinExtension  = nombreArchivoConExtension.substr( 0 , nombreArchivoConExtension.lastIndexOf('.') );
+    const tipoArchivo: eTipoArchivo = this.getTipoArchivo(extensionArchivo);
+
+    const parametros: DocumentoAdjuntoDownloadParam = {
+      bucketName           : 'prueba',
+      nombreArchivoDownload: nombreArchivoConExtension,
+      NivelBucketName      : '/nivel1/nivel2/'
+    };
+
+    this.documentoAdjuntoService.downloadDocumentFromServer( parametros ).pipe( takeUntil(this.unsubscribe$) ).subscribe( blob => {
+
+      if ( blob ) {
+        this.utilService.createDocumentFromBlob( blob, tipoArchivo, nombreAchivoSinExtension );
+      } else {
+        const mensajeInformativo = this.langService.getLang(eModulo.Base, 'lbl-no-existe-ducumento-from-cite' );
+        this.notificacionService.showSnackbarMensaje(mensajeInformativo, 5000, eTipoNotificacion.Informativo);
+      }
+
     });
   }
 

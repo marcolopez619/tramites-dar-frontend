@@ -1,4 +1,4 @@
-export interface DocumentoAdjuntoModel{
+export interface DocumentoAdjuntoModel {
   id?: number;
   nombre?: string;
   bucketName?: string;
@@ -12,8 +12,13 @@ export interface DocumentoAdjuntoModel{
   isCiteOrHR?: number;
 }
 
+export interface DocumentoAdjuntoDownloadParam {
+  bucketName?: string;
+  nombreArchivoDownload?: string;
+  NivelBucketName?: string;
+}
 
-export interface DataDocumentoAdjunto{
+export interface DataDocumentoAdjunto {
   startSaveDocuments?: boolean;
   datosAdicionales?: any;
 }
