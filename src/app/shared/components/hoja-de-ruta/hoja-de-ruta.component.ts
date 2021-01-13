@@ -165,7 +165,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
       datosFormulario.ListCiteExt           = undefined;
       datosFormulario.ListAdjunto           = undefined;
       datosFormulario.Referencia            = objDatosFormulario.referencia;
-      datosFormulario.PlazoDias             = objDatosFormulario.plazoDias;
+      datosFormulario.PlazoDias             = objDatosFormulario.plazoDias ?? 0;
       datosFormulario.Urgente               = objDatosFormulario.isUrgente = false ? 0 : 1;
       datosFormulario.UsuarioBitacora       = this.contextService.getItemContexto('samActName');
       datosFormulario.RegistroBitacora      = '10.10.10.10';
