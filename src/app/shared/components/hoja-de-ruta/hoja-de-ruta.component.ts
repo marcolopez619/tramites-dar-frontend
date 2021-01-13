@@ -23,6 +23,10 @@ import { UsuarioService } from '../../services/usuario.service';
 import { CiteModelByUsuario } from '../../../cites/models/cites.models';
 import { CitesService } from '../../../cites/cites.service';
 
+export class Test {
+
+}
+
 @Component({
   selector: 'app-hoja-de-ruta',
   templateUrl: './hoja-de-ruta.component.html',
@@ -67,6 +71,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     const idTipoTramiteDefault = 1;
+    setTimeout(()=>this.data = new Test(),0)
 
     this.citeSelected = this.data.citeSelected as CiteModelByUsuario;
 
@@ -94,6 +99,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
         referencia        : [ this.citeSelected.referencia, Validators.compose([Validators.required])],
         numeroFojas       : [undefined, Validators.compose([Validators.required])],
         plazoDias         : [undefined, Validators.compose([Validators.required])],
+        listaCite         : [undefined, Validators.compose([Validators.required])],
         isUrgente         : [false, Validators.compose([Validators.required])],
         isConCopiaFisica  : [false, Validators.compose([Validators.required])]
       });
@@ -107,6 +113,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
         referencia        : [undefined, Validators.compose([Validators.required])],
         numeroFojas       : [undefined, Validators.compose([Validators.required])],
         plazoDias         : [undefined, Validators.compose([Validators.required])],
+        listaCite         : [undefined, Validators.compose([Validators.required])],
         isUrgente         : [false, Validators.compose([Validators.required])],
         isConCopiaFisica  : [false, Validators.compose([Validators.required])]
       });
@@ -212,7 +219,6 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
   private getAllCitesFromPersona( idPersonaGd: number ): void {
     this.citesService.getAllCitesFromPersona( idPersonaGd ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaCitesPersona => {
       this.listaCite = listaCitesPersona.data as Array<CiteModelByUsuario>;
-      var algo=this.listaCite;
     });
   }
 
