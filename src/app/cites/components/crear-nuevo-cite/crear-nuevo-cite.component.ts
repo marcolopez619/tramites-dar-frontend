@@ -121,20 +121,38 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
   }
 
   getListaSeleccionadaVias(event: AutocompleteData): void {
-    this.listaVias = event.listaSeleccionados as Array<UsuarioModel>;
+    this.listaVias = event.listaSeleccionados;
     this.deleteSelectedUsersFromAnotherLists(this.listaVias);
+
+    if (event.itemEliminado) {
+      // Añadir el item eliminado a las demas lista complementarias
+      this.listaUsuariosDestinatarios.push( event.itemEliminado );
+      this.listaUsuariosRemitentes.push( event.itemEliminado );
+    }
   }
 
   getListaSeleccionadaDestinatarios(event: AutocompleteData): void {
-    this.listaDestinatarios = event.listaSeleccionados as Array<UsuarioModel>;
+    this.listaDestinatarios = event.listaSeleccionados;
     this.formCrearCite.controls['listaDestinatarios'].setValue( (this._isDestinatarioInvalid) ? undefined : this.listaDestinatarios );
     this.deleteSelectedUsersFromAnotherLists(this.listaDestinatarios);
+
+    if (event.itemEliminado) {
+      // Añadir el item eliminado a las demas lista complementarias
+      this.listaUsuariosRemitentes.push( event.itemEliminado );
+      this.listaUsuariosVias.push( event.itemEliminado );
+    }
   }
 
   getListaSeleccionadaRemitentes(event: AutocompleteData): void {
-    this.listaRemitentes = event.listaSeleccionados as Array<UsuarioModel>;
+    this.listaRemitentes = event.listaSeleccionados;
     this.formCrearCite.controls['listaRemitentes'].setValue( (this._isRemitenteInvalid) ? undefined : this.listaRemitentes );
     this.deleteSelectedUsersFromAnotherLists(this.listaRemitentes);
+
+    if (event.itemEliminado) {
+      // Añadir el item eliminado a las demas lista complementarias
+      this.listaUsuariosDestinatarios.push( event.itemEliminado );
+      this.listaUsuariosVias.push( event.itemEliminado );
+    }
   }
 
   getEstatusFormDestinatario($event): void {
