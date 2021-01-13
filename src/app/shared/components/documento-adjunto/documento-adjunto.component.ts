@@ -13,6 +13,7 @@ import { NotificacionService } from '../../services/notificacion.service';
 import { DocumentoAdjuntoService } from './../../services/documento-adjunto.service';
 import { HojaRutaBandejaModel } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
 import { ContextoService } from '../../services/contexto.service';
+import { eTipoDocumento } from '../../enums/tipo_documento.enum';
 
 @Component({
   selector: 'sh-documento-adjunto',
@@ -77,6 +78,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
 
             this.listaDocumentosToUpload.forEach(element => {
               element.id = ( data.datosAdicionales as HojaRutaBandejaModel).idHojaRuta;
+              element.isCiteOrHR = eTipoDocumento.HOJA_DE_RUTA;
             });
           }
 
@@ -144,7 +146,8 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
           nombre             : fileTemporal.name.substring( 0, indexInicioExtensionFile ),
           fechaSubida        : new Date().toISOString(),
           informacion        : fileTemporal,
-          porcentajeUploaded : 0
+          porcentajeUploaded : 0,
+          isCiteOrHR         : eTipoDocumento.CITE
         };
 
         this.listaDocumentosToUpload.push( documentoAdjuntoToUpload );
