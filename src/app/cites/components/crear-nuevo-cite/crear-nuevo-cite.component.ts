@@ -16,6 +16,7 @@ import { UtilService } from '../../../shared/services/util.service';
 import { CitesService } from '../../cites.service';
 import { ReporteService } from './../../../shared/services/reporte.service';
 import { CiteModel, CiteTemplateJsReport, ResultCiteInst } from '../../models/cites.models';
+import { AutocompleteData } from '../../../shared/models/autocomplete.model';
 
 @Component({
   selector: 'app-crear-nuevo-cite',
@@ -119,19 +120,19 @@ export class CrearNuevoCiteComponent extends BaseComponent implements OnInit {
     this.listaUsuariosRemitentes    = this.listaUsuariosRemitentes.filter( x => !arrayItemsToDelete.includes( x ) );
   }
 
-  getListaSeleccionadaVias($event): void {
-    this.listaVias = $event as Array<UsuarioModel>;
+  getListaSeleccionadaVias(event: AutocompleteData): void {
+    this.listaVias = event.listaSeleccionados as Array<UsuarioModel>;
     this.deleteSelectedUsersFromAnotherLists(this.listaVias);
   }
 
-  getListaSeleccionadaDestinatarios($event): void {
-    this.listaDestinatarios = $event as Array<UsuarioModel>;
+  getListaSeleccionadaDestinatarios(event: AutocompleteData): void {
+    this.listaDestinatarios = event.listaSeleccionados as Array<UsuarioModel>;
     this.formCrearCite.controls['listaDestinatarios'].setValue( (this._isDestinatarioInvalid) ? undefined : this.listaDestinatarios );
     this.deleteSelectedUsersFromAnotherLists(this.listaDestinatarios);
   }
 
-  getListaSeleccionadaRemitentes($event): void {
-    this.listaRemitentes = $event as Array<UsuarioModel>;
+  getListaSeleccionadaRemitentes(event: AutocompleteData): void {
+    this.listaRemitentes = event.listaSeleccionados as Array<UsuarioModel>;
     this.formCrearCite.controls['listaRemitentes'].setValue( (this._isRemitenteInvalid) ? undefined : this.listaRemitentes );
     this.deleteSelectedUsersFromAnotherLists(this.listaRemitentes);
   }
