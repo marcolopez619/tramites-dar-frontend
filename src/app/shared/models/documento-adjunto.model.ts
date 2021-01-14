@@ -22,3 +22,9 @@ export interface DataDocumentoAdjunto {
   startSaveDocuments?: boolean;
   datosAdicionales?: any;
 }
+
+export interface DataDocumentoAdjuntoResultFromSave {
+  isUploadedFile ?: boolean;
+  cantidadArchivosSubidos?: number;
+  cantidaTotalArchivosPorSubir?: number;
+}

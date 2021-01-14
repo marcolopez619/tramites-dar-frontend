@@ -23,7 +23,7 @@
  </mat-dialog-content>
 
  <mat-dialog-actions fxLayout="row" fxLayoutGap="20px">
-  <button fxFlex mat-raised-button color="accent" (click)="onSaveDocAdjuntos()" [disabled]="!this.isValid || isFileUploadedCompleted || contextService.isLoading">
+  <button fxFlex mat-raised-button color="accent" (click)="onSaveDocAdjuntos()" [disabled]="!this.isValid  || contextService.isLoading">
     {{langService.getLang(eModulo.Base, 'lbl-guardar' )}}
   </button>
   <button fxFlex mat-raised-button color="warn" (click)="onClose()">

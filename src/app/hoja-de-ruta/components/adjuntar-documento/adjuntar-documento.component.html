@@ -33,10 +33,10 @@
 </mat-dialog-content>
 
 <mat-dialog-actions fxLayout="row" fxLayoutGap="20px">
-  <button fxFlex mat-raised-button color="accent" (click)="onGuardarDocumentoAdjunto()" [disabled]="!this.formAdjuntarDocumento.valid || isFileUploadedCompleted || contextService.isLoading">
+  <button fxFlex mat-raised-button color="accent" (click)="onGuardarDocumentoAdjunto()" [disabled]="!this.formAdjuntarDocumento.valid || contextService.isLoading">
     {{langService.getLang(eModulo.Base, 'lbl-guardar' )}}
   </button>
-  <button fxFlex mat-raised-button color="warn" (click)="onCancelar()">
+  <button fxFlex mat-raised-button color="warn" (click)="onClose()">
     {{langService.getLang(eModulo.Base, 'btn-cerrar' )}}
   </button>
 </mat-dialog-actions>

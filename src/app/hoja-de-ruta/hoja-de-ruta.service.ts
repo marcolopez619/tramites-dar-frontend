@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Resultado } from '../shared/models/resultado.model';
@@ -18,7 +18,8 @@ export class HojaDeRutaService {
   ) {}
 
   getAllHojaRutaBandeja(idPersonaGd: number, tipoBandeja: string): Observable<Resultado> {
-    return this.httpClient.get<Resultado>( `${this.baseURL}/bandeja/${idPersonaGd}/${tipoBandeja}`);
+    const headers = new HttpHeaders().set('X-Notificador', 'false');
+    return this.httpClient.get<Resultado>( `${this.baseURL}/bandeja/${idPersonaGd}/${tipoBandeja}`, {headers : headers } );
   }
 
   createParticipante(pParticipanteInsert: ParticipanteInsertModel ): Observable<Resultado> {
