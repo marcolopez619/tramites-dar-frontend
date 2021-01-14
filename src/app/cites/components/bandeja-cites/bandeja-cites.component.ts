@@ -167,7 +167,7 @@ export class BandejaCitesComponent extends BaseComponent implements OnInit, Afte
       width: '1000px',
       data: {
         citeSelected                   : pCiteModel,
-        cantidadPermitidaSubidaArchivos: 1
+        cantidadPermitidaSubidaArchivos: 3
       }
     });
     dlgUploadArchivo.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {

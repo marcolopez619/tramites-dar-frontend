@@ -7,7 +7,7 @@ import { fadeInAnim, slideInLeftAnim } from '../../animations/template.animation
 import { BaseComponent } from '../../base.component';
 import { eModulo } from '../../enums/modulo.enum';
 import { eTipoNotificacion } from '../../enums/tipo-notificacion.enum';
-import { DataDocumentoAdjunto, DocumentoAdjuntoModel } from '../../models/documento-adjunto.model';
+import { DataDocumentoAdjunto, DataDocumentoAdjuntoResultFromSave, DocumentoAdjuntoModel } from '../../models/documento-adjunto.model';
 import { LangService } from '../../services/lang.service';
 import { NotificacionService } from '../../services/notificacion.service';
 import { DocumentoAdjuntoService } from './../../services/documento-adjunto.service';
@@ -182,19 +182,53 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
       return;
     }
 
-    this.listaDocumentosToUpload.forEach(element => {
+    for (let index = 0; index < this.listaDocumentosToUpload.length; index++) {
+      const element = this.listaDocumentosToUpload[index];
+
       this.documentoAdjuntoService.uploadDocumentToServer( element ).pipe( takeUntil ( this.unsubscribe$ ) ).subscribe( respSave => {
 
         this.notificacionService.progressSubject.asObservable().subscribe( porcentajeUpload => {
+
           if (porcentajeUpload.progress) {
             element.porcentajeUploaded = 100;
             this.isUploadedFile = element.porcentajeUploaded >= 100;
-            this.isUploadedAllFiles.emit( this.isUploadedFile );
+
+            const dataDocAdjResult: DataDocumentoAdjuntoResultFromSave = {
+              isUploadedFile              : element.porcentajeUploaded >= 100,
+              cantidadArchivosSubidos     : index,
+              cantidaTotalArchivosPorSubir: this.listaDocumentosToUpload.length - 1
+            };
+
+            this.isUploadedAllFiles.emit( dataDocAdjResult );
           }
+
         });
-        console.log( '----> ', respSave.message );
+        console.log( 'Resp subida archivo : ----> ', respSave.message );
       });
-    });
+
+    }
+
+    /* this.listaDocumentosToUpload.forEach(( element, index ) => {
+      this.documentoAdjuntoService.uploadDocumentToServer( element ).pipe( takeUntil ( this.unsubscribe$ ) ).subscribe( respSave => {
+
+        this.notificacionService.progressSubject.asObservable().subscribe( porcentajeUpload => {
+
+          if (porcentajeUpload.progress) {
+            element.porcentajeUploaded = 100;
+            this.isUploadedFile = element.porcentajeUploaded >= 100;
+            this.isUploadedAllFiles.emit(
+              {
+                isUploadedFile         : this.isUploadedFile,
+                cantidadArchivosSubidos: index,
+                cantidaTotaldArchivos  : this.listaDocumentosToUpload.length - 1
+              }
+            );
+          }
+
+        });
+        console.log( 'Resp subida archivo : ----> ', respSave.message );
+      });
+    }); */
   }
 
   onCancel(): void {

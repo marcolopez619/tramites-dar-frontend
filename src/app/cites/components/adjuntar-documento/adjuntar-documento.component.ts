@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
-import { DataDocumentoAdjunto } from '../../../shared/models/documento-adjunto.model';
+import { DataDocumentoAdjunto, DataDocumentoAdjuntoResultFromSave } from '../../../shared/models/documento-adjunto.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { DocumentoAdjuntoService } from '../../../shared/services/documento-adjunto.service';
 import { LangService } from '../../../shared/services/lang.service';
@@ -19,7 +19,7 @@ export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit
 
   isValid: boolean;
   isFileUploadedCompleted: boolean;
-  citeSelected : CiteModelByUsuario;
+  citeSelected: CiteModelByUsuario;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -49,12 +49,17 @@ export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit
     this.documentoAdjuntoService.sendFlagToSaveDocument( data );
   }
 
-  verifyDocsAdjuntos(isValidDocAdj: boolean): void{
+  verifyDocsAdjuntos(isValidDocAdj: boolean): void {
     this.isValid = isValidDocAdj;
   }
 
-  isUploadesAllFiles(event: boolean) : void{
-    this.isFileUploadedCompleted = event;
+  isUploadesAllFiles(dataUploaded: DataDocumentoAdjuntoResultFromSave): void {
+
+    this.isFileUploadedCompleted = dataUploaded.isUploadedFile;
+
+    if ( dataUploaded.cantidadArchivosSubidos === dataUploaded.cantidaTotalArchivosPorSubir ) {
+      this.onClose( true );
+    }
   }
 
   onClose(object?: any): void {
