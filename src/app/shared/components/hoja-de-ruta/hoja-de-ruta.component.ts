@@ -170,6 +170,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
   onGuardarHojaDeRuta(): void {
     let datosFormulario: HojaDeRutaInsertModel = {};
 
+
     if (this.citeSelected) {
       // Crea la hoja de ruta en funcion a los datos del cite
       const año = new Date().getFullYear();
@@ -195,18 +196,22 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
         Urgente              : +this.formHojaDeRuta.controls['isUrgente'].value,
         ConCopiaFisica       : +this.formHojaDeRuta.controls['isUrgente'].value,
         UsuarioBitacora      : this.contextService.getItemContexto('samActName'),
-        RegistroBitacora: undefined
       };
 
       datosFormulario = datosHRFromCite;
     } else {
+
+      const listaIdPersonaCC = this.prepareArrayAsJSONString(
+        this.listaCc,
+        'idPersonaGd'
+      );
       const objDatosFormulario: any = this.formHojaDeRuta.value;
 
       datosFormulario.IdTipoTramite         = objDatosFormulario.tipoTramite;
-      datosFormulario.Gestion               = 2021;
+      datosFormulario.Gestion               = new Date().getFullYear();
       datosFormulario.IdPersonaRemite       = objDatosFormulario.listaRemitentes.idPersonaGd;
       datosFormulario.IdPersonaDestinatario = objDatosFormulario.listaDestinatarios[0].idPersonaGd;
-      datosFormulario.IdPersonaSolicita     = objDatosFormulario.listaCc[0].idPersonaGd;
+      datosFormulario.IdPersonaSolicita     = objDatosFormulario.listaCc==null?undefined:objDatosFormulario.listaCc[0].idPersonaGd;
       datosFormulario.ListDestCopia         = undefined;
       datosFormulario.ListCite              = undefined;
       datosFormulario.ListCiteExt           = undefined;
@@ -216,7 +221,6 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
       datosFormulario.Urgente               = objDatosFormulario.isUrgente = false ? 0 : 1;
       datosFormulario.ConCopiaFisica        = objDatosFormulario.isConCopiaFisica = false ? 0 : 1;
       datosFormulario.UsuarioBitacora       = this.contextService.getItemContexto('samActName');
-      datosFormulario.RegistroBitacora      = '10.10.10.10';
     }
 
     this.hojaRutaService
