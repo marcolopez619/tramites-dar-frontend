@@ -128,7 +128,8 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
         }, {
           descAccion : 'ver_seguimiento',
           tooltipText : 'Ver seguimiento',
-          icono : 'visibility'
+          icono : 'visibility',
+          onClick: this.onVerSeguimiento
         }];
 
         estados = [{
@@ -158,12 +159,12 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
           tooltipText : 'Enviar',
           icono : 'send',
           onClick : this.onDerivar
-        }, {
+        }/* , {
           descAccion : 'adjuntar_documento',
           tooltipText : 'Adjuntar documento',
           icono : 'attachment',
           onClick: this.onAdjuntarDocumento
-        }
+        } */
       ];
 
         estados = [{
