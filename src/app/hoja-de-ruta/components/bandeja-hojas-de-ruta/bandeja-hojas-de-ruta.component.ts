@@ -61,10 +61,16 @@ export class BandejaHojasDeRutaComponent
   }
 
   ngOnInit(): void {
+    this.inicializarBandeja();
+  }
+
+  private inicializarBandeja(): void{
+
     this.idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
     this.tipoBandeja = this.valorBandejaSelected;
     this.getAllHojaRutaBandeja(this.idPersonaGd, this.tipoBandeja);
   }
+
   private getAllHojaRutaBandeja( idPersonaGd: number, tipoBandeja ): void {
     this.hojaRutaService.getAllHojaRutaBandeja( idPersonaGd, tipoBandeja ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaHojaRutaBandeja => {
       this.listaBandeja = listaHojaRutaBandeja.data as Array<HojaRutaBandejaModel>;
@@ -137,8 +143,6 @@ export class BandejaHojasDeRutaComponent
   }
 
   crearHojadeRuta(): void {
-    //const dlgNuevoCite = this.dialog.open( HojaDeRutaComponent,  {
-    //const dlgNuevoCite = this.dialog.open( BusquedaAvanzadaComponent,  {
     const dlgNuevoCite = this.dialog.open(HojaDeRutaComponent, {
       disableClose: false,
       width: '1000px',
@@ -149,7 +153,7 @@ export class BandejaHojasDeRutaComponent
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((result) => {
         if (result) {
-          //..
+          this.inicializarBandeja();
         }
       });
   }
