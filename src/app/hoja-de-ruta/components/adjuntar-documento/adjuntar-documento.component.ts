@@ -6,7 +6,7 @@ import { BaseComponent } from '../../../shared/base.component';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { DocumentoAdjuntoService } from '../../../shared/services/documento-adjunto.service';
 import { LangService } from '../../../shared/services/lang.service';
-import { DataDocumentoAdjunto } from '../../../shared/models/documento-adjunto.model';
+import { DataDocumentoAdjunto, DataDocumentoAdjuntoResultFromSave } from '../../../shared/models/documento-adjunto.model';
 import { HojaRutaBandejaModel } from '../../models/hoja-de-ruta.model';
 
 @Component({
@@ -21,7 +21,6 @@ export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit
   formAdjuntarDocumento: FormGroup;
 
   hojaRutaSelected: HojaRutaBandejaModel;
-  isFileUploadedCompleted: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<any>,
@@ -57,16 +56,20 @@ export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit
 
   }
 
-  isUploadesAllFiles(event: boolean) : void{
-    this.isFileUploadedCompleted = event;
+  isUploadesAllFiles(data: DataDocumentoAdjuntoResultFromSave): void {
+
+    if ( data.cantidadArchivosSubidos === data.cantidaTotalArchivosPorSubir) {
+      this.onClose();
+    }
+
   }
 
-  isDocumentoAdjuntoValid(isValid: boolean): void{
+  isDocumentoAdjuntoValid(isValid: boolean): void {
     console.log( `is required desde adjuntar documento : ${isValid}` );
     this.formAdjuntarDocumento.controls[ 'documentosAdjuntos' ].setValue( isValid ? isValid : undefined );
   }
 
-  onCancelar(): void {
+  onClose(): void {
     this.dialogRef.close(undefined);
   }
 
