@@ -24,7 +24,5 @@ export interface DataDocumentoAdjunto {
 }
 
 export interface DataDocumentoAdjuntoResultFromSave {
-  isUploadedFile ?: boolean;
-  cantidadArchivosSubidos?: number;
-  cantidaTotalArchivosPorSubir?: number;
+  isAllFilesUploaded?: boolean;
 }
