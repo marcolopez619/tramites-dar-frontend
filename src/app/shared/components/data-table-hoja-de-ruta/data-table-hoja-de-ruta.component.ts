@@ -156,17 +156,13 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
         const acciones: Array<Accion> = [{
           descAccion : 'enviar',
           tooltipText : 'Enviar',
-          icono : 'send'
-        },
-        /* {
-          descAccion : 'editar',
-          tooltipText : 'Editar',
-          icono : 'edit'
-        }, */
-        {
+          icono : 'send',
+          onClick : this.onDerivar
+        }, {
           descAccion : 'adjuntar_documento',
           tooltipText : 'Adjuntar documento',
-          icono : 'attachment'
+          icono : 'attachment',
+          onClick: this.onAdjuntarDocumento
         }
       ];
 
