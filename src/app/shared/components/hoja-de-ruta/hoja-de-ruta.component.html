@@ -90,6 +90,7 @@
                 formControlName="numeroCite">
               <mat-error *ngIf="formHojaDeRuta.controls['numeroCite'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-error-numero-cite') }}</mat-error>
             </mat-form-field>-->
+
             <mat-form-field fxFlex>
               <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-buscar-cite' )}} : </mat-label>
               <mat-select formControlName="listaCite" required placeholder="Seleccione" (selectionChange)="onCiteSeleccionChange($event)">
@@ -98,6 +99,8 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+
+
 
             <mat-form-field fxFlex>
               <input matInput required Alfanumerico shUppercase maxlength="100"

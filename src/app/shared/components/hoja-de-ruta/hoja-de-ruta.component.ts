@@ -55,6 +55,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
   private _isDestinatarioInvalid: boolean;
   private _isRemitenteInvalid: boolean;
   private _isCcInvalid: boolean;
+  private _isCiteInvalid: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<any>,
@@ -93,7 +94,6 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
         listaRemitentes   : [this.citeSelected.remitentes, Validators.compose([Validators.required])],
         listaDestinatarios: [ this.citeSelected.destinatarios, Validators.compose([Validators.required])],
         listaCc           : [undefined],
-        numeroCite        : [this.citeSelected.numeroCite, Validators.compose([Validators.required])],
         referencia        : [ this.citeSelected.referencia, Validators.compose([Validators.required])],
         numeroFojas       : [undefined, Validators.compose([Validators.required])],
         plazoDias         : [undefined, Validators.compose([Validators.required])],
@@ -107,7 +107,6 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
         listaRemitentes   : [undefined, Validators.compose([Validators.required])],
         listaDestinatarios: [undefined, Validators.compose([Validators.required])],
         listaCc           : [undefined],
-        numeroCite        : [undefined, Validators.compose([Validators.required])],
         referencia        : [undefined, Validators.compose([Validators.required])],
         numeroFojas       : [ 0, Validators.compose([Validators.required])],
         plazoDias         : [ 0, Validators.compose([Validators.required])],
@@ -134,6 +133,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
   }
 
   private getAllCitesFromPersona( idPersonaGd: number ): void {
+    //this.formHojaDeRuta.controls['listaCite'].setValue(this.listaCite );
     this.citesService.getAllCitesFromPersona( idPersonaGd ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaCitesPersona => {
       this.listaCite = listaCitesPersona.data as Array<CiteModelByUsuario>;
     });
@@ -204,7 +204,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
 
       datosFormulario.IdTipoTramite         = objDatosFormulario.tipoTramite;
       datosFormulario.Gestion               = 2021;
-      datosFormulario.IdPersonaRemite       = objDatosFormulario.listaRemitentes[0].idPersonaGd;
+      datosFormulario.IdPersonaRemite       = objDatosFormulario.listaRemitentes.idPersonaGd;
       datosFormulario.IdPersonaDestinatario = objDatosFormulario.listaDestinatarios[0].idPersonaGd;
       datosFormulario.IdPersonaSolicita     = objDatosFormulario.listaCc[0].idPersonaGd;
       datosFormulario.ListDestCopia         = undefined;
@@ -214,6 +214,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
       datosFormulario.Referencia            = objDatosFormulario.referencia;
       datosFormulario.PlazoDias             = objDatosFormulario.plazoDias ?? 0;
       datosFormulario.Urgente               = objDatosFormulario.isUrgente = false ? 0 : 1;
+      datosFormulario.ConCopiaFisica        = objDatosFormulario.isConCopiaFisica = false ? 0 : 1;
       datosFormulario.UsuarioBitacora       = this.contextService.getItemContexto('samActName');
       datosFormulario.RegistroBitacora      = '10.10.10.10';
     }

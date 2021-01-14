@@ -63,32 +63,25 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     var vObjHojaRuta = this.data.hojaRutaSelected;
 
     const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
-    this.getAllCitesFromPersona( idPersonaGd );
 
-    //filteredOptions: new Observable<User[]>();
+    if(vObjHojaRuta.estado=="creado"){
+      this.listaCite=[{idCite: vObjHojaRuta.idCite,
+                   numeroCite:vObjHojaRuta.cite}]
+    }
+    else{
+      this.getAllCitesFromPersona( idPersonaGd );
+    }
+
     this.getHojaRutaInstructiva();
-    //this.getAllInstructiva();
     const dataForm: DerivarModel = {};
-    //this.hojaRutaService.getHojaRutaInstructiva().pipe(takeUntil(this.unsubscribe$)).subscribe((resultado)=>{this.vListaInstructiva=resultado.data});
-    // Carga los usuarios de la bd
     const idTipoTramite = 1;
     this.getAllusuarios(idTipoTramite);
 
-    /////////////////////////
-    // Recupera la data del usuario loggeado como remitente.
-    const idPersonaGDLoggeado = this.contextService.getItemContexto('idPersonaGd');
-    //const usuario = this.listaUsuarios.find( x => x.idPersonaGd === idPersonaGDLoggeado );
-
     this.listaInicialDestinatarios = [{ nombreCompleto: vObjHojaRuta.nombreDestinatario,
                                         idPersonaGd: vObjHojaRuta.idDestinatario }];
-    //this.listaInicialDestinatarios.push(usuario);
-    //this.formHojaDeRuta.controls['listaRemitentes'].setValue(usuario);
-    /////////////////////////
 
     this.formDerivarHR = this.formBuilder.group({
-      //listaDestinatarios: [this.vObjHojaRuta.Destinatario, Validators.compose([Validators.required])],
-      //listaRemitentes   : [this.citeSelected.remitentes, Validators.compose([Validators.required])],
-      listaCite        : [undefined, Validators.compose([Validators.required])],
+      listaCite        : [this.listaCite[0].idCite, Validators.compose([Validators.required])],
       vListaInstructiva: [undefined, Validators.compose([Validators.required])],
       instructiva      : [vObjHojaRuta.asunto, Validators.compose([Validators.required])],
     });
@@ -149,7 +142,6 @@ export class DerivarComponent extends BaseComponent implements OnInit {
   private getAllCitesFromPersona( idPersonaGd: number ): void {
     this.citesService.getAllCitesFromPersona( idPersonaGd ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaCitesPersona => {
       this.listaCite = listaCitesPersona.data as Array<CiteModelByUsuario>;
-      var algo=this.listaCite;
     });
   }
 
