@@ -8,6 +8,7 @@ import { DocumentoAdjuntoService } from '../../../shared/services/documento-adju
 import { LangService } from '../../../shared/services/lang.service';
 import { DataDocumentoAdjunto, DataDocumentoAdjuntoResultFromSave } from '../../../shared/models/documento-adjunto.model';
 import { HojaRutaBandejaModel } from '../../models/hoja-de-ruta.model';
+import { NotificacionService } from '../../../shared/services/notificacion.service';
 
 @Component({
   selector: 'app-adjuntar-documento',
@@ -28,7 +29,8 @@ export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit
     public contextService: ContextoService,
     public langService: LangService,
     private formBuilder: FormBuilder,
-    private documentoAdjuntoService: DocumentoAdjuntoService
+    private documentoAdjuntoService: DocumentoAdjuntoService,
+    private notificacionService: NotificacionService
   ) { super(); }
 
   ngOnInit(): void {
@@ -47,7 +49,10 @@ export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit
       //Enviar el flag de inicio de subida de documentos al servidor de archivos ( true )
       const data: DataDocumentoAdjunto = {
         startSaveDocuments : true,
-        datosAdicionales : this.hojaRutaSelected
+        datosAdicionales : {
+          idHojaRuta : this.hojaRutaSelected.idHojaRuta,
+          comentario : comentario
+        }
 
       };
 
@@ -58,7 +63,7 @@ export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit
 
   isUploadesAllFiles(data: DataDocumentoAdjuntoResultFromSave): void {
 
-    if ( data.cantidadArchivosSubidos === data.cantidaTotalArchivosPorSubir) {
+    if ( data.isAllFilesUploaded ) {
       this.onClose();
     }
 

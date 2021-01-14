@@ -55,9 +55,7 @@ export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit
 
   isUploadesAllFiles(dataUploaded: DataDocumentoAdjuntoResultFromSave): void {
 
-    this.isFileUploadedCompleted = dataUploaded.isUploadedFile;
-
-    if ( dataUploaded.cantidadArchivosSubidos === dataUploaded.cantidaTotalArchivosPorSubir ) {
+    if ( dataUploaded.isAllFilesUploaded ) {
       this.onClose( true );
     }
   }

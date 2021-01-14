@@ -16,8 +16,12 @@
 
       <form [formGroup]="formAdjuntarDocumento">
           <mat-form-field fxFlexFill>
-              <input shUppercase matInput placeholder="{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-comentario-adjuntar-documento') }}"
-                  formControlName="comentario">
+              <input
+                shUppercase
+                matInput
+                shAutofocus
+                placeholder="{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-comentario-adjuntar-documento') }}"
+                formControlName="comentario">
               <mat-error *ngIf="formAdjuntarDocumento.controls['comentario'].errors?.required">{{langService.getLang(eModulo.HojaDeRuta,'lbl-error-comentario-adjuntar-documento')}}</mat-error>
           </mat-form-field>
       </form>

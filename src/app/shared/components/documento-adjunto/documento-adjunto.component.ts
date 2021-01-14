@@ -14,6 +14,7 @@ import { DocumentoAdjuntoService } from './../../services/documento-adjunto.serv
 import { HojaRutaBandejaModel } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
 import { ContextoService } from '../../services/contexto.service';
 import { eTipoDocumento } from '../../enums/tipo_documento.enum';
+import { Resultado } from '../../models/resultado.model';
 
 @Component({
   selector: 'sh-documento-adjunto',
@@ -77,8 +78,11 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
           if ( 'idHojaRuta' in data.datosAdicionales ) {
 
             this.listaDocumentosToUpload.forEach(element => {
-              element.id = ( data.datosAdicionales as HojaRutaBandejaModel).idHojaRuta;
-              element.isCiteOrHR = eTipoDocumento.HOJA_DE_RUTA;
+
+              element.id          = ( data.datosAdicionales as HojaRutaBandejaModel).idHojaRuta;
+              element.isCiteOrHR  = eTipoDocumento.HOJA_DE_RUTA;
+              element.descripcion = data.datosAdicionales.comentario;
+
             });
           }
 
@@ -176,7 +180,28 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
     this.verifyisValid();
   }
 
-  onSaveDocument(): void {
+  async onSaveDocument() {
+
+    let contadorSuccesUpload = 0;
+
+    if (this.listaDocumentosToUpload.length < 0 ) { return; }
+
+    for (let index = 0; index < this.listaDocumentosToUpload.length; index++) {
+
+      const element  = this.listaDocumentosToUpload[index];
+      const respSave = ( await this.documentoAdjuntoService.uploadDocumentToServer( element ).toPromise() ) as Resultado;
+      ( respSave.data > 0 ) ? contadorSuccesUpload++ : contadorSuccesUpload += 0;
+
+    }
+
+    const data:  DataDocumentoAdjuntoResultFromSave = {
+     isAllFilesUploaded : contadorSuccesUpload === this.listaDocumentosToUpload.length
+    };
+
+    this.isUploadedAllFiles.emit( data );
+  }
+
+  /* onSaveDocument(): void {
 
     if (this.listaDocumentosToUpload.length < 0 ) {
       return;
@@ -208,28 +233,7 @@ export class DocumentoAdjuntoComponent extends BaseComponent implements  OnInit,
 
     }
 
-    /* this.listaDocumentosToUpload.forEach(( element, index ) => {
-      this.documentoAdjuntoService.uploadDocumentToServer( element ).pipe( takeUntil ( this.unsubscribe$ ) ).subscribe( respSave => {
-
-        this.notificacionService.progressSubject.asObservable().subscribe( porcentajeUpload => {
-
-          if (porcentajeUpload.progress) {
-            element.porcentajeUploaded = 100;
-            this.isUploadedFile = element.porcentajeUploaded >= 100;
-            this.isUploadedAllFiles.emit(
-              {
-                isUploadedFile         : this.isUploadedFile,
-                cantidadArchivosSubidos: index,
-                cantidaTotaldArchivos  : this.listaDocumentosToUpload.length - 1
-              }
-            );
-          }
-
-        });
-        console.log( 'Resp subida archivo : ----> ', respSave.message );
-      });
-    }); */
-  }
+  } */
 
   onCancel(): void {
     this.listaDocumentosToUpload.length = 0;
