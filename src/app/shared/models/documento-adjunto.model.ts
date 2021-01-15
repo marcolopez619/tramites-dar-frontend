@@ -29,6 +29,9 @@ export interface DataDocumentoAdjuntoResultFromSave {
 
 export interface ListaDocumentosAdjuntos {
   idDerivacion?: number;
+  nombreArchivo?: string;
+  tipoArchivo?: string;
+  nivelBucket?: string;
   referencia?: string;
   pathArchivo?: string;
   fechaRegistro?: Date;

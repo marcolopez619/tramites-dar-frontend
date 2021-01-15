@@ -21,6 +21,7 @@ import { FinalizarComponent } from '../finalizar/finalizar.component';
 import { NuevoParticipanteComponent } from '../participante/nuevo-participante.component';
 import { RechazarHrComponent } from '../rechazar-hoja-ruta/rechazar-hoja-ruta.component';
 import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
+import { ListaDocsAdjSubidosComponent } from '../../../shared/components/lista-docs-adj-subidos/lista-docs-adj-subidos.component';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -31,7 +32,7 @@ import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
 })
 export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['tipoTramiteDes', 'nombreRemitente', 'descripcionDoc', 'cite', 'nombreDestinatario', 'referencia', 'fechaBandeja', 'estado'];
+  displayedColumns = ['tipoTramiteDes', 'nombreRemitente', 'descripcionDoc', 'numeroHojaRuta', 'nombreDestinatario', 'referencia', 'fechaBandeja', 'estado'];
   dataSource = new MatTableDataSource<HojaRutaBandejaModel>([]);
 
   mouseOverModel: DataTableHRMouseModel = {};
@@ -354,6 +355,26 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
           //..
         }
     });
+  }
+
+  onListarDocumentosAdjuntos(pHojaRuta: HojaRutaBandejaModel): void {
+
+    const dlgListaDocAdj = this.dialog.open(ListaDocsAdjSubidosComponent, {
+      disableClose: false,
+      width: '1500px',
+      data: {
+        listaDocumentosAdj: pHojaRuta.listaAdjuntos
+      }
+    });
+    dlgListaDocAdj
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          //..
+        }
+      });
+
   }
   onAnadirParticipante(pHojaRuta: HojaRutaBandejaModel): void {
 
