@@ -152,7 +152,7 @@
 
     <ng-container matColumnDef="fecha">
       <mat-header-cell *matHeaderCellDef fxFlex="6" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-fecha-registro') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="6"> {{element.fecha | date: 'dd-MM-yyyy' }} </mat-cell>
+      <mat-cell *matCellDef="let element" fxFlex="6"> {{element.fecha | date: 'dd-MM-yyyy hh:mm' }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="estado">

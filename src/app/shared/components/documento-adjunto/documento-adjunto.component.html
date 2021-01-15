@@ -27,7 +27,7 @@
 
       <ng-container matColumnDef="fechaSubida" >
         <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-subida') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaSubida | date : 'dd/MM/yyyy' }} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaSubida | date : 'dd/MM/yyyy hh:mm' }} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="progreso" >

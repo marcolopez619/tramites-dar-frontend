@@ -98,13 +98,7 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
           tooltipText : 'Enviar',
           icono : 'send',
           onClick : this.onDerivar
-        },
-        /* {
-          descAccion : 'editar',
-          tooltipText : 'Editar',
-          icono : 'edit'
-        }, */
-        {
+        },{
           descAccion : 'adjuntar_documento',
           tooltipText : 'Adjuntar documento',
           icono : 'attachment',
@@ -132,7 +126,8 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
         }, {
           descAccion : 'ver_seguimiento',
           tooltipText : 'Ver seguimiento',
-          icono : 'visibility'
+          icono : 'visibility',
+          onClick: this.onVerSeguimiento
         }];
 
         estados = [{
@@ -160,18 +155,14 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
         const acciones: Array<Accion> = [{
           descAccion : 'enviar',
           tooltipText : 'Enviar',
-          icono : 'send'
-        },
-        /* {
-          descAccion : 'editar',
-          tooltipText : 'Editar',
-          icono : 'edit'
-        }, */
-        {
+          icono : 'send',
+          onClick : this.onDerivar
+        }/* , {
           descAccion : 'adjuntar_documento',
           tooltipText : 'Adjuntar documento',
-          icono : 'attachment'
-        }
+          icono : 'attachment',
+          onClick: this.onAdjuntarDocumento
+        } */
       ];
 
         estados = [{
