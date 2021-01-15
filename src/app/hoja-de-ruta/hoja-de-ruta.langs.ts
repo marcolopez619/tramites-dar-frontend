@@ -93,6 +93,7 @@ export const hojaDeRutaLang = {
     'tit-confirmacion-aceptar': 'Aceptar hoja de ruta',
     'lbl-confirmar-aceptar': '¿Está seguro de aceptar la hoja de ruta?',
     'lbl-numero-hoja-ruta': 'Numero hoja de ruta',
+    'lbl-numero-descripcion': 'Descripcion',
 
     'lbl-fecha-registro' : 'Fecha registro',
     'tit-bandeja-seleccionada' : 'Bandeja: $bandejaSeleccionada'

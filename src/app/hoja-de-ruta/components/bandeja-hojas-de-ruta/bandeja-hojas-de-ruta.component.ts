@@ -13,11 +13,13 @@ import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { HojaDeRutaService } from '../../hoja-de-ruta.service';
 import { HojaRutaBandejaModel } from '../../models/hoja-de-ruta.model';
+import { AceptarHrComponent } from '../aceptar-hoja-ruta/aceptar-hoja-ruta.component';
 import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-documento.component';
 import { ComentarioComponent } from '../comentario-hoja-de-ruta/comentario-hoja-de-ruta.component';
 import { DerivarComponent } from '../derivar/derivar.component';
 import { FinalizarComponent } from '../finalizar/finalizar.component';
 import { NuevoParticipanteComponent } from '../participante/nuevo-participante.component';
+import { RechazarHrComponent } from '../rechazar-hoja-ruta/rechazar-hoja-ruta.component';
 import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
 
 @Component({
@@ -425,5 +427,50 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
         }
       });
   }
+  onAceptar(pObjHojaRuta: HojaRutaBandejaModel): void {
+    /**title: this.langService.getLang(this.eModulo.HojaDeRuta, 'tit-confirmacion-aceptar'),
+                  content: this.langService.getLang(this.eModulo.HojaDeRuta, 'lbl-confirmar-aceptar'), */
+        const dlgAceptarHr = this.dialog.open(AceptarHrComponent, {
+          disableClose: false,
+          width: '500px',
+          data: {
+                  title: 'Aceptar hoja de ruta',
+                  content: '¿Está seguro de aceptar la hoja de ruta',
+                  icon: 'public',
+                  hojaRutaSelected:pObjHojaRuta
+          }
+        });
+
+        dlgAceptarHr.afterClosed()
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe((result) => {
+            if (result) {
+              this.inicializarBandeja();
+            }
+          });
+      }
+  onRechazar(pObjHojaRuta: HojaRutaBandejaModel): void {
+        /**title: this.langService.getLang(this.eModulo.HojaDeRuta, 'tit-confirmacion-aceptar'),
+                      content: this.langService.getLang(this.eModulo.HojaDeRuta, 'lbl-confirmar-aceptar'), */
+                      var algo=1;
+            const confirmDialog = this.dialog.open(RechazarHrComponent, {
+              disableClose: false,
+              width: '500px',
+              data: {
+                      title: 'Rechazar hoja de ruta',
+                      content: '¿Está seguro de rechazar la hoja de ruta',
+                      icon: 'public',
+                      hojaRutaSelected:pObjHojaRuta
+              }
+            });
+
+            confirmDialog.afterClosed()
+              .pipe(takeUntil(this.unsubscribe$))
+              .subscribe((result) => {
+                if (result) {
+                  this.inicializarBandeja();
+                }
+              });
+          }
 
 }

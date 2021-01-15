@@ -6,6 +6,7 @@ import { ContextoService } from '../shared/services/contexto.service';
 import { HojaDeRutaAceptarModel } from './models/hoja-de-ruta-aceptar.model';
 import { HojaRutaFinalizarPatch } from './models/hoja-de-ruta.model';
 import { HojaRutaDerivaModel } from './models/hoja-ruta-deriva.model';
+import { HojaRutaRechazarModel } from './models/hoja-ruta-rechazar.model';
 import { ParticipanteInsertModel } from './models/participante.model';
 
 @Injectable()
@@ -42,5 +43,8 @@ export class HojaDeRutaService {
   }
   hojaRutaAceptar(pHojaRutaDeriva: HojaDeRutaAceptarModel): Observable<Resultado> {
     return this.httpClient.post<Resultado>( `${this.baseURL}/aceptar`, pHojaRutaDeriva);
+  }
+  hojaRutaRechazar(pHojaRutaDeriva: HojaRutaRechazarModel): Observable<Resultado> {
+    return this.httpClient.post<Resultado>( `${this.baseURL}/rechazar`, pHojaRutaDeriva);
   }
 }

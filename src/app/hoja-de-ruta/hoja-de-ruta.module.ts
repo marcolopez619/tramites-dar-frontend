@@ -13,6 +13,7 @@ import { NuevoParticipanteComponent } from './components/participante/nuevo-part
 import { HojaDeRutaService } from './hoja-de-ruta.service';
 import { FinalizarComponent } from './components/finalizar/finalizar.component';
 import { AceptarHrComponent } from './components/aceptar-hoja-ruta/aceptar-hoja-ruta.component';
+import { RechazarHrComponent } from './components/rechazar-hoja-ruta/rechazar-hoja-ruta.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AceptarHrComponent } from './components/aceptar-hoja-ruta/aceptar-hoja-
     DerivarComponent,
     AdjuntarDocumentoComponent,
     NuevoParticipanteComponent,
-    AceptarHrComponent
+    AceptarHrComponent,
+    RechazarHrComponent
   ],
   imports: [
     CommonModule,

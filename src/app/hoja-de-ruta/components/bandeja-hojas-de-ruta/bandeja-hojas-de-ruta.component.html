@@ -82,8 +82,8 @@
 
             <div *ngSwitchCase="'RECIBIDO'">
               <div *ngIf="element.estado.toUpperCase() == 'EN ESPERA'">
-                <a mat-icon-button matTooltip="Aceptar envío" (click)="alert('falta implenetar aceptar')"> <mat-icon>done</mat-icon></a>
-                <a mat-icon-button matTooltip="Rechazar envío" (click)="alert('falta implenetar RECHAZAR')"> <mat-icon>highlight_off</mat-icon></a>
+                <a mat-icon-button matTooltip="Aceptar envío" (click)="onAceptar(element)"> <mat-icon>done</mat-icon></a>
+                <a mat-icon-button matTooltip="Rechazar envío" (click)="onRechazar(element)"> <mat-icon>highlight_off</mat-icon></a>
                 <a mat-icon-button matTooltip="Ver seguimiento" (click)="onVerSeguimiento(element)"> <mat-icon>visibility</mat-icon></a>
               </div>
             </div>

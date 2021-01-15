@@ -20,6 +20,7 @@ import { FinalizarComponent } from '../../../hoja-de-ruta/components/finalizar/f
 import { SeguimientoComponent } from '../../../hoja-de-ruta/components/seguimiento/seguimiento.component';
 import { AceptarHrComponent } from '../../../hoja-de-ruta/components/aceptar-hoja-ruta/aceptar-hoja-ruta.component';
 import { HojaRutaService } from '../../services/hoja-ruta.service';
+import { RechazarHrComponent } from '../../../hoja-de-ruta/components/rechazar-hoja-ruta/rechazar-hoja-ruta.component';
 
 @Component({
   selector: 'sh-data-table-hoja-de-ruta',
@@ -122,7 +123,8 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
         }, {
           descAccion : 'rechazar',
           tooltipText : 'Rechazar envío',
-          icono : 'highlight_off'
+          icono : 'send',
+          onClick: this.onRechazar
         }, {
           descAccion : 'ver_seguimiento',
           tooltipText : 'Ver seguimiento',
@@ -363,8 +365,32 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
           //..
         }
       });
-
   }
+
+  private onRechazar(pObjHojaRuta: HojaRutaBandejaModel, pDialog?: MatDialog): void {
+    /**title: this.langService.getLang(this.eModulo.HojaDeRuta, 'tit-confirmacion-aceptar'),
+                  content: this.langService.getLang(this.eModulo.HojaDeRuta, 'lbl-confirmar-aceptar'), */
+                  var algo=1;
+        const confirmDialog = pDialog.open(RechazarHrComponent, {
+          disableClose: false,
+          width: '500px',
+          data: {
+                  title: 'Rechazar hoja de ruta',
+                  content: '¿Está seguro de rechazar la hoja de ruta',
+                  icon: 'public',
+                  hojaRutaSelected:pObjHojaRuta
+          }
+        });
+
+        confirmDialog.afterClosed()
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe((result) => {
+            if (result) {
+              //..
+            }
+          });
+      }
+
   private onFinalizar(pHojaRuta: HojaRutaBandejaModel, pDialog?: MatDialog): void {
 
     const dlgFinalizar = pDialog.open(FinalizarComponent, {
