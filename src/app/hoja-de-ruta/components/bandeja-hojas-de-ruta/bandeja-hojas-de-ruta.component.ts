@@ -349,9 +349,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
       .afterClosed()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((result) => {
-        if (result) {
-          //..
-        }
+        this.inicializarBandeja();
     });
   }
 
@@ -424,7 +422,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((result) => {
         if (result) {
-          //..
+          this.inicializarBandeja();
         }
       });
   }
