@@ -18,6 +18,7 @@ import { LangService } from '../../../shared/services/lang.service';
 import { UsuarioService } from '../../../shared/services/usuario.service';
 import { HojaDeRutaService } from '../../hoja-de-ruta.service';
 import { DerivarModel } from '../../models/derivar.model';
+import { HojaDeRutaAceptarModel } from '../../models/hoja-de-ruta-aceptar.model';
 import { HojaRutaDerivaModel } from '../../models/hoja-ruta-deriva.model';
 import { InstructivaModel } from '../../models/instructiva.model';
 //import {AutocompleteLibModule} from 'angular-ng-autocomplete';
@@ -65,8 +66,7 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
 
     if(vObjHojaRuta.estado=="creado"){
-      this.listaCite=[{idCite: vObjHojaRuta.idCite,
-                   numeroCite:vObjHojaRuta.cite}]
+      this.listaCite=[{idCite: vObjHojaRuta.idCite, numeroCite:vObjHojaRuta.cite}]
     }
     else{
       this.getAllCitesFromPersona( idPersonaGd );
@@ -102,6 +102,8 @@ export class DerivarComponent extends BaseComponent implements OnInit {
         this.listaUsuarios = respService.data;
       });
   }
+
+
   getListaSeleccionadaInstructiva($event): void {
     console.log('----------------------');
     this.vListaInstructivaAux = $event as Array<InstructivaModel>;

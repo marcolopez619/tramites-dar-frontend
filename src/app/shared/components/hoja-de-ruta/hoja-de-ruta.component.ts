@@ -133,7 +133,6 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
   }
 
   private getAllCitesFromPersona( idPersonaGd: number ): void {
-    //this.formHojaDeRuta.controls['listaCite'].setValue(this.listaCite );
     this.citesService.getAllCitesFromPersona( idPersonaGd ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaCitesPersona => {
       this.listaCite = listaCitesPersona.data as Array<CiteModelByUsuario>;
     });
@@ -170,11 +169,8 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
   onGuardarHojaDeRuta(): void {
     let datosFormulario: HojaDeRutaInsertModel = {};
 
-
     if (this.citeSelected) {
       // Crea la hoja de ruta en funcion a los datos del cite
-      const año = new Date().getFullYear();
-
       const listaIdPersonaCC = this.prepareArrayAsJSONString(
         this.listaCc,
         'idPersonaGd'
@@ -200,11 +196,6 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
 
       datosFormulario = datosHRFromCite;
     } else {
-
-      const listaIdPersonaCC = this.prepareArrayAsJSONString(
-        this.listaCc,
-        'idPersonaGd'
-      );
       const objDatosFormulario: any = this.formHojaDeRuta.value;
 
       datosFormulario.IdTipoTramite         = objDatosFormulario.tipoTramite;
@@ -213,7 +204,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
       datosFormulario.IdPersonaDestinatario = objDatosFormulario.listaDestinatarios[0].idPersonaGd;
       datosFormulario.IdPersonaSolicita     = objDatosFormulario.listaCc==null?undefined:objDatosFormulario.listaCc[0].idPersonaGd;
       datosFormulario.ListDestCopia         = undefined;
-      datosFormulario.ListCite              = undefined;
+      datosFormulario.ListCite              = JSON.stringify(this.listaCite);
       datosFormulario.ListCiteExt           = undefined;
       datosFormulario.ListAdjunto           = undefined;
       datosFormulario.Referencia            = objDatosFormulario.referencia;
@@ -233,7 +224,10 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
 
   onCiteSeleccionChange(event: MatSelectChange): void {
     const infCiteSelected = this.listaCite.find( x => x.idCite === event.value );
-    this.formHojaDeRuta.controls['referencia'].setValue(infCiteSelected.referencia);
+    var algo=infCiteSelected;
+    var algo2=event;
+    this.listaCite=[{idCite: infCiteSelected.idCite, numeroCite:infCiteSelected.numeroCite}]
+    //this.formHojaDeRuta.controls['referencia'].setValue(infCiteSelected.referencia);
   }
 
   onTipoTramiteChange(event: MatSelectChange): void {

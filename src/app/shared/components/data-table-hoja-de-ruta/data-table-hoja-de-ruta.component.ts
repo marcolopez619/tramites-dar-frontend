@@ -18,6 +18,8 @@ import { NuevoParticipanteComponent } from '../../../hoja-de-ruta/components/par
 import { ComentarioComponent } from '../../../hoja-de-ruta/components/comentario-hoja-de-ruta/comentario-hoja-de-ruta.component';
 import { FinalizarComponent } from '../../../hoja-de-ruta/components/finalizar/finalizar.component';
 import { SeguimientoComponent } from '../../../hoja-de-ruta/components/seguimiento/seguimiento.component';
+import { AceptarHrComponent } from '../../../hoja-de-ruta/components/aceptar-hoja-ruta/aceptar-hoja-ruta.component';
+import { HojaRutaService } from '../../services/hoja-ruta.service';
 
 @Component({
   selector: 'sh-data-table-hoja-de-ruta',
@@ -47,6 +49,7 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
   constructor(
     public contextService: ContextoService,
     public langService: LangService,
+    private hojaRutaService: HojaRutaService,
     public dialog: MatDialog
   ) {
     super();
@@ -120,7 +123,8 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
         const acciones: Array<Accion> = [{
           descAccion : 'aceptar',
           tooltipText : 'Aceptar envío',
-          icono : 'done'
+          icono : 'send',
+          onClick: this.onAceptar
         }, {
           descAccion : 'rechazar',
           tooltipText : 'Rechazar envío',
@@ -346,6 +350,29 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
           //..
         }
       });
+  }
+  private onAceptar(pObjHojaRuta: HojaRutaBandejaModel, pDialog?: MatDialog): void {
+/**title: this.langService.getLang(this.eModulo.HojaDeRuta, 'tit-confirmacion-aceptar'),
+              content: this.langService.getLang(this.eModulo.HojaDeRuta, 'lbl-confirmar-aceptar'), */
+    const confirmDialog = pDialog.open(AceptarHrComponent, {
+      disableClose: false,
+      width: '500px',
+      data: {
+              title: 'Aceptar hoja de ruta',
+              content: '¿Está seguro de aceptar la hoja de ruta?',
+              icon: 'public',
+              hojaRutaSelected:pObjHojaRuta
+      }
+    });
+
+    confirmDialog.afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          //..
+        }
+      });
+
   }
   private onFinalizar(pHojaRuta: HojaRutaBandejaModel, pDialog?: MatDialog): void {
 

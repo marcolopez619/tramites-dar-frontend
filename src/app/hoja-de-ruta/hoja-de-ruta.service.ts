@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Resultado } from '../shared/models/resultado.model';
 import { ContextoService } from '../shared/services/contexto.service';
+import { HojaDeRutaAceptarModel } from './models/hoja-de-ruta-aceptar.model';
 import { HojaRutaFinalizarPatch } from './models/hoja-de-ruta.model';
 import { HojaRutaDerivaModel } from './models/hoja-ruta-deriva.model';
 import { ParticipanteInsertModel } from './models/participante.model';
@@ -38,5 +39,8 @@ export class HojaDeRutaService {
 
   FinalizarHojaRuta(pHojaRHData: HojaRutaFinalizarPatch ): Observable<Resultado> {
     return this.httpClient.patch<Resultado>(`${this.baseURL}/finalizar`, pHojaRHData );
+  }
+  hojaRutaAceptar(pHojaRutaDeriva: HojaDeRutaAceptarModel): Observable<Resultado> {
+    return this.httpClient.post<Resultado>( `${this.baseURL}/aceptar`, pHojaRutaDeriva);
   }
 }

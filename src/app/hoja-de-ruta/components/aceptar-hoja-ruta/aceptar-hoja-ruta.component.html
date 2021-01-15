@@ -1,0 +1,37 @@
+<div class="alt-theme">
+  <mat-toolbar shToolbarModal color="primary">
+    {{ data.title }}
+  </mat-toolbar>
+  <mat-dialog-content>
+    <form [formGroup]="formAceptarHR">
+      <div fxLayout="column" fxLayoutAlign="center center" fxFlex="15">
+        <mat-icon [inline]="true" style="font-size: 50px !important" color="primary">{{ data.icon }}</mat-icon>
+      </div>
+      <div layout=”column”>
+        <div><h3>{{numeroCite}}</h3>
+        </div>
+        <div>
+          <mat-checkbox formControlName="esFisico" [labelPosition]="'before'">
+            {{langService.getLang(eModulo.HojaDeRuta,'lbl-fisico')}}
+          </mat-checkbox>
+        </div>
+        <br>
+
+        <div>
+          <span style="font-size: 20px; text-align: center">{{ data.content }}</span>
+        </div>
+
+      </div>
+
+    </form>
+  </mat-dialog-content>
+</div>
+
+<mat-dialog-actions fxLayout="row" fxLayoutGap="20px">
+  <button fxFlex mat-raised-button color='accent' (click)="save()" [mat-dialog-close]="true">
+    <span>{{ langService.getLang(eModulo.Base,'btn-si') }}</span>
+  </button>
+  <button fxFlex mat-raised-button color="warn" [mat-dialog-close]="false">
+    <span>{{ langService.getLang(eModulo.Base,'btn-no') }}</span>
+  </button>
+</mat-dialog-actions>

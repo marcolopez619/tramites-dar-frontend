@@ -89,6 +89,9 @@ export const hojaDeRutaLang = {
     'tit-ventana-añadir-comentario': 'Añadir comentario',
     'tit-derivar-hoja-ruta': 'Derivar hoja de ruta',
     'lbl-fecha-bandeja': 'Fecha',
+    'lbl-fisico': 'Documento en físico',
+    'tit-confirmacion-aceptar': 'Aceptar hoja de ruta',
+    'lbl-confirmar-aceptar': '¿Está seguro de aceptar la hoja de ruta?',
 
     'lbl-fecha-registro' : 'Fecha registro',
     'tit-bandeja-seleccionada' : 'Bandeja: $bandejaSeleccionada'

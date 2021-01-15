@@ -55,3 +55,8 @@ export interface HojaRutaFinalizarPatch extends Bitacora{
   idHojaRuta?: number;
   motivo?: string;
 }
+
+export interface HojaRutaAceptar extends Bitacora{
+  idHojaRuta?: number;
+  esFisico?: number;
+}
