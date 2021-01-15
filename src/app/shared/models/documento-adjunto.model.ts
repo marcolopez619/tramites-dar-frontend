@@ -26,3 +26,12 @@ export interface DataDocumentoAdjunto {
 export interface DataDocumentoAdjuntoResultFromSave {
   isAllFilesUploaded?: boolean;
 }
+
+export interface ListaDocumentosAdjuntos {
+  idDerivacion?: number;
+  referencia?: string;
+  pathArchivo?: string;
+  fechaRegistro?: Date;
+  idCite?: number;
+  cite?: string;
+}
