@@ -29,7 +29,7 @@ import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
 })
 export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['tipoTramiteDes', 'nombreRemitente', 'descripcionDoc', 'cite', 'nombreDestinatario', 'referencia', 'fechaBandeja', 'estado'];
+  displayedColumns = ['tipoTramiteDes', 'nombreRemitente', 'descripcionDoc', 'numeroHojaRuta', 'nombreDestinatario', 'referencia', 'fechaBandeja', 'estado'];
   dataSource = new MatTableDataSource<HojaRutaBandejaModel>([]);
 
   mouseOverModel: DataTableHRMouseModel = {};

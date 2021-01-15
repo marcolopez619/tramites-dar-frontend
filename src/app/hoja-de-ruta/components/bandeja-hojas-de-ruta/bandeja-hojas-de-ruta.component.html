@@ -37,9 +37,9 @@
       <mat-cell *matCellDef="let element" fxFlex="8"> {{element.descripcionDoc}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="cite">
-      <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-numero-cite') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="10"> {{element.cite}} </mat-cell>
+    <ng-container matColumnDef="numeroHojaRuta">
+      <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-numero-hoja-ruta') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="10"> {{element.numeroHojaRuta}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="nombreDestinatario" >
