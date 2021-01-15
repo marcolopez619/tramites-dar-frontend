@@ -76,7 +76,8 @@ export const baseLang = {
             'tit-cantidad-documentos-adjuntos' : 'Cantidad permitida: $cantidadPermitida archivos',
             'lbl-estado' : 'Estado',
             'lbl-error-supero-cantidad-maxima-permitida' : 'Solo se permite $cantidadUsuario usuarios',
-            'lbl-progreso-subida' : 'Progreso'
+            'lbl-progreso-subida' : 'Progreso',
+            'lbl-doc-adj-no-encontrado' : 'El documento seleccionado no se encuentra en el servidor para su descarga'
         },
         'en': {
             'lang-error': 'Lang not found',

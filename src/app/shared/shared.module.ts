@@ -60,6 +60,7 @@ import { BusquedaAvanzadaComponent } from './components/busqueda-avanzada/busque
 import { HojaRutaService } from './services/hoja-ruta.service';
 import { DataTableHojaDeRutaComponent } from './components/data-table-hoja-de-ruta/data-table-hoja-de-ruta.component';
 import { BusquedaService } from './services/busqueda.service';
+import { ListaDocsAdjSubidosComponent } from './components/lista-docs-adj-subidos/lista-docs-adj-subidos.component';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -91,7 +92,8 @@ import { BusquedaService } from './services/busqueda.service';
         AutocompleteComponent,
         DocumentoAdjuntoComponent,
         BusquedaAvanzadaComponent,
-        DataTableHojaDeRutaComponent
+        DataTableHojaDeRutaComponent,
+        ListaDocsAdjSubidosComponent
     ],
     imports: [
         CommonModule,

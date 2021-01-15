@@ -28,13 +28,13 @@
     </ng-container>
 
     <ng-container matColumnDef="referencia" >
-      <mat-header-cell *matHeaderCellDef fxFlex="15"  mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-referencia') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="15" > {{element.referencia}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef fxFlex="11"  mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-referencia') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="11" > {{element.referencia}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="fechaBandeja">
-      <mat-header-cell *matHeaderCellDef fxFlex="6" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-fecha-bandeja') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="6"> {{element.fechaBandeja | date: 'dd-MMM-yyyy' }} </mat-cell>
+      <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-fecha-bandeja') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="10"> {{element.fechaBandeja | date: 'dd-MMM-yyyy hh:mm' }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="estado" >

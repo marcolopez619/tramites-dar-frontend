@@ -46,13 +46,13 @@
           </ng-container>
 
           <ng-container matColumnDef="referencia" >
-            <mat-header-cell *matHeaderCellDef fxFlex="35"  mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-referencia') }} </mat-header-cell>
-            <mat-cell *matCellDef="let element" fxFlex="35" > &nbsp;&nbsp;{{element.referencia}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef fxFlex="30"  mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-referencia') }} </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="30" > &nbsp;&nbsp;{{element.referencia}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="fechaCreacion" >
-            <mat-header-cell *matHeaderCellDef fxFlex="6"  mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-fecha-creacion') }} </mat-header-cell>
-            <mat-cell *matCellDef="let element" fxFlex="6" > {{element.fechaCreacion | date : 'dd/MM/yyyy' }} </mat-cell>
+            <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Cites, 'lbl-fecha-creacion') }} </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaCreacion | date : 'dd/MM/yyyy hh:mm' }} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="estado" >
