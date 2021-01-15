@@ -30,7 +30,7 @@ import { HojaRutaService } from '../../services/hoja-ruta.service';
 })
 export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnInit, AfterViewInit,  OnDestroy {
 
-  displayedColumns = ['tipoTramiteDes', 'nombreRemitente', 'descripcionDoc', 'cite', 'nombreDestinatario', 'referencia', 'fechaBandeja', 'estado'];
+  displayedColumns = ['tipoTramiteDes', 'nombreRemitente', 'descripcionDoc', 'numeroHojaRuta', 'nombreDestinatario', 'referencia', 'fechaBandeja', 'estado'];
   dataSource = new MatTableDataSource<HojaRutaBandejaModel>([]);
 
   mouseOverModel: DataTableHRMouseModel = {};
