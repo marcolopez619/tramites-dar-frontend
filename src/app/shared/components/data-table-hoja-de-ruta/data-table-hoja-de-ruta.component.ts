@@ -95,13 +95,7 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
           tooltipText : 'Enviar',
           icono : 'send',
           onClick : this.onDerivar
-        },
-        /* {
-          descAccion : 'editar',
-          tooltipText : 'Editar',
-          icono : 'edit'
-        }, */
-        {
+        },{
           descAccion : 'adjuntar_documento',
           tooltipText : 'Adjuntar documento',
           icono : 'attachment',

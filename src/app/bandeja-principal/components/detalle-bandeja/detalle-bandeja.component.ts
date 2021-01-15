@@ -21,7 +21,7 @@ export class DetalleBandejaComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     // Valor por default cuando se carga el detalle del menu principal
-    this.valorCapturado = 'Creadas';
+    this.valorCapturado = 'Principal';
   }
 
 }
