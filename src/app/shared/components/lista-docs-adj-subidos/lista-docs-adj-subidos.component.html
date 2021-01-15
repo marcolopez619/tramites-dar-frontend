@@ -1,1 +1,65 @@
-<p>lista-docs-adj-subidos works!</p>
+
+
+
+<mat-card>
+  <mat-card-header class="alt-theme">
+    <mat-toolbar color="primary">
+      <h3>{{ langService.getLang(eModulo.Base, 'tit-lista-doc-adj') }}</h3>
+      <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+      </a>
+
+    </mat-toolbar>
+  </mat-card-header>
+
+  <shared-loader-spinner></shared-loader-spinner>
+
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="nombreArchivo">
+        <mat-header-cell *matHeaderCellDef fxFlex="40" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-nombre-doc-adj') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="40"> {{element.nombreArchivo}} </mat-cell>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="tipoArchivo">
+        <mat-header-cell *matHeaderCellDef fxFlex="6" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-extension-doc-adj') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="6"> {{element.tipoArchivo}} </mat-cell>
+      </ng-container> -->
+
+      <ng-container matColumnDef="referencia">
+        <mat-header-cell *matHeaderCellDef fxFlex="25" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-referencia-doc-adj') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="25"> {{element.referencia}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="fechaRegistro">
+        <mat-header-cell *matHeaderCellDef fxFlex="15" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-registro-doc-adj') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="15"> {{element.fechaRegistro | date: 'dd-MMM-yyyy hh:mm' }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="cite" >
+        <mat-header-cell *matHeaderCellDef fxFlex="15"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-numero-cite-doc-adj') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="15" >{{element.cite}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones" >
+        <mat-header-cell *matHeaderCellDef fxFlex="5"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="5" >
+          <a mat-icon-button matTooltip="Descargar" (click)="onDowloadSelectedDocument(element)"> <mat-icon>vertical_align_bottom</mat-icon></a>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row
+        shRowHover
+        [ngClass]="{'row-action': idSeleccionado === row.idDerivacion}"
+        [@fadeInAnim]="true"
+        *matRowDef="let row; columns: displayedColumns;"
+        ></mat-row>
+
+    </mat-table>
+    <shared-table-empty [datasource]="dataSource"></shared-table-empty>
+    <mat-paginator #paginator [pageSize]="config.paginatorSize" [pageSizeOptions]="config.paginatorOptions" [showFirstLastButtons]="true"></mat-paginator>
+
+
+</mat-card>

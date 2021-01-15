@@ -1,4 +1,4 @@
-export interface Bitacora{
+export interface Bitacora {
   usuarioBitacora?: string;
 }
 
@@ -11,19 +11,16 @@ export interface HojaDeRutaModel {
   destinatarios?: Array<string>;
   referencia?: string;
   estado?: string;
-
   idTipoRemitente?: number;
   idRemitente?: number;
-  idDestinatario?:number;
-  idCopiaCc?:number;
+  idDestinatario?: number;
+  idCopiaCc?: number;
   nombreTipoRemitente?: string;
-  //nombreRemitente?: string;
   nombreDestinatario?: string;
   nombreCopiaCc?: string;
   numeroHojaRuta?: string;
-  // TODO : AÑADIR EL ATRIBUTO QUE MAPEE A LA LISTA DE DOCUMENTOS ADJUNTO
 }
-export interface HojaRutaBandejaModel{
+export interface HojaRutaBandejaModel {
   idHojaRuta?: number;
   idDerivacion?: number;
   numero?: number;
@@ -33,30 +30,31 @@ export interface HojaRutaBandejaModel{
   plazoTotal?: number;
   tipoTramite?: number;
   tipoTramiteDes?: string;
-  fechaDeriva?: Date;
-  fechaAcepta?: Date;
+  fechaBandeja?: Date;
   asunto?: string;
   fisico?: number;
   plazo?: number;
-  idRemitente?:number;
+  idRemitente?: number;
   nombreRemitente?: string;
-  nombreDestinatario?: string;
   idDestinatario?: number;
+  nombreDestinatario?: string;
   descripcionDoc?: string;
+  idCite?: number;
   cite?: string;
   estado?: string;
+  numeroHojaRuta?: string;
+  listaAdjuntos?: string;
   codigoRespuesta?: number;
   mensaje?: string;
   isRowMouseOver?: boolean;
 }
 
-
-export interface HojaRutaFinalizarPatch extends Bitacora{
+export interface HojaRutaFinalizarPatch extends Bitacora {
   idHojaRuta?: number;
   motivo?: string;
 }
 
-export interface HojaRutaAceptar extends Bitacora{
+export interface HojaRutaAceptar extends Bitacora {
   idHojaRuta?: number;
   esFisico?: number;
 }

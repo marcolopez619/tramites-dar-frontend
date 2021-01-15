@@ -20,6 +20,8 @@
 <mat-card-content>
 
 
+   ---> {{valorBandejaSelected.toUpperCase()}}
+
   <mat-table #table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="tipoTramiteDes">
@@ -37,9 +39,9 @@
       <mat-cell *matCellDef="let element" fxFlex="8"> {{element.descripcionDoc}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="cite">
-      <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-numero-cite') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="10"> {{element.cite}} </mat-cell>
+    <ng-container matColumnDef="numeroHojaRuta">
+      <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-numero-hoja-ruta') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="10"> {{element.numeroHojaRuta}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="nombreDestinatario" >
@@ -70,6 +72,7 @@
               <div *ngIf="element.estado.toUpperCase() == 'CREADO' ">
                 <a mat-icon-button matTooltip="Enviar" (click)="onDerivar(element)"> <mat-icon>send</mat-icon></a>
                 <a mat-icon-button matTooltip="Adjuntar documento" (click)="onAdjuntarDocumento(element)"> <mat-icon>attachment</mat-icon></a>
+                <a mat-icon-button matTooltip="Ver documentos adjuntos" *ngIf="element.listaAdjuntos" (click)="onListarDocumentosAdjuntos(element)"> <mat-icon>list</mat-icon></a>
               </div>
             </div>
 
