@@ -23,7 +23,7 @@ import { eTipoNotificacion } from '../../enums/tipo-notificacion.enum';
 })
 export class ListaDocsAdjSubidosComponent extends BaseComponent  implements OnInit, AfterViewInit,  OnDestroy {
 
-  displayedColumns = [];
+  displayedColumns = [ 'nombreArchivo', 'referencia', 'fechaRegistro', 'cite', 'acciones' ];
   dataSource = new MatTableDataSource<ListaDocumentosAdjuntos>([]);
 
   @Input()
@@ -47,7 +47,20 @@ export class ListaDocsAdjSubidosComponent extends BaseComponent  implements OnIn
   }
 
   ngOnInit(): void {
-    //...
+    this.listaDocumentosAdjuntos = JSON.parse( this.data.listaDocumentosAdj ) as Array<ListaDocumentosAdjuntos>;
+
+    this.listaDocumentosAdjuntos.forEach(element => {
+      const indexUltimaSlah           = element.pathArchivo.lastIndexOf('/');
+      const indexPunto                = element.pathArchivo.lastIndexOf('.');
+      const nombreArchivoConExtension = element.pathArchivo.substring( indexUltimaSlah + 1);
+      const tipoArchivo               = element.pathArchivo.substr( indexPunto + 1 );
+
+      element.nombreArchivo = nombreArchivoConExtension;
+      element.tipoArchivo   = tipoArchivo;
+      element.nivelBucket   = element.pathArchivo.substr( 0, indexUltimaSlah + 1 );
+    });
+
+    this.dataSource.data = this.listaDocumentosAdjuntos;
   }
 
   ngAfterViewInit(): void {
@@ -61,19 +74,18 @@ export class ListaDocsAdjSubidosComponent extends BaseComponent  implements OnIn
     this.unsubscribe$.next(true);
   }
 
-  onDowloadSelectedDocument(): void {
+  onDowloadSelectedDocument(pSelectedItem: ListaDocumentosAdjuntos): void {
 
-    const nombreArchivoconExtension = '';
-    const tipoArchivo = '';
-
-    const paramDocAdjToDownload : DocumentoAdjuntoDownloadParam = {
-
+    const paramDocAdjToDownload: DocumentoAdjuntoDownloadParam = {
+      bucketName           : 'prueba',
+      NivelBucketName      : pSelectedItem.nivelBucket,
+      nombreArchivoDownload: `${pSelectedItem.nombreArchivo}`
     };
 
-    this.documentoAdjuntoService.downloadDocumentFromServer( paramDocAdjToDownload ).pipe( takeUntil ( this.unsubscribe$ ) ).subscribe( blob =>{
+    this.documentoAdjuntoService.downloadDocumentFromServer( paramDocAdjToDownload ).pipe( takeUntil ( this.unsubscribe$ ) ).subscribe( blob => {
 
       if ( blob ) {
-        this.utilService.createDocumentFromBlob( blob, nombreArchivoconExtension, tipoArchivo );
+        this.utilService.createDocumentFromBlob( blob, pSelectedItem.tipoArchivo, pSelectedItem.nombreArchivo);
       } else {
         const mensaje = this.langService.getLang( eModulo.Base, 'lbl-doc-adj-no-encontrado' );
         this.notificacionService.showSnackbarMensaje( mensaje, 4000, eTipoNotificacion.Informativo );

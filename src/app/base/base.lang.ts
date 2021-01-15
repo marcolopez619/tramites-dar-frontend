@@ -77,7 +77,13 @@ export const baseLang = {
             'lbl-estado' : 'Estado',
             'lbl-error-supero-cantidad-maxima-permitida' : 'Solo se permite $cantidadUsuario usuarios',
             'lbl-progreso-subida' : 'Progreso',
-            'lbl-doc-adj-no-encontrado' : 'El documento seleccionado no se encuentra en el servidor para su descarga'
+            'lbl-doc-adj-no-encontrado' : 'El documento seleccionado no se encuentra en el servidor para su descarga',
+            'tit-lista-doc-adj' : 'Documentos adjuntos subidos al servidor',
+            'lbl-nombre-doc-adj': 'Nombre',
+            'lbl-extension-doc-adj': 'Extension',
+            'lbl-referencia-doc-adj': 'Referencia',
+            'lbl-fecha-registro-doc-adj': 'Fecha registro',
+            'lbl-numero-cite-doc-adj': 'Numero Cite',
         },
         'en': {
             'lang-error': 'Lang not found',

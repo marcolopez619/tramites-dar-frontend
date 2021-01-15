@@ -20,6 +20,8 @@
 <mat-card-content>
 
 
+   ---> {{valorBandejaSelected.toUpperCase()}}
+
   <mat-table #table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="tipoTramiteDes">
@@ -70,6 +72,7 @@
               <div *ngIf="element.estado.toUpperCase() == 'CREADO' ">
                 <a mat-icon-button matTooltip="Enviar" (click)="onDerivar(element)"> <mat-icon>send</mat-icon></a>
                 <a mat-icon-button matTooltip="Adjuntar documento" (click)="onAdjuntarDocumento(element)"> <mat-icon>attachment</mat-icon></a>
+                <a mat-icon-button matTooltip="Ver documentos adjuntos" *ngIf="element.listaAdjuntos" (click)="onListarDocumentosAdjuntos(element)"> <mat-icon>list</mat-icon></a>
               </div>
             </div>
 
