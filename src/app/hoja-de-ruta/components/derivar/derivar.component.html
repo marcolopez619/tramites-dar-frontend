@@ -60,7 +60,8 @@
 
   <mat-dialog-actions fxLayout="row" fxLayoutGap="20px">
     <!--<button fxFlex mat-raised-button color="accent" (click)="save()" [disabled]="!formDerivarHR.valid || formDerivarHR.pristine || contextService.isLoading">Guardar-->
-    <button fxFlex mat-raised-button color="accent" [disabled]="" (click)="saveDerivar()">{{langService.getLang(eModulo.Base, 'lbl-enviar')}}</button>
+    <button fxFlex mat-raised-button color="accent" (click)="saveDerivar()"
+    disabled="{{formDerivarHR.invalid || contextService.isLoading}}">{{langService.getLang(eModulo.Base, 'lbl-enviar')}}</button>
     <button fxFlex mat-raised-button color="warn" (click)="cancelar()">{{langService.getLang(eModulo.Base, 'btnCancel')}}</button>
   </mat-dialog-actions>
 </mat-card>
