@@ -8,18 +8,16 @@
         <mat-icon [inline]="true" style="font-size: 50px !important" color="primary">{{ data.icon }}</mat-icon>
       </div>
       <div layout=”column”>
-        <div><h3>{{numeroCite}}</h3>
+        <div>
+          <span style="font-size: 20px; text-align: center">{{ data.content +' : '+ numeroHojaRuta }}?</span>
         </div>
+        <br>
         <div>
           <mat-checkbox formControlName="esFisico" [labelPosition]="'before'">
             {{langService.getLang(eModulo.HojaDeRuta,'lbl-fisico')}}
           </mat-checkbox>
         </div>
         <br>
-
-        <div>
-          <span style="font-size: 20px; text-align: center">{{ data.content }}</span>
-        </div>
 
       </div>
 

@@ -359,7 +359,7 @@ export class DataTableHojaDeRutaComponent extends BaseComponent  implements OnIn
       width: '500px',
       data: {
               title: 'Aceptar hoja de ruta',
-              content: '¿Está seguro de aceptar la hoja de ruta?',
+              content: '¿Está seguro de aceptar la hoja de ruta',
               icon: 'public',
               hojaRutaSelected:pObjHojaRuta
       }

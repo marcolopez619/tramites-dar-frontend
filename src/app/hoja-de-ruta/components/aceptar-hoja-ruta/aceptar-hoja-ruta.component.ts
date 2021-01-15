@@ -23,7 +23,7 @@ export class AceptarHrComponent extends BaseComponent implements OnInit {
 
   longMaxDescripcion = 500;
   formAceptarHR: FormGroup;
-  numeroCite:string;
+  numeroHojaRuta:string;
   constructor(
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -37,7 +37,7 @@ export class AceptarHrComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     var   vObjHojaRuta = this.data.hojaRutaSelected;
-    this.numeroCite=vObjHojaRuta.cite;
+    this.numeroHojaRuta=vObjHojaRuta.numeroHojaRuta;
     const dataForm: HojaDeRutaAceptarModel = {};
     this.formAceptarHR = this.formBuilder.group({
       esFisico: [true, [Validators.required, Validators.maxLength(this.longMaxDescripcion)]]
