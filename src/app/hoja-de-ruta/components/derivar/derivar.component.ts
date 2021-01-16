@@ -8,18 +8,15 @@ import { CitesService } from '../../../cites/cites.service';
 import { CiteModelByUsuario } from '../../../cites/models/cites.models';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
-import { UsuarioModel, DestinatarioModel } from '../../../shared/models/Usuario.model';
+import { AutocompleteData } from '../../../shared/models/autocomplete.model';
+import { UsuarioModel } from '../../../shared/models/Usuario.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
-import { DocumentoAdjuntoService } from '../../../shared/services/documento-adjunto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { UsuarioService } from '../../../shared/services/usuario.service';
 import { HojaDeRutaService } from '../../hoja-de-ruta.service';
-import { DerivarModel } from '../../models/derivar.model';
+import { HojaRutaBandejaModel } from '../../models/hoja-de-ruta.model';
 import { HojaRutaDerivaModel } from '../../models/hoja-ruta-deriva.model';
 import { InstructivaModel } from '../../models/instructiva.model';
-//import {AutocompleteLibModule} from 'angular-ng-autocomplete';
-import { HojaRutaBandejaModel } from '../../models/hoja-de-ruta.model';
-import { AutocompleteData } from '../../../shared/models/autocomplete.model';
 
 @Component({
   selector: 'derivar',
@@ -51,7 +48,6 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private usuarioService: UsuarioService,
     private citesService: CitesService,
-    private documentoAdjuntoService: DocumentoAdjuntoService,
     private hojaRutaService: HojaDeRutaService
   ) {
     super();
@@ -105,6 +101,13 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     });
   }
 
+  private getAllCitesFromPersona( idPersonaGd: number ): void {
+    this.citesService.getAllCitesFromPersona( idPersonaGd ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaCitesPersona => {
+      this.listaCite = listaCitesPersona.data as Array<CiteModelByUsuario>;
+    });
+  }
+
+
   getListaSeleccionadaInstructiva($event): void {
     this.vListaInstructivaAux = $event as Array<InstructivaModel>;
     this.formDerivarHR.controls['vListaInstructivaAux'].setValue(
@@ -132,11 +135,6 @@ export class DerivarComponent extends BaseComponent implements OnInit {
 
   }
 
-  private getAllCitesFromPersona( idPersonaGd: number ): void {
-    this.citesService.getAllCitesFromPersona( idPersonaGd ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaCitesPersona => {
-      this.listaCite = listaCitesPersona.data as Array<CiteModelByUsuario>;
-    });
-  }
 
   saveDerivar(): void {
 
