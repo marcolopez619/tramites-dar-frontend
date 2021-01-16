@@ -81,9 +81,9 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     this.getAllusuarios( 1 );
 
     this.formDerivarHR = this.formBuilder.group({
-      destinatario: [this.hojaRutaSelected.idDestinatario, Validators.compose([ Validators.required ])],
-      listaCite   : [this.listaCite[0].idCite, Validators.compose([Validators.required])],
-      instructiva : [this.hojaRutaSelected.asunto, Validators.compose([Validators.required])]
+      idDestinatario: [this.hojaRutaSelected.idDestinatario, Validators.compose([ Validators.required ])],
+      idCite        : [this.listaCite[0].idCite <= 0 ? undefined : this.listaCite[0].idCite, Validators.compose([Validators.required])],
+      instructiva   : [this.hojaRutaSelected.asunto, Validators.compose([Validators.required])]
     });
   }
 
@@ -119,11 +119,17 @@ export class DerivarComponent extends BaseComponent implements OnInit {
   getListaSeleccionadaDestinatarios(data: AutocompleteData): void {
     this.listaDestinatarios = data.listaSeleccionados;
 
-    this.formDerivarHR.controls[ 'listaCite' ].setValue( undefined );
+    if (this.listaDestinatarios.length === 0 ) {
+      this.listaCite.length = 0;
+      this.listaCite = [];
+      this.formDerivarHR.controls[ 'idCite' ].setValue( undefined );
+      this.formDerivarHR.controls[ 'idCite' ].updateValueAndValidity();
+    } else {
+      // Carga los cites disponibles de la persona loggeada
+      const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
+      this.getAllCitesFromPersona( idPersonaGd );
+    }
 
-    // Carga los cites disponibles de la persona loggeada
-    const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
-    this.getAllCitesFromPersona( idPersonaGd );
   }
 
   private getAllCitesFromPersona( idPersonaGd: number ): void {
@@ -136,7 +142,7 @@ export class DerivarComponent extends BaseComponent implements OnInit {
 
     // Recupera el idPersonaGD, primeramente de la lista autocomplete, sino lo encuentra toma el dato de la Hoja de ruta seleccionada
     const idPersonaDestinatario = this.listaDestinatarios.map( x => x.idPersonaGd )[ 0 ];
-    const idPersonaDestinatarioFromHR = this.data.hojaRutaSelected.idDestinatario;
+    const idPersonaDestinatarioFromHR = this.formDerivarHR.controls[ 'idDestinatario' ].value;
 
     const datosFormulario: HojaRutaDerivaModel = {
       IdHojaDeRuta   : this.data.hojaRutaSelected.idHojaRuta,
