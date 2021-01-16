@@ -25,6 +25,7 @@
                 (listaSeleccionadosEmiter)="getListaSeleccionadaDestinatarios($event)">
               </sh-autocomplete>
             </div>
+
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
               <mat-form-field fxFlex>
                 <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-buscar-cite' )}} : </mat-label>
@@ -34,14 +35,19 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-
             </div>
+
           </div>
+
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex>
 
               <mat-form-field fxFlex>
-                <input matInput required shUppercase maxlength="100"
+                <input
+                  matInput
+                  required
+                  shUppercase
+                  maxlength="100"
                   placeholder="{{langService.getLang(eModulo.HojaDeRuta,'lbl-referencia')}}"
                   formControlName="instructiva">
               </mat-form-field>
@@ -55,13 +61,10 @@
     </mat-card-content>
   </mat-dialog-content>
 
-  <h3 style="text-align: center;">{{ langService.getLang(eModulo.HojaDeRuta, 'tit-enviar-hoja-ruta-seguro') }}</h3>
-
+  <!-- <h3 style="text-align: center;">{{ langService.getLang(eModulo.HojaDeRuta, 'tit-enviar-hoja-ruta-seguro') }}</h3> -->
 
   <mat-dialog-actions fxLayout="row" fxLayoutGap="20px">
-    <!--<button fxFlex mat-raised-button color="accent" (click)="save()" [disabled]="!formDerivarHR.valid || formDerivarHR.pristine || contextService.isLoading">Guardar-->
-    <button fxFlex mat-raised-button color="accent" (click)="saveDerivar()"
-    disabled="{{formDerivarHR.invalid || contextService.isLoading}}">{{langService.getLang(eModulo.Base, 'lbl-enviar')}}</button>
-    <button fxFlex mat-raised-button color="warn" (click)="cancelar()">{{langService.getLang(eModulo.Base, 'btnCancel')}}</button>
+    <button fxFlex mat-raised-button color="accent" (click)="saveDerivar()" [disabled]="!this.formDerivarHR.valid || contextService.isLoading">{{langService.getLang(eModulo.Base, 'lbl-enviar')}}</button>
+    <button fxFlex mat-raised-button color="warn" (click)="onClose()">{{langService.getLang(eModulo.Base, 'btnCancel')}}</button>
   </mat-dialog-actions>
 </mat-card>
