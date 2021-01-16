@@ -64,21 +64,21 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
 
     if ( this.hojaRutaSelected.estado === 'creado' ) {
-      this.listaCite = [{
+      this.listaCite.push({
           idCite    : this.hojaRutaSelected.idCite,
           numeroCite: this.hojaRutaSelected.cite
-        }];
+        });
     }
     if ( this.hojaRutaSelected.idCite <= 0 ) {
       this.getAllCitesFromPersona( idPersonaGd );
     }
 
-    this.getHojaRutaInstructiva();
+    // this.getHojaRutaInstructiva();
     this.getAllusuarios( 1 );
 
     this.formDerivarHR = this.formBuilder.group({
       idDestinatario: [this.hojaRutaSelected.idDestinatario, Validators.compose([ Validators.required ])],
-      idCite        : [this.listaCite[0].idCite <= 0 ? undefined : this.listaCite[0].idCite, Validators.compose([Validators.required])],
+      idCite        : [this.hojaRutaSelected.idCite <= 0 ? undefined : this.hojaRutaSelected.idCite, Validators.compose([Validators.required])],
       instructiva   : [this.hojaRutaSelected.asunto, Validators.compose([Validators.required])]
     });
   }
