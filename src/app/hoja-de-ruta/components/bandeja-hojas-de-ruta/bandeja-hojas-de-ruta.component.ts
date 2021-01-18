@@ -471,9 +471,6 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
           });
       }
   onRechazar(pObjHojaRuta: HojaRutaBandejaModel): void {
-        /**title: this.langService.getLang(this.eModulo.HojaDeRuta, 'tit-confirmacion-aceptar'),
-                      content: this.langService.getLang(this.eModulo.HojaDeRuta, 'lbl-confirmar-aceptar'), */
-                      var algo=1;
             const confirmDialog = this.dialog.open(RechazarHrComponent, {
               disableClose: false,
               width: '500px',

@@ -22,7 +22,7 @@ import { HojaRutaRechazarModel } from '../../models/hoja-ruta-rechazar.model';
 })
 export class RechazarHrComponent extends BaseComponent implements OnInit {
 
-  longMaxDescripcion = 500;
+  longMaxDescripcion = 100;
   formRechazarHR: FormGroup;
   numeroHojaRuta:string;
   constructor(
