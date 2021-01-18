@@ -42,6 +42,7 @@ export class DerivarComponent extends BaseComponent implements OnInit {
   listaInicialDestinatarios: Array<UsuarioModel> = [];
   instructiva: string;
   filteredOptions: Observable<string>;
+  vNumeroHojaRuta: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -59,6 +60,7 @@ export class DerivarComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.hojaRutaSelected = this.data.hojaRutaSelected as HojaRutaBandejaModel;
+    this.vNumeroHojaRuta=this.hojaRutaSelected.numeroHojaRuta;
 
     this.listaInicialDestinatarios.push({
       idPersonaGd: this.hojaRutaSelected.idDestinatario,
