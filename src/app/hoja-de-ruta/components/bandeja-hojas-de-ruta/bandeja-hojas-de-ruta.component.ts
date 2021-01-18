@@ -390,7 +390,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((result) => {
         if (result) {
-          //..
+          this.inicializarBandeja();
         }
       });
   }
@@ -408,7 +408,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((result) => {
         if (result) {
-          //..
+          this.inicializarBandeja();
         }
       });
   }
@@ -458,7 +458,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
                   title: 'Aceptar hoja de ruta',
                   content: '¿Está seguro de aceptar la hoja de ruta',
                   icon: 'public',
-                  hojaRutaSelected:pObjHojaRuta
+                  hojaRutaSelected: pObjHojaRuta
           }
         });
 
@@ -478,11 +478,11 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
                       title: 'Rechazar hoja de ruta',
                       content: '¿Está seguro de rechazar la hoja de ruta',
                       icon: 'public',
-                      hojaRutaSelected:pObjHojaRuta
+                      hojaRutaSelected: pObjHojaRuta
               }
             });
 
-            confirmDialog.afterClosed()
+                      confirmDialog.afterClosed()
               .pipe(takeUntil(this.unsubscribe$))
               .subscribe((result) => {
                 if (result) {

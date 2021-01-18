@@ -48,10 +48,10 @@ export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit
     if ( this.formAdjuntarDocumento.controls[ 'documentosAdjuntos' ].valid ) {
       //Enviar el flag de inicio de subida de documentos al servidor de archivos ( true )
       const data: DataDocumentoAdjunto = {
-        startSaveDocuments : true,
-        datosAdicionales : {
-          idHojaRuta : this.hojaRutaSelected.idHojaRuta,
-          comentario : comentario
+        startSaveDocuments: true,
+        datosAdicionales  : {
+          idHojaRuta: this.hojaRutaSelected.idHojaRuta,
+          comentario: comentario
         }
 
       };
@@ -64,18 +64,17 @@ export class AdjuntarDocumentoComponent  extends BaseComponent implements OnInit
   isUploadesAllFiles(data: DataDocumentoAdjuntoResultFromSave): void {
 
     if ( data.isAllFilesUploaded ) {
-      this.onClose();
+      this.onClose( true );
     }
 
   }
 
   isDocumentoAdjuntoValid(isValid: boolean): void {
-    console.log( `is required desde adjuntar documento : ${isValid}` );
     this.formAdjuntarDocumento.controls[ 'documentosAdjuntos' ].setValue( isValid ? isValid : undefined );
   }
 
-  onClose(): void {
-    this.dialogRef.close(undefined);
+  onClose( object?: any ): void {
+    this.dialogRef.close(object);
   }
 
 }

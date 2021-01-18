@@ -52,7 +52,7 @@ export const hojaDeRutaLang = {
     'lbl-comentario-adjuntar-documento' : 'Referencia o mensaje',
     'lbl-error-comentario-adjuntar-documento' : 'La referencia o comentario es obligatorio',
 
-    'tit-anadir-participante' : 'Añadir nuevo participante(s)',
+    'tit-anadir-participante' : 'Añadir nuevo(s) participante(s)',
     'lbl-error-participante' : 'El participante es necesario',
 
     'lbl-tipo-remitente' : 'Tipo remitente',

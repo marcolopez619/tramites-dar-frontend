@@ -21,7 +21,7 @@
             [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-urgente' )"
             [isRequired]="true"
             [listaCompleta]="listaUsuarios"
-            (isFormularioInvalid) = "getEstatusFormDestinatario($event)"
+            (isFormularioInvalid) = "getEstatusFromDestinatario($event)"
             (listaSeleccionadosEmiter)="getListaSeleccionadaDestinatarios($event)">
           </sh-autocomplete>
         </div>
