@@ -84,6 +84,7 @@ export const hojaDeRutaLang = {
     'lbl-seguimiento-detalle-asunto': 'Asunto',
     'tit-enviar-hoja-ruta': 'Enviar hoja de ruta',
     'tit-enviar-hoja-ruta-seguro': '¿Esta seguro de enviar la hoja de ruta.?',
+    'tit-rechazar-hoja-ruta':'Rechazar hoja de ruta',
 
     'tit-ventana-finaliza-tramite': 'Finalizar trámite',
     'tit-ventana-añadir-comentario': 'Añadir comentario',
@@ -91,9 +92,10 @@ export const hojaDeRutaLang = {
     'lbl-fecha-bandeja': 'Fecha',
     'lbl-fisico': 'Documento en físico',
     'tit-confirmacion-aceptar': 'Aceptar hoja de ruta',
-    'lbl-confirmar-aceptar': '¿Está seguro de aceptar la hoja de ruta?',
+    'lbl-confirmar-aceptar': '¿Está seguro de aceptar la hoja de ruta : ',
     'lbl-numero-hoja-ruta': 'Número hoja de ruta',
     'lbl-numero-descripcion': 'Descripcion',
+    'lbl-rechazar-hoja-ruta-seguro': '¿Está seguro de rechazar la hoja de ruta : ',
 
     'lbl-fecha-registro' : 'Fecha registro',
     'tit-bandeja-seleccionada' : 'Bandeja: $bandejaSeleccionada'

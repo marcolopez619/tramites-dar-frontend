@@ -22,6 +22,7 @@ import { NuevoParticipanteComponent } from '../participante/nuevo-participante.c
 import { RechazarHrComponent } from '../rechazar-hoja-ruta/rechazar-hoja-ruta.component';
 import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
 import { ListaDocsAdjSubidosComponent } from '../../../shared/components/lista-docs-adj-subidos/lista-docs-adj-subidos.component';
+import { eModulo } from '../../../shared/enums/modulo.enum';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -455,8 +456,8 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
           disableClose: false,
           width: '500px',
           data: {
-                  title: 'Aceptar hoja de ruta',
-                  content: '¿Está seguro de aceptar la hoja de ruta',
+                  title: this.langService.getLang(eModulo.HojaDeRuta, 'tit-confirmacion-aceptar'),//'Aceptar hoja de ruta',
+                  content: this.langService.getLang(eModulo.HojaDeRuta, 'lbl-confirmar-aceptar')+pObjHojaRuta.numeroHojaRuta,
                   icon: 'public',
                   hojaRutaSelected: pObjHojaRuta
           }
@@ -475,8 +476,8 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
               disableClose: false,
               width: '500px',
               data: {
-                      title: 'Rechazar hoja de ruta',
-                      content: '¿Está seguro de rechazar la hoja de ruta',
+                      title: this.langService.getLang(eModulo.HojaDeRuta, 'tit-rechazar-hoja-ruta'),
+                      content: this.langService.getLang(eModulo.HojaDeRuta, 'lbl-rechazar-hoja-ruta-seguro')+pObjHojaRuta.numeroHojaRuta,
                       icon: 'public',
                       hojaRutaSelected: pObjHojaRuta
               }
