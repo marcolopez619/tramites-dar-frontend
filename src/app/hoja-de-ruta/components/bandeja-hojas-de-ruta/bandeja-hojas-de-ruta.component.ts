@@ -22,6 +22,7 @@ import { NuevoParticipanteComponent } from '../participante/nuevo-participante.c
 import { RechazarHrComponent } from '../rechazar-hoja-ruta/rechazar-hoja-ruta.component';
 import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
 import { ListaDocsAdjSubidosComponent } from '../../../shared/components/lista-docs-adj-subidos/lista-docs-adj-subidos.component';
+import { eModulo } from '../../../shared/enums/modulo.enum';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -489,20 +490,21 @@ export class BandejaHojasDeRutaComponent
         }
       });
   }
-  onAceptar(pHojaRuta: HojaRutaBandejaModel): void {
+
+  onAceptar(pObjHojaRuta: HojaRutaBandejaModel): void {
+
     const dlgAceptarHr = this.dialog.open(AceptarHrComponent, {
-      disableClose: false,
-      width: '500px',
-      data: {
-        title: 'Aceptar hoja de ruta',
-        content: '¿Está seguro de aceptar la hoja de ruta',
-        icon: 'public',
-        hojaRutaSelected: pHojaRuta
-      }
+        disableClose: false,
+        width: '500px',
+        data: {
+                title: this.langService.getLang(eModulo.HojaDeRuta, 'tit-confirmacion-aceptar'),
+                content: this.langService.getLang(eModulo.HojaDeRuta, 'lbl-confirmar-aceptar'),
+                icon: 'public',
+                hojaRutaSelected: pObjHojaRuta
+        }
     });
 
-    dlgAceptarHr
-      .afterClosed()
+    dlgAceptarHr.afterClosed()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((result) => {
         if (result) {
@@ -510,25 +512,26 @@ export class BandejaHojasDeRutaComponent
         }
       });
   }
-  onRechazar(pHojaRuta: HojaRutaBandejaModel): void {
-    const dlgRechazarHR = this.dialog.open(RechazarHrComponent, {
+  onRechazar(pObjHojaRuta: HojaRutaBandejaModel): void {
+    const confirmDialog = this.dialog.open(RechazarHrComponent, {
       disableClose: false,
       width: '500px',
       data: {
-        title: 'Rechazar hoja de ruta',
-        content: '¿Está seguro de rechazar la hoja de ruta',
+        title: this.langService.getLang(eModulo.HojaDeRuta, 'tit-rechazar-hoja-ruta'),
+        content: this.langService.getLang(eModulo.HojaDeRuta, 'lbl-rechazar-hoja-ruta-seguro'),
         icon: 'public',
-        hojaRutaSelected: pHojaRuta
-      }
-    });
+        hojaRutaSelected: pObjHojaRuta
+        }
+      });
 
-    dlgRechazarHR
-      .afterClosed()
+    confirmDialog.afterClosed()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((result) => {
         if (result) {
           this.inicializarBandeja();
         }
-      });
+    });
+
   }
+
 }
