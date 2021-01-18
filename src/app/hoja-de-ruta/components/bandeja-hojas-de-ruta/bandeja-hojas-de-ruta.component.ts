@@ -491,16 +491,16 @@ export class BandejaHojasDeRutaComponent
       });
   }
 
-  onAceptar(pObjHojaRuta: HojaRutaBandejaModel): void {
+  onAceptar(pHojaRuta: HojaRutaBandejaModel): void {
 
     const dlgAceptarHr = this.dialog.open(AceptarHrComponent, {
         disableClose: false,
         width: '500px',
         data: {
                 title: this.langService.getLang(eModulo.HojaDeRuta, 'tit-confirmacion-aceptar'),
-                content: this.langService.getLang(eModulo.HojaDeRuta, 'lbl-confirmar-aceptar'),
-                icon: 'public',
-                hojaRutaSelected: pObjHojaRuta
+                content: this.langService.getLang(eModulo.HojaDeRuta, 'lbl-confirmar-aceptar').concat( pHojaRuta.numeroHojaRuta ),
+                icon: 'contact_support',
+                hojaRutaSelected: pHojaRuta
         }
     });
 
@@ -512,19 +512,19 @@ export class BandejaHojasDeRutaComponent
         }
       });
   }
-  onRechazar(pObjHojaRuta: HojaRutaBandejaModel): void {
-    const confirmDialog = this.dialog.open(RechazarHrComponent, {
+  onRechazar(pHojaRuta: HojaRutaBandejaModel): void {
+    const dlgRechazarHR = this.dialog.open(RechazarHrComponent, {
       disableClose: false,
-      width: '500px',
+      width: '520px',
       data: {
         title: this.langService.getLang(eModulo.HojaDeRuta, 'tit-rechazar-hoja-ruta'),
-        content: this.langService.getLang(eModulo.HojaDeRuta, 'lbl-rechazar-hoja-ruta-seguro'),
-        icon: 'public',
-        hojaRutaSelected: pObjHojaRuta
+        content: this.langService.getLang(eModulo.HojaDeRuta, 'lbl-rechazar-hoja-ruta-seguro').concat( pHojaRuta.numeroHojaRuta ) ,
+        icon: 'contact_support',
+        hojaRutaSelected: pHojaRuta
         }
       });
 
-    confirmDialog.afterClosed()
+    dlgRechazarHR.afterClosed()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((result) => {
         if (result) {
