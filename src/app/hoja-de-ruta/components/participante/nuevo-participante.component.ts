@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
+import { AutocompleteData } from '../../../shared/models/autocomplete.model';
 import { UsuarioModel } from '../../../shared/models/Usuario.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
@@ -46,8 +47,8 @@ export class NuevoParticipanteComponent extends BaseComponent implements OnInit 
     this.getAllusuarios( idTipoTramite );
 
     this.formAnadirNuevoParticipante = this.formBuilder.group({
-      listaParticipantes: [undefined, [Validators.compose([ Validators.required])]],
-      mensaje       : [ undefined, [Validators.compose( [ Validators.required, Validators.minLength(5), Validators.maxLength(50) ])] ]
+      listaParticipantes: [ undefined, [Validators.compose([ Validators.required])]],
+      mensaje           : [ undefined, [Validators.compose( [ Validators.required, Validators.minLength(5), Validators.maxLength(100) ])] ]
     });
   }
 
@@ -57,18 +58,13 @@ export class NuevoParticipanteComponent extends BaseComponent implements OnInit 
     });
   }
 
-  getEstatusFormDestinatario($event): void {
-    this._isParticipanteInvalid = $event;
-    console.log( ' is Invalid participante : ' + $event );
+  getEstatusFromDestinatario(isInvalid : boolean): void {
+    this._isParticipanteInvalid = isInvalid;
+    this.formAnadirNuevoParticipante.controls[ 'listaParticipantes' ].setValue( isInvalid ? undefined: this.listaParcitipantesSelected );
   }
 
-  getListaSeleccionadaDestinatarios($event): void {
-    this.listaParcitipantesSelected = $event as Array<UsuarioModel>;
-
-    this.listaParcitipantesSelected.forEach( element => {
-      console.log( ' Participante ---> ' + element.nombreCompleto );
-    });
-
+  getListaSeleccionadaDestinatarios(dataSelected: AutocompleteData ): void {
+    this.listaParcitipantesSelected = dataSelected.listaSeleccionados;
     this.formAnadirNuevoParticipante.controls['listaParticipantes'].setValue( (this._isParticipanteInvalid) ? undefined : this.listaParcitipantesSelected );
   }
 
@@ -93,7 +89,7 @@ export class NuevoParticipanteComponent extends BaseComponent implements OnInit 
 
     this.hojaDeRutaService.createParticipante( participanteInsertModel ).pipe( takeUntil(this.unsubscribe$)).subscribe( respCreateParticipante => {
       console.log( `${respCreateParticipante.data}` );
-      this.onClose();
+      this.onClose(respCreateParticipante.data);
     });
 
   }
@@ -103,8 +99,8 @@ export class NuevoParticipanteComponent extends BaseComponent implements OnInit 
 
   }
 
-  onClose(): void {
-      this.dialogRef.close();
+  onClose(object?: any): void {
+      this.dialogRef.close( object );
   }
 
 }
