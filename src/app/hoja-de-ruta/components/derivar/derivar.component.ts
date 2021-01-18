@@ -17,6 +17,8 @@ import { HojaDeRutaService } from '../../hoja-de-ruta.service';
 import { HojaRutaBandejaModel } from '../../models/hoja-de-ruta.model';
 import { HojaRutaDerivaModel } from '../../models/hoja-ruta-deriva.model';
 import { InstructivaModel } from '../../models/instructiva.model';
+import { ListaDocumentosAdjuntos } from '../../../shared/models/documento-adjunto.model';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'derivar',
@@ -27,6 +29,7 @@ import { InstructivaModel } from '../../models/instructiva.model';
 export class DerivarComponent extends BaseComponent implements OnInit {
   listaUsuarios: Array<UsuarioModel> = [];
   listaCite: Array<CiteModelByUsuario> = [];
+  listaDocumentosAdjuntos: string;
 
   private hojaRutaSelected: HojaRutaBandejaModel;
 
@@ -40,6 +43,7 @@ export class DerivarComponent extends BaseComponent implements OnInit {
   instructiva: string;
   filteredOptions: Observable<string>;
   vNumeroHojaRuta: string;
+  showAllDocAdj: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -56,7 +60,7 @@ export class DerivarComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.hojaRutaSelected = this.data.hojaRutaSelected as HojaRutaBandejaModel;
-    this.vNumeroHojaRuta=this.hojaRutaSelected.numeroHojaRuta;
+    this.vNumeroHojaRuta = this.hojaRutaSelected.numeroHojaRuta;
 
     this.listaInicialDestinatarios.push({
       idPersonaGd: this.hojaRutaSelected.idDestinatario,
@@ -113,6 +117,19 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     });
   }
 
+  private getListaDocumentosAdjuntos(): void {
+    this.listaDocumentosAdjuntos = this.hojaRutaSelected.listaAdjuntos; // JSON.parse(this.hojaRutaSelected.listaAdjuntos) as Array<ListaDocumentosAdjuntos>;
+  }
+
+  onChangeSlideToggleValue(event:  MatSlideToggleChange ): void {
+    this.showAllDocAdj = event.checked;
+
+    if (this.showAllDocAdj) {
+      this.getListaDocumentosAdjuntos();
+    } else {
+      this.listaDocumentosAdjuntos = '';
+    }
+  }
 
   getListaSeleccionadaInstructiva($event): void {
     this.vListaInstructivaAux = $event as Array<InstructivaModel>;
@@ -140,7 +157,6 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     }
 
   }
-
 
   saveDerivar(): void {
 

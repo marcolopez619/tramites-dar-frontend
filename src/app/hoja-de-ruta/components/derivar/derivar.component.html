@@ -62,6 +62,13 @@
             </div>
           </div>
 
+
+
+          <div fxLayout="column" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+              <mat-slide-toggle [checked]="showAllDocAdj" (change)="onChangeSlideToggleValue($event)"> Ver lista de documentos adjuntos </mat-slide-toggle>
+              <sh-lista-docs-adj-subidos *ngIf="showAllDocAdj" [ocultarToolbar]="true" [listaDocumentosAdjuntos]="listaDocumentosAdjuntos" ></sh-lista-docs-adj-subidos>
+          </div>
+
         </div>
       </form>
 
