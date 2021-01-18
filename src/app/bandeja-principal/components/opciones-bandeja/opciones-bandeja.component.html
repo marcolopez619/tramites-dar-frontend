@@ -32,21 +32,19 @@
       <mat-accordion>
         <mat-expansion-panel [expanded]="true" >
           <mat-expansion-panel-header>
-            <mat-panel-title>
+            <mat-panel-title fxLayout="row" fxLayoutAlign="space-between center" >
               <!-- Cabeceras del submenu -->
               <div fxLayout="row" fxLayoutAlign="space-between center" >
                 <mat-icon>{{item.icono}}</mat-icon>
-                {{item.displayName}}
+                &nbsp;&nbsp; {{item.displayName}}
               </div>
             </mat-panel-title>
           </mat-expansion-panel-header>
 
           <div *ngFor="let child of item.children">
               <mat-list-item fxLayout="column" fxLayoutAlign="center center" (click)="onSelectedButton(child)" >
-                <button mat-icon-button >
-                  <mat-icon>{{child.icono}}</mat-icon>
-                  {{child.displayName}}
-                </button>
+                <mat-icon [class.active]="selected" matListIcon>{{child.icono}}</mat-icon>
+                <a matLine>{{child.displayName}}</a>
               </mat-list-item>
           </div>
 

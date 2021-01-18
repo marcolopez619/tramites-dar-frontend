@@ -224,10 +224,8 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
 
   onCiteSeleccionChange(event: MatSelectChange): void {
     const infCiteSelected = this.listaCite.find( x => x.idCite === event.value );
-    var algo=infCiteSelected;
-    var algo2=event;
     this.listaCite=[{idCite: infCiteSelected.idCite, numeroCite:infCiteSelected.numeroCite}]
-    //this.formHojaDeRuta.controls['referencia'].setValue(infCiteSelected.referencia);
+    this.formHojaDeRuta.controls['referencia'].setValue(infCiteSelected.referencia);
   }
 
   onTipoTramiteChange(event: MatSelectChange): void {

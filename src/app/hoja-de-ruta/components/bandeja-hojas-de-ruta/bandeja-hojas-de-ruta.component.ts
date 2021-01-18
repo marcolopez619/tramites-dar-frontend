@@ -351,7 +351,9 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
       .afterClosed()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((result) => {
-        this.inicializarBandeja();
+        if (result) {
+          this.inicializarBandeja();
+        }
     });
   }
 

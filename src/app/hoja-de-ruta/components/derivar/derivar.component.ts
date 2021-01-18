@@ -8,18 +8,15 @@ import { CitesService } from '../../../cites/cites.service';
 import { CiteModelByUsuario } from '../../../cites/models/cites.models';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
-import { UsuarioModel, DestinatarioModel } from '../../../shared/models/Usuario.model';
+import { AutocompleteData } from '../../../shared/models/autocomplete.model';
+import { UsuarioModel } from '../../../shared/models/Usuario.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
-import { DocumentoAdjuntoService } from '../../../shared/services/documento-adjunto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { UsuarioService } from '../../../shared/services/usuario.service';
 import { HojaDeRutaService } from '../../hoja-de-ruta.service';
-import { DerivarModel } from '../../models/derivar.model';
+import { HojaRutaBandejaModel } from '../../models/hoja-de-ruta.model';
 import { HojaRutaDerivaModel } from '../../models/hoja-ruta-deriva.model';
 import { InstructivaModel } from '../../models/instructiva.model';
-//import {AutocompleteLibModule} from 'angular-ng-autocomplete';
-import { HojaRutaBandejaModel } from '../../models/hoja-de-ruta.model';
-import { AutocompleteData } from '../../../shared/models/autocomplete.model';
 
 @Component({
   selector: 'derivar',
@@ -52,7 +49,6 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private usuarioService: UsuarioService,
     private citesService: CitesService,
-    private documentoAdjuntoService: DocumentoAdjuntoService,
     private hojaRutaService: HojaDeRutaService
   ) {
     super();
@@ -70,21 +66,21 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
 
     if ( this.hojaRutaSelected.estado === 'creado' ) {
-      this.listaCite = [{
+      this.listaCite.push({
           idCite    : this.hojaRutaSelected.idCite,
           numeroCite: this.hojaRutaSelected.cite
-        }];
+        });
     }
     if ( this.hojaRutaSelected.idCite <= 0 ) {
       this.getAllCitesFromPersona( idPersonaGd );
     }
 
-    this.getHojaRutaInstructiva();
+    // this.getHojaRutaInstructiva();
     this.getAllusuarios( 1 );
 
     this.formDerivarHR = this.formBuilder.group({
       idDestinatario: [this.hojaRutaSelected.idDestinatario, Validators.compose([ Validators.required ])],
-      idCite        : [this.listaCite[0].idCite <= 0 ? undefined : this.listaCite[0].idCite, Validators.compose([Validators.required])],
+      idCite        : [this.hojaRutaSelected.idCite <= 0 ? undefined : this.hojaRutaSelected.idCite, Validators.compose([Validators.required])],
       instructiva   : [this.hojaRutaSelected.asunto, Validators.compose([Validators.required])]
     });
   }
@@ -106,6 +102,13 @@ export class DerivarComponent extends BaseComponent implements OnInit {
       this.vListaInstructiva = vResultado.data as Array<InstructivaModel>;
     });
   }
+
+  private getAllCitesFromPersona( idPersonaGd: number ): void {
+    this.citesService.getAllCitesFromPersona( idPersonaGd ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaCitesPersona => {
+      this.listaCite = listaCitesPersona.data as Array<CiteModelByUsuario>;
+    });
+  }
+
 
   getListaSeleccionadaInstructiva($event): void {
     this.vListaInstructivaAux = $event as Array<InstructivaModel>;
@@ -134,11 +137,6 @@ export class DerivarComponent extends BaseComponent implements OnInit {
 
   }
 
-  private getAllCitesFromPersona( idPersonaGd: number ): void {
-    this.citesService.getAllCitesFromPersona( idPersonaGd ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaCitesPersona => {
-      this.listaCite = listaCitesPersona.data as Array<CiteModelByUsuario>;
-    });
-  }
 
   saveDerivar(): void {
 
