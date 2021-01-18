@@ -202,15 +202,15 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
       datosFormulario.Gestion               = new Date().getFullYear();
       datosFormulario.IdPersonaRemite       = objDatosFormulario.listaRemitentes.idPersonaGd;
       datosFormulario.IdPersonaDestinatario = objDatosFormulario.listaDestinatarios[0].idPersonaGd;
-      datosFormulario.IdPersonaSolicita     = objDatosFormulario.listaCc==null?undefined:objDatosFormulario.listaCc[0].idPersonaGd;
+      datosFormulario.IdPersonaSolicita     = objDatosFormulario.listaRemitentes.idPersonaGd;
       datosFormulario.ListDestCopia         = undefined;
       datosFormulario.ListCite              = JSON.stringify(this.listaCite);
       datosFormulario.ListCiteExt           = undefined;
       datosFormulario.ListAdjunto           = undefined;
       datosFormulario.Referencia            = objDatosFormulario.referencia;
       datosFormulario.PlazoDias             = objDatosFormulario.plazoDias ?? 0;
-      datosFormulario.Urgente               = objDatosFormulario.isUrgente = false ? 0 : 1;
-      datosFormulario.ConCopiaFisica        = objDatosFormulario.isConCopiaFisica = false ? 0 : 1;
+      datosFormulario.Urgente               = +objDatosFormulario.isUrgente ;//= false ? 0 : 1;
+      datosFormulario.ConCopiaFisica        = +objDatosFormulario.isConCopiaFisica;// = false ? 0 : 1;
       datosFormulario.UsuarioBitacora       = this.contextService.getItemContexto('samActName');
     }
 
