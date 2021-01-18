@@ -65,22 +65,26 @@ export class DerivarComponent extends BaseComponent implements OnInit {
 
     const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
 
-    if ( this.hojaRutaSelected.estado === 'creado' ) {
+    if ( this.hojaRutaSelected.estado === 'creado' || 'en atencion') {
       this.listaCite.push({
           idCite    : this.hojaRutaSelected.idCite,
           numeroCite: this.hojaRutaSelected.cite
         });
     }
-    if ( this.hojaRutaSelected.idCite <= 0 ) {
+
+    /* if ( this.hojaRutaSelected.idCite <= 0 ) {
       this.getAllCitesFromPersona( idPersonaGd );
-    }
+    } */
+
+    this.getAllCitesFromPersona( idPersonaGd );
 
     // this.getHojaRutaInstructiva();
     this.getAllusuarios( 1 );
 
     this.formDerivarHR = this.formBuilder.group({
       idDestinatario: [this.hojaRutaSelected.idDestinatario, Validators.compose([ Validators.required ])],
-      idCite        : [this.hojaRutaSelected.idCite <= 0 ? undefined : this.hojaRutaSelected.idCite, Validators.compose([Validators.required])],
+      // idCite        : [this.hojaRutaSelected.idCite <= 0 ? undefined : this.hojaRutaSelected.idCite, Validators.compose([Validators.required])],
+      idCite        : [undefined],
       instructiva   : [this.hojaRutaSelected.asunto, Validators.compose([Validators.required])]
     });
   }
@@ -145,11 +149,11 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     const idPersonaDestinatarioFromHR = this.formDerivarHR.controls[ 'idDestinatario' ].value;
 
     const datosFormulario: HojaRutaDerivaModel = {
-      IdHojaDeRuta   : this.data.hojaRutaSelected.idHojaRuta,
+      IdHojaDeRuta   : this.hojaRutaSelected.idHojaRuta,
       IdPersonaGb    : idPersonaDestinatario ?? idPersonaDestinatarioFromHR,
       Asunto         : this.formDerivarHR.controls['instructiva'].value,
-      PlazoDias      : this.data.hojaRutaSelected.plazo,
-      Urgente        : this.data.hojaRutaSelected.urgente,
+      PlazoDias      : this.hojaRutaSelected.plazo,
+      Urgente        : this.hojaRutaSelected.urgente,
       UsuarioBitacora: this.contextService.getItemContexto('samActName')
     };
 

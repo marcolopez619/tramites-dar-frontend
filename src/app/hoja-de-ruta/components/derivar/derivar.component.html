@@ -24,7 +24,7 @@
               <sh-autocomplete
                 [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatario' )"
                 [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-destinatario' )"
-                [isRequired]="true"
+                [isRequired]="false"
                 [listaInicial]="listaInicialDestinatarios"
                 [listaCompleta]="listaUsuarios"
                 [cantidadPermitida]="1"
@@ -36,7 +36,7 @@
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
               <mat-form-field fxFlex>
                 <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-buscar-cite' )}} : </mat-label>
-                <mat-select formControlName="idCite" required placeholder="Seleccione">
+                <mat-select formControlName="idCite" placeholder="Seleccione">
                   <mat-option *ngFor="let cite of listaCite" [value]="cite.idCite">
                     {{cite.numeroCite}}
                   </mat-option>

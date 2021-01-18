@@ -46,11 +46,11 @@ export class FinalizarComponent extends BaseComponent implements OnInit {
       };
       this.hojaRutaService.FinalizarHojaRuta( pHRData ).pipe( takeUntil( this.unsubscribe$ )).subscribe( respFinalizarHR => {
         console.log(`-----> ${respFinalizarHR.data}`);
-        this.onClose();
+        this.onClose( respFinalizarHR );
       });
     }
 
-    onClose(): void {
-        this.dialogRef.close(undefined);
+    onClose( object?: any ): void {
+        this.dialogRef.close( object );
     }
 }
