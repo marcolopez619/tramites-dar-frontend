@@ -48,7 +48,7 @@ export class ComentarioComponent extends BaseComponent implements OnInit {
     };
 
     this.comentarioService.insertComentario(datosFormulario).pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
-      this.onClose();
+      this.onClose(result.data);
     });
   }
 

@@ -408,7 +408,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((result) => {
         if (result) {
-          //..
+          this.inicializarBandeja();
         }
       });
   }
@@ -458,7 +458,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
                   title: 'Aceptar hoja de ruta',
                   content: '¿Está seguro de aceptar la hoja de ruta',
                   icon: 'public',
-                  hojaRutaSelected:pObjHojaRuta
+                  hojaRutaSelected: pObjHojaRuta
           }
         });
 
@@ -473,19 +473,19 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
   onRechazar(pObjHojaRuta: HojaRutaBandejaModel): void {
         /**title: this.langService.getLang(this.eModulo.HojaDeRuta, 'tit-confirmacion-aceptar'),
                       content: this.langService.getLang(this.eModulo.HojaDeRuta, 'lbl-confirmar-aceptar'), */
-                      var algo=1;
-            const confirmDialog = this.dialog.open(RechazarHrComponent, {
+                      const algo = 1;
+                      const confirmDialog = this.dialog.open(RechazarHrComponent, {
               disableClose: false,
               width: '500px',
               data: {
                       title: 'Rechazar hoja de ruta',
                       content: '¿Está seguro de rechazar la hoja de ruta',
                       icon: 'public',
-                      hojaRutaSelected:pObjHojaRuta
+                      hojaRutaSelected: pObjHojaRuta
               }
             });
 
-            confirmDialog.afterClosed()
+                      confirmDialog.afterClosed()
               .pipe(takeUntil(this.unsubscribe$))
               .subscribe((result) => {
                 if (result) {
