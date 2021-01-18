@@ -114,7 +114,7 @@
               <div *ngIf="element.estado.toUpperCase() == 'PARTICIPANTE' ">
                 <a mat-icon-button matTooltip="Adjuntar documento" (click)="onAdjuntarDocumento(element)"> <mat-icon>attachment</mat-icon></a>
                 <a mat-icon-button matTooltip="Añadir comentario" (click)="onAnadirComentario(element)"> <mat-icon>add_comment</mat-icon></a>
-                <a mat-icon-button matTooltip="Finalizar participacion"> <mat-icon>person_off</mat-icon></a>
+                <a mat-icon-button matTooltip="Finalizar participacion" (click)="onFinalizarParticipacion(element)"> <mat-icon>playlist_add_check</mat-icon></a>
                 <a mat-icon-button matTooltip="Ver seguimiento" (click)="onVerSeguimiento(element)"> <mat-icon>visibility</mat-icon></a>
               </div>
             </div>

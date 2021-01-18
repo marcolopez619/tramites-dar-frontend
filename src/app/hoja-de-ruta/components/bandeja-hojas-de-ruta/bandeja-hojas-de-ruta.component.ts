@@ -23,6 +23,7 @@ import { RechazarHrComponent } from '../rechazar-hoja-ruta/rechazar-hoja-ruta.co
 import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
 import { ListaDocsAdjSubidosComponent } from '../../../shared/components/lista-docs-adj-subidos/lista-docs-adj-subidos.component';
 import { eModulo } from '../../../shared/enums/modulo.enum';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -465,6 +466,28 @@ export class BandejaHojasDeRutaComponent
       }
     });
     dlgFinalizar
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          this.inicializarBandeja();
+        }
+      });
+  }
+  onFinalizarParticipacion(pHojaRuta: HojaRutaBandejaModel): void {
+    const title = this.langService.getLang(eModulo.HojaDeRuta, 'tit-finalizar-participacion-hr' );
+    const content = this.langService.getLang(eModulo.HojaDeRuta, 'msg-finalizar-participacion-hr' ).replace('$numeroHojaRuta' , pHojaRuta.numeroHojaRuta );
+
+    const dlgFinalizarParticipacion = this.dialog.open( ConfirmDialogComponent , {
+      disableClose: false,
+      width: '600px',
+      data: {
+        title  : title,
+        content: content,
+        icon   : 'contact_support'
+      }
+    });
+    dlgFinalizarParticipacion
       .afterClosed()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((result) => {
