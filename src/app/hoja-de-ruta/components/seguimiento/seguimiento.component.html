@@ -1,6 +1,6 @@
 <div class="alt-theme">
   <mat-toolbar shToolbarModal color="primary">
-    <h3>{{data.titulo}}</h3>
+    <h3>{{langService.getLang(eModulo.HojaDeRuta, 'tit-seguimiento-detalle-seguimiento') }}</h3>
     <span class="flex-spacer"></span>
 
     <button mat-button mat-dialog-close matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}">
@@ -10,25 +10,18 @@
   </mat-toolbar>
 </div>
 <mat-dialog-content>
-  <fieldset>
-    <legend>Seguimiento del proceso</legend>
     <form [formGroup]="formSeguimiento">
-
       <div fxLayout="row" fxLayoutGap="30px">
-        <h3 fxFlex="12">{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-hoja-ruta')}}</h3>
+        <td class="alinear-columna-centro"><strong><h3>Hoja de ruta : {{numeroHojaRuta}} &nbsp; &nbsp; {{referencia}} </h3></strong></td>
 
-        <mat-label fxFlex="15">{{numeroHojaRuta}}</mat-label>
-        <h3>
-          <mat-label fxFlex="72" >{{referencia}}</mat-label>
-        </h3>
       </div>
 
       <div *ngFor="let detalleSeguimientoItem of listaAux; let indice=index">
         <fieldset-detalle fxLayout="row" fxFlex="100">
-          <legend>{{indice+1}}</legend>
+          <legend><strong>{{indice+1}}</strong></legend>
           <detalle-seguimiento [detalleSeguimiento]="detalleSeguimientoItem"></detalle-seguimiento>
         </fieldset-detalle>
       </div>
     </form>
-  </fieldset>
+
 </mat-dialog-content>

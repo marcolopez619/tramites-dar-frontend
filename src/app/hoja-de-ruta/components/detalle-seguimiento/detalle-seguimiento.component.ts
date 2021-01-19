@@ -2,6 +2,7 @@ import { Component, Inject, OnInit, Output, EventEmitter, Input } from '@angular
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
+import { ListaDocumentosAdjuntos } from '../../../shared/models/documento-adjunto.model';
 import { LangService } from '../../../shared/services/lang.service';
 import { DetalleSeguimientoModel } from '../../models/detalle-seguimiento.model';
 
@@ -17,6 +18,7 @@ export class DetalleSeguimientoComponent extends BaseComponent implements OnInit
 
   detalleSeguimiento: DetalleSeguimientoModel;
   listaParticipantes: [];
+  listaDocumentosAdjuntos: string;
 
   longMaxDescripcion = 500;
   formSeguimientoDetalle: FormGroup;
@@ -29,8 +31,13 @@ export class DetalleSeguimientoComponent extends BaseComponent implements OnInit
 
   ngOnInit(): void {
     if(this.detalleSeguimiento.participantes!=undefined){
-       let vAguito=this.detalleSeguimiento.participantes;
-       this.listaParticipantes=vAguito;
+      this.listaParticipantes=this.detalleSeguimiento.participantes;
+       //this.listaParticipantes=vAguito;
+    }
+    if(this.detalleSeguimiento.adjuntos!=undefined){
+      this.listaDocumentosAdjuntos = this.detalleSeguimiento.adjuntos;
+      //var aaaaaa = JSON.parse(this.detalleSeguimiento.adjuntos) as Array<ListaDocumentosAdjuntos>;
+      //var algomas = this.detalleSeguimiento.adjuntos;
     }
     this.formSeguimientoDetalle = this.formBuilder.group({
       remitente : this.detalleSeguimiento.remitente,

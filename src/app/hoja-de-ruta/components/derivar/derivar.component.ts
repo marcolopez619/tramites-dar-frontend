@@ -75,20 +75,15 @@ export class DerivarComponent extends BaseComponent implements OnInit {
           numeroCite: this.hojaRutaSelected.cite
         });
     }
-
-    /* if ( this.hojaRutaSelected.idCite <= 0 ) {
+    else{
       this.getAllCitesFromPersona( idPersonaGd );
-    } */
+    }
 
-    this.getAllCitesFromPersona( idPersonaGd );
-
-    // this.getHojaRutaInstructiva();
     this.getAllusuarios( 1 );
 
     this.formDerivarHR = this.formBuilder.group({
       idDestinatario: [this.hojaRutaSelected.idDestinatario, Validators.compose([ Validators.required ])],
-      // idCite        : [this.hojaRutaSelected.idCite <= 0 ? undefined : this.hojaRutaSelected.idCite, Validators.compose([Validators.required])],
-      idCite        : [undefined],
+      idCite        : [this.hojaRutaSelected.idCite],
       instructiva   : [this.hojaRutaSelected.asunto, Validators.compose([Validators.required])]
     });
   }

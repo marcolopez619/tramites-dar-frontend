@@ -3,13 +3,10 @@
   <form [formGroup]="formSeguimientoDetalle" fxFlex>
 
     <div fxLayout="row" fxLayoutGap="30px">
-      <mat-icon>person</mat-icon>
-      <!--
-      <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.HojaDeRuta, 'lbl-participante') }}"
-        (click)="administrarParticipante()">
-        <mat-icon>person_add</mat-icon>
-      </a>-->
+      <mat-icon style="font-size: 60px; margin-top: 0px;">person</mat-icon>
     </div>
+    <br>
+    <br>
 
     <div fxLayout="row" fxLayoutGap="30px">
       <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-remitente')}}</mat-label>
@@ -46,7 +43,7 @@
 
         <div *ngFor="let objParticipante of listaParticipantes">
           <tr>
-            <td class="alinear-columna-derecha"><strong>Nombres :</strong></td>
+            <td class="alinear-columna-derecha"><strong> &nbsp;Nombres :</strong></td>
             <td>
               <div>
                 {{objParticipante.participante}}
@@ -57,7 +54,6 @@
               </div>
             </td>
             <td>
-
               <tr>
                 <td class="alinear-columna-derecha"><strong> &nbsp;Fecha :</strong></td>
                 <td>
@@ -70,11 +66,19 @@
                   {{objParticipante.concluido}}
                 </td>
               </tr>
-
             </td>
           </tr>
-
         </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <strong>Documentos adjuntos</strong>
+        </mat-expansion-panel-header>
+
+        <sh-lista-docs-adj-subidos [ocultarToolbar]="true" [listaDocumentosAdjuntos]="listaDocumentosAdjuntos" ></sh-lista-docs-adj-subidos>
 
       </mat-expansion-panel>
     </mat-accordion>

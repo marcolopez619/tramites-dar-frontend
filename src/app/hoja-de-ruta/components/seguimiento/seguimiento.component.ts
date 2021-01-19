@@ -80,6 +80,7 @@ export class SeguimientoComponent extends BaseComponent implements OnInit {
         //vObjSeguimiento
         this.listaAux = JSON.parse( vSeg ) as Array<DetalleSeguimientoModel>;
         this.dataSource.data = vObjSeguimiento as Array<SeguimientoModel>;
+        this.data.idHojaRuta = undefined;
       });
       /*
       this.formSeguimiento = this.formBuilder.group({

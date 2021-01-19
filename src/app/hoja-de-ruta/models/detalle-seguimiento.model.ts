@@ -18,5 +18,5 @@ export interface SeguimientoModel {
     asunto?: string;
     plazoDias?: number;
     participantes?: [];
-    adjunto?: File;
+    adjuntos?: string;
   }
