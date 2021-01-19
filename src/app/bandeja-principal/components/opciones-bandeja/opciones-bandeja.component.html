@@ -27,10 +27,10 @@
 </li> -->
 
 <mat-nav-list>
-  <span *ngFor="let item of listaOpcionesBandeja">
+  <span *ngFor="let item of listaOpcionesBandeja; let i = index;">
     <span *ngIf="item.children && item.children.length > 0">
       <mat-accordion>
-        <mat-expansion-panel [expanded]="true" >
+        <mat-expansion-panel [expanded]="i === 1">
           <mat-expansion-panel-header>
             <mat-panel-title fxLayout="row" fxLayoutAlign="space-between center" >
               <!-- Cabeceras del submenu -->
@@ -42,8 +42,8 @@
           </mat-expansion-panel-header>
 
           <div *ngFor="let child of item.children">
-              <mat-list-item fxLayout="column" fxLayoutAlign="center center" (click)="onSelectedButton(child)" >
-                <mat-icon [class.active]="selected" matListIcon>{{child.icono}}</mat-icon>
+              <mat-list-item fxLayout="column" fxLayoutAlign="center center" (click)="onSelectedButton(child)" [ngClass]="{'resaltar-opcion-menu-selected' : child.isMouseEnter }" >
+                <mat-icon matListIcon>{{child.icono}}</mat-icon>
                 <a matLine>{{child.displayName}}</a>
               </mat-list-item>
           </div>

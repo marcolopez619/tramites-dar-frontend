@@ -36,5 +36,8 @@ h1.example-app-name {
      `<body>` to be our scrolling element for mobile layouts. */
   flex: 1 0 auto;
 }
-
-
+.resaltar-opcion-menu-selected {
+  background-color: #44bef1;
+  border-radius: 15px;
+  color: whitesmoke;
+}
