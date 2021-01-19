@@ -3,16 +3,22 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { HojaDeRutaComponent } from '../../../shared/components/hoja-de-ruta/hoja-de-ruta.component';
+import { ListaDocsAdjSubidosComponent } from '../../../shared/components/lista-docs-adj-subidos/lista-docs-adj-subidos.component';
+import { eModulo } from '../../../shared/enums/modulo.enum';
+import { eTipoArchivo } from '../../../shared/enums/tipo-archivo.enum';
 import { Accion, DataTableHRMouseModel, Estado } from '../../../shared/models/data-table-hr-mouse.model';
+import { HojaRutaReportModel } from '../../../shared/models/reporte.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
+import { ReporteService } from '../../../shared/services/reporte.service';
+import { UtilService } from '../../../shared/services/util.service';
 import { HojaDeRutaService } from '../../hoja-de-ruta.service';
-import { HojaRutaBandejaModel } from '../../models/hoja-de-ruta.model';
+import { FinalizarParticipacionQueryParameter, HojaRutaBandejaModel } from '../../models/hoja-de-ruta.model';
 import { AceptarHrComponent } from '../aceptar-hoja-ruta/aceptar-hoja-ruta.component';
 import { AdjuntarDocumentoComponent } from '../adjuntar-documento/adjuntar-documento.component';
 import { ComentarioComponent } from '../comentario-hoja-de-ruta/comentario-hoja-de-ruta.component';
@@ -21,9 +27,6 @@ import { FinalizarComponent } from '../finalizar/finalizar.component';
 import { NuevoParticipanteComponent } from '../participante/nuevo-participante.component';
 import { RechazarHrComponent } from '../rechazar-hoja-ruta/rechazar-hoja-ruta.component';
 import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
-import { ListaDocsAdjSubidosComponent } from '../../../shared/components/lista-docs-adj-subidos/lista-docs-adj-subidos.component';
-import { eModulo } from '../../../shared/enums/modulo.enum';
-import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -66,7 +69,8 @@ export class BandejaHojasDeRutaComponent
     public langService: LangService,
     public contextService: ContextoService,
     private hojaRutaService: HojaDeRutaService,
-    private router: Router
+    private reporteService: ReporteService,
+    private utilService: UtilService
   ) {
     super();
   }
@@ -487,12 +491,18 @@ export class BandejaHojasDeRutaComponent
         icon   : 'contact_support'
       }
     });
-    dlgFinalizarParticipacion
-      .afterClosed()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((result) => {
+
+    dlgFinalizarParticipacion.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe((result) => {
+
         if (result) {
-          this.inicializarBandeja();
+          const pFinalizarParameter: FinalizarParticipacionQueryParameter = {
+            idDerivacionParticipante: pHojaRuta.idDerivacionParticipante,
+            usuarioBitacora         : this.contextService.getItemContexto('samActName')
+          };
+
+          this.hojaRutaService.FinalizarParticipacionHojaRuta( pFinalizarParameter ).pipe( takeUntil(this.unsubscribe$) ).subscribe( respParticipacion => {
+            this.inicializarBandeja();
+          });
         }
       });
   }
@@ -512,6 +522,28 @@ export class BandejaHojasDeRutaComponent
           //..
         }
       });
+  }
+
+  onImprimirHojaruta(pHojaRuta: HojaRutaBandejaModel): void {
+    const reportData: HojaRutaReportModel = {
+      idHojaRuta      : pHojaRuta.idHojaRuta,
+      numeroHojaRuta  : pHojaRuta.numeroHojaRuta,
+      tipoHojaRuta    : pHojaRuta.tipoTramiteDes,
+      procedencia     : pHojaRuta.nombreRemitente,
+      numeroCite      : pHojaRuta.cite,
+      remitenteInicial: pHojaRuta.nombreRemitente,
+      fechaHoraInicial: pHojaRuta.fechaBandeja,
+      destinatario    : pHojaRuta.nombreDestinatario,
+      referencia      : pHojaRuta.referencia,
+      tipoDocumento   : pHojaRuta.descripcionDoc,
+      numeroFojas     : 0,
+      conCopiaFisica  : 'SI',
+      urgente         : 'NO'
+    };
+
+    this.reporteService.getHojaRutaTemplate( reportData ).pipe(takeUntil(this.unsubscribe$)).subscribe( respTemplate => {
+      this.utilService.createDocumentFromBlob( respTemplate, eTipoArchivo.Pdf, pHojaRuta.numeroHojaRuta);
+    });
   }
 
   onAceptar(pHojaRuta: HojaRutaBandejaModel): void {

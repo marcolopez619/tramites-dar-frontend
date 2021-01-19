@@ -55,6 +55,10 @@ export interface HojaRutaFinalizarPatch extends Bitacora {
   motivo?: string;
 }
 
+export interface FinalizarParticipacionQueryParameter extends Bitacora {
+  idDerivacionParticipante?: number;
+}
+
 export interface HojaRutaAceptar extends Bitacora {
   idHojaRuta?: number;
   esFisico?: number;
