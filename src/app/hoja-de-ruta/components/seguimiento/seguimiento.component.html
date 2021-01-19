@@ -24,10 +24,10 @@
       </div>
 
       <div *ngFor="let detalleSeguimientoItem of listaAux; let indice=index">
-        <fieldset fxLayout="row" fxFlex="100">
+        <fieldset-detalle fxLayout="row" fxFlex="100">
           <legend>{{indice+1}}</legend>
           <detalle-seguimiento [detalleSeguimiento]="detalleSeguimientoItem"></detalle-seguimiento>
-        </fieldset>
+        </fieldset-detalle>
       </div>
     </form>
   </fieldset>

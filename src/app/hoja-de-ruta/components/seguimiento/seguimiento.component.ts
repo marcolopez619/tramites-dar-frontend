@@ -1,29 +1,18 @@
 import { Component, Inject, OnInit, Output, EventEmitter } from "@angular/core";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
+import { FormBuilder,FormControl, FormGroup, Validators} from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatTableDataSource } from "@angular/material/table";
 import { takeUntil } from "rxjs/internal/operators/takeUntil";
-import {
-  fadeInAnim,
-  slideInLeftAnim,
-} from "../../../shared/animations/template.animation";
+import { fadeInAnim, slideInLeftAnim,} from "../../../shared/animations/template.animation";
 import { BaseComponent } from "../../../shared/base.component";
-//import { ComentarioModel } from '../../../shared/models/comentario.model';
-//import { ComentarioService } from '../../../shared/services/comentario.service';
-//import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from "../../../shared/services/lang.service";
 import { HojaDeRutaService } from "../../hoja-de-ruta.service";
 import { DetalleSeguimientoModel, SeguimientoModel } from "../../models/detalle-seguimiento.model";
-//import { DetalleSeguimientoModel } from '../../models/detalle-seguimiento.model';
 
 @Component({
   selector: "seguimiento",
   templateUrl: "./seguimiento.component.html",
+  styleUrls: ['./seguimiento.component.css'],
   animations: [fadeInAnim, slideInLeftAnim],
   host: { class: "container-fluid", "[@fadeInAnim]": "true" },
 })
@@ -31,8 +20,6 @@ export class SeguimientoComponent extends BaseComponent implements OnInit {
   longMaxDescripcion = 500;
   numeroHojaRuta="";
   referencia="";
-
-
 
   listaAux : Array<DetalleSeguimientoModel> = [];
   //TODO: Datos de prueba.

@@ -17,6 +17,6 @@ export interface SeguimientoModel {
     fecha_proceso?: Date;
     asunto?: string;
     plazoDias?: number;
-    participantes?: string;
+    participantes?: [];
     adjunto?: File;
   }
