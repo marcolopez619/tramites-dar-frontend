@@ -107,8 +107,7 @@ export class BandejaHojasDeRutaComponent
   }
 
   private inicializarBandeja(): void {
-    this.idPersonaGd =
-      this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
+    this.idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
     this.tipoBandeja = this.valorBandejaSelected;
     this.getAllHojaRutaBandeja(this.idPersonaGd, this.tipoBandeja);
   }

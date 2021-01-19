@@ -76,7 +76,6 @@
   </mat-dialog-content>
 
   <!-- <h3 style="text-align: center;">{{ langService.getLang(eModulo.HojaDeRuta, 'tit-enviar-hoja-ruta-seguro') }}</h3> -->
-
   <mat-dialog-actions fxLayout="row" fxLayoutGap="20px">
     <button fxFlex mat-raised-button color="accent" (click)="saveDerivar()" [disabled]="!this.formDerivarHR.valid || contextService.isLoading">{{langService.getLang(eModulo.Base, 'lbl-enviar')}}</button>
     <button fxFlex mat-raised-button color="warn" (click)="onClose()">{{langService.getLang(eModulo.Base, 'btnCancel')}}</button>

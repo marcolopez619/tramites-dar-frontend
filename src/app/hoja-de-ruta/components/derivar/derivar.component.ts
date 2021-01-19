@@ -19,6 +19,8 @@ import { HojaRutaDerivaModel } from '../../models/hoja-ruta-deriva.model';
 import { InstructivaModel } from '../../models/instructiva.model';
 import { ListaDocumentosAdjuntos } from '../../../shared/models/documento-adjunto.model';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { NotificacionService } from '../../../shared/services/notificacion.service';
+import { eTipoNotificacion } from '../../../shared/enums/tipo-notificacion.enum';
 
 @Component({
   selector: 'derivar',
@@ -52,6 +54,7 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     public langService: LangService,
     private formBuilder: FormBuilder,
     private usuarioService: UsuarioService,
+    private notificacionService: NotificacionService,
     private citesService: CitesService,
     private hojaRutaService: HojaDeRutaService
   ) {
@@ -61,12 +64,6 @@ export class DerivarComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.hojaRutaSelected = this.data.hojaRutaSelected as HojaRutaBandejaModel;
     this.vNumeroHojaRuta = this.hojaRutaSelected.numeroHojaRuta;
-
-    this.listaInicialDestinatarios.push({
-      idPersonaGd: this.hojaRutaSelected.idDestinatario,
-      nombreCompleto: this.hojaRutaSelected.nombreDestinatario
-    });
-
     const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
 
     if ( this.hojaRutaSelected.estado === 'creado' || 'en atencion') {
@@ -76,19 +73,15 @@ export class DerivarComponent extends BaseComponent implements OnInit {
         });
     }
 
-    /* if ( this.hojaRutaSelected.idCite <= 0 ) {
-      this.getAllCitesFromPersona( idPersonaGd );
-    } */
-
     this.getAllCitesFromPersona( idPersonaGd );
 
     // this.getHojaRutaInstructiva();
     this.getAllusuarios( 1 );
 
     this.formDerivarHR = this.formBuilder.group({
-      idDestinatario: [this.hojaRutaSelected.idDestinatario, Validators.compose([ Validators.required ])],
+      idDestinatario: [undefined, Validators.compose([ Validators.required ])],
       // idCite        : [this.hojaRutaSelected.idCite <= 0 ? undefined : this.hojaRutaSelected.idCite, Validators.compose([Validators.required])],
-      idCite        : [undefined],
+      idCite        : [this.hojaRutaSelected ? this.hojaRutaSelected.idCite : undefined],
       instructiva   : [this.hojaRutaSelected.asunto, Validators.compose([Validators.required])]
     });
   }
@@ -146,14 +139,10 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     this.listaDestinatarios = data.listaSeleccionados;
 
     if (this.listaDestinatarios.length === 0 ) {
-      this.listaCite.length = 0;
-      this.listaCite = [];
-      this.formDerivarHR.controls[ 'idCite' ].setValue( undefined );
-      this.formDerivarHR.controls[ 'idCite' ].updateValueAndValidity();
+      this.formDerivarHR.controls[ 'idDestinatario' ].setValue( undefined );
+      this.formDerivarHR.controls[ 'idDestinatario' ].updateValueAndValidity();
     } else {
-      // Carga los cites disponibles de la persona loggeada
-      const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
-      this.getAllCitesFromPersona( idPersonaGd );
+      this.formDerivarHR.controls[ 'idDestinatario' ].setValue( this.listaDestinatarios[ 0 ].idPersonaGd );
     }
 
   }
@@ -163,6 +152,14 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     // Recupera el idPersonaGD, primeramente de la lista autocomplete, sino lo encuentra toma el dato de la Hoja de ruta seleccionada
     const idPersonaDestinatario = this.listaDestinatarios.map( x => x.idPersonaGd )[ 0 ];
     const idPersonaDestinatarioFromHR = this.formDerivarHR.controls[ 'idDestinatario' ].value;
+    const idPersonaGdLogeado = this.contextService.getItemContexto(`idPersonaGd`);
+
+    if ( idPersonaDestinatario === idPersonaGdLogeado || idPersonaDestinatarioFromHR === idPersonaGdLogeado || !idPersonaGdLogeado ) {
+      this.notificacionService.showSnackbarMensaje( 'NO SE PUEDE DERIVAR A SI MISMO', 4000, eTipoNotificacion.Informativo );
+      return;
+    }
+
+    const idCiteRecuperado = this.formDerivarHR.controls['idCite'].value;
 
     const datosFormulario: HojaRutaDerivaModel = {
       IdHojaDeRuta   : this.hojaRutaSelected.idHojaRuta,
