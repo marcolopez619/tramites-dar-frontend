@@ -1,9 +1,8 @@
-import { BaseComponent } from './../../../shared/base.component';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
-import { OpcionBandeja } from '../../models/bandeja-principal.model';
 import { OpcionesBandejaDefault } from '../../../shared/models/opciones-bandeja.model';
-import { ppid } from 'process';
+import { OpcionBandeja } from '../../models/bandeja-principal.model';
+import { BaseComponent } from './../../../shared/base.component';
 
 @Component({
   selector: 'app-opciones-bandeja',
@@ -44,7 +43,8 @@ export class OpcionesBandejaComponent extends BaseComponent implements OnInit {
     }
 
     this.onOpcionClick.next( pParam.displayName );
-    // console.log( 'Opcione seleccionada : ' + pParam );
   }
+
+
 
 }

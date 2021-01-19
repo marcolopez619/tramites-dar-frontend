@@ -27,10 +27,10 @@
 </li> -->
 
 <mat-nav-list>
-  <span *ngFor="let item of listaOpcionesBandeja">
+  <span *ngFor="let item of listaOpcionesBandeja; let i = index;">
     <span *ngIf="item.children && item.children.length > 0">
       <mat-accordion>
-        <mat-expansion-panel [expanded]="true" >
+        <mat-expansion-panel [expanded]="i === 1">
           <mat-expansion-panel-header>
             <mat-panel-title fxLayout="row" fxLayoutAlign="space-between center" >
               <!-- Cabeceras del submenu -->
