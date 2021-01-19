@@ -29,6 +29,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import { ClassTipoNotificacionPipe } from './pipes/class-tipo-notificacion.pipe';
 import { IconTipoNotificacionPipe } from './pipes/icon-tipo-notificacion.pipe';
@@ -125,6 +126,7 @@ import { ListaDocsAdjSubidosComponent } from './components/lista-docs-adj-subido
         MatTabsModule,
         MatStepperModule,
         MatSidenavModule,
+        MatSlideToggleModule,
         // Modulos para formularios.
         FormsModule,
         ReactiveFormsModule,
@@ -159,6 +161,7 @@ import { ListaDocsAdjSubidosComponent } from './components/lista-docs-adj-subido
         MatTabsModule,
         MatStepperModule,
         MatSidenavModule,
+        MatSlideToggleModule,
 
         FormsModule,
         ReactiveFormsModule,
@@ -187,7 +190,8 @@ import { ListaDocsAdjSubidosComponent } from './components/lista-docs-adj-subido
         AutocompleteComponent,
         DocumentoAdjuntoComponent,
         BusquedaAvanzadaComponent,
-        DataTableHojaDeRutaComponent
+        DataTableHojaDeRutaComponent,
+        ListaDocsAdjSubidosComponent
     ],
     entryComponents: [
         ConfirmDialogComponent

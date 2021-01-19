@@ -32,6 +32,9 @@ export class ListaDocsAdjSubidosComponent extends BaseComponent  implements OnIn
   @Input()
   bandeja: string;
 
+  @Input()
+  ocultarToolbar: boolean;
+
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -47,7 +50,7 @@ export class ListaDocsAdjSubidosComponent extends BaseComponent  implements OnIn
   }
 
   ngOnInit(): void {
-    this.listaDocumentosAdjuntos = JSON.parse( this.data.listaDocumentosAdj ) as Array<ListaDocumentosAdjuntos>;
+    this.listaDocumentosAdjuntos = JSON.parse( this.data.listaDocumentosAdj ?? this.listaDocumentosAdjuntos ) as Array<ListaDocumentosAdjuntos>;
 
     this.listaDocumentosAdjuntos.forEach(element => {
       const indexUltimaSlah           = element.pathArchivo.lastIndexOf('/');

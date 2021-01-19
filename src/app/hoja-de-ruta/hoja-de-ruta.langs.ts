@@ -85,6 +85,8 @@ export const hojaDeRutaLang = {
     'tit-enviar-hoja-ruta': 'Enviar hoja de ruta',
     'tit-enviar-hoja-ruta-seguro': '¿Esta seguro de enviar la hoja de ruta.?',
     'tit-rechazar-hoja-ruta':'Rechazar hoja de ruta',
+    'tit-finalizar-participacion-hr' : 'Finalizar participación',
+    'msg-finalizar-participacion-hr' : '¿ Seguro de finalizar su participación en la hoja de ruta: $numeroHojaRuta ?',
 
     'tit-ventana-finaliza-tramite': 'Finalizar trámite',
     'tit-ventana-añadir-comentario': 'Añadir comentario',

@@ -3,7 +3,8 @@
 
 <mat-card>
   <mat-card-header class="alt-theme">
-    <mat-toolbar color="primary">
+
+    <mat-toolbar color="primary" *ngIf="!ocultarToolbar">
       <h3>{{ langService.getLang(eModulo.Base, 'tit-lista-doc-adj') }}</h3>
       <span class="flex-spacer"></span>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">

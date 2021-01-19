@@ -23,6 +23,7 @@ import { RechazarHrComponent } from '../rechazar-hoja-ruta/rechazar-hoja-ruta.co
 import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
 import { ListaDocsAdjSubidosComponent } from '../../../shared/components/lista-docs-adj-subidos/lista-docs-adj-subidos.component';
 import { eModulo } from '../../../shared/enums/modulo.enum';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -31,9 +32,19 @@ import { eModulo } from '../../../shared/enums/modulo.enum';
   animations: [fadeInAnim, slideInLeftAnim],
   host: { class: 'container-fluid', '[@fadeInAnim]': 'true' }
 })
-export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
-
-  displayedColumns = ['tipoTramiteDes', 'nombreRemitente', 'descripcionDoc', 'numeroHojaRuta', 'nombreDestinatario', 'referencia', 'fechaBandeja', 'estado'];
+export class BandejaHojasDeRutaComponent
+  extends BaseComponent
+  implements OnInit, AfterViewInit, OnDestroy {
+  displayedColumns = [
+    'tipoTramiteDes',
+    'nombreRemitente',
+    'descripcionDoc',
+    'numeroHojaRuta',
+    'nombreDestinatario',
+    'referencia',
+    'fechaBandeja',
+    'estado'
+  ];
   dataSource = new MatTableDataSource<HojaRutaBandejaModel>([]);
 
   mouseOverModel: DataTableHRMouseModel = {};
@@ -45,8 +56,8 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
   @Input()
   valorBandejaSelected: string;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   idPersonaGd = 0;
   tipoBandeja = '';
 
@@ -92,26 +103,28 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
   }
 
   private inicializarBandeja(): void {
-
-    this.idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
+    this.idPersonaGd =
+      this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
     this.tipoBandeja = this.valorBandejaSelected;
     this.getAllHojaRutaBandeja(this.idPersonaGd, this.tipoBandeja);
   }
 
-  private getAllHojaRutaBandeja( idPersonaGd: number, tipoBandeja ): void {
-    this.hojaRutaService.getAllHojaRutaBandeja( idPersonaGd, tipoBandeja ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaHojaRutaBandeja => {
-
-      if (listaHojaRutaBandeja.data !== null ) {
-        this.listaBandeja = listaHojaRutaBandeja.data as Array<HojaRutaBandejaModel>;
-      } else {
-        this.listaBandeja.length = 0;
-        this.listaBandeja = [];
-      }
-      this.dataSource.data = this.listaBandeja;
-    });
+  private getAllHojaRutaBandeja(idPersonaGd: number, tipoBandeja): void {
+    this.hojaRutaService
+      .getAllHojaRutaBandeja(idPersonaGd, tipoBandeja)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((listaHojaRutaBandeja) => {
+        if (listaHojaRutaBandeja.data !== null) {
+          this.listaBandeja = listaHojaRutaBandeja.data as Array<HojaRutaBandejaModel>;
+        } else {
+          this.listaBandeja.length = 0;
+          this.listaBandeja = [];
+        }
+        this.dataSource.data = this.listaBandeja;
+      });
   }
 
-   /**
+  /**
    * METODO QUE CREA LAS ACCIONES DEL MOUSEOVER EN FUNCION A LOS ESTADOS
    * Y ASIGNA LO QUE DEBE HACER CUANDO SE PRECIONA UN CLICK DEL ICONO CORRESPONDIENTE
    *
@@ -119,189 +132,225 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
    * @memberof DataTableHojaDeRutaComponent
    */
   private crearAccionesMouseOver(): void {
-
     let estados: Array<Estado> = [];
 
     switch (this.valorBandejaSelected.toUpperCase()) {
-
       case 'PRINCIPAL': {
-        const acciones: Array<Accion> = [{
-          descAccion : 'enviar',
-          tooltipText : 'Enviar',
-          icono : 'send',
-          onClick : this.onDerivar
-        },
-        /* {
+        const acciones: Array<Accion> = [
+          {
+            descAccion: 'enviar',
+            tooltipText: 'Enviar',
+            icono: 'send',
+            onClick: this.onDerivar
+          },
+          /* {
           descAccion : 'editar',
           tooltipText : 'Editar',
           icono : 'edit'
         }, */
-        {
-          descAccion : 'adjuntar_documento',
-          tooltipText : 'Adjuntar documento',
-          icono : 'attachment',
-          onClick : this.onAdjuntarDocumento
-        }
-      ];
+          {
+            descAccion: 'adjuntar_documento',
+            tooltipText: 'Adjuntar documento',
+            icono: 'attachment',
+            onClick: this.onAdjuntarDocumento
+          }
+        ];
 
-        estados = [{
-          descEstado : 'creado',
-          acciones : acciones
-        }];
+        estados = [
+          {
+            descEstado: 'creado',
+            acciones: acciones
+          }
+        ];
 
         break;
       }
       case 'RECIBIDO': {
-        const acciones: Array<Accion> = [{
-          descAccion : 'aceptar',
-          tooltipText : 'Aceptar envío',
-          icono : 'done'
-        }, {
-          descAccion : 'rechazar',
-          tooltipText : 'Rechazar envío',
-          icono : 'highlight_off'
-        }, {
-          descAccion : 'ver_seguimiento',
-          tooltipText : 'Ver seguimiento',
-          icono : 'visibility',
-          onClick: this.onVerSeguimiento
-        }];
+        const acciones: Array<Accion> = [
+          {
+            descAccion: 'aceptar',
+            tooltipText: 'Aceptar envío',
+            icono: 'done'
+          },
+          {
+            descAccion: 'rechazar',
+            tooltipText: 'Rechazar envío',
+            icono: 'highlight_off'
+          },
+          {
+            descAccion: 'ver_seguimiento',
+            tooltipText: 'Ver seguimiento',
+            icono: 'visibility',
+            onClick: this.onVerSeguimiento
+          }
+        ];
 
-        estados = [{
-          descEstado : 'espera',
-          acciones : acciones
-        }];
+        estados = [
+          {
+            descEstado: 'espera',
+            acciones: acciones
+          }
+        ];
 
         break;
       }
       case 'ENVIADO': {
-        const acciones: Array<Accion> = [{
-          descAccion : 'cancelar',
-          tooltipText : 'Cancelar envío',
-          icono : 'cancel_schedule_send'
-        }];
+        const acciones: Array<Accion> = [
+          {
+            descAccion: 'cancelar',
+            tooltipText: 'Cancelar envío',
+            icono: 'cancel_schedule_send'
+          }
+        ];
 
-        estados = [{
-          descEstado : 'enviado',
-          acciones : acciones
-        }];
+        estados = [
+          {
+            descEstado: 'enviado',
+            acciones: acciones
+          }
+        ];
 
         break;
       }
       case 'RECHAZADO': {
-        const acciones: Array<Accion> = [{
-          descAccion : 'enviar',
-          tooltipText : 'Enviar',
-          icono : 'send',
-          onClick : this.onDerivar
-        }/* , {
+        const acciones: Array<Accion> = [
+          {
+            descAccion: 'enviar',
+            tooltipText: 'Enviar',
+            icono: 'send',
+            onClick: this.onDerivar
+          } /* , {
           descAccion : 'adjuntar_documento',
           tooltipText : 'Adjuntar documento',
           icono : 'attachment',
           onClick: this.onAdjuntarDocumento
         } */
-      ];
+        ];
 
-        estados = [{
-          descEstado : 'rechazado',
-          acciones : acciones
-        }];
+        estados = [
+          {
+            descEstado: 'rechazado',
+            acciones: acciones
+          }
+        ];
 
         break;
       }
       case 'PENDIENTE': {
-        const accionesAEnAtencion: Array<Accion> = [{
-          descAccion : 'derivar',
-          tooltipText : 'Derivar',
-          icono : 'near_me',
-          onClick: this.onDerivar
-        }, {
-          descAccion : 'adjuntar_documento',
-          tooltipText : 'Adjuntar documento',
-          icono : 'attachment',
-          onClick: this.onAdjuntarDocumento
-        }, {
-          descAccion : 'anadir_participante',
-          tooltipText : 'Añadir participante',
-          icono : 'person_add',
-          onClick: this.onAnadirParticipante
-        }, {
-          descAccion : 'anadir_comentario',
-          tooltipText : 'Añadir comentario',
-          icono : 'add_comment',
-          onClick: this.onAnadirComentario
-        }, {
-          descAccion : 'ver_seguimiento',
-          tooltipText : 'Ver seguimiento',
-          icono : 'remove_red_eye',
-          onClick: this.onVerSeguimiento
+        const accionesAEnAtencion: Array<Accion> = [
+          {
+            descAccion: 'derivar',
+            tooltipText: 'Derivar',
+            icono: 'near_me',
+            onClick: this.onDerivar
+          },
+          {
+            descAccion: 'adjuntar_documento',
+            tooltipText: 'Adjuntar documento',
+            icono: 'attachment',
+            onClick: this.onAdjuntarDocumento
+          },
+          {
+            descAccion: 'anadir_participante',
+            tooltipText: 'Añadir participante',
+            icono: 'person_add',
+            onClick: this.onAnadirParticipante
+          },
+          {
+            descAccion: 'anadir_comentario',
+            tooltipText: 'Añadir comentario',
+            icono: 'add_comment',
+            onClick: this.onAnadirComentario
+          },
+          {
+            descAccion: 'ver_seguimiento',
+            tooltipText: 'Ver seguimiento',
+            icono: 'remove_red_eye',
+            onClick: this.onVerSeguimiento
+          },
+          {
+            descAccion: 'finalizar',
+            tooltipText: 'Finalizar trámite',
+            icono: 'offline_pin',
+            onClick: this.onFinalizar
+          }
+        ];
 
-        }, {
-          descAccion : 'finalizar',
-          tooltipText : 'Finalizar trámite',
-          icono : 'offline_pin',
-          onClick: this.onFinalizar
-        }];
+        const accionesParticipante: Array<Accion> = [
+          {
+            descAccion: 'adjuntar_documento',
+            tooltipText: 'Adjuntar documento',
+            icono: 'attachment'
+          },
+          {
+            descAccion: 'anadir_comentario',
+            tooltipText: 'Añadir comentario',
+            icono: 'add_comment'
+          },
+          {
+            descAccion: 'finalizar_participacion',
+            tooltipText: 'Finalizar participación',
+            icono: 'person_off'
+          },
+          {
+            descAccion: 'ver_seguimiento',
+            tooltipText: 'Ver seguimiento',
+            icono: 'remove_red_eye'
+          }
+        ];
 
-        const accionesParticipante: Array<Accion> = [{
-          descAccion : 'adjuntar_documento',
-          tooltipText : 'Adjuntar documento',
-          icono : 'attachment'
-        }, {
-          descAccion : 'anadir_comentario',
-          tooltipText : 'Añadir comentario',
-          icono : 'add_comment'
-        }, {
-          descAccion : 'finalizar_participacion',
-          tooltipText : 'Finalizar participación',
-          icono : 'person_off'
-        }, {
-          descAccion : 'ver_seguimiento',
-          tooltipText : 'Ver seguimiento',
-          icono : 'remove_red_eye'
-        }];
-
-        estados = [{
-          descEstado : 'en atencion',
-          acciones : accionesAEnAtencion
-        }/* ,{
+        estados = [
+          {
+            descEstado: 'en atencion',
+            acciones: accionesAEnAtencion
+          } /* ,{
           descEstado : 'participante',
           acciones : accionesParticipante
-        } */];
+        } */
+        ];
 
         break;
       }
       case 'PROCESO': {
-        const acciones: Array<Accion> = [{
-          descAccion : 'ver_seguimiento',
-          tooltipText : 'Ver seguimiento',
-          icono : 'remove_red_eye'
-        }];
+        const acciones: Array<Accion> = [
+          {
+            descAccion: 'ver_seguimiento',
+            tooltipText: 'Ver seguimiento',
+            icono: 'remove_red_eye'
+          }
+        ];
 
-        estados = [{
-          descEstado : 'proceso',
-          acciones : acciones
-        }];
+        estados = [
+          {
+            descEstado: 'proceso',
+            acciones: acciones
+          }
+        ];
 
         break;
       }
       case 'FINALIZADO': {
-        const acciones: Array<Accion> = [{
-          descAccion : 'ver_seguimiento',
-          tooltipText : 'Ver seguimiento',
-          icono : 'remove_red_eye',
-          onClick: this.onVerSeguimiento
-        }];
+        const acciones: Array<Accion> = [
+          {
+            descAccion: 'ver_seguimiento',
+            tooltipText: 'Ver seguimiento',
+            icono: 'remove_red_eye',
+            onClick: this.onVerSeguimiento
+          }
+        ];
 
-        estados = [{
-          descEstado : 'finalizado',
-          acciones : acciones
-        }];
+        estados = [
+          {
+            descEstado: 'finalizado',
+            acciones: acciones
+          }
+        ];
 
         break;
       }
-      default: break;
-      }
+      default:
+        break;
+    }
 
     this.mouseOverModel.estados = estados;
     this.mouseOverModel.descBandeja = this.valorBandejaSelected;
@@ -323,7 +372,6 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
       });
   }
   onDerivar(pObjHojaRuta: HojaRutaBandejaModel): void {
-
     const dlgDerivar = this.dialog.open(DerivarComponent, {
       disableClose: false,
       width: '1000px',
@@ -338,7 +386,7 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
         if (result) {
           this.inicializarBandeja();
         }
-    });
+      });
   }
   onAdjuntarDocumento(pHojaRuta: HojaRutaBandejaModel): void {
     const dlgDerivar = this.dialog.open(AdjuntarDocumentoComponent, {
@@ -355,11 +403,10 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
         if (result) {
           this.inicializarBandeja();
         }
-    });
+      });
   }
 
   onListarDocumentosAdjuntos(pHojaRuta: HojaRutaBandejaModel): void {
-
     const dlgListaDocAdj = this.dialog.open(ListaDocsAdjSubidosComponent, {
       disableClose: false,
       width: '1500px',
@@ -375,10 +422,8 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
           //..
         }
       });
-
   }
   onAnadirParticipante(pHojaRuta: HojaRutaBandejaModel): void {
-
     const dlgNuevoParticipante = this.dialog.open(NuevoParticipanteComponent, {
       disableClose: false,
       width: '1000px',
@@ -396,7 +441,6 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
       });
   }
   onAnadirComentario(pHojaRuta: HojaRutaBandejaModel): void {
-
     const dlgAnadirComentario = this.dialog.open(ComentarioComponent, {
       disableClose: false,
       width: '1000px',
@@ -414,7 +458,6 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
       });
   }
   onFinalizar(pHojaRuta: HojaRutaBandejaModel): void {
-
     const dlgFinalizar = this.dialog.open(FinalizarComponent, {
       disableClose: false,
       width: '1000px',
@@ -431,8 +474,29 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
         }
       });
   }
-  onVerSeguimiento(pHojaRuta: HojaRutaBandejaModel): void {
+  onFinalizarParticipacion(pHojaRuta: HojaRutaBandejaModel): void {
+    const title = this.langService.getLang(eModulo.HojaDeRuta, 'tit-finalizar-participacion-hr' );
+    const content = this.langService.getLang(eModulo.HojaDeRuta, 'msg-finalizar-participacion-hr' ).replace('$numeroHojaRuta' , pHojaRuta.numeroHojaRuta );
 
+    const dlgFinalizarParticipacion = this.dialog.open( ConfirmDialogComponent , {
+      disableClose: false,
+      width: '600px',
+      data: {
+        title  : title,
+        content: content,
+        icon   : 'contact_support'
+      }
+    });
+    dlgFinalizarParticipacion
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          this.inicializarBandeja();
+        }
+      });
+  }
+  onVerSeguimiento(pHojaRuta: HojaRutaBandejaModel): void {
     const dlgVerSeguimiento = this.dialog.open(SeguimientoComponent, {
       disableClose: false,
       width: '1000px',
@@ -449,47 +513,48 @@ export class BandejaHojasDeRutaComponent extends BaseComponent implements OnInit
         }
       });
   }
-  onAceptar(pObjHojaRuta: HojaRutaBandejaModel): void {
-    /**title: this.langService.getLang(this.eModulo.HojaDeRuta, 'tit-confirmacion-aceptar'),
-                  content: this.langService.getLang(this.eModulo.HojaDeRuta, 'lbl-confirmar-aceptar'), */
-        const dlgAceptarHr = this.dialog.open(AceptarHrComponent, {
-          disableClose: false,
-          width: '500px',
-          data: {
-                  title: this.langService.getLang(eModulo.HojaDeRuta, 'tit-confirmacion-aceptar'),//'Aceptar hoja de ruta',
-                  content: this.langService.getLang(eModulo.HojaDeRuta, 'lbl-confirmar-aceptar')+pObjHojaRuta.numeroHojaRuta,
-                  icon: 'public',
-                  hojaRutaSelected: pObjHojaRuta
-          }
-        });
 
-        dlgAceptarHr.afterClosed()
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe((result) => {
-            if (result) {
-              this.inicializarBandeja();
-            }
-          });
-      }
-  onRechazar(pObjHojaRuta: HojaRutaBandejaModel): void {
-            const confirmDialog = this.dialog.open(RechazarHrComponent, {
-              disableClose: false,
-              width: '500px',
-              data: {
-                      title: this.langService.getLang(eModulo.HojaDeRuta, 'tit-rechazar-hoja-ruta'),
-                      content: this.langService.getLang(eModulo.HojaDeRuta, 'lbl-rechazar-hoja-ruta-seguro')+pObjHojaRuta.numeroHojaRuta,
-                      icon: 'public',
-                      hojaRutaSelected: pObjHojaRuta
-              }
-            });
+  onAceptar(pHojaRuta: HojaRutaBandejaModel): void {
 
-                      confirmDialog.afterClosed()
-              .pipe(takeUntil(this.unsubscribe$))
-              .subscribe((result) => {
-                if (result) {
-                  this.inicializarBandeja();
-                }
-              });
-          }
+    const dlgAceptarHr = this.dialog.open(AceptarHrComponent, {
+        disableClose: false,
+        width: '500px',
+        data: {
+                title: this.langService.getLang(eModulo.HojaDeRuta, 'tit-confirmacion-aceptar'),
+                content: this.langService.getLang(eModulo.HojaDeRuta, 'lbl-confirmar-aceptar').concat( pHojaRuta.numeroHojaRuta ),
+                icon: 'contact_support',
+                hojaRutaSelected: pHojaRuta
+        }
+    });
+
+    dlgAceptarHr.afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          this.inicializarBandeja();
+        }
+      });
+  }
+  onRechazar(pHojaRuta: HojaRutaBandejaModel): void {
+    const dlgRechazarHR = this.dialog.open(RechazarHrComponent, {
+      disableClose: false,
+      width: '520px',
+      data: {
+        title: this.langService.getLang(eModulo.HojaDeRuta, 'tit-rechazar-hoja-ruta'),
+        content: this.langService.getLang(eModulo.HojaDeRuta, 'lbl-rechazar-hoja-ruta-seguro').concat( pHojaRuta.numeroHojaRuta ) ,
+        icon: 'contact_support',
+        hojaRutaSelected: pHojaRuta
+        }
+      });
+
+    dlgRechazarHR.afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result) {
+          this.inicializarBandeja();
+        }
+    });
+
+  }
 
 }

@@ -24,7 +24,7 @@
               <sh-autocomplete
                 [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatario' )"
                 [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-destinatario' )"
-                [isRequired]="true"
+                [isRequired]="false"
                 [listaInicial]="listaInicialDestinatarios"
                 [listaCompleta]="listaUsuarios"
                 [cantidadPermitida]="1"
@@ -36,7 +36,7 @@
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
               <mat-form-field fxFlex>
                 <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-buscar-cite' )}} : </mat-label>
-                <mat-select formControlName="idCite" required placeholder="Seleccione">
+                <mat-select formControlName="idCite" placeholder="Seleccione">
                   <mat-option *ngFor="let cite of listaCite" [value]="cite.idCite">
                     {{cite.numeroCite}}
                   </mat-option>
@@ -60,6 +60,13 @@
               </mat-form-field>
 
             </div>
+          </div>
+
+
+
+          <div fxLayout="column" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+              <mat-slide-toggle [checked]="showAllDocAdj" (change)="onChangeSlideToggleValue($event)"> Ver lista de documentos adjuntos </mat-slide-toggle>
+              <sh-lista-docs-adj-subidos *ngIf="showAllDocAdj" [ocultarToolbar]="true" [listaDocumentosAdjuntos]="listaDocumentosAdjuntos" ></sh-lista-docs-adj-subidos>
           </div>
 
         </div>

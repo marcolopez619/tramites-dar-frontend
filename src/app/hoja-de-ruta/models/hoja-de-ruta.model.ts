@@ -44,6 +44,7 @@ export interface HojaRutaBandejaModel {
   estado?: string;
   numeroHojaRuta?: string;
   listaAdjuntos?: string;
+  idDerivacionParticipante?: number;
   codigoRespuesta?: number;
   mensaje?: string;
   isRowMouseOver?: boolean;

@@ -17,6 +17,8 @@ import { HojaDeRutaService } from '../../hoja-de-ruta.service';
 import { HojaRutaBandejaModel } from '../../models/hoja-de-ruta.model';
 import { HojaRutaDerivaModel } from '../../models/hoja-ruta-deriva.model';
 import { InstructivaModel } from '../../models/instructiva.model';
+import { ListaDocumentosAdjuntos } from '../../../shared/models/documento-adjunto.model';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'derivar',
@@ -27,6 +29,7 @@ import { InstructivaModel } from '../../models/instructiva.model';
 export class DerivarComponent extends BaseComponent implements OnInit {
   listaUsuarios: Array<UsuarioModel> = [];
   listaCite: Array<CiteModelByUsuario> = [];
+  listaDocumentosAdjuntos: string;
 
   private hojaRutaSelected: HojaRutaBandejaModel;
 
@@ -40,6 +43,7 @@ export class DerivarComponent extends BaseComponent implements OnInit {
   instructiva: string;
   filteredOptions: Observable<string>;
   vNumeroHojaRuta: string;
+  showAllDocAdj: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -56,7 +60,7 @@ export class DerivarComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.hojaRutaSelected = this.data.hojaRutaSelected as HojaRutaBandejaModel;
-    this.vNumeroHojaRuta=this.hojaRutaSelected.numeroHojaRuta;
+    this.vNumeroHojaRuta = this.hojaRutaSelected.numeroHojaRuta;
 
     this.listaInicialDestinatarios.push({
       idPersonaGd: this.hojaRutaSelected.idDestinatario,
@@ -65,22 +69,26 @@ export class DerivarComponent extends BaseComponent implements OnInit {
 
     const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
 
-    if ( this.hojaRutaSelected.estado === 'creado' ) {
+    if ( this.hojaRutaSelected.estado === 'creado' || 'en atencion') {
       this.listaCite.push({
           idCite    : this.hojaRutaSelected.idCite,
           numeroCite: this.hojaRutaSelected.cite
         });
     }
-    if ( this.hojaRutaSelected.idCite <= 0 ) {
+
+    /* if ( this.hojaRutaSelected.idCite <= 0 ) {
       this.getAllCitesFromPersona( idPersonaGd );
-    }
+    } */
+
+    this.getAllCitesFromPersona( idPersonaGd );
 
     // this.getHojaRutaInstructiva();
     this.getAllusuarios( 1 );
 
     this.formDerivarHR = this.formBuilder.group({
       idDestinatario: [this.hojaRutaSelected.idDestinatario, Validators.compose([ Validators.required ])],
-      idCite        : [this.hojaRutaSelected.idCite <= 0 ? undefined : this.hojaRutaSelected.idCite, Validators.compose([Validators.required])],
+      // idCite        : [this.hojaRutaSelected.idCite <= 0 ? undefined : this.hojaRutaSelected.idCite, Validators.compose([Validators.required])],
+      idCite        : [undefined],
       instructiva   : [this.hojaRutaSelected.asunto, Validators.compose([Validators.required])]
     });
   }
@@ -109,6 +117,19 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     });
   }
 
+  private getListaDocumentosAdjuntos(): void {
+    this.listaDocumentosAdjuntos = this.hojaRutaSelected.listaAdjuntos; // JSON.parse(this.hojaRutaSelected.listaAdjuntos) as Array<ListaDocumentosAdjuntos>;
+  }
+
+  onChangeSlideToggleValue(event:  MatSlideToggleChange ): void {
+    this.showAllDocAdj = event.checked;
+
+    if (this.showAllDocAdj) {
+      this.getListaDocumentosAdjuntos();
+    } else {
+      this.listaDocumentosAdjuntos = '';
+    }
+  }
 
   getListaSeleccionadaInstructiva($event): void {
     this.vListaInstructivaAux = $event as Array<InstructivaModel>;
@@ -137,7 +158,6 @@ export class DerivarComponent extends BaseComponent implements OnInit {
 
   }
 
-
   saveDerivar(): void {
 
     // Recupera el idPersonaGD, primeramente de la lista autocomplete, sino lo encuentra toma el dato de la Hoja de ruta seleccionada
@@ -145,11 +165,11 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     const idPersonaDestinatarioFromHR = this.formDerivarHR.controls[ 'idDestinatario' ].value;
 
     const datosFormulario: HojaRutaDerivaModel = {
-      IdHojaDeRuta   : this.data.hojaRutaSelected.idHojaRuta,
+      IdHojaDeRuta   : this.hojaRutaSelected.idHojaRuta,
       IdPersonaGb    : idPersonaDestinatario ?? idPersonaDestinatarioFromHR,
       Asunto         : this.formDerivarHR.controls['instructiva'].value,
-      PlazoDias      : this.data.hojaRutaSelected.plazo,
-      Urgente        : this.data.hojaRutaSelected.urgente,
+      PlazoDias      : this.hojaRutaSelected.plazo,
+      Urgente        : this.hojaRutaSelected.urgente,
       UsuarioBitacora: this.contextService.getItemContexto('samActName')
     };
 
