@@ -96,6 +96,7 @@ export const hojaDeRutaLang = {
     'lbl-numero-hoja-ruta': 'Número hoja de ruta',
     'lbl-numero-descripcion': 'Descripcion',
     'lbl-rechazar-hoja-ruta-seguro': '¿Está seguro de rechazar la hoja de ruta : ',
+    'lbl-seguimiento-detalle-nombres':'Nombres ',
 
     'lbl-fecha-registro' : 'Fecha registro',
     'tit-bandeja-seleccionada' : 'Bandeja: $bandejaSeleccionada'
