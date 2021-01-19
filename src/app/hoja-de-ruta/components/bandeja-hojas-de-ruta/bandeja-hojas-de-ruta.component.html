@@ -78,7 +78,7 @@
 
             <div *ngSwitchCase="'ENVIADO'">
               <div *ngIf="element.estado.toUpperCase() == 'EN ESPERA' ">
-                <a mat-icon-button matTooltip="Cancelar envío" (click)="console.log('jajajajajajajajajja')"> <mat-icon>cancel_schedule_send</mat-icon></a>
+                <a mat-icon-button matTooltip="Imprimir planilla hoja de ruta" (click)="onImprimirHojaruta(element)"> <mat-icon>print</mat-icon></a>
               </div>
             </div>
 
@@ -88,6 +88,7 @@
                 <a mat-icon-button matTooltip="Aceptar envío" (click)="onAceptar(element)"> <mat-icon>done</mat-icon></a>
                 <a mat-icon-button matTooltip="Rechazar envío" (click)="onRechazar(element)"> <mat-icon>highlight_off</mat-icon></a>
                 <a mat-icon-button matTooltip="Ver seguimiento" (click)="onVerSeguimiento(element)"> <mat-icon>visibility</mat-icon></a>
+                <a mat-icon-button matTooltip="Imprimir planilla hoja de ruta" (click)="onImprimirHojaruta(element)"> <mat-icon>print</mat-icon></a>
               </div>
             </div>
 
@@ -109,6 +110,7 @@
                 <a mat-icon-button matTooltip="Añadir comentario" (click)="onAnadirComentario(element)"> <mat-icon>add_comment</mat-icon></a>
                 <a mat-icon-button matTooltip="Ver seguimiento" (click)="onVerSeguimiento(element)"> <mat-icon>visibility</mat-icon></a>
                 <a mat-icon-button matTooltip="Finalizar trámite" (click)="onFinalizar(element)"> <mat-icon>offline_pin</mat-icon></a>
+                <a mat-icon-button matTooltip="Imprimir planilla hoja de ruta" (click)="onImprimirHojaruta(element)"> <mat-icon>print</mat-icon></a>
               </div>
 
               <div *ngIf="element.estado.toUpperCase() == 'PARTICIPANTE' ">
@@ -116,6 +118,7 @@
                 <a mat-icon-button matTooltip="Añadir comentario" (click)="onAnadirComentario(element)"> <mat-icon>add_comment</mat-icon></a>
                 <a mat-icon-button matTooltip="Finalizar participacion" (click)="onFinalizarParticipacion(element)"> <mat-icon>playlist_add_check</mat-icon></a>
                 <a mat-icon-button matTooltip="Ver seguimiento" (click)="onVerSeguimiento(element)"> <mat-icon>visibility</mat-icon></a>
+                <a mat-icon-button matTooltip="Imprimir planilla hoja de ruta" (click)="onImprimirHojaruta(element)"> <mat-icon>print</mat-icon></a>
               </div>
             </div>
 
@@ -123,6 +126,7 @@
             <div *ngSwitchCase="'PROCESO'">
               <div *ngIf="element.estado.toUpperCase() == 'ATENDIDO' ">
                 <a mat-icon-button matTooltip="Ver seguimiento" (click)="onVerSeguimiento(element)"> <mat-icon>visibility</mat-icon></a>
+                <a mat-icon-button matTooltip="Imprimir planilla hoja de ruta" (click)="onImprimirHojaruta(element)"> <mat-icon>print</mat-icon></a>
               </div>
             </div>
 

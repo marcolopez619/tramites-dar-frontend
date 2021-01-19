@@ -24,6 +24,11 @@ import { SeguimientoComponent } from '../seguimiento/seguimiento.component';
 import { ListaDocsAdjSubidosComponent } from '../../../shared/components/lista-docs-adj-subidos/lista-docs-adj-subidos.component';
 import { eModulo } from '../../../shared/enums/modulo.enum';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { ReporteService } from '../../../shared/services/reporte.service';
+import { UtilService } from '../../../shared/services/util.service';
+import { CiteTemplateJsReport } from '../../../cites/models/cites.models';
+import { HojaRutaReportModel } from '../../../shared/models/reporte.model';
+import { eTipoArchivo } from '../../../shared/enums/tipo-archivo.enum';
 
 @Component({
   selector: 'app-bandeja-hojas-de-ruta',
@@ -66,7 +71,8 @@ export class BandejaHojasDeRutaComponent
     public langService: LangService,
     public contextService: ContextoService,
     private hojaRutaService: HojaDeRutaService,
-    private router: Router
+    private reporteService: ReporteService,
+    private utilService: UtilService
   ) {
     super();
   }
@@ -512,6 +518,28 @@ export class BandejaHojasDeRutaComponent
           //..
         }
       });
+  }
+
+  onImprimirHojaruta(pHojaRuta: HojaRutaBandejaModel): void {
+    const reportData: HojaRutaReportModel = {
+      idHojaRuta      : pHojaRuta.idHojaRuta,
+      numeroHojaRuta  : pHojaRuta.numeroHojaRuta,
+      tipoHojaRuta    : pHojaRuta.tipoTramiteDes,
+      procedencia     : pHojaRuta.nombreRemitente,
+      numeroCite      : pHojaRuta.cite,
+      remitenteInicial: pHojaRuta.nombreRemitente,
+      fechaHoraInicial: pHojaRuta.fechaBandeja,
+      destinatario    : pHojaRuta.nombreDestinatario,
+      referencia      : pHojaRuta.referencia,
+      tipoDocumento   : pHojaRuta.descripcionDoc,
+      numeroFojas     : 0,
+      conCopiaFisica  : 'SI',
+      urgente         : 'NO'
+    };
+
+    this.reporteService.getHojaRutaTemplate( reportData ).pipe(takeUntil(this.unsubscribe$)).subscribe( respTemplate => {
+      this.utilService.createDocumentFromBlob( respTemplate, eTipoArchivo.Pdf, pHojaRuta.numeroHojaRuta);
+    });
   }
 
   onAceptar(pHojaRuta: HojaRutaBandejaModel): void {

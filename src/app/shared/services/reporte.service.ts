@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CiteTemplateJsReport } from '../../cites/models/cites.models';
 import { ContextoService } from './contexto.service';
+import { HojaRutaReportModel } from '../models/reporte.model';
 
 @Injectable()
 export class ReporteService {
@@ -17,5 +18,9 @@ export class ReporteService {
 
   getPlanillaCiteTemplate(pDatosReporte: CiteTemplateJsReport): Observable<Blob> {
     return this.httpClient.post(`${this.baseURL}/cite`, pDatosReporte, { responseType : 'blob'} );
+  }
+
+  getHojaRutaTemplate(pDatosReporte?: HojaRutaReportModel): Observable<Blob> {
+    return this.httpClient.post(`${this.baseURL}/hojaruta`, pDatosReporte, { responseType : 'blob'} );
   }
 }
