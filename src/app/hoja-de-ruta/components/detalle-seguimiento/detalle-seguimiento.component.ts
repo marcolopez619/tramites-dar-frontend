@@ -18,6 +18,7 @@ export class DetalleSeguimientoComponent extends BaseComponent implements OnInit
 
   detalleSeguimiento: DetalleSeguimientoModel;
   listaParticipantes: [];
+  vAux: [];
   listaDocumentosAdjuntos: string;
 
   longMaxDescripcion = 500;
@@ -30,14 +31,28 @@ export class DetalleSeguimientoComponent extends BaseComponent implements OnInit
   }
 
   ngOnInit(): void {
-    if(this.detalleSeguimiento.participantes!=undefined){
+    if(this.detalleSeguimiento.participantes){
       this.listaParticipantes=this.detalleSeguimiento.participantes;
        //this.listaParticipantes=vAguito;
     }
-    if(this.detalleSeguimiento.adjuntos!=undefined){
-      this.listaDocumentosAdjuntos = this.detalleSeguimiento.adjuntos;
-      //var aaaaaa = JSON.parse(this.detalleSeguimiento.adjuntos) as Array<ListaDocumentosAdjuntos>;
-      //var algomas = this.detalleSeguimiento.adjuntos;
+    if(this.detalleSeguimiento.adjuntos){
+      /*
+      const vObjDocAdjunto : ListaDocumentosAdjuntos = {
+        idDerivacion : 0,
+        nombreArchivo : '',
+        tipoArchivo : '',
+        nivelBucket : '',
+        referencia : '',
+        pathArchivo : this.detalleSeguimiento.adjuntos[0].path_archivo,
+        fechaRegistro : new Date(),
+        idCite : 0,
+        cite : ''
+      };*/
+      const vObjDocAdjunto : ListaDocumentosAdjuntos = {
+        pathArchivo : this.detalleSeguimiento.adjuntos[0].path_archivo,
+      };
+      const vColDocAdjunto = [ vObjDocAdjunto ];
+      this.listaDocumentosAdjuntos = JSON.stringify( vColDocAdjunto );
     }
     this.formSeguimientoDetalle = this.formBuilder.group({
       remitente : this.detalleSeguimiento.remitente,

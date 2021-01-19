@@ -52,6 +52,8 @@ export class ListaDocsAdjSubidosComponent extends BaseComponent  implements OnIn
   ngOnInit(): void {
     this.listaDocumentosAdjuntos = JSON.parse( this.data.listaDocumentosAdj ?? this.listaDocumentosAdjuntos ) as Array<ListaDocumentosAdjuntos>;
 
+
+
     this.listaDocumentosAdjuntos.forEach(element => {
       const indexUltimaSlah           = element.pathArchivo.lastIndexOf('/');
       const indexPunto                = element.pathArchivo.lastIndexOf('.');
