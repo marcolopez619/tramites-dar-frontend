@@ -42,8 +42,8 @@
           </mat-expansion-panel-header>
 
           <div *ngFor="let child of item.children">
-              <mat-list-item fxLayout="column" fxLayoutAlign="center center" (click)="onSelectedButton(child)" >
-                <mat-icon [class.active]="selected" matListIcon>{{child.icono}}</mat-icon>
+              <mat-list-item fxLayout="column" fxLayoutAlign="center center" (click)="onSelectedButton(child)" [ngClass]="{'resaltar-opcion-menu-selected' : child.isMouseEnter }" >
+                <mat-icon matListIcon>{{child.icono}}</mat-icon>
                 <a matLine>{{child.displayName}}</a>
               </mat-list-item>
           </div>

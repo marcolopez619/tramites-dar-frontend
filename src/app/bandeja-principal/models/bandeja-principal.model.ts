@@ -3,4 +3,5 @@ export interface OpcionBandeja {
   displayName?: string;
   icono?: string;
   children?: Array<OpcionBandeja>;
+  isMouseEnter?: boolean;
 }
