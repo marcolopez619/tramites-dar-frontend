@@ -121,6 +121,8 @@
 
   <mat-card>
 
+    <mat-divider></mat-divider>
+
   <mat-table #table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="hojaRuta">
       <mat-header-cell *matHeaderCellDef fxFlex="15" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-hoja-ruta') }} </mat-header-cell>

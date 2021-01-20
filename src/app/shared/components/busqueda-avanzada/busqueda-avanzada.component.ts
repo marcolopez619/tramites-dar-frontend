@@ -178,6 +178,7 @@ export class BusquedaAvanzadaComponent extends BaseComponent implements OnInit, 
         this.dataSource.data = respBusqueda.data as Array<BusquedaAvanzadaResult>;
       } else {
         this.dataSource.data.length = 0;
+        this.dataSource.data = [];
       }
     });
 
