@@ -359,6 +359,10 @@ export class BandejaHojasDeRutaComponent
     this.mouseOverModel.descBandeja = this.valorBandejaSelected;
   }
 
+  onActualizarBandeja(): void {
+    this.inicializarBandeja();
+  }
+
   crearHojadeRuta(): void {
     const dlgNuevoCite = this.dialog.open(HojaDeRutaComponent, {
       disableClose: false,

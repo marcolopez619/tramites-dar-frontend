@@ -4,10 +4,13 @@
   <mat-card-header class="alt-theme">
   <mat-toolbar color="primary">
       <h3>{{ langService.getLang(eModulo.HojaDeRuta, 'tit-bandeja-seleccionada').replace('$bandejaSeleccionada', valorBandejaSelected)  }}</h3>
+
+      <!-- &nbsp;&nbsp;&nbsp;&nbsp;
+      <a mat-icon-button matTooltip="Actualizar" (click)="onActualizarBandeja"> <mat-icon>refresh</mat-icon></a> -->
+
       <span class="flex-spacer"></span>
-      <a mat-button matTooltip="{{ langService.getLang(eModulo.HojaDeRuta, 'btn-crear-nueva-hoja-ruta') }}" (click)="crearHojadeRuta()">
-          <mat-icon>add_circle</mat-icon>
-      </a>
+      <a mat-button matTooltip="Actualizar" (click)="onActualizarBandeja()"> <mat-icon>refresh</mat-icon></a>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.HojaDeRuta, 'btn-crear-nueva-hoja-ruta') }}" (click)="crearHojadeRuta()"> <mat-icon>add_circle</mat-icon></a>
       <!--
       <span class="flex-spacer"></span>
       <a mat-button routerLink="/menu" matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}">
@@ -28,8 +31,8 @@
     </ng-container>
 
     <ng-container matColumnDef="nombreRemitente">
-      <mat-header-cell *matHeaderCellDef fxFlex="15" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-nombre-remitente') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="15"> {{element.nombreRemitente}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef fxFlex="16" mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-nombre-remitente') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="16"> {{element.nombreRemitente}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="descripcionDoc">
@@ -48,8 +51,8 @@
     </ng-container>
 
     <ng-container matColumnDef="referencia" >
-      <mat-header-cell *matHeaderCellDef fxFlex="11"  mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-referencia') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="11" > {{element.referencia}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef fxFlex="20"  mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-referencia') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="20" > {{element.referencia}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="fechaBandeja">
@@ -58,8 +61,8 @@
     </ng-container>
 
     <ng-container matColumnDef="estado" >
-      <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-estado') }} </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="10" >
+      <mat-header-cell *matHeaderCellDef fxFlex="15"  mat-sort-header> {{ langService.getLang(eModulo.HojaDeRuta, 'lbl-estado') }} </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="15" >
 
 
         <div *ngIf="showMouseOverActions && element.isRowMouseOver" fxLayout="row" fxLayoutAlign="start center">
@@ -122,7 +125,7 @@
 
 
             <div *ngSwitchCase="'PROCESO'">
-              <div *ngIf="element.estado.toUpperCase() == 'ATENDIDO' ">
+              <div *ngIf="element.estado.toUpperCase() == 'ATENDIDO' || element.estado.toUpperCase() == 'PARTICIPANTE'">
                 <a mat-icon-button matTooltip="Ver seguimiento" (click)="onVerSeguimiento(element)"> <mat-icon>visibility</mat-icon></a>
                 <a mat-icon-button matTooltip="Imprimir planilla hoja de ruta" (click)="onImprimirHojaruta(element)"> <mat-icon>print</mat-icon></a>
               </div>
