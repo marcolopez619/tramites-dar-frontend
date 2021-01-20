@@ -134,7 +134,8 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
 
   private getAllCitesFromPersona( idPersonaGd: number ): void {
     this.citesService.getAllCitesFromPersona( idPersonaGd ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaCitesPersona => {
-      this.listaCite = listaCitesPersona.data as Array<CiteModelByUsuario>;
+      // Filtra los cites que poseen el estado consolidado.
+      this.listaCite = (listaCitesPersona.data as Array<CiteModelByUsuario>).filter( x => x.estado.toUpperCase() === 'consolidado'.toUpperCase() );
     });
   }
 
