@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
 import { ListaDocumentosAdjuntos } from '../../../shared/models/documento-adjunto.model';
@@ -25,31 +25,18 @@ export class DetalleSeguimientoComponent extends BaseComponent implements OnInit
   formSeguimientoDetalle: FormGroup;
   constructor(
        public langService: LangService,
-    private formBuilder: FormBuilder,
+       private formBuilder: FormBuilder
   ) {
     super();
   }
 
   ngOnInit(): void {
-    if(this.detalleSeguimiento.participantes){
-      this.listaParticipantes=this.detalleSeguimiento.participantes;
-       //this.listaParticipantes=vAguito;
+    if (this.detalleSeguimiento.participantes) {
+      this.listaParticipantes = this.detalleSeguimiento.participantes;
     }
-    if(this.detalleSeguimiento.adjuntos){
-      /*
-      const vObjDocAdjunto : ListaDocumentosAdjuntos = {
-        idDerivacion : 0,
-        nombreArchivo : '',
-        tipoArchivo : '',
-        nivelBucket : '',
-        referencia : '',
-        pathArchivo : this.detalleSeguimiento.adjuntos[0].path_archivo,
-        fechaRegistro : new Date(),
-        idCite : 0,
-        cite : ''
-      };*/
-      const vObjDocAdjunto : ListaDocumentosAdjuntos = {
-        pathArchivo : this.detalleSeguimiento.adjuntos[0].path_archivo,
+    if (this.detalleSeguimiento.adjuntos) {
+      const vObjDocAdjunto: ListaDocumentosAdjuntos = {
+        pathArchivo : this.detalleSeguimiento.adjuntos[0].path_archivo
       };
       const vColDocAdjunto = [ vObjDocAdjunto ];
       this.listaDocumentosAdjuntos = JSON.stringify( vColDocAdjunto );
@@ -67,7 +54,6 @@ export class DetalleSeguimientoComponent extends BaseComponent implements OnInit
   administrarParticipante(object?: any): void {
     //this.dialogRef.close(object);
   }
-
 
   onClose(object?: any): void {
     //this.dialogRef.close(object);

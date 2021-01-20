@@ -72,13 +72,15 @@
       </mat-expansion-panel>
     </mat-accordion>
 
-    <mat-accordion>
+    <br/>
+
+    <mat-accordion *ngIf="listaDocumentosAdjuntos?.length > 0">
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <strong>Documentos adjuntos</strong>
         </mat-expansion-panel-header>
 
-        <sh-lista-docs-adj-subidos [ocultarToolbar]="true" [listaDocumentosAdjuntos]="listaDocumentosAdjuntos" ></sh-lista-docs-adj-subidos>
+        <sh-lista-docs-adj-subidos  [ocultarToolbar]="true" [listaDocumentosAdjuntos]="listaDocumentosAdjuntos" ></sh-lista-docs-adj-subidos>
 
       </mat-expansion-panel>
     </mat-accordion>
