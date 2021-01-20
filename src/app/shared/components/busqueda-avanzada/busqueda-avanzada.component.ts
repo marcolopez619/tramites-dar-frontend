@@ -41,6 +41,9 @@ export class BusquedaAvanzadaComponent extends BaseComponent implements OnInit, 
 
   listaTipobandeja: Array<string> = [ 'Todos' ];
 
+  fechaLimiteSuperior = new Date();
+  fechaLimiteInferior = new Date( this.fechaLimiteSuperior.getFullYear() - 1, 0, 1);
+
   constructor(
     public contextService: ContextoService,
     public langService: LangService,
