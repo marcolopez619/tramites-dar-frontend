@@ -23,6 +23,8 @@ import { UsuarioService } from '../../services/usuario.service';
 import { CiteModelByUsuario } from '../../../cites/models/cites.models';
 import { CitesService } from '../../../cites/cites.service';
 import { AutocompleteData } from '../../models/autocomplete.model';
+import { NotificacionService } from '../../services/notificacion.service';
+import { eTipoNotificacion } from '../../enums/tipo-notificacion.enum';
 
 export class Test {
 
@@ -55,7 +57,6 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
   private _isDestinatarioInvalid: boolean;
   private _isRemitenteInvalid: boolean;
   private _isCcInvalid: boolean;
-  private _isCiteInvalid: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<any>,
@@ -66,7 +67,8 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
     private parametricaService: ParametricaService,
     private usuarioService: UsuarioService,
     private hojaRutaService: HojaRutaService,
-    private citesService: CitesService
+    private citesService: CitesService,
+    private notificacionService: NotificacionService
   ) {
     super();
   }
@@ -91,15 +93,15 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
     if (this.citeSelected) {
       this.formHojaDeRuta = this.formBuilder.group({
         tipoTramite       : [ this.citeSelected.idTipoTramite, Validators.compose([Validators.required])],
-        listaRemitentes   : [this.citeSelected.remitentes, Validators.compose([Validators.required])],
+        listaRemitentes   : [ this.citeSelected.remitentes, Validators.compose([Validators.required])],
         listaDestinatarios: [ this.citeSelected.destinatarios, Validators.compose([Validators.required])],
-        listaCc           : [undefined],
+        listaCc           : [ undefined],
         referencia        : [ this.citeSelected.referencia, Validators.compose([Validators.required])],
-        numeroFojas       : [undefined, Validators.compose([Validators.required])],
-        plazoDias         : [undefined, Validators.compose([Validators.required])],
-        listaCite         : [undefined, Validators.compose([Validators.required])],
-        isUrgente         : [false, Validators.compose([Validators.required])],
-        isConCopiaFisica  : [false, Validators.compose([Validators.required])]
+        numeroFojas       : [ 0, Validators.compose([Validators.required])],
+        plazoDias         : [ 0, Validators.compose([Validators.required])],
+        listaCite         : [ this.citeSelected.idCite, Validators.compose([Validators.required])],
+        isUrgente         : [ false, Validators.compose([Validators.required])],
+        isConCopiaFisica  : [ false, Validators.compose([Validators.required])]
       });
     } else {
       this.formHojaDeRuta = this.formBuilder.group({
@@ -116,8 +118,6 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
       });
     }
   }
-
-
 
   private prepareArrayAsJSONString( lista: Array<any>, nombreKey: string ): Array<any> {
     const listaJSON = [];
@@ -168,6 +168,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
 
   onGuardarHojaDeRuta(): void {
     let datosFormulario: HojaDeRutaInsertModel = {};
+    const listaIdCite = [{ idCite: this.formHojaDeRuta.controls[ 'listaCite' ].value }];
 
     if (this.citeSelected) {
       // Crea la hoja de ruta en funcion a los datos del cite
@@ -175,7 +176,6 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
         this.listaCc,
         'idPersonaGd'
       );
-      const listaIdCite = [{ idCite: this.citeSelected.idCite }];
 
       const datosHRFromCite: HojaDeRutaInsertModel = {
         IdTipoTramite        : this.formHojaDeRuta.controls['tipoTramite'].value,
@@ -191,7 +191,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
         PlazoDias            : this.formHojaDeRuta.controls['plazoDias'].value,
         Urgente              : +this.formHojaDeRuta.controls['isUrgente'].value,
         ConCopiaFisica       : +this.formHojaDeRuta.controls['isUrgente'].value,
-        UsuarioBitacora      : this.contextService.getItemContexto('samActName'),
+        UsuarioBitacora      : this.contextService.getItemContexto('samActName')
       };
 
       datosFormulario = datosHRFromCite;
@@ -204,14 +204,20 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
       datosFormulario.IdPersonaDestinatario = objDatosFormulario.listaDestinatarios[0].idPersonaGd;
       datosFormulario.IdPersonaSolicita     = objDatosFormulario.listaRemitentes.idPersonaGd;
       datosFormulario.ListDestCopia         = undefined;
-      datosFormulario.ListCite              = JSON.stringify(this.listaCite);
+      datosFormulario.ListCite              = JSON.stringify(listaIdCite);
       datosFormulario.ListCiteExt           = undefined;
       datosFormulario.ListAdjunto           = undefined;
       datosFormulario.Referencia            = objDatosFormulario.referencia;
       datosFormulario.PlazoDias             = objDatosFormulario.plazoDias ?? 0;
-      datosFormulario.Urgente               = +objDatosFormulario.isUrgente ;//= false ? 0 : 1;
-      datosFormulario.ConCopiaFisica        = +objDatosFormulario.isConCopiaFisica;// = false ? 0 : 1;
+      datosFormulario.Urgente               = +objDatosFormulario.isUrgente;
+      datosFormulario.ConCopiaFisica        = +objDatosFormulario.isConCopiaFisica;
       datosFormulario.UsuarioBitacora       = this.contextService.getItemContexto('samActName');
+    }
+
+    // Valida que el remitente no sea igual al destinatario.
+    if (datosFormulario.IdPersonaRemite === datosFormulario.IdPersonaDestinatario) {
+      this.notificacionService.showSnackbarMensaje( 'EL REMITENTE Y EL DESTINATARIO NO PUEDEN SER LOS MISMOS', 4000, eTipoNotificacion.Incorrecto );
+      return;
     }
 
     this.hojaRutaService
@@ -224,8 +230,8 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
 
   onCiteSeleccionChange(event: MatSelectChange): void {
     const infCiteSelected = this.listaCite.find( x => x.idCite === event.value );
-    this.listaCite=[{idCite: infCiteSelected.idCite, numeroCite:infCiteSelected.numeroCite}]
-    this.formHojaDeRuta.controls['referencia'].setValue(infCiteSelected.referencia);
+    this.formHojaDeRuta.controls[ 'listaCite' ].setValue( event.value );
+    this.formHojaDeRuta.controls[ 'referencia' ].setValue(infCiteSelected.referencia);
   }
 
   onTipoTramiteChange(event: MatSelectChange): void {
