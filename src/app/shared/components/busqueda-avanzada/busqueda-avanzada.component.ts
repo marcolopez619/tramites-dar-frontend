@@ -1,20 +1,20 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
-import { slideInLeftAnim, zoomInAnim, fadeInAnim } from '../../animations/template.animation';
+import { fadeInAnim, slideInLeftAnim, zoomInAnim } from '../../animations/template.animation';
 import { BaseComponent } from '../../base.component';
 import { BusquedaAvanzadaModel, BusquedaAvanzadaResult } from '../../models/busqueda-avanzada.model';
 import { OpcionesBandejaDefault } from '../../models/opciones-bandeja.model';
 import { TipoDocumentoModel, TipoTramiteModel } from '../../models/parametricas.model';
 import { UsuarioModel } from '../../models/Usuario.model';
+import { BusquedaService } from '../../services/busqueda.service';
 import { ContextoService } from '../../services/contexto.service';
 import { LangService } from '../../services/lang.service';
 import { ParametricaService } from '../../services/parametrica.service';
 import { UsuarioService } from '../../services/usuario.service';
-import { BusquedaService } from '../../services/busqueda.service';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'sh-busqueda-avanzada',
@@ -62,6 +62,17 @@ export class BusquedaAvanzadaComponent extends BaseComponent implements OnInit, 
     const idPersonaGD = this.contextService.getItemContexto('idPersonaGd') ?? 542;
 
     this.parametricaService.getTipoDocumentos( idUnidadOrg ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaTipoDocs => {
+      const opcionTodos: TipoDocumentoModel = {
+        idUnidadOrg     : 0,
+        nombre          : '',
+        sigla           : '',
+        descripcionOrg  : '',
+        idDocumentoTipo : 0,
+        descripcionDoc  : 'TODOS',
+        abreviacion     : '',
+        idDocumentoEmite: 0
+      };
+      listaTipoDocs.data.push(opcionTodos);
       this.listaTipoDocumento = listaTipoDocs.data as Array<TipoDocumentoModel>;
     });
 
@@ -98,7 +109,7 @@ export class BusquedaAvanzadaComponent extends BaseComponent implements OnInit, 
     this.unsubscribe$.next(true);
   }
 
-  private setFormDefaultValues(): void{
+  private setFormDefaultValues(): void {
     const idPersonaGD = this.contextService.getItemContexto('idPersonaGd') ?? 542;
 
     this.formBusquedaAvanzada.controls[ 'idPersonaLogin' ].setValue( idPersonaGD );
