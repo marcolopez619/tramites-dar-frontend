@@ -34,11 +34,12 @@
       <mat-label fxFlex>{{this.detalleSeguimiento.asunto}}</mat-label>
     </div>
 
+    <br/>
 
-    <mat-accordion>
+    <mat-accordion *ngIf="listaParticipantes?.length > 0">
       <mat-expansion-panel>
         <mat-expansion-panel-header>
-          <strong>Datos de los participantes</strong>
+          <strong>Participantes</strong>
         </mat-expansion-panel-header>
 
         <div *ngFor="let objParticipante of listaParticipantes">

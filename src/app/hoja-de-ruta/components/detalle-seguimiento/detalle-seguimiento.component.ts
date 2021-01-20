@@ -9,6 +9,7 @@ import { DetalleSeguimientoModel } from '../../models/detalle-seguimiento.model'
 @Component({
   selector: 'detalle-seguimiento',
   templateUrl: './detalle-seguimiento.component.html',
+  styleUrls : ['./detalle-seguimiento.component.css'],
   animations: [fadeInAnim, slideInLeftAnim],
   host: { class: 'container-fluid', '[@fadeInAnim]': 'true' }
 })
