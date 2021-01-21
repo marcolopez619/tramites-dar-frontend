@@ -10,18 +10,20 @@
   </mat-toolbar>
 </div>
 <mat-dialog-content>
-    <form [formGroup]="formSeguimiento">
-      <div fxLayout="row" fxLayoutGap="30px">
-        <td class="alinear-columna-centro"><strong><h3>Hoja de ruta : {{numeroHojaRuta}} &nbsp; &nbsp; {{referencia}} </h3></strong></td>
 
+    <form [formGroup]="formSeguimiento">
+
+      <div fxLayout="row" fxLayoutAlign="center center" >
+        <h3>Hoja de ruta : {{numeroHojaRuta}} &nbsp; &nbsp; {{referencia}} </h3>
       </div>
 
       <div *ngFor="let detalleSeguimientoItem of listaAux; let indice=index">
-        <fieldset-detalle fxLayout="row" fxFlex="100">
-          <legend><strong>{{indice+1}}</strong></legend>
-          <detalle-seguimiento [detalleSeguimiento]="detalleSeguimientoItem"></detalle-seguimiento>
-        </fieldset-detalle>
+        <br><br>
+        <detalle-seguimiento [contador]="indice + 1" [detalleSeguimiento]="detalleSeguimientoItem"></detalle-seguimiento>
       </div>
     </form>
+
+  <br>
+  <br>
 
 </mat-dialog-content>

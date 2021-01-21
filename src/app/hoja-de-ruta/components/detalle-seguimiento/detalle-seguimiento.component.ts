@@ -4,7 +4,7 @@ import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template
 import { BaseComponent } from '../../../shared/base.component';
 import { ListaDocumentosAdjuntos } from '../../../shared/models/documento-adjunto.model';
 import { LangService } from '../../../shared/services/lang.service';
-import { DetalleSeguimientoModel } from '../../models/detalle-seguimiento.model';
+import { DetalleSeguimientoModel, Participante } from '../../models/detalle-seguimiento.model';
 
 @Component({
   selector: 'detalle-seguimiento',
@@ -15,15 +15,20 @@ import { DetalleSeguimientoModel } from '../../models/detalle-seguimiento.model'
 })
 export class DetalleSeguimientoComponent extends BaseComponent implements OnInit {
 
-  @Input()
-
-  detalleSeguimiento: DetalleSeguimientoModel;
-  listaParticipantes: [];
+  listaParticipantes: Array<Participante>;
   vAux: [];
   listaDocumentosAdjuntos: string;
 
   longMaxDescripcion = 500;
   formSeguimientoDetalle: FormGroup;
+
+  @Input()
+  detalleSeguimiento: DetalleSeguimientoModel;
+
+  @Input()
+  contador: number;
+
+
   constructor(
        public langService: LangService,
        private formBuilder: FormBuilder
@@ -32,24 +37,41 @@ export class DetalleSeguimientoComponent extends BaseComponent implements OnInit
   }
 
   ngOnInit(): void {
+
+    this.detalleSeguimiento.fechaEntrada = new Date( this.detalleSeguimiento.fechaEntrada );
+
+    const b = Date.parse(this.detalleSeguimiento.fechaProceso.toString());
+    const isInvalidDateProceso =  Number.isNaN( b );
+    this.detalleSeguimiento.fechaProceso = isInvalidDateProceso ? new Date( '1801-01-01' ) : new Date( this.detalleSeguimiento.fechaProceso);
+
     if (this.detalleSeguimiento.participantes) {
+
+      this.detalleSeguimiento.participantes.forEach(element => {
+        element.fechaDerivacion = new Date( element.fechaDerivacion );
+        element.fechaResuelto = new Date( element.fechaResuelto );
+      });
+
       this.listaParticipantes = this.detalleSeguimiento.participantes;
     }
+
     if (this.detalleSeguimiento.adjuntos) {
+
       const vObjDocAdjunto: ListaDocumentosAdjuntos = {
-        pathArchivo : this.detalleSeguimiento.adjuntos[0].path_archivo
+        pathArchivo : this.detalleSeguimiento.adjuntos[0].pathArchivo
       };
+
       const vColDocAdjunto = [ vObjDocAdjunto ];
       this.listaDocumentosAdjuntos = JSON.stringify( vColDocAdjunto );
     }
+
     this.formSeguimientoDetalle = this.formBuilder.group({
-      remitente : this.detalleSeguimiento.remitente,
-      cargo: this.detalleSeguimiento.cargo,
-      estado_entrada: this.detalleSeguimiento.estado_entrada,
-      estado_proceso: this.detalleSeguimiento.estado_proceso,
-      fecha_entrada: this.detalleSeguimiento.fecha_entrada,
-      fecha_proceso: this.detalleSeguimiento.fecha_proceso,
-      asunto: this.detalleSeguimiento.asunto
+      remitente    : this.detalleSeguimiento.remitente,
+      cargo        : this.detalleSeguimiento.cargo,
+      estadoEntrada: this.detalleSeguimiento.estadoEntrada,
+      estadoProceso: this.detalleSeguimiento.estadoProceso,
+      fechaEntrada : this.detalleSeguimiento.fechaEntrada,
+      fechaProceso : this.detalleSeguimiento.fechaProceso,
+      asunto       : this.detalleSeguimiento.asunto
     });
   }
   administrarParticipante(object?: any): void {

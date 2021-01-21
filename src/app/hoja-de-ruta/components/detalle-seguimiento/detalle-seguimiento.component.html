@@ -1,3 +1,11 @@
+<mat-card  class="mat-elevation-z12">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-chip-list>
+         <mat-chip color="Warn">{{contador}}</mat-chip>
+        </mat-chip-list>
+    </mat-card-title>
+  </mat-card-header>
 <mat-card-content>
 
   <form [formGroup]="formSeguimientoDetalle" fxFlex>
@@ -17,16 +25,16 @@
     <br>
     <div fxLayout="row" fxLayoutGap="30px">
       <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-estado')}} :</mat-label>
-      <mat-label fxFlex>{{this.detalleSeguimiento.estado_entrada}}</mat-label>
+      <mat-label fxFlex>{{this.detalleSeguimiento.estadoEntrada}}</mat-label>
       <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-fecha')}} :</mat-label>
-      <mat-label fxFlex>{{this.detalleSeguimiento.fecha_entrada | date : 'dd/MM/yyyy hh:mm'}}</mat-label>
+      <mat-label fxFlex>{{this.detalleSeguimiento.fechaEntrada | date : 'dd/MM/yyyy hh:mm'}}</mat-label>
     </div>
     <br>
     <div fxLayout="row" fxLayoutGap="30px">
       <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-estado')}} :</mat-label>
-      <mat-label fxFlex>{{this.detalleSeguimiento.estado_proceso}}</mat-label>
+      <mat-label fxFlex>{{this.detalleSeguimiento.estadoProceso}}</mat-label>
       <mat-label>{{langService.getLang(eModulo.HojaDeRuta, 'lbl-seguimiento-detalle-fecha')}} :</mat-label>
-      <mat-label fxFlex>{{this.detalleSeguimiento.fecha_proceso | date : 'dd/MM/yyyy hh:mm'}}</mat-label>
+      <mat-label fxFlex>{{this.detalleSeguimiento.fechaProceso.getFullYear() == 1800 ? '' :  (this.detalleSeguimiento.fechaProceso | date : 'dd/MM/yyyy hh:mm') }}</mat-label>
     </div>
     <br>
     <div fxLayout="row" fxLayoutGap="30px">
@@ -58,7 +66,9 @@
               <tr>
                 <td class="alinear-columna-derecha"><strong> &nbsp;Fecha :</strong></td>
                 <td>
-                  {{objParticipante.fecha_aceptado |date : 'dd/MM/yyyy hh:mm'}}
+                  {{objParticipante.fechaAceptado | date : 'dd/MM/yyyy hh:mm'}}
+
+                  <!-- {{objParticipante.fecha_aceptado.getFullYear() ? == 1800 ? '--Sin fecha aún--' : (objParticipante.fecha_aceptado | date : 'dd/MM/yyyy hh:mm') }} -->
                 </td>
               </tr>
               <tr>
@@ -90,3 +100,4 @@
   </form>
 
 </mat-card-content>
+</mat-card>

@@ -1,22 +1,33 @@
 export interface SeguimientoModel {
-    idHojaruta? : number;
+    idHojaruta?: number;
     numeroHojaRuta?: string;
     referencia?: string;
     seguimiento?: Array<DetalleSeguimientoModel>;
   }
 
-  export interface DetalleSeguimientoModel {
-    idHojaruta? : number;
+export interface DetalleSeguimientoModel {
+    idHojaruta?: number;
     idPersonaGr?: number;
     remitente?: string;
     cargo?: string;
     idEstado?: number;
-    estado_entrada?: string;
-    estado_proceso?: string;
-    fecha_entrada?: Date;
-    fecha_proceso?: Date;
+    estadoEntrada?: string;
+    estadoProceso?: string;
+    fechaEntrada?: Date;
+    fechaProceso?: Date;
     asunto?: string;
     plazoDias?: number;
-    participantes?: [];
+    participantes?: Array<Participante>;
     adjuntos?: Array<any>;
   }
+
+export interface Participante {
+  estado?: string;
+  participante?: string;
+  cargo?: string;
+  mensaje?: string;
+  fechaDerivacion?: Date;
+  fechaResuelto?: Date;
+  mensajeResuelto?: string;
+  concluido?: string;
+}
