@@ -23,10 +23,22 @@ export class OpcionesBandejaComponent extends BaseComponent implements OnInit {
   constructor() { super(); }
 
   ngOnInit(): void {
-    // ..
+    const menuSelectedIncial: OpcionBandeja = {
+        id         : 6,
+        displayName: 'Principal',
+        icono      : 'home',
+        children   : undefined
+    };
+
+    this.resaltarOpcionMenuSelected( menuSelectedIncial );
   }
 
   onSelectedButton(pParam: OpcionBandeja): void {
+    this.resaltarOpcionMenuSelected(pParam);
+    this.onOpcionClick.next( pParam.displayName );
+  }
+
+  private resaltarOpcionMenuSelected(pParam: OpcionBandeja): void {
 
     this.listaOpcionesBandeja.forEach(element => {
       element.children.forEach(otro => {
@@ -42,9 +54,6 @@ export class OpcionesBandejaComponent extends BaseComponent implements OnInit {
       this.listaOpcionesBandeja[ 1 ].children.find( x => x.id === pParam.id ).isMouseEnter = true;
     }
 
-    this.onOpcionClick.next( pParam.displayName );
   }
-
-
 
 }

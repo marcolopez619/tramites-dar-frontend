@@ -1,6 +1,6 @@
 <mat-sidenav-container class="example-container">
-  <mat-sidenav mode="side" [(opened)]="opened"  class="example-sidenav-container">
-    <app-opciones-bandeja (onOpcionClick)="captureValueFromEmiter($event)"></app-opciones-bandeja>
+  <mat-sidenav mode="side" [(opened)]="opened"  class="example-sidenav-container" #sideNav>
+    <app-opciones-bandeja (onOpcionClick)="captureValueFromEmiter($event); sideNav.toggle()"></app-opciones-bandeja>
   </mat-sidenav>
   <mat-sidenav-content fxFlexFill>
     <a mat-icon-button matTooltip="{{opened?'Cerrar menu' : 'Abrir menu'}}" (click)="opened=!opened">
