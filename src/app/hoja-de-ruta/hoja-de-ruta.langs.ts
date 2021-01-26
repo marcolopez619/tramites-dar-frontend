@@ -102,7 +102,8 @@ export const hojaDeRutaLang = {
     'tit-seguimiento-detalle-seguimiento':'Seguimiento del proceso',
 
     'lbl-fecha-registro' : 'Fecha registro',
-    'tit-bandeja-seleccionada' : 'Bandeja: $bandejaSeleccionada'
+    'tit-bandeja-seleccionada' : 'Bandeja: $bandejaSeleccionada',
+    'msg-error-mismo-remitente-y-destinatario' : 'EL REMITENTE Y EL DESTINATARIO NO PUEDEN SER LOS MISMOS'
 
   }
 };

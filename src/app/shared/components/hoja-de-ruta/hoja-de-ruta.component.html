@@ -56,6 +56,7 @@
                 [placeHolder]="langService.getLang(eModulo.HojaDeRuta, 'lbl-destinatario' )"
                 [matLabelError]="langService.getLang(eModulo.HojaDeRuta, 'lbl-error-destinatario' )"
                 [isRequired]="true"
+                [listaInicial]="listaInicialDestinatarios"
                 [listaCompleta]="listaUsuarios"
                 [cantidadPermitida]="1"
                 (isFormularioInvalid)="getEstatusFormDestinatario($event)"

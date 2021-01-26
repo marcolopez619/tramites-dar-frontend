@@ -25,6 +25,7 @@ import { CitesService } from '../../../cites/cites.service';
 import { AutocompleteData } from '../../models/autocomplete.model';
 import { NotificacionService } from '../../services/notificacion.service';
 import { eTipoNotificacion } from '../../enums/tipo-notificacion.enum';
+import { eModulo } from '../../enums/modulo.enum';
 
 export class Test {
 
@@ -91,6 +92,9 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
     this.getAllCitesFromPersona( idPersonaGd );
 
     if (this.citeSelected) {
+
+      // this.listaInicialDestinatarios = this.citeSelected.destinatarios;
+
       this.formHojaDeRuta = this.formBuilder.group({
         tipoTramite       : [ this.citeSelected.idTipoTramite, Validators.compose([Validators.required])],
         listaRemitentes   : [ this.citeSelected.remitentes, Validators.compose([Validators.required])],
@@ -156,6 +160,11 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
           // Recupera la data del usuario loggeado como remitente.
           const idPersonaGDLoggeado = this.contextService.getItemContexto('idPersonaGd');
           this.setListaInicialRemitente(idPersonaGDLoggeado);
+
+          // Setea la lista inicial de destinatarios si es que existe un cite seleccioando
+          if (this.citeSelected) {
+            this.setListaInicialDestinatario(this.citeSelected.destinatarios[ 0 ].destinatario);
+          }
         }
 
       });
@@ -165,6 +174,11 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
     const usuario = this.listaUsuarios.find( x => x.idPersonaGd === idPersonaGD );
     this.listaInicialRemitentes.push(usuario);
     this.formHojaDeRuta.controls['listaRemitentes'].setValue(usuario);
+  }
+
+  private setListaInicialDestinatario( nombreDestinatario: string ): void {
+    this.listaInicialDestinatarios = this.listaUsuarios.filter( x => x.nombreCompleto.toUpperCase() === nombreDestinatario.toUpperCase() );
+    this.formHojaDeRuta.controls['listaDestinatarios'].setValue(this.listaInicialDestinatarios);
   }
 
   onGuardarHojaDeRuta(): void {
@@ -217,7 +231,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
 
     // Valida que el remitente no sea igual al destinatario.
     if (datosFormulario.IdPersonaRemite === datosFormulario.IdPersonaDestinatario) {
-      this.notificacionService.showSnackbarMensaje( 'EL REMITENTE Y EL DESTINATARIO NO PUEDEN SER LOS MISMOS', 4000, eTipoNotificacion.Incorrecto );
+      this.notificacionService.showSnackbarMensaje( this.langService.getLang(eModulo.HojaDeRuta, 'msg-error-mismo-remitente-y-destinatario'), 4000, eTipoNotificacion.Incorrecto );
       return;
     }
 
