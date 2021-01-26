@@ -178,6 +178,7 @@ export class HojaDeRutaComponent extends BaseComponent implements OnInit {
 
   private setListaInicialDestinatario( nombreDestinatario: string ): void {
     this.listaInicialDestinatarios = this.listaUsuarios.filter( x => x.nombreCompleto.toUpperCase() === nombreDestinatario.toUpperCase() );
+    this.listaDestinatarios = this.listaInicialDestinatarios;
     this.formHojaDeRuta.controls['listaDestinatarios'].setValue(this.listaInicialDestinatarios);
   }
 
