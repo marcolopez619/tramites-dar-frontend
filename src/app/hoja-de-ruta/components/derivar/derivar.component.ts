@@ -66,7 +66,7 @@ export class DerivarComponent extends BaseComponent implements OnInit {
     this.vNumeroHojaRuta = this.hojaRutaSelected.numeroHojaRuta;
     const idPersonaGd = this.contextService.getItemContexto(`idPersonaGd`) ?? 542;
 
-    if ( this.hojaRutaSelected.estado === 'creado' || 'en atencion') {
+    if ( this.hojaRutaSelected.estado.toUpperCase() == 'CREADO' || this.hojaRutaSelected.estado.toUpperCase() == 'EN ATENCION') {
       this.listaCite.push({
           idCite    : this.hojaRutaSelected.idCite,
           numeroCite: this.hojaRutaSelected.cite
@@ -94,6 +94,12 @@ export class DerivarComponent extends BaseComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((respService) => {
         this.listaUsuarios = respService.data;
+
+        if (this.hojaRutaSelected.estado.toUpperCase() == 'CREADO') {
+          const destinatario = this.listaUsuarios.find( x => x.idPersonaGd === this.hojaRutaSelected.idDestinatario );
+          this.listaInicialDestinatarios.push( destinatario );
+          this.formDerivarHR.controls['idDestinatario'].setValue( destinatario.idPersonaGd );
+        }
       });
   }
 
