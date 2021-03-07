@@ -19,8 +19,6 @@
     "compodoc:serve": "./node_modules/.bin/compodoc -p src/tsconfig.app.json --theme material --output ./dist-docs -s"
   },
   "authors": [
-    "Patricio Quispe Sosa <patricio.quispe@segip.gob.bo>",
-    "Marco Ruben Leonardini Gutierrez <marco.leonardini@segip.gob.bo>",
     "Marco Antonio Molina López <marco.molina@segip.gob.bo>"
   ],
   "private": true,

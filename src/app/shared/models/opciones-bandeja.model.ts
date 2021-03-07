@@ -22,44 +22,39 @@ export class OpcionesBandejaDefault{
    },
    {
      id : 4,
-     displayName : 'HOJAS DE RUTA',
+     displayName : 'ESTUDIANTE',
      icono : 'description',
      children: [
       {
         id : 6,
-        displayName : 'Principal',
+        displayName : 'Cambio de carrera',
         icono : 'home',
         children : undefined
       },
       {
         id : 7,
-        displayName : 'Recibido',
+        displayName : 'Suspencion de carrera',
         icono : 'how_to_reg',
         children : undefined
       }, {
         id : 8,
-        displayName : 'Enviado',
+        displayName : 'Readmision de carrera',
         icono : 'search',
         children : undefined
       }, {
         id : 9,
-        displayName : 'Rechazado',
+        displayName : 'Traspasos de universidad',
         icono : 'swap_horiz',
         children : undefined
       }, {
         id : 10,
-        displayName : 'Pendiente',
+        displayName : 'Transferencias de carrera',
         icono : 'waves',
         children : undefined
       }, {
         id : 11,
-        displayName : 'Proceso',
+        displayName : 'Anulacion de carrera',
         icono : 'edit',
-        children : undefined
-      }, {
-        id : 12,
-        displayName : 'Finalizado',
-        icono : 'ballot',
         children : undefined
       }
      ]

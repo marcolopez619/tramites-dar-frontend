@@ -24,10 +24,10 @@ export class OpcionesBandejaComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     const menuSelectedIncial: OpcionBandeja = {
-        id         : 6,
-        displayName: 'Principal',
-        icono      : 'home',
-        children   : undefined
+      id         : 6,
+      displayName: 'Cambio de carrera',
+      icono      : 'home',
+      children   : undefined
     };
 
     this.resaltarOpcionMenuSelected( menuSelectedIncial );
