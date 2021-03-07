@@ -22,7 +22,6 @@ export class MenuComponent extends BaseComponent implements OnInit {
 
   openSideNav = true;
 
-  listaCompleta = ['MARCO ANTONIO MOLINA LOPEZ', 'SARDINA CONDORI MALPARTIDA', 'MAMANI MAMANILLO JUAN', 'HUNCARIO LUIS', 'ZAPATA CONDORI ALBERTO'];
 
     /**
      * Creates an instance of MenuComponent.
@@ -34,7 +33,7 @@ export class MenuComponent extends BaseComponent implements OnInit {
     constructor(
         public contextoService: ContextoService,
         public langService: LangService,
-        private router: Router
+        private router: Router,
     ) { super(); }
 
     /**

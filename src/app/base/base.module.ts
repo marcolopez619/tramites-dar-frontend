@@ -14,6 +14,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { NotificacionComponent } from './notificacion/notificacion.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { EstudianteModule } from '../estudiante/estudiante.module';
 
 /**
  * Modulo base del sistema.
@@ -28,7 +29,8 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     SharedModule,
     CitesModule,
     HojaDeRutaModule,
-    BandejaPrincipalModule
+    BandejaPrincipalModule,
+    EstudianteModule
   ],
   declarations: [
     LayoutComponent,

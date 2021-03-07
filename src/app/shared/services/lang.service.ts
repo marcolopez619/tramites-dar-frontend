@@ -4,6 +4,7 @@ import { eModulo } from '../../shared/enums/modulo.enum';
 import { ContextoService } from './contexto.service';
 import { citesLang } from '../../cites/cites.langs';
 import { hojaDeRutaLang } from '../../hoja-de-ruta/hoja-de-ruta.langs';
+import { estudianteLang } from '../../estudiante/estudiante.langs';
 
 /**
  * Servicio para manejar langs de forma global en el sistema.
@@ -34,6 +35,10 @@ export class LangService {
       {
         id: eModulo.HojaDeRuta,
         contenido: hojaDeRutaLang
+      },
+      {
+        id: eModulo.Estudiante,
+        contenido : estudianteLang
       }
       );
   }

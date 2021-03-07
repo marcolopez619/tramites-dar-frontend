@@ -20,6 +20,7 @@ import { CustomMatPaginator } from './shared/custom.matpaginator';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { LayoutComponent } from './base/layout/layout.component';
+import { EstudianteModule } from './estudiante/estudiante.module';
 
 registerLocaleData(localeEs);
 
@@ -33,7 +34,8 @@ registerLocaleData(localeEs);
         RouterModule.forRoot(appRoutes),
         CitesModule,
         HojaDeRutaModule,
-        BandejaPrincipalModule
+        BandejaPrincipalModule,
+        EstudianteModule
     ],
     providers: [
         AuthService,
