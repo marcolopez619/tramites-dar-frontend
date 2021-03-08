@@ -7,3 +7,13 @@ export interface BandejaTramite extends BandejaAbstract {
   fechaInicio?: Date;
   fechaFinal?: Date;
 }
+
+export interface BandejaCambioCarrera extends BandejaAbstract{
+  idCambioCarrera?: number,
+  idOrigen?: number;
+  origen?:string;
+  idDestino?: number;
+  destino?:string;
+  fechaSolicitud?: Date;
+  motivo?: string;
+}

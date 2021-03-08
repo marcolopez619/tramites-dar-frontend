@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
-import { AnulacionComponent } from './components/anulacion/anulacion.component';
-import { BandejaAnulacionComponent } from './components/bandeja-anulacion/bandeja-anulacion.component';
+import { BandejaAnulacionComponent } from './components/anulacion/bandeja-anulacion/bandeja-anulacion.component';
 
 export const estudianteRoutes: Routes = [
   {

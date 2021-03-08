@@ -5,19 +5,21 @@ import { estudianteRoutes } from './estudiante.routing';
 import { RouterModule } from '@angular/router';
 import { AnulacionComponent } from './components/anulacion/anulacion.component';
 import { EstudianteService } from './estudiante.service';
-import { BandejaAnulacionComponent } from './components/bandeja-anulacion/bandeja-anulacion.component';
+import { BandejaAnulacionComponent } from './components/anulacion/bandeja-anulacion/bandeja-anulacion.component';
+import { CambioCarreraComponent } from './components/cambio-carrera/cambio-carrera/cambio-carrera.component';
+import { BandejaCambioCarreraComponent } from './components/cambio-carrera/bandeja-cambio-carrera/bandeja-cambio-carrera.component';
 
 
 
 @NgModule({
-  declarations: [AnulacionComponent, BandejaAnulacionComponent],
+  declarations: [AnulacionComponent, BandejaAnulacionComponent, CambioCarreraComponent, BandejaCambioCarreraComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(estudianteRoutes),
     SharedModule
   ],
   exports : [
-    AnulacionComponent, BandejaAnulacionComponent
+    AnulacionComponent, BandejaAnulacionComponent, CambioCarreraComponent, BandejaCambioCarreraComponent
   ],
   providers : [
     EstudianteService

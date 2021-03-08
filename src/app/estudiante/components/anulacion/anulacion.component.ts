@@ -1,11 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { takeUntil } from 'rxjs/operators';
-import { FinalizarParticipacionQueryParameter } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
-import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
-import { eModulo } from '../../../shared/enums/modulo.enum';
 import { LangService } from '../../../shared/services/lang.service';
 
 @Component({
