@@ -15,6 +15,7 @@ import { NotificacionComponent } from './notificacion/notificacion.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { EstudianteModule } from '../estudiante/estudiante.module';
+import { TramitesModule } from '../tramites/tramites.module';
 
 /**
  * Modulo base del sistema.
@@ -30,7 +31,8 @@ import { EstudianteModule } from '../estudiante/estudiante.module';
     CitesModule,
     HojaDeRutaModule,
     BandejaPrincipalModule,
-    EstudianteModule
+    EstudianteModule,
+    TramitesModule
   ],
   declarations: [
     LayoutComponent,

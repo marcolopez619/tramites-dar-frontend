@@ -5,6 +5,7 @@ import { ContextoService } from './contexto.service';
 import { citesLang } from '../../cites/cites.langs';
 import { hojaDeRutaLang } from '../../hoja-de-ruta/hoja-de-ruta.langs';
 import { estudianteLang } from '../../estudiante/estudiante.langs';
+import { tramiteLang } from '../../tramites/tramites.langs';
 
 /**
  * Servicio para manejar langs de forma global en el sistema.
@@ -39,6 +40,10 @@ export class LangService {
       {
         id: eModulo.Estudiante,
         contenido : estudianteLang
+      },
+      {
+        id: eModulo.Tramite,
+        contenido : tramiteLang
       }
       );
   }

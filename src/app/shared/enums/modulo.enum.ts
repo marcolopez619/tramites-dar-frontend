@@ -8,5 +8,6 @@ export enum eModulo {
     Base,
     Cites,
     HojaDeRuta,
-    Estudiante
+    Estudiante,
+    Tramite
 }

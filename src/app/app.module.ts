@@ -21,6 +21,7 @@ import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { LayoutComponent } from './base/layout/layout.component';
 import { EstudianteModule } from './estudiante/estudiante.module';
+import { TramitesModule } from './tramites/tramites.module';
 
 registerLocaleData(localeEs);
 
@@ -35,7 +36,8 @@ registerLocaleData(localeEs);
         CitesModule,
         HojaDeRutaModule,
         BandejaPrincipalModule,
-        EstudianteModule
+        EstudianteModule,
+        TramitesModule
     ],
     providers: [
         AuthService,

@@ -89,7 +89,8 @@ export const baseLang = {
             'lbl-confirmacion' : 'Confirmacion',
             'lbl-carrera' : 'Carrera',
             'lbl-fecha-solicitud' : 'Fecha solicitud',
-            'lbl-motivo' : 'Motivo'
+            'lbl-motivo' : 'Motivo',
+            'lbl-gestion' : 'Gestión'
         },
         'en': {
             'lang-error': 'Lang not found',
