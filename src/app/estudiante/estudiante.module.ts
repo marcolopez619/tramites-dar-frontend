@@ -5,18 +5,19 @@ import { estudianteRoutes } from './estudiante.routing';
 import { RouterModule } from '@angular/router';
 import { AnulacionComponent } from './components/anulacion/anulacion.component';
 import { EstudianteService } from './estudiante.service';
+import { BandejaAnulacionComponent } from './components/bandeja-anulacion/bandeja-anulacion.component';
 
 
 
 @NgModule({
-  declarations: [AnulacionComponent],
+  declarations: [AnulacionComponent, BandejaAnulacionComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(estudianteRoutes),
     SharedModule
   ],
   exports : [
-    AnulacionComponent
+    AnulacionComponent, BandejaAnulacionComponent
   ],
   providers : [
     EstudianteService

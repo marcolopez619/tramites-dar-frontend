@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { takeUntil } from 'rxjs/operators';
 import { FinalizarParticipacionQueryParameter } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
@@ -18,6 +18,8 @@ import { LangService } from '../../../shared/services/lang.service';
 export class AnulacionComponent extends BaseComponent  implements OnInit {
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<any>,
     public langService: LangService,
     private dialog: MatDialog,
   ) {
@@ -28,7 +30,8 @@ export class AnulacionComponent extends BaseComponent  implements OnInit {
   }
 
   onImprimirFormulario(): void {
-    const title = this.langService.getLang(eModulo.Base, 'lbl-confirmacion' );
+    this.onClose(true);
+    /* const title = this.langService.getLang(eModulo.Base, 'lbl-confirmacion' );
     const content = this.langService.getLang(eModulo.Estudiante, 'msg-impresion-anulacion-carrera' );
 
     const dlgConfirmImpresion = this.dialog.open( ConfirmDialogComponent , {
@@ -46,8 +49,12 @@ export class AnulacionComponent extends BaseComponent  implements OnInit {
         if (result) {
           console.log( 'IMPRIMIENDOOOOO FORMULARIOOOOOOOOOO DE ANULACIONNNN' );
         }
-      });
+      }); */
 
+  }
+
+  onClose(object?: any): void {
+    this.dialogRef.close(object);
   }
 
 }

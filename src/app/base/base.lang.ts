@@ -84,8 +84,12 @@ export const baseLang = {
             'lbl-referencia-doc-adj': 'Referencia',
             'lbl-fecha-registro-doc-adj': 'Fecha registro',
             'lbl-numero-cite-doc-adj': 'Numero Cite',
+            'lbl-imprimir' : 'Imprimir',
 
-            'lbl-confirmacion' : 'Confirmacion'
+            'lbl-confirmacion' : 'Confirmacion',
+            'lbl-carrera' : 'Carrera',
+            'lbl-fecha-solicitud' : 'Fecha solicitud',
+            'lbl-motivo' : 'Motivo'
         },
         'en': {
             'lang-error': 'Lang not found',
