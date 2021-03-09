@@ -62,6 +62,8 @@ import { HojaRutaService } from './services/hoja-ruta.service';
 import { DataTableHojaDeRutaComponent } from './components/data-table-hoja-de-ruta/data-table-hoja-de-ruta.component';
 import { BusquedaService } from './services/busqueda.service';
 import { ListaDocsAdjSubidosComponent } from './components/lista-docs-adj-subidos/lista-docs-adj-subidos.component';
+import { DatosEstudianteComponent } from './components/datos-estudiante/datos-estudiante.component';
+import { MotivoService } from './services/motivo.service';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -94,7 +96,8 @@ import { ListaDocsAdjSubidosComponent } from './components/lista-docs-adj-subido
         DocumentoAdjuntoComponent,
         BusquedaAvanzadaComponent,
         DataTableHojaDeRutaComponent,
-        ListaDocsAdjSubidosComponent
+        ListaDocsAdjSubidosComponent,
+        DatosEstudianteComponent
     ],
     imports: [
         CommonModule,
@@ -191,7 +194,8 @@ import { ListaDocsAdjSubidosComponent } from './components/lista-docs-adj-subido
         DocumentoAdjuntoComponent,
         BusquedaAvanzadaComponent,
         DataTableHojaDeRutaComponent,
-        ListaDocsAdjSubidosComponent
+        ListaDocsAdjSubidosComponent,
+        DatosEstudianteComponent
     ],
     entryComponents: [
         ConfirmDialogComponent
@@ -203,7 +207,8 @@ import { ListaDocsAdjSubidosComponent } from './components/lista-docs-adj-subido
       ParametricaService,
       ComentarioService,
       HojaRutaService,
-      BusquedaService
+      BusquedaService,
+      MotivoService
     ]
 })
 export class SharedModule { }

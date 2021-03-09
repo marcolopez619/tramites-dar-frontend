@@ -17,3 +17,14 @@ export interface BandejaCambioCarrera extends BandejaAbstract{
   fechaSolicitud?: Date;
   motivo?: string;
 }
+
+export interface BandejaSuspencion extends BandejaAbstract{
+  idSuspencion?: number;
+  idCarrera?: number;
+  carrera?: string;
+  tiempo?: string;
+  fechaInicio?: Date;
+  fechaFinal?: Date;
+  motivo?: string;
+  fechaSolicitud?: Date;
+}
