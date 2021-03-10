@@ -12,7 +12,7 @@ export const estudianteLang = {
     'lbl-carrera-destino' : 'carrera destino',
     'lbl-confir-sol-nuevo-tramite-cambio-carrera' : '¿ Seguro de finalizar la solicitud de cambio de carrera ?',
 
-    'lbl-tiempo-solicitado' : 'Tiempo solicitado',
+    'lbl-tiempo-solicitado' : 'Tiempo solicitado (Gestiones)',
     'lbl-tiempo' : 'Tiempo',
     'lbl-rango' : 'Rango',
     'lbl-tiempo-suspencion-solicitado' : 'Tiempo suspención solicitado :',
@@ -22,6 +22,8 @@ export const estudianteLang = {
     'lbl-descripcion-suspencion' : 'Breve descripcion del motivo de la suspención',
     'lbl-descripcion-suspencion-error' : 'La descripción es obligatoria',
     'msg-confirmar-suspencion' : '¿Seguro de realizar la suspención por : $tiempoSuspencion Gestiones para la carrera de: $carreraOrigen por motivo : $tipoSuspencion ?',
+    'lbl-datos-estudiante' : 'Datos estudiante',
+
 
 
 

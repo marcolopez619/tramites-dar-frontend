@@ -90,7 +90,8 @@ export const baseLang = {
             'lbl-carrera' : 'Carrera',
             'lbl-fecha-solicitud' : 'Fecha solicitud',
             'lbl-motivo' : 'Motivo',
-            'lbl-gestion' : 'Gestión'
+            'lbl-gestion' : 'Gestión',
+            'lbl-finalizar' : 'Finalizar'
         },
         'en': {
             'lang-error': 'Lang not found',
