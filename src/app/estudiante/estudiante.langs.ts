@@ -2,6 +2,7 @@ export const estudianteLang = {
   'es' : {
     'tit-lista-anulaciones' : 'Solicitud de anulaciones',
     'tit-lista-cambios-carrera' : 'Solicitud de cambios de carrera',
+    'tit-lista-readmision-carrera' : 'Solicitudes de readmisiones de carrera',
     'tit-nueva-solicitud' : 'Nueva solicitud',
     'tit-nueva-solicitud-anulacion' : 'Nueva solicitud de anulación',
     'tit-nueva-solicitud-suspencion' : 'Nueva solicitud de suspención',
@@ -23,6 +24,9 @@ export const estudianteLang = {
     'lbl-descripcion-suspencion-error' : 'La descripción es obligatoria',
     'msg-confirmar-suspencion' : '¿Seguro de realizar la suspención por : $tiempoSuspencion Gestiones para la carrera de: $carreraOrigen por motivo : $tipoSuspencion ?',
     'lbl-datos-estudiante' : 'Datos estudiante',
+    'lbl-fecha-solicitud-suspencion' : 'Fecha solicitud suspención',
+    'lbl-fecha-solicitud-readmision' : 'Fecha solicitud readmisión',
+
 
 
 

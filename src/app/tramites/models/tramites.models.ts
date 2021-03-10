@@ -28,3 +28,11 @@ export interface BandejaSuspencion extends BandejaAbstract{
   motivo?: string;
   fechaSolicitud?: Date;
 }
+export interface BandejaReadmision extends BandejaAbstract{
+  idReadmision?: number;
+  idCarrera?: number;
+  carrera?: string;
+  fechaSolicitudSuspencion?: Date;
+  fechaSolicitudReadmision?: Date;
+  tiempo?: string;
+}

@@ -10,18 +10,20 @@ import { CambioCarreraComponent } from './components/cambio-carrera/cambio-carre
 import { BandejaCambioCarreraComponent } from './components/cambio-carrera/bandeja-cambio-carrera/bandeja-cambio-carrera.component';
 import { BandejaSuspencionComponent } from './components/suspencion/bandeja-suspencion/bandeja-suspencion.component';
 import { SuspencionComponent } from './components/suspencion/suspencion/suspencion.component';
+import { BandejaReadmisionComponent } from './components/readmision/bandeja-readmision/bandeja-readmision.component';
+import { ReadmisionComponent } from './components/readmision/readmision/readmision.component';
 
 
 
 @NgModule({
-  declarations: [AnulacionComponent, BandejaAnulacionComponent, CambioCarreraComponent, BandejaCambioCarreraComponent, BandejaSuspencionComponent, SuspencionComponent],
+  declarations: [AnulacionComponent, BandejaAnulacionComponent, CambioCarreraComponent, BandejaCambioCarreraComponent, BandejaSuspencionComponent, SuspencionComponent, BandejaReadmisionComponent, ReadmisionComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(estudianteRoutes),
     SharedModule
   ],
   exports : [
-    AnulacionComponent, BandejaAnulacionComponent, CambioCarreraComponent, BandejaCambioCarreraComponent, BandejaSuspencionComponent
+    AnulacionComponent, BandejaAnulacionComponent, CambioCarreraComponent, BandejaCambioCarreraComponent, BandejaSuspencionComponent, BandejaReadmisionComponent
   ],
   providers : [
     EstudianteService
