@@ -6,6 +6,7 @@ export const estudianteLang = {
     'tit-nueva-solicitud' : 'Nueva solicitud',
     'tit-nueva-solicitud-anulacion' : 'Nueva solicitud de anulación',
     'tit-nueva-solicitud-suspencion' : 'Nueva solicitud de suspención',
+    'tit-nueva-solicitud-readmision' : 'Nueva solicitud de readmisión',
 
     'lbl-motivo-gestiones' : 'Motivo y gestiones',
 
@@ -16,8 +17,12 @@ export const estudianteLang = {
     'lbl-tiempo-solicitado' : 'Tiempo solicitado (Gestiones)',
     'lbl-tiempo' : 'Tiempo',
     'lbl-rango' : 'Rango',
-    'lbl-tiempo-suspencion-solicitado' : 'Tiempo suspención solicitado :',
+    'lbl-tiempo-suspencion-solicitado' : 'Suspencion a tramitar :',
     'lbl-tiempo-suspencion-solicitado-error' : 'Tiempo suspención inválido',
+    'lbl-seleccion-suspencion' : 'Suspención solicitada :',
+    'lbl-seleccion-suspencion-error' : 'La suspencion es inválida',
+    'lbl-motivo-readmision' : 'Motivo readmision :',
+    'lbl-motivo-readmision-error' : 'Motivo readmision es inválido',
     'lbl-motivo-suspencion' : 'Motivo',
     'lbl-motivo-suspencion-error' : 'El motivo es inválido',
     'lbl-descripcion-suspencion' : 'Breve descripcion del motivo de la suspención',

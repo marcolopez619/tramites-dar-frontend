@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { estudianteRoutes } from './estudiante.routing';
 import { RouterModule } from '@angular/router';
@@ -26,7 +26,7 @@ import { ReadmisionComponent } from './components/readmision/readmision/readmisi
     AnulacionComponent, BandejaAnulacionComponent, CambioCarreraComponent, BandejaCambioCarreraComponent, BandejaSuspencionComponent, BandejaReadmisionComponent
   ],
   providers : [
-    EstudianteService
+    EstudianteService, DatePipe
   ]
 })
 export class EstudianteModule { }
