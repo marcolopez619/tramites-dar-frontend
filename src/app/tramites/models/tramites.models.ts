@@ -36,3 +36,14 @@ export interface BandejaReadmision extends BandejaAbstract{
   fechaSolicitudReadmision?: Date;
   tiempo?: string;
 }
+export interface BandejaTraspasoUniversidad extends BandejaAbstract{
+  idTramite?: number;
+  idUniversidadDestino?: number;
+  universidadDestino?: string;
+  idCarreraDestino?: number;
+  carreraDestino?: string;
+  idPeriodo?: number;
+  periodo?: string;
+  motivo?: string;
+  fechaSolicitud?: Date;
+}

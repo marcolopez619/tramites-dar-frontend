@@ -3,11 +3,18 @@ export const estudianteLang = {
     'tit-lista-anulaciones' : 'Solicitud de anulaciones',
     'tit-lista-cambios-carrera' : 'Solicitud de cambios de carrera',
     'tit-lista-readmision-carrera' : 'Solicitudes de readmisiones de carrera',
+    'tit-lista-traspaso-universidad' : 'Solicitudes de traspaso de universidades',
     'tit-nueva-solicitud' : 'Nueva solicitud',
     'tit-nueva-solicitud-anulacion' : 'Nueva solicitud de anulación',
     'tit-nueva-solicitud-suspencion' : 'Nueva solicitud de suspención',
     'tit-nueva-solicitud-readmision' : 'Nueva solicitud de readmisión',
 
+    'lbl-traspaso-univ-destino' : 'Universidad destino',
+    'lbl-traspaso-carrera-destino' : 'Carrera destino',
+    'lbl-fecha-solicitud-traspaso' : 'Fecha solicitud',
+
+    'lbl-periodo' : 'Periodo',
+    'lbl-motivo' : 'Motivo',
     'lbl-motivo-gestiones' : 'Motivo y gestiones',
 
     'lbl-carrera-origen' : 'carrera origen',
