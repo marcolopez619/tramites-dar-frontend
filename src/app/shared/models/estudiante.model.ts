@@ -9,4 +9,8 @@ export interface EstudianteModel{
   facultad?:string;
   tipoTramite?: string;
   fechaSolicitud?: Date;
+  anioIngreso?: number;
+  cantMateriasAprobadas?: number;
+  cantMateriasReprobadas?: number;
+  promedioGeneral?: number;
 }

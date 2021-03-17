@@ -1,1 +1,191 @@
-<p>traspaso-universidad works!</p>
+<shared-loader-spinner></shared-loader-spinner>
+
+<mat-card>
+  <mat-card-header class="alt-theme">
+  <mat-toolbar shToolbarModal color="primary">
+      <h3>{{ langService.getLang(eModulo.Estudiante, 'tit-nueva-solicitud-traspaso') }}</h3>
+      <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
+          <mat-icon>close</mat-icon>
+      </a>
+  </mat-toolbar>
+</mat-card-header>
+
+<mat-dialog-content>
+<mat-card-content>
+
+  <mat-horizontal-stepper labelPosition="bottom" #stepper >
+
+    <mat-step>
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Estudiante, 'lbl-datos-estudiante' )}}</ng-template>
+
+      <sh-datos-estudiante [datoEstudiante]="datoEstudiante"></sh-datos-estudiante>
+
+      <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>
+        <button mat-raised-button color="primary" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="formTraspaso">
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Estudiante, 'lbl-motivo-gestiones' )}}</ng-template>
+
+      <form [formGroup]="formTraspaso" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
+
+        <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
+
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFill>
+            <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
+              <mat-form-field fxFlex>
+                <mat-select formControlName="idUnivDestino" (selectionChange)="onUniversidadSelectionChange($event)" placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-universidad-destino')}}">
+                   <mat-option *ngFor="let universidad of listaUniversidades" [value]="universidad.idUniversidad">
+                     {{universidad.descUniversidad}}
+                   </mat-option>
+                 </mat-select>
+                 <mat-error *ngIf="formTraspaso.controls['idUnivDestino'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-univ-destino-error') }}</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
+              <mat-form-field fxFlex>
+                <mat-select formControlName="idCarreraDestino" (selectionChange)="onCarreraSelectionChange($event)" placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-carrera-destino')}}">
+                   <mat-option *ngFor="let carrera of listaCarreras" [value]="carrera.idCarrera">
+                     {{carrera.descCarrera}}
+                   </mat-option>
+                 </mat-select>
+                 <mat-error *ngIf="formTraspaso.controls['idCarreraDestino'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-carrera-destino-error') }}</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFill>
+            <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
+              <mat-form-field fxFlex>
+                <mat-select formControlName="idMotivoTraspaso" (selectionChange)="onMotivoSelectionChange($event)" placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-motivo-traspaso')}}">
+                   <mat-option *ngFor="let motivo of listaMotivoTraspaso" [value]="motivo.idMotivoTraspaso">
+                     {{motivo.motivoTraspaso}}
+                   </mat-option>
+                 </mat-select>
+                 <mat-error *ngIf="formTraspaso.controls['idMotivoTraspaso'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-motivo-traspaso-error') }}</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
+              <mat-form-field fxFlex>
+                <input type="text" required matInput minlength="5" maxlength="100" autocomplete="off"
+                  placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-descripcion-traspaso')}}" formControlName="descripcionTraspaso">
+                  <mat-label>&nbsp; {{langService.getLang(eModulo.Estudiante,'lbl-descripcion-traspaso')}} </mat-label>
+                <mat-error *ngIf="formTraspaso.controls['descripcionTraspaso'].invalid">{{langService.getLang(eModulo.Estudiante,'lbl-descripcion-traspaso-error') }}</mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+
+
+          <!-- <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+            <mat-form-field fxFlex>
+              <mat-label>Breve descripcion :</mat-label>
+              <input type="text" min="0" max="250" minlength="1" maxlength="250" autocomplete="off" matInput required
+                placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-descripcion-suspencion')}}" formControlName="motivo">
+              <mat-error *ngIf="formTraspaso.controls['motivo'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-descripcion-suspencion-error') }}</mat-error>
+            </mat-form-field>
+          </div> -->
+
+
+
+
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>
+            <button mat-raised-button color="primary" disabled="{{formTraspaso.invalid || contextService.isLoading}}" matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
+            <button mat-raised-button color="primary" disabled="{{formTraspaso.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+          </div>
+        </div>
+
+      </form>
+    </mat-step>
+
+
+    <!-- Finalizacion -->
+    <mat-step>
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-confirmar-creacion-cite' )}}</ng-template>
+
+      <div fxLayout="column" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+
+
+          <table>
+            <tr>
+              <td style="text-align: end;"><span><strong>Nombre y Apellidos : </strong></span></td>
+              <td><span>&nbsp;{{this.datoEstudiante.nombreCompleto}}</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align: end;"><span><strong>Carrera : </strong></span></td>
+              <td><span>&nbsp;{{this.datoEstudiante.carrera}}</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align: end;"><span><strong>Año ingreso : </strong></span></td>
+              <td><span>&nbsp;{{this.datoEstudiante.anioIngreso}}</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align: end;"><span><strong>Materias aprobadas : </strong></span></td>
+              <td><span>&nbsp;{{this.datoEstudiante.cantMateriasAprobadas}}</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align: end;"><span><strong>Materias reprobadas : </strong></span></td>
+              <td><span>&nbsp;{{this.datoEstudiante.cantMateriasReprobadas}}</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align: end;"><span><strong>Promedio General :</strong></span></td>
+              <td><span>&nbsp;{{this.datoEstudiante.promedioGeneral}}</span></td>
+            </tr>
+
+          </table>
+
+
+
+        <div fxLayout="column" fxLayoutAlign="space-around center" >
+          <h3>Datos universidad destino : </h3>
+
+          <div fxLayout="row" fxLayoutAlign="start center" >
+            <mat-label><strong>Universidad : </strong>&nbsp; {{this.universidadSelected?.descUniversidad}}</mat-label>
+            &nbsp;&nbsp;&nbsp;
+            <mat-label><strong>Carrera :</strong>&nbsp; {{this.carreraSelected?.descCarrera}}</mat-label>
+            &nbsp;&nbsp;&nbsp;
+            <mat-label><strong>Motivo :</strong>&nbsp; {{this.motivoSelected?.motivoTraspaso}}</mat-label>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span style="font-size: 15px; text-align: center">&nbsp;</span>
+        <br>
+        <br>
+        <br>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlexFill>
+        <button mat-raised-button color="primary" matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
+
+        <div fxLayout="row" fxLayoutAlign="center center" fxFlex >
+          <button mat-raised-button color="accent" (click)="onFinalizarSolicitud()">{{langService.getLang(eModulo.Base, 'lbl-finalizar' )}}</button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+
+
+
+</mat-card-content>
+</mat-dialog-content>
+</mat-card>

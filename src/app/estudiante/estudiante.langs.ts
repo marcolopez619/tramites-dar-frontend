@@ -8,6 +8,7 @@ export const estudianteLang = {
     'tit-nueva-solicitud-anulacion' : 'Nueva solicitud de anulación',
     'tit-nueva-solicitud-suspencion' : 'Nueva solicitud de suspención',
     'tit-nueva-solicitud-readmision' : 'Nueva solicitud de readmisión',
+    'tit-nueva-solicitud-traspaso' : 'Nueva solicitud de traspaso de universidad',
 
     'lbl-traspaso-univ-destino' : 'Universidad destino',
     'lbl-traspaso-carrera-destino' : 'Carrera destino',
@@ -18,7 +19,7 @@ export const estudianteLang = {
     'lbl-motivo-gestiones' : 'Motivo y gestiones',
 
     'lbl-carrera-origen' : 'carrera origen',
-    'lbl-carrera-destino' : 'carrera destino',
+    'lbl-carrera-destino' : 'Carrera destino',
     'lbl-confir-sol-nuevo-tramite-cambio-carrera' : '¿ Seguro de finalizar la solicitud de cambio de carrera ?',
 
     'lbl-tiempo-solicitado' : 'Tiempo solicitado (Gestiones)',
@@ -39,7 +40,13 @@ export const estudianteLang = {
     'lbl-fecha-solicitud-suspencion' : 'Fecha solicitud suspención',
     'lbl-fecha-solicitud-readmision' : 'Fecha solicitud readmisión',
 
-
+    'lbl-universidad-destino' : 'Universidad destino',
+    'lbl-univ-destino-error' : 'La universidad destino es inválida',
+    'lbl-carrera-destino-error' : 'La carrera destino es inválida',
+    'lbl-motivo-traspaso' : 'Motivo de traspaso',
+    'lbl-motivo-traspaso-error' : 'El motivo es inválido',
+    'lbl-descripcion-traspaso' : 'Descripcion del motivo',
+    'lbl-descripcion-traspaso-error' : 'La descripcion es inválida',
 
 
 
