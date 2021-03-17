@@ -6,6 +6,7 @@ import { citesLang } from '../../cites/cites.langs';
 import { hojaDeRutaLang } from '../../hoja-de-ruta/hoja-de-ruta.langs';
 import { estudianteLang } from '../../estudiante/estudiante.langs';
 import { tramiteLang } from '../../tramites/tramites.langs';
+import { darLang } from '../../dar/dar.langs';
 
 /**
  * Servicio para manejar langs de forma global en el sistema.
@@ -44,6 +45,10 @@ export class LangService {
       {
         id: eModulo.Tramite,
         contenido : tramiteLang
+      },
+      {
+        id: eModulo.Dar,
+        contenido : darLang
       }
       );
   }
