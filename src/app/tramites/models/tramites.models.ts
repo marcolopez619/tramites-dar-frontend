@@ -51,6 +51,7 @@ export interface BandejaTraspasoUniversidad extends BandejaAbstract{
 export interface BandejaDar extends BandejaAbstract{
   idSolicitudTramite?: number;
   nombreCompleto?: string;
+  carrera?: string;
   idTipoTramite?: number;
   descTipoTramite?: string;
   fechaSolicitud?: Date;

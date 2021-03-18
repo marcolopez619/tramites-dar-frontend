@@ -18,7 +18,7 @@ import { BandejaDar } from '../../../tramites/models/tramites.models';
 })
 export class BandejaDarComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['nombreCompleto', 'tipoTramite', 'fechaSolicitud', 'estado', 'acciones' ];
+  displayedColumns = ['nombreCompleto', 'carrera', 'tipoTramite', 'fechaSolicitud', 'estado', 'acciones' ];
   dataSource = new MatTableDataSource<BandejaDar>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -47,21 +47,28 @@ export class BandejaDarComponent extends BaseComponent  implements OnInit, After
     this.unsubscribe$.next(true);
   }
 
+  aplicarFiltro(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   private getListaTramites(): void {
     const data :  Array<BandejaDar> = [{
-      idSolicitudTramite : 1,
-      nombreCompleto : 'MALUMA CONDORI SARDIAN',
-      idTipoTramite : 1,
-      descTipoTramite : 'TRAMITE DE SUSPENCION',
-      fechaSolicitud : new Date( 2019, 2 ),
-      estado : 'EN PROCESO'
+      idSolicitudTramite: 1,
+      nombreCompleto    : 'MALUMA CONDORI SARDIAN',
+      carrera           : 'INGENIERIA DE SISTEMAS',
+      idTipoTramite     : 1,
+      descTipoTramite   : 'TRAMITE DE SUSPENCION',
+      fechaSolicitud    : new Date( 2019, 2 ),
+      estado            : 'EN PROCESO'
     },{
       idSolicitudTramite: 2,
-      nombreCompleto : 'ANUEL AAA ZORRINO',
-      idTipoTramite : 2,
-      descTipoTramite : 'TRAMITE DE CAMBIO DE CARRERA',
-      fechaSolicitud : new Date( 2010, 5 ),
-      estado : 'EN PROCESO'
+      nombreCompleto    : 'ANUEL AAA ZORRINO',
+      carrera           : 'INGENIERIA DE AGROINDUSTRIAL',
+      idTipoTramite     : 2,
+      descTipoTramite   : 'TRAMITE DE CAMBIO DE CARRERA',
+      fechaSolicitud    : new Date( 2010, 5 ),
+      estado            : 'EN PROCESO'
     }  ];
     this.dataSource.data = data;
   }

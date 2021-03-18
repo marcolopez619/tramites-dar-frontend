@@ -13,11 +13,22 @@
 
 <mat-card-content>
 
+  <mat-form-field fxFill>
+    <mat-label>Buscar</mat-label>
+    <input matInput (keyup)="aplicarFiltro($event)">
+
+  </mat-form-field>
+
     <mat-table #table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="nombreCompleto">
         <mat-header-cell *matHeaderCellDef fxFlex="35" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-nombre-completo') }} </mat-header-cell>
         <mat-cell *matCellDef="let element" fxFlex="35"> {{element.nombreCompleto}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="carrera">
+        <mat-header-cell *matHeaderCellDef fxFlex="35" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-nombre-completo') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="35"> {{element.carrera}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="tipoTramite">
