@@ -26,8 +26,7 @@ export class BandejaDarComponent extends BaseComponent  implements OnInit, After
 
   constructor(
     public langService: LangService,
-    public contextService: ContextoService,
-    private dialog: MatDialog
+    public contextService: ContextoService
   ) {
     super();
   }

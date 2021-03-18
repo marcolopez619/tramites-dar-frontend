@@ -64,6 +64,7 @@ import { BusquedaService } from './services/busqueda.service';
 import { ListaDocsAdjSubidosComponent } from './components/lista-docs-adj-subidos/lista-docs-adj-subidos.component';
 import { DatosEstudianteComponent } from './components/datos-estudiante/datos-estudiante.component';
 import { MotivoService } from './services/motivo.service';
+import { DatosFormatoTablaComponent } from './components/datos-formato-tabla/datos-formato-tabla.component';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -97,7 +98,8 @@ import { MotivoService } from './services/motivo.service';
         BusquedaAvanzadaComponent,
         DataTableHojaDeRutaComponent,
         ListaDocsAdjSubidosComponent,
-        DatosEstudianteComponent
+        DatosEstudianteComponent,
+        DatosFormatoTablaComponent
     ],
     imports: [
         CommonModule,
@@ -195,7 +197,8 @@ import { MotivoService } from './services/motivo.service';
         BusquedaAvanzadaComponent,
         DataTableHojaDeRutaComponent,
         ListaDocsAdjSubidosComponent,
-        DatosEstudianteComponent
+        DatosEstudianteComponent,
+        DatosFormatoTablaComponent
     ],
     entryComponents: [
         ConfirmDialogComponent

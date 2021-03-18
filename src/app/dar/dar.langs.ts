@@ -3,6 +3,8 @@ export const darLang = {
     'tit-bandeja-dar' : 'Solicitudes de tramites',
 
     'lbl-nombre-completo' : 'Nombre completo',
-    'lbl-tipo-tramite' : 'Tipo trámite'
+    'lbl-tipo-tramite' : 'Tipo trámite',
+    'lbl-observaciones' : 'Observaciones',
+    'lbl-observaciones-error' : 'La observacion es inválida'
   }
 };
