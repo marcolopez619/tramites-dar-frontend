@@ -1,1 +1,60 @@
-<p>universidad works!</p>
+<shared-loader-spinner></shared-loader-spinner>
+
+<mat-card>
+  <mat-card-header class="alt-theme">
+  <mat-toolbar color="primary">
+      {{ langService.getLang(eModulo.Dar, 'tit-detalle-universidad') }}
+      <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Dar, 'tit-editar-universidad') }}" (click)="onAnadirEditCarrera()">
+          <mat-icon>edit</mat-icon>
+      </a>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Dar, 'tit-nueva-carrera') }}" (click)="onEditUniversidad()">
+          <mat-icon>add_circle</mat-icon>
+      </a>
+  </mat-toolbar>
+</mat-card-header>
+
+<mat-card-content>
+
+ <!--  <mat-form-field fxFill>
+    <mat-label>Buscar</mat-label>
+    <input matInput (keyup)="aplicarFiltro($event)">
+
+  </mat-form-field> -->
+
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="descCarrera">
+        <mat-header-cell *matHeaderCellDef fxFlex="80" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-universidad') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="80"> {{element.descCarrera}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="estado" >
+        <mat-header-cell *matHeaderCellDef fxFlex="15"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="15" > {{element.estado}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef fxFlex="15" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element;" fxFlex="15" fxLayoutAlign="center center">
+          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}" (click)="onAnadirEditCarrera(element)">
+            <mat-icon>edit</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+      <mat-row
+        shRowHover
+        [ngClass]="{'row-action': idSeleccionado === row.idCarrera}"
+        [@fadeInAnim]="true"
+        *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+
+    </mat-table>
+    <shared-table-empty [datasource]="dataSource"></shared-table-empty>
+    <mat-paginator #paginator [pageSize]="config.paginatorSize" [pageSizeOptions]="config.paginatorOptions" [showFirstLastButtons]="true"></mat-paginator>
+
+  </mat-card-content>
+</mat-card>

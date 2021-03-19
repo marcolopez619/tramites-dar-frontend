@@ -18,7 +18,7 @@ import { UniversidadComponent } from './components/gestion-universidades/univers
     RouterModule.forChild(darRoutes),
     SharedModule
   ],
-  exports: [BandejaDarComponent, DetalleTramiteComponent, BandejaUniversidadesComponent],
+  exports: [BandejaDarComponent, DetalleTramiteComponent, BandejaUniversidadesComponent, UniversidadComponent],
   providers : [
     DarService,
     DatePipe

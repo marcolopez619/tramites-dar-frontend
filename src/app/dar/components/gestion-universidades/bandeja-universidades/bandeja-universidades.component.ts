@@ -20,7 +20,7 @@ import { UniversidadComponent } from '../universidad/universidad.component';
 })
 export class BandejaUniversidadesComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['universidad', 'estado', 'acciones' ];
+  displayedColumns = ['universidad', 'estado' ];
   dataSource = new MatTableDataSource<BandejaUniversidades>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

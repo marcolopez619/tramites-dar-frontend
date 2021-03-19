@@ -4,10 +4,11 @@
   <mat-card-header class="alt-theme">
   <mat-toolbar color="primary">
       {{ langService.getLang(eModulo.Dar, 'tit-bandeja-universidades') }}
-      <span class="flex-spacer"></span>
+
+      <!-- <span class="flex-spacer"></span>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Dar, 'tit-nueva-universidad') }}" (click)="onAnadirEditarUniversidad(true)">
           <mat-icon>add_circle</mat-icon>
-      </a>
+      </a> -->
   </mat-toolbar>
 </mat-card-header>
 
@@ -34,13 +35,10 @@
       <ng-container matColumnDef="acciones">
         <mat-header-cell *matHeaderCellDef fxFlex="15" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
         <mat-cell *matCellDef="let element;" fxFlex="15" fxLayoutAlign="center center">
-          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}" (click)="onAnadirEditarUniversidad()">
-            <mat-icon>edit</mat-icon>
-          </a>
-         <!--  <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-imprimir') }}">
-            <mat-icon></mat-icon>
-          </a> -->
           <!--
+            <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}" (click)="onAnadirEditarUniversidad()">
+              <mat-icon>edit</mat-icon>
+            </a>
             <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-imprimir') }}">
               <mat-icon>print</mat-icon>
             </a>
