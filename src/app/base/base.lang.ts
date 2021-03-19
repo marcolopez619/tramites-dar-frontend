@@ -57,6 +57,7 @@ export const baseLang = {
             'lbl-hojas-de-ruta' : 'Hojas de ruta',
             'lbl-menu-principal' : 'Menu principal',
             'lbl-acciones' : 'Acciones',
+            'lbl-anadir' : 'Añadir',
             'lbl-editar' : 'Editar',
             'lbl-guardar' : 'Guardar',
             'lbl-generar-hoja-ruta' : 'Generar hoja de ruta',

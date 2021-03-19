@@ -9,6 +9,7 @@ export const darLang = {
     'tit-detalle-universidad' : 'Detalle de universidad',
 
     'lbl-universidad' : 'Universidad',
+    'lbl-universidad-error' : 'La universidad es inválida',
     'lbl-nombre-completo' : 'Nombre completo',
     'lbl-tipo-tramite' : 'Tipo trámite',
     'lbl-observaciones' : 'Observaciones',

@@ -77,6 +77,8 @@ export class UniversidadComponent extends BaseComponent  implements OnInit, Afte
         disableClose: false,
         width: '1000px',
         data: {
+          isEditarUniversidad : true,
+          selectedData: { nombre: 'ALGUNA UNIVERSIDAD', estado : true }
         }
       });
       dlgEditUniversidad.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
@@ -94,7 +96,8 @@ export class UniversidadComponent extends BaseComponent  implements OnInit, Afte
         disableClose: false,
         width: '1000px',
         data: {
-          isAnadir : isAnadir
+          isAnadirCarrera: isAnadir,
+          selectedData   : (isAnadir) ? undefined :  { nombre: pCarrera.descCarrera, estado : true }
         }
       });
       dlgEditCarrera.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
