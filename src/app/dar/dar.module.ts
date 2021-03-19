@@ -6,17 +6,19 @@ import { SharedModule } from '../shared/shared.module';
 import { DarService } from './dar.service';
 import { BandejaDarComponent } from './components/bandeja-dar/bandeja-dar.component';
 import { DetalleTramiteComponent } from './components/detalle-tramite/detalle-tramite.component';
+import { BandejaUniversidadesComponent } from './components/gestion-universidades/bandeja-universidades/bandeja-universidades.component';
+import { UniversidadComponent } from './components/gestion-universidades/universidad/universidad.component';
 
 
 
 @NgModule({
-  declarations: [BandejaDarComponent, DetalleTramiteComponent],
+  declarations: [BandejaDarComponent, DetalleTramiteComponent, BandejaUniversidadesComponent, UniversidadComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(darRoutes),
     SharedModule
   ],
-  exports: [BandejaDarComponent, DetalleTramiteComponent],
+  exports: [BandejaDarComponent, DetalleTramiteComponent, BandejaUniversidadesComponent],
   providers : [
     DarService,
     DatePipe
