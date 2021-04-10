@@ -2,6 +2,7 @@ export const estudianteLang = {
   'es' : {
     'tit-lista-anulaciones' : 'Solicitud de anulaciones',
     'tit-lista-cambios-carrera' : 'Solicitud de cambios de carrera',
+    'tit-lista-suspenciones-carrera' : 'Solicitud de suspenciónes de carrera',
     'tit-lista-readmision-carrera' : 'Solicitudes de readmisiones de carrera',
     'tit-lista-traspaso-universidad' : 'Solicitudes de traspaso de universidades',
     'tit-nueva-solicitud' : 'Nueva solicitud',
