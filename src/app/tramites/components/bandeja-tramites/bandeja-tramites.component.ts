@@ -9,6 +9,7 @@ import { BaseComponent } from '../../../shared/base.component';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { BandejaTramite } from '../../models/tramites.models';
+import { TramitesService } from '../../tramites.service';
 import { NuevoTramiteComponent } from '../nuevo-tramite/nuevo-tramite.component';
 
 @Component({
@@ -29,7 +30,8 @@ export class BandejaTramitesComponent extends BaseComponent implements OnInit, A
   constructor(
     public langService: LangService,
     public contextService: ContextoService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private tramitesService: TramitesService
   ) {
     super();
   }
@@ -50,23 +52,9 @@ export class BandejaTramitesComponent extends BaseComponent implements OnInit, A
   }
 
   private getListaTramites(): void {
-    const data : Array<BandejaTramite> = [{
-      idTramite : 1,
-      tramite : 'CAMBIO DE CARRERA',
-      gestion: 2018,
-      fechaInicio: new Date(),
-      fechaFinal: new Date(),
-      estado : 'PROCESO'
-    },{
-      idTramite : 2,
-      tramite : 'TRASPASO DE UNIVERSIDAD',
-      gestion: 2021,
-      fechaInicio: new Date(),
-      fechaFinal: new Date(),
-      estado : 'FINALIZADO'
-    }];
-
-    this.dataSource.data = data;
+    this.tramitesService.getAllListaTramites().pipe( takeUntil(this.unsubscribe$)).subscribe( allTramites => {
+      this.dataSource.data = allTramites.data;
+    });
   }
 
   onNuevoTramite(): void {
@@ -77,8 +65,7 @@ export class BandejaTramitesComponent extends BaseComponent implements OnInit, A
     });
     dlgNuevoTramite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
-        console.log( `---> ${result}` );
-        // TODO: ACTUALIZAR LA BANDEJA PRINCIPAL.
+        this.getListaTramites();
       }
     });
   }

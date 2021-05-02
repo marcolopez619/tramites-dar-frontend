@@ -59,7 +59,7 @@ export class BandejaDarComponent extends BaseComponent  implements OnInit, After
       idTipoTramite     : 1,
       descTipoTramite   : 'TRAMITE DE SUSPENCION',
       fechaSolicitud    : new Date( 2019, 2 ),
-      estado            : 'EN PROCESO'
+      estado            : 1
     },{
       idSolicitudTramite: 2,
       nombreCompleto    : 'ANUEL AAA ZORRINO',
@@ -67,7 +67,7 @@ export class BandejaDarComponent extends BaseComponent  implements OnInit, After
       idTipoTramite     : 2,
       descTipoTramite   : 'TRAMITE DE CAMBIO DE CARRERA',
       fechaSolicitud    : new Date( 2010, 5 ),
-      estado            : 'EN PROCESO'
+      estado            : 1
     }  ];
     this.dataSource.data = data;
   }

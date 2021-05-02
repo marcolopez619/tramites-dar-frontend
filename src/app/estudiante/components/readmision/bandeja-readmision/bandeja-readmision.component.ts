@@ -57,7 +57,7 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
       fechaSolicitudSuspencion: new Date(),
       fechaSolicitudReadmision: new Date(),
       tiempo                  : '1 Gestion',
-      estado                  : 'EN PROCESO'
+      estado                  : 4
     },{
       idReadmision            : 2,
       idCarrera               : 2,
@@ -65,7 +65,7 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
       fechaSolicitudSuspencion: new Date(),
       fechaSolicitudReadmision: new Date(),
       tiempo                  : '4 Gestiones',
-      estado                  : 'FINALIZADO'
+      estado                  : 3
     }];
     this.dataSource.data = data;
   }

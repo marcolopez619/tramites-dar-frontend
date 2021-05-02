@@ -59,7 +59,7 @@ export class BandejaCambioCarreraComponent extends BaseComponent  implements OnI
       idDestino     : 2,
       destino       : 'TRABAJO SOCIAL',
       fechaSolicitud: new Date(),
-      estado        : 'EN PROCESO',
+      estado        : 3,
       motivo        : 'MOTIVOS PERSONALES Y LABORALESSSS'
     }, {
       idCambioCarrera : 2,
@@ -68,7 +68,7 @@ export class BandejaCambioCarreraComponent extends BaseComponent  implements OnI
       idDestino     : 1,
       destino       : 'INGENIERIA INFORMATICA',
       fechaSolicitud: new Date(),
-      estado        : 'FINALIZADO',
+      estado        : 2,
       motivo        : 'POR ALGUN MOTIVO QUE NO TE INTERESA'
     }]
 

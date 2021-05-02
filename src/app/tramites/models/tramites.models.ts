@@ -2,10 +2,12 @@ import { BandejaAbstract } from '../../shared/models/abstract.models';
 
 export interface BandejaTramite extends BandejaAbstract {
   idTramite?: number;
-  tramite?: string;
-  gestion?: number;
-  fechaInicio?: Date;
+  descripcionTramite?: string;
+  idHabilitacionTramite?: number;
+  fechaInicial?: Date;
   fechaFinal?: Date;
+  estado?: number;
+  gestion?: number;
 }
 
 export interface BandejaCambioCarrera extends BandejaAbstract {

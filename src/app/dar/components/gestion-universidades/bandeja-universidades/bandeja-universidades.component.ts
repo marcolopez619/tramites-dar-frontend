@@ -58,11 +58,11 @@ export class BandejaUniversidadesComponent extends BaseComponent  implements OnI
     const data :  Array<BandejaUniversidades> = [{
       idUniversidad  : 1,
       descUniversidad: 'UNIVERSIDAD MAYOR, REAL Y PONTIFICIA DE SAN FRANCISCO XAVIER DE CHUQUISACA',
-      estado         : 'ACTIVO'
+      estado         : 1
     },{
       idUniversidad  : 2,
       descUniversidad: 'Universidad Autónoma Gabriel René Moreno'.toUpperCase(),
-      estado         : 'DESACTIVO'
+      estado         : 0
     }  ];
     this.dataSource.data = data;
   }

@@ -55,13 +55,13 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
       carrera       : 'INGENIERIA ELECTRONICA',
       fechaSolicitud: new Date(),
       motivo        : 'SOLICITUD POR NUEVA INSCRIPCION JAJAJAJAJAJJAJA',
-      estado        : 'EN PROCESO'
+      estado        : 5
     }, {
       idCarrera     : 2,
       carrera       : 'ENFERMERIA',
       fechaSolicitud: new Date(),
       motivo        : 'PORQUE NO ME GUSTA LA CARRERA',
-      estado        : 'FINALIZADO'
+      estado        : 2
     }]
 
     this.dataSource.data = data;

@@ -61,7 +61,7 @@ export class BandejaSuspencionComponent extends BaseComponent  implements OnInit
       fechaFinal    : new Date(),
       motivo        : 'ALGUN MOTIVO LARRRGOOO QUE NO ME INTERASA',
       fechaSolicitud: new Date(),
-      estado        : 'EN PROCESO'
+      estado        : 5
     },{
       idSuspencion  : 2,
       idCarrera     : 2,
@@ -71,7 +71,7 @@ export class BandejaSuspencionComponent extends BaseComponent  implements OnInit
       fechaFinal    : new Date(),
       motivo        : 'MOTIVOS LABORALES Y FAMILIARES',
       fechaSolicitud: new Date(),
-      estado        : 'FINALIZADO'
+      estado        : 4
     }];
     this.dataSource.data = data;
   }

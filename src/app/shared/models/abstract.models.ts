@@ -1,4 +1,4 @@
 export interface BandejaAbstract {
-  estado?: string;
+  estado?: number;
   acciones?: string;
 }

@@ -17,12 +17,12 @@
 
       <ng-container matColumnDef="tramite">
         <mat-header-cell *matHeaderCellDef fxFlex="35" mat-sort-header> {{ langService.getLang(eModulo.Tramite, 'lbl-tramite') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="35"> {{element.tramite}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="35"> {{element.descripcionTramite}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="rangoFechas" >
         <mat-header-cell *matHeaderCellDef fxFlex="25"  mat-sort-header> {{ langService.getLang(eModulo.Tramite, 'lbl-rango-fechas') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="25" > {{element.fechaInicio | date : 'dd/MM/yyyy' }} al {{element.fechaFinal | date : 'dd/MM/yyyy' }} &nbsp; </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="25" > {{element.fechaInicial | date : 'dd/MM/yyyy' }} al {{element.fechaFinal | date : 'dd/MM/yyyy' }} &nbsp; </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="gestion" >
@@ -32,7 +32,7 @@
 
       <ng-container matColumnDef="estado" >
         <mat-header-cell *matHeaderCellDef fxFlex="15"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="15" > {{element.estado}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="15" > {{element.estado | estadoToLiteral}} </mat-cell>
       </ng-container>
 
 

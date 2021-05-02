@@ -74,8 +74,7 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
     };
 
     this.tramiteService.insertHabilitaconTramite( habilitacionTramiteInsert ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( respInsert => {
-      console.log(`${JSON.stringify( respInsert )}`);
-      this.onClose();
+      this.onClose(respInsert);
     });
 
   }

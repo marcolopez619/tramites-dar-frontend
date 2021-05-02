@@ -15,8 +15,12 @@ export class TramitesService {
     private contextoService: ContextoService
   ) { }
 
-  insertHabilitaconTramite(habilitacionTramiteModelInsert : HabilitacionTramiteModelInsert): Observable<Resultado>{
+  insertHabilitaconTramite(habilitacionTramiteModelInsert: HabilitacionTramiteModelInsert): Observable<Resultado> {
     return this.httpClient.post<Resultado>(`${this.baseURL}`, habilitacionTramiteModelInsert );
+  }
+
+  getAllListaTramites(): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}`);
   }
 
 }

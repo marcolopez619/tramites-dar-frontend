@@ -58,7 +58,7 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
       idPeriodo : 1,
       periodo : '1/2021',
       motivo : 'ALGUN MOTIVO DE MIERDA PARA Q NO JODAN',
-      estado : 'EN PROCESO',
+      estado : 0,
       fechaSolicitud : new Date(2020, 0)
     },{
       idTramite : 2,
@@ -69,7 +69,7 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
       idPeriodo : 2,
       periodo : '2/2021',
       motivo : 'SOLICITUD REALIZADA POR MOTIVOS LABORALES Y FAMILIARES',
-      estado : 'EN PROCESO',
+      estado : 1,
       fechaSolicitud : new Date(2020, 3)
     }
      ];

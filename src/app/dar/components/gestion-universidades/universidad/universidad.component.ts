@@ -59,15 +59,15 @@ export class UniversidadComponent extends BaseComponent  implements OnInit, Afte
       const data :  Array<BandejaCarreras> = [{
         idCarrera  : 1,
         descCarrera: 'ENFERMERIA',
-        estado     : 'ACTIVO'
+        estado     : 6
       },{
         idCarrera  : 2,
         descCarrera: 'ADMINISTRACION DE EMPRESAS',
-        estado     : 'DESACTIVO'
+        estado     : 2
       },{
         idCarrera  : 3,
         descCarrera: 'INGENIERIA AGROINDUSTRIAL Y AGROPECUARIA',
-        estado     : 'ACTIVO'
+        estado     : 8
       }];
       this.dataSource.data = data;
     }
