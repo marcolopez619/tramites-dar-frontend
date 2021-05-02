@@ -12,3 +12,7 @@ export interface HabilitacionTramiteModelInsert{
   gestion?: number;
   idTramite?: number;
 }
+
+export interface HabilitacionTramiteModelUpdate extends HabilitacionTramiteModelInsert{
+  idHabilitacionTramite?: number;
+}

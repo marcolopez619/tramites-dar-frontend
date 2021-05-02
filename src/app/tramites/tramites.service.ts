@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Resultado } from '../shared/models/resultado.model';
-import { HabilitacionTramiteModelInsert } from '../shared/models/tramites.models';
+import { HabilitacionTramiteModelInsert, HabilitacionTramiteModelUpdate } from '../shared/models/tramites.models';
 import { ContextoService } from '../shared/services/contexto.service';
 
 @Injectable()
@@ -15,12 +15,16 @@ export class TramitesService {
     private contextoService: ContextoService
   ) { }
 
+  getAllListaTramites(): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}`);
+  }
+
   insertHabilitaconTramite(habilitacionTramiteModelInsert: HabilitacionTramiteModelInsert): Observable<Resultado> {
     return this.httpClient.post<Resultado>(`${this.baseURL}`, habilitacionTramiteModelInsert );
   }
 
-  getAllListaTramites(): Observable<Resultado> {
-    return this.httpClient.get<Resultado>(`${this.baseURL}`);
+  updateHabilitaconTramite(habilitacionTramiteModelUpdate: HabilitacionTramiteModelUpdate): Observable<Resultado> {
+    return this.httpClient.patch<Resultado>(`${this.baseURL}`, habilitacionTramiteModelUpdate );
   }
 
 }

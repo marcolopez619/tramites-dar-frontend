@@ -5,10 +5,11 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle/slide-toggl
 import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
-import { HabilitacionTramiteModelInsert, TramiteModel } from '../../../shared/models/tramites.models';
+import { HabilitacionTramiteModelInsert, HabilitacionTramiteModelUpdate, TramiteModel } from '../../../shared/models/tramites.models';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { TramitesAcademicosService } from '../../../shared/services/tramites-academicos.service';
+import { BandejaTramite } from '../../models/tramites.models';
 import { TramitesService } from '../../tramites.service';
 
 @Component({
@@ -25,6 +26,8 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
   fechaLimiteSuperior = new Date();
   fechaLimiteInferior = new Date( this.fechaLimiteSuperior.getFullYear() - 1, 0, 1);
 
+  elementBandejaSelected: BandejaTramite;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<any>,
@@ -40,13 +43,34 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.getListaTramites();
 
-    this.formTramite = this.formBuilder.group({
-      idTramite : [ undefined, Validators.compose([ Validators.required ])],
-      rangoFechaGroup: this.formBuilder.group({
-        fechaInicial: [ undefined, Validators.compose([ Validators.required ]) ],
-        fechaFinal  : [ undefined, Validators.compose([ Validators.required ]) ]
-      })
-    });
+    // Captura el elemento a editar si es que lo hay
+    this.elementBandejaSelected = this.data.elementBandejaTramite as BandejaTramite;
+
+    if ( this.elementBandejaSelected ) {
+      // => es edicion
+      this.activado = !!this.elementBandejaSelected.estado;
+
+      this.formTramite = this.formBuilder.group({
+        idTramite      : [ this.elementBandejaSelected.idTramite, Validators.compose([ Validators.required ])],
+        estado         : [ +this.activado ],
+        rangoFechaGroup: this.formBuilder.group({
+          fechaInicial: [ this.elementBandejaSelected.fechaInicial, Validators.compose([ Validators.required ]) ],
+          fechaFinal  : [ this.elementBandejaSelected.fechaFinal, Validators.compose([ Validators.required ]) ]
+        })
+      });
+
+    } else {
+      // => Nueva insercion
+      this.formTramite = this.formBuilder.group({
+        idTramite      : [ undefined, Validators.compose([ Validators.required ])],
+        estado         : [ undefined ],
+        rangoFechaGroup: this.formBuilder.group({
+          fechaInicial: [ undefined, Validators.compose([ Validators.required ]) ],
+          fechaFinal  : [ undefined, Validators.compose([ Validators.required ]) ]
+        })
+      });
+    }
+
   }
 
   private getListaTramites(): void {
@@ -65,17 +89,35 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
     const fechaIncial = rangoFechas.fechaInicial;
     const fechaFinal  = rangoFechas.fechaFinal;
 
-    const habilitacionTramiteInsert: HabilitacionTramiteModelInsert = {
-      fechaInicial: fechaIncial,
-      fechaFinal  : fechaFinal,
-      estado      : +this.activado, // Habilitado por default
-      gestion     : new Date().getFullYear(),
-      idTramite   : this.formTramite.controls['idTramite'].value
-    };
+    if ( this.elementBandejaSelected ) {
+      // => Edicion
+      const habilitacionTramiteModelUpdate: HabilitacionTramiteModelUpdate = {
+        idHabilitacionTramite: this.elementBandejaSelected.idHabilitacionTramite,
+        fechaInicial         : fechaIncial,
+        fechaFinal           : fechaFinal,
+        estado               : +this.activado,
+        gestion              : new Date().getFullYear(),
+        idTramite            : this.formTramite.controls['idTramite'].value
+      };
 
-    this.tramiteService.insertHabilitaconTramite( habilitacionTramiteInsert ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( respInsert => {
-      this.onClose(respInsert);
-    });
+      this.tramiteService.updateHabilitaconTramite( habilitacionTramiteModelUpdate ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( respUpdate => {
+        this.onClose(respUpdate);
+      });
+
+    } else {
+      // => Nueva insercion
+      const habilitacionTramiteInsert: HabilitacionTramiteModelInsert = {
+        fechaInicial: fechaIncial,
+        fechaFinal  : fechaFinal,
+        estado      : +this.activado, // Habilitado por default
+        gestion     : new Date().getFullYear(),
+        idTramite   : this.formTramite.controls['idTramite'].value
+      };
+
+      this.tramiteService.insertHabilitaconTramite( habilitacionTramiteInsert ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( respInsert => {
+        this.onClose(respInsert);
+      });
+    }
 
   }
 

@@ -57,11 +57,13 @@ export class BandejaTramitesComponent extends BaseComponent implements OnInit, A
     });
   }
 
-  onNuevoTramite(): void {
+  onAddEditTramite(elementToEdit?: BandejaTramite): void {
     const dlgNuevoTramite = this.dialog.open( NuevoTramiteComponent,  {
       disableClose: false,
       width: '1000px',
-      data: { }
+      data: {
+        elementBandejaTramite : elementToEdit
+       }
     });
     dlgNuevoTramite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
