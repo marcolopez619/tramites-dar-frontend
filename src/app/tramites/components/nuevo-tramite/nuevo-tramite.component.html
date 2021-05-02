@@ -20,7 +20,7 @@
                 <mat-label>{{langService.getLang(eModulo.Tramite, 'lbl-tramite' )}} : </mat-label>
                 <mat-select formControlName="idTramite" placeholder="Seleccione">
                   <mat-option *ngFor="let tramite of listaTramites" [value]="tramite.idTramite">
-                    {{tramite.descTramite}}
+                    {{tramite.descripcionTramite}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>

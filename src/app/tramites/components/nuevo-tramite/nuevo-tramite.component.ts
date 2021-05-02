@@ -1,12 +1,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle/slide-toggle';
+import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
-import { TramiteModel } from '../../../shared/models/tramites.models';
+import { HabilitacionTramiteModelInsert, TramiteModel } from '../../../shared/models/tramites.models';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
+import { TramitesAcademicosService } from '../../../shared/services/tramites-academicos.service';
+import { TramitesService } from '../../tramites.service';
 
 @Component({
   selector: 'app-nuevo-tramite',
@@ -22,13 +25,14 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
   fechaLimiteSuperior = new Date();
   fechaLimiteInferior = new Date( this.fechaLimiteSuperior.getFullYear() - 1, 0, 1);
 
-
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<any>,
     public langService: LangService,
     public contextService: ContextoService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private tramiteService: TramitesService,
+    private tramitesAcademicosService: TramitesAcademicosService
   ) {
     super();
   }
@@ -41,38 +45,38 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
       rangoFechaGroup: this.formBuilder.group({
         fechaInicial: [ undefined, Validators.compose([ Validators.required ]) ],
         fechaFinal  : [ undefined, Validators.compose([ Validators.required ]) ]
-      }),
+      })
     });
   }
 
-  private getListaTramites():void {
+  private getListaTramites(): void {
 
-    const data: Array<TramiteModel> = [{
-      idTramite : 1,
-      descTramite : 'SUSPENCION'
-    },{
-      idTramite : 2,
-      descTramite : 'ANULACION'
-    }];
-
-    this.listaTramites = data;
+    this.tramitesAcademicosService.getTramitesHabilitados().pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaTramitesAcademicos => {
+      this.listaTramites = listaTramitesAcademicos.data as Array<TramiteModel>;
+    });
   }
 
-  onChangeSlideToggleValue( event:MatSlideToggleChange ): void{
+  onChangeSlideToggleValue( event: MatSlideToggleChange ): void {
     this.activado = event.checked;
   }
 
-  onSaveTramite(): void{
+  onSaveTramite(): void {
     const rangoFechas = this.formTramite.controls['rangoFechaGroup'].value;
     const fechaIncial = rangoFechas.fechaInicial;
     const fechaFinal  = rangoFechas.fechaFinal;
 
-    console.log(`idTramite : ${this.formTramite.controls['idTramite'].value}`);
-    console.log(`Fecha Inicial : ${fechaIncial}`);
-    console.log(`Fecha final : ${fechaFinal}`);
-    console.log(`Fecha final : ${this.activado}`);
+    const habilitacionTramiteInsert: HabilitacionTramiteModelInsert = {
+      fechaInicial: fechaIncial,
+      fechaFinal  : fechaFinal,
+      estado      : +this.activado, // Habilitado por default
+      gestion     : new Date().getFullYear(),
+      idTramite   : this.formTramite.controls['idTramite'].value
+    };
 
-    this.onClose()
+    this.tramiteService.insertHabilitaconTramite( habilitacionTramiteInsert ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( respInsert => {
+      console.log(`${JSON.stringify( respInsert )}`);
+      this.onClose();
+    });
 
   }
 

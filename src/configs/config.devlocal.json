@@ -1,5 +1,5 @@
 {
-    "backendApi": "https://localhost:5001",
+    "backendApi": "http://localhost:8000/api",
     "mostrarErroresDetallados" : true,
     "langs" : [
         {

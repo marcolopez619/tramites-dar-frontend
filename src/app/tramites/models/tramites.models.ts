@@ -1,4 +1,4 @@
-import { BandejaAbstract } from "../../shared/models/abstract.models";
+import { BandejaAbstract } from '../../shared/models/abstract.models';
 
 export interface BandejaTramite extends BandejaAbstract {
   idTramite?: number;
@@ -8,17 +8,17 @@ export interface BandejaTramite extends BandejaAbstract {
   fechaFinal?: Date;
 }
 
-export interface BandejaCambioCarrera extends BandejaAbstract{
-  idCambioCarrera?: number,
+export interface BandejaCambioCarrera extends BandejaAbstract {
+  idCambioCarrera?: number;
   idOrigen?: number;
-  origen?:string;
+  origen?: string;
   idDestino?: number;
-  destino?:string;
+  destino?: string;
   fechaSolicitud?: Date;
   motivo?: string;
 }
 
-export interface BandejaSuspencion extends BandejaAbstract{
+export interface BandejaSuspencion extends BandejaAbstract {
   idSuspencion?: number;
   idCarrera?: number;
   carrera?: string;
@@ -28,7 +28,7 @@ export interface BandejaSuspencion extends BandejaAbstract{
   motivo?: string;
   fechaSolicitud?: Date;
 }
-export interface BandejaReadmision extends BandejaAbstract{
+export interface BandejaReadmision extends BandejaAbstract {
   idReadmision?: number;
   idCarrera?: number;
   carrera?: string;
@@ -36,7 +36,7 @@ export interface BandejaReadmision extends BandejaAbstract{
   fechaSolicitudReadmision?: Date;
   tiempo?: string;
 }
-export interface BandejaTraspasoUniversidad extends BandejaAbstract{
+export interface BandejaTraspasoUniversidad extends BandejaAbstract {
   idTramite?: number;
   idUniversidadDestino?: number;
   universidadDestino?: string;
@@ -48,7 +48,7 @@ export interface BandejaTraspasoUniversidad extends BandejaAbstract{
   fechaSolicitud?: Date;
 }
 
-export interface BandejaDar extends BandejaAbstract{
+export interface BandejaDar extends BandejaAbstract {
   idSolicitudTramite?: number;
   nombreCompleto?: string;
   carrera?: string;
@@ -57,11 +57,11 @@ export interface BandejaDar extends BandejaAbstract{
   fechaSolicitud?: Date;
 }
 
-export interface BandejaUniversidades extends BandejaAbstract{
+export interface BandejaUniversidades extends BandejaAbstract {
   idUniversidad?: number;
   descUniversidad?: string;
 }
-export interface BandejaCarreras extends BandejaAbstract{
+export interface BandejaCarreras extends BandejaAbstract {
   idCarrera?: number;
   descCarrera?: string;
 }
