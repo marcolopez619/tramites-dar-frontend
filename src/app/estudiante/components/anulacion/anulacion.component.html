@@ -7,44 +7,16 @@
           <mat-icon>close</mat-icon>
         </a>
     </mat-toolbar>
-    <!-- <div mat-card-avatar class="header-image"></div> -->
-    <!-- <mat-card-title> &nbsp; Información del estudiante</mat-card-title>
-      <mat-card-subtitle>&nbsp;</mat-card-subtitle> -->
     </mat-card-header>
     <mat-card-content>
 
-      <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
-        <img style="max-width: 350px;" mat-card-image src="https://imagenes.elpais.com/resizer/Y6ooftjQIqJ38yuds-ss-PDsMxY=/768x0/cloudfront-eu-central-1.images.arcpublishing.com/prisa/ICWTJEOAHJBRXAPAO4ACVRSTQ4.jpg" alt="Foto del estudiante">
+      <sh-datos-estudiante [datoEstudiante]="datosEstudiante"></sh-datos-estudiante>
 
-        <div fxLayout="row" fxLayoutAlign="center center" >
-          <div fxLayout="column" fxLayoutAlign="center end" fxLayoutAlign.lt-sm="center start">
-            <span><strong>RU: </strong></span>
-            <span><strong>CI: </strong> </span>
-            <span><strong>APS Y NOMBRES: </strong></span>
-            <span><strong>CARRERA: </strong></span>
-            <span><strong>FACULTAD: </strong></span>
-            <span><strong>TRAMITE:</strong></span>
-            <span><strong>FECHA: </strong></span>
-        </div>
-
-        <div fxLayout="column" fxLayoutAlign="center start" >
-          <span>&nbsp;32926 </span>
-          <span>&nbsp;5550155 </span>
-          <span>&nbsp;MALUMA CONDORI MAMANI </span>
-          <span>&nbsp;ENFERMERIA</span>
-          <span>&nbsp;CIENCIAS DE LA SALUD</span>
-          <span>&nbsp;ANULACION DE CARRERA</span>
-          <span>&nbsp;23/mar/2021</span>
-        </div>
-      </div>
-
-
-    </div>
   </mat-card-content>
   <mat-card-actions>
     <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
-      <button mat-raised-button color="accent" fxFlex (click)="onImprimirFormulario()" >{{langService.getLang(eModulo.Base, 'lbl-imprimir')}}</button>
-      <button mat-raised-button color="warn" fxFlex (click)="onClose()" >{{langService.getLang(eModulo.Base, 'btnCancel')}}</button>
+      <button mat-raised-button color="accent" fxFlex (click)="onImprimirFormulario()" [disabled]="this.contextService.isLoading" >{{langService.getLang(eModulo.Base, 'lbl-imprimir')}}</button>
+      <button mat-raised-button color="warn" fxFlex (click)="onClose()" [disabled]="this.contextService.isLoading" >{{langService.getLang(eModulo.Base, 'btnCancel')}}</button>
     </div>
   </mat-card-actions>
 </mat-card>

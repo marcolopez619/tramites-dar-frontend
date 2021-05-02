@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { fadeInAnim, slideInLeftAnim } from '../../animations/template.animation';
 import { EstudianteModel } from '../../models/estudiante.model';
+import { ContextoService } from '../../services/contexto.service';
 
 @Component({
   selector: 'sh-datos-estudiante',
@@ -14,7 +15,11 @@ export class DatosEstudianteComponent implements OnInit {
   @Input()
   datoEstudiante: EstudianteModel;
 
-  constructor() { }
+  constructor(
+    //
+  ) {
+    //
+  }
 
   ngOnInit(): void {
   }

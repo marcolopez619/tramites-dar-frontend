@@ -71,7 +71,9 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
     const dlgNuevaSolicitud = this.dialog.open( AnulacionComponent,  {
       disableClose: false,
       width: '1000px',
-      data: { }
+      data: {
+        idEstudiante : 1 // FIXME: DATO QUEMADO, SACARLO DEL CONTEXTO CUANDO INICIE SESSION EL ESTUDIANTE
+      }
     });
     dlgNuevaSolicitud.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {

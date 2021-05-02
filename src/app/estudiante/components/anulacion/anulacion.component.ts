@@ -1,8 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
+import { EstudianteModel } from '../../../shared/models/estudiante.model';
+import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
+import { EstudianteService } from '../../estudiante.service';
 
 @Component({
   selector: 'app-anulacion',
@@ -13,16 +17,27 @@ import { LangService } from '../../../shared/services/lang.service';
 })
 export class AnulacionComponent extends BaseComponent  implements OnInit {
 
+  datosEstudiante: EstudianteModel;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<any>,
     public langService: LangService,
-    private dialog: MatDialog,
+    private estudianteService: EstudianteService,
+    public contextService: ContextoService,
+    private dialog: MatDialog
   ) {
     super();
   }
 
   ngOnInit(): void {
+    this.getInformacionEstudiante(this.data.idEstudiante);
+  }
+
+  private getInformacionEstudiante(pIdEstudiante: number): void {
+    this.estudianteService.getInformacionEstudiante(pIdEstudiante).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.datosEstudiante = resp.data;
+    });
   }
 
   onImprimirFormulario(): void {
