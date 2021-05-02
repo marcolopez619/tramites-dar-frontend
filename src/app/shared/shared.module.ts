@@ -67,6 +67,7 @@ import { MotivoService } from './services/motivo.service';
 import { DatosFormatoTablaComponent } from './components/datos-formato-tabla/datos-formato-tabla.component';
 import { UniversidadCarreraComponent } from './components/universidad-carrera/universidad-carrera.component';
 import { TramitesAcademicosService } from './services/tramites-academicos.service';
+import { EstadoToLiteralPipe } from './pipes/estado-to-literal.pipe';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -102,7 +103,8 @@ import { TramitesAcademicosService } from './services/tramites-academicos.servic
         ListaDocsAdjSubidosComponent,
         DatosEstudianteComponent,
         DatosFormatoTablaComponent,
-        UniversidadCarreraComponent
+        UniversidadCarreraComponent,
+        EstadoToLiteralPipe
     ],
     imports: [
         CommonModule,
@@ -177,6 +179,7 @@ import { TramitesAcademicosService } from './services/tramites-academicos.servic
 
         ClassTipoNotificacionPipe,
         IconTipoNotificacionPipe,
+        EstadoToLiteralPipe,
 
         HoverCardDirective,
         AutofocusDirective,
