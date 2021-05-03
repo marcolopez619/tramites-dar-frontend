@@ -10,6 +10,7 @@ import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { BandejaAnulacion } from '../../../models/anulacion.models';
 import { AnulacionComponent } from '../anulacion.component';
+import { AnulacionService } from '../anulacion.service';
 
 @Component({
   selector: 'app-bandeja-anulacion',
@@ -29,13 +30,14 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
   constructor(
     public langService: LangService,
     public contextService: ContextoService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private anulacionService: AnulacionService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.getListaAnulaciones(32926);
+    this.getListaAnulaciones();
   }
 
   ngAfterViewInit(): void {
@@ -49,22 +51,13 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
     this.unsubscribe$.next(true);
   }
 
-  private getListaAnulaciones(pRu: number ): void {
-    const data :  Array<BandejaAnulacion> = [{
-      idCarrera     : 1,
-      carrera       : 'INGENIERIA ELECTRONICA',
-      fechaSolicitud: new Date(),
-      motivo        : 'SOLICITUD POR NUEVA INSCRIPCION JAJAJAJAJAJJAJA',
-      estado        : 5
-    }, {
-      idCarrera     : 2,
-      carrera       : 'ENFERMERIA',
-      fechaSolicitud: new Date(),
-      motivo        : 'PORQUE NO ME GUSTA LA CARRERA',
-      estado        : 2
-    }]
+  private getListaAnulaciones(): void {
+    const idEstudiante = 1; // FIXME: DATO QUEMADO, OBTENERLO DEL CONTEXTO
 
-    this.dataSource.data = data;
+    this.anulacionService.getAllListaAnulaciones( idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
+      this.dataSource.data = resp.data;
+    });
+
   }
 
   onNuevaSolicitud(): void {
@@ -78,7 +71,7 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
     dlgNuevaSolicitud.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
         console.log( `---> ${result}` );
-        // TODO: ACTUALIZAR LA BANDEJA PRINCIPAL.
+        this.getListaAnulaciones();
       }
     });
   }

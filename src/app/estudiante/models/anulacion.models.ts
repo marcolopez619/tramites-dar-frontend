@@ -1,8 +1,32 @@
-import { BandejaAbstract } from "../../shared/models/abstract.models";
+import { BandejaAbstract } from '../../shared/models/abstract.models';
 
 export interface BandejaAnulacion extends BandejaAbstract {
-  idCarrera?: number;
-  carrera?: string;
+  idEstudiante?: number;
+  ru?: number;
+  ci?: string;
+  complemento?: string;
+  paterno?: string;
+  materno?: string;
+  nombres?: string;
+  fechaNacimiento?: Date;
+  sexo?: boolean;
+  idAnulacion?: number;
   fechaSolicitud?: Date;
   motivo?: string;
+  Carrera?: string;
+  fechaProceso?: Date;
+  observaciones?: string;
+  idTramite?: number;
+  tipoTramite?: string;
+  estado?: number;
+}
+
+export interface AnulacionInsert {
+  motivo?: string;
+  idEstudiante?: number;
+
+  idTramite?: number;
+  idEstado?: number;
+  idEntidad?: number;
+  observaciones?: string;
 }

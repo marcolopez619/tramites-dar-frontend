@@ -14,8 +14,7 @@ import { BandejaReadmisionComponent } from './components/readmision/bandeja-read
 import { ReadmisionComponent } from './components/readmision/readmision/readmision.component';
 import { TraspasoUniversidadComponent } from './components/traspaso-universidad/traspaso-universidad/traspaso-universidad.component';
 import { BandejaTraspasoUniversidadComponent } from './components/traspaso-universidad/bandeja-traspaso-universidad/bandeja-traspaso-universidad.component';
-
-
+import { AnulacionService } from './components/anulacion/anulacion.service';
 
 @NgModule({
   declarations: [AnulacionComponent, BandejaAnulacionComponent, CambioCarreraComponent, BandejaCambioCarreraComponent, BandejaSuspencionComponent, SuspencionComponent, BandejaReadmisionComponent, ReadmisionComponent, TraspasoUniversidadComponent, BandejaTraspasoUniversidadComponent],
@@ -28,7 +27,9 @@ import { BandejaTraspasoUniversidadComponent } from './components/traspaso-unive
     AnulacionComponent, BandejaAnulacionComponent, CambioCarreraComponent, BandejaCambioCarreraComponent, BandejaSuspencionComponent, BandejaReadmisionComponent, BandejaTraspasoUniversidadComponent
   ],
   providers : [
-    EstudianteService, DatePipe
+    EstudianteService,
+    AnulacionService,
+    DatePipe
   ]
 })
 export class EstudianteModule { }

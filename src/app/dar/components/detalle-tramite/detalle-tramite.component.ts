@@ -7,7 +7,7 @@ import { FinalizarParticipacionQueryParameter } from '../../../hoja-de-ruta/mode
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
-import { eTipoTramite } from '../../../shared/enums/eTipoTramite.enum';
+import { eTipoTramite } from '../../../shared/enums/tipoTramite.enum';
 import { EstudianteModel } from '../../../shared/models/estudiante.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
@@ -70,11 +70,11 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
   private setColumnas(pTipoTramite: number): void{
 
     switch (pTipoTramite) {
-      case eTipoTramite.ANULACION_CARRERA:
+      case eTipoTramite.ANULACION:
         this.listaLabelColumnas = ['Tramite solicitado', 'Carrera a anular', 'Fecha solicitud', 'Motivo'];
         this.listaValoresColumnas = ['Anulacion de carrera', this.datoEstudiante.carrera, this.datePipe.transform(this.datoEstudiante.fechaSolicitud, 'dd-MM-yyyy' ), 'ALGUN MOTIVO MUY LARRRRGOOOOOOOO'];
         break;
-      case eTipoTramite.CAMBIO_CARRERA:
+      case eTipoTramite.CAMBIO_DE_CARRERA:
         this.listaLabelColumnas = ['Tramite solicitado','Carrera origen', 'Carrera destino', 'Fecha solicitud', 'Motivo'];
         this.listaValoresColumnas = ['Cambio de carrera',this.datoEstudiante.carrera, 'PEDAGOGIA INTERCULTURAL', '01/03/2020', 'SOLICITO EL CAMBIO DE CARRERA PORQ LO NECESITO'  ];
         break;
@@ -86,7 +86,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
         this.listaLabelColumnas = ['Tramite solicitado','Carrera origen', 'Tiempo', 'Rango', 'Fecha solicitud', 'Motivo'];
         this.listaValoresColumnas = ['Suspención', this.datoEstudiante.carrera, '3 gestiones', ' 17/03/2021   al 17/03/2021', '08/23/2020', 'ALGUN MOTIVO LARRRGOOO QUE NO ME INTERASA' ];
         break;
-      case eTipoTramite.TRASPASO_UNIVERSIDAD:
+      case eTipoTramite.TRASPASO_DE_UNIVERSIDAD:
         this.listaLabelColumnas = ['Tramite solicitado','Universidad destino', 'Carrera destino', 'Periodo' , 'Año ingreso', 'Materias aprobadas', 'Materias reprobadas', 'Promedio General', 'Fecha solicitud', 'Motivo'];
         this.listaValoresColumnas = ['Traspaso de universidad', 'UNIVERSIDAD MAYOR, REAL Y PONTIFICIA DE SAN FRANCISCO XAVIER DE CHUQUISACA', 'INGENIERIA EN SISTEMAS', '1/2021', '2007', '40' , '9', '54.78', '01/01/2020', ' ALGUN MOTIVO DE MIERDA PARA Q NO JODAN' ];
         break;
