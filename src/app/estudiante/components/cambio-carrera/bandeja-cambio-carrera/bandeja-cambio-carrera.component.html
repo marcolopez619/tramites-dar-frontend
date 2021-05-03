@@ -17,12 +17,12 @@
 
       <ng-container matColumnDef="origen">
         <mat-header-cell *matHeaderCellDef fxFlex="30" mat-sort-header> {{ langService.getLang(eModulo.Estudiante, 'lbl-carrera-origen') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="30"> {{element.origen}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="30"> {{element.carreraorigen}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="destino">
         <mat-header-cell *matHeaderCellDef fxFlex="30" mat-sort-header> {{ langService.getLang(eModulo.Estudiante, 'lbl-carrera-destino') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="30"> {{element.destino}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="30"> {{element.carreradestino}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="fechaSolicitud" >
@@ -37,7 +37,7 @@
 
       <ng-container matColumnDef="estado" >
         <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.estado}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.estado | estadoToLiteral }} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="acciones">

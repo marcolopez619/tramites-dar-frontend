@@ -9,6 +9,7 @@ import { BaseComponent } from '../../../../shared/base.component';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { BandejaCambioCarrera } from '../../../../tramites/models/tramites.models';
+import { CambioCarreraService } from '../../cambio-carrera.service';
 import { CambioCarreraComponent } from '../cambio-carrera/cambio-carrera.component';
 
 @Component({
@@ -29,13 +30,14 @@ export class BandejaCambioCarreraComponent extends BaseComponent  implements OnI
   constructor(
     public langService: LangService,
     public contextService: ContextoService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cambioCarreraService: CambioCarreraService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.getListaCambiosCarrera(32926);
+    this.getListaCambiosCarrera();
   }
 
   ngAfterViewInit(): void {
@@ -49,30 +51,14 @@ export class BandejaCambioCarreraComponent extends BaseComponent  implements OnI
     this.unsubscribe$.next(true);
   }
 
-  private getListaCambiosCarrera(pRu: number ): void {
+  private getListaCambiosCarrera(): void {
 
-    const data :  Array<
-    BandejaCambioCarrera> = [{
-      idCambioCarrera : 1,
-      idOrigen      : 1,
-      origen        : 'INGENIERIA INFORMATICA',
-      idDestino     : 2,
-      destino       : 'TRABAJO SOCIAL',
-      fechaSolicitud: new Date(),
-      estado        : 3,
-      motivo        : 'MOTIVOS PERSONALES Y LABORALESSSS'
-    }, {
-      idCambioCarrera : 2,
-      idOrigen      : 4,
-      origen        : 'INGENIERIA AGROINDUSTRIAL',
-      idDestino     : 1,
-      destino       : 'INGENIERIA INFORMATICA',
-      fechaSolicitud: new Date(),
-      estado        : 2,
-      motivo        : 'POR ALGUN MOTIVO QUE NO TE INTERESA'
-    }]
+    const idEstudiante = 1; // FIXME: Obtener del contexto del sistema
 
-    this.dataSource.data = data;
+    this.cambioCarreraService.getAllListaCambiosCarrera( idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp =>{
+      this.dataSource.data = resp.data;
+    });
+
   }
 
   onNuevaSolicitud(): void {

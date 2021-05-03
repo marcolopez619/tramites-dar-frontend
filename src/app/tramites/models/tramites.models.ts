@@ -12,12 +12,17 @@ export interface BandejaTramite extends BandejaAbstract {
 
 export interface BandejaCambioCarrera extends BandejaAbstract {
   idCambioCarrera?: number;
-  idOrigen?: number;
-  origen?: string;
-  idDestino?: number;
-  destino?: string;
+  idCarreraOrigen?: number;
+  carreraorigen?: string;
+  idCarreraDestino?: number;
+  carreradestino?: string;
   fechaSolicitud?: Date;
   motivo?: string;
+  fechaProceso?: Date;
+  observaciones?: string;
+  idTramite?: number;
+  tipoTramite?: string;
+  estado?: number;
 }
 
 export interface BandejaSuspencion extends BandejaAbstract {
