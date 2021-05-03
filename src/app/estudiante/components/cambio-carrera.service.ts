@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Resultado } from '../../shared/models/resultado.model';
 import { ContextoService } from '../../shared/services/contexto.service';
 import { AnulacionInsert } from '../models/anulacion.models';
+import { CambioCarreraInsert } from '../models/cambio_carrera.model';
 
 @Injectable()
 export class CambioCarreraService {
@@ -19,7 +20,7 @@ export class CambioCarreraService {
     return this.httpClient.get<Resultado>(`${this.baseURL}/${pIdEstudiante}`);
   }
 
-  insertCambioCarrera(anulacionInsert: AnulacionInsert): Observable<Resultado> {
-    return this.httpClient.post<Resultado>(`${this.baseURL}`, anulacionInsert );
+  insertCambioCarrera(cambioCarreraInsert: CambioCarreraInsert): Observable<Resultado> {
+    return this.httpClient.post<Resultado>(`${this.baseURL}`, cambioCarreraInsert );
   }
 }

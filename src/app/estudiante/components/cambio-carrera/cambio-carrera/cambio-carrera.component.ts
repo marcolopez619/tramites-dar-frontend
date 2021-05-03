@@ -1,17 +1,22 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
 import { startWith } from 'rxjs/internal/operators/startWith';
 import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from '../../../../shared/base.component';
+import { eEstado } from '../../../../shared/enums/estado.enum';
+import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
+import { eEntidad } from '../../../../shared/enums/tipo_entidad.enum';
 import { CarreraModel } from '../../../../shared/models/carrera.model';
-import { UniversidadService } from '../../../../shared/services/universidad.service';
+import { EstudianteModel } from '../../../../shared/models/estudiante.model';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
-import { EstudianteModel } from '../../../../shared/models/estudiante.model';
+import { UniversidadService } from '../../../../shared/services/universidad.service';
 import { EstudianteService } from '../../../estudiante.service';
+import { CambioCarreraInsert } from '../../../models/cambio_carrera.model';
+import { CambioCarreraService } from '../../cambio-carrera.service';
 
 @Component({
   selector: 'app-cambio-carrera',
@@ -32,7 +37,8 @@ export class CambioCarreraComponent extends BaseComponent implements OnInit {
     public contextService: ContextoService,
     private formBuilder: FormBuilder,
     private estudianteService: EstudianteService,
-    private universidadService: UniversidadService
+    private universidadService: UniversidadService,
+    private cambioCarreraService: CambioCarreraService
   ) {
     super();
   }
@@ -42,7 +48,8 @@ export class CambioCarreraComponent extends BaseComponent implements OnInit {
     this.getListaCarreras();
 
     this.formCambioCarrera = this.formBuilder.group({
-      idCarreraDestino : [undefined, Validators.compose([ Validators.required ])]
+      idCarreraDestino : [undefined, Validators.compose([ Validators.required ])],
+      motivo           : [undefined, Validators.compose([ Validators.required ])]
     });
 
     this.listaCarrerasFiltradas = this.formCambioCarrera.controls['idCarreraDestino'].valueChanges.pipe(
@@ -73,13 +80,23 @@ export class CambioCarreraComponent extends BaseComponent implements OnInit {
   }
 
   onFinalizarSolicitud(): void {
-    const descCarreraSeleccionada = this.formCambioCarrera.controls['idCarreraDestino'].value;
-    const infCarreraSeleccionada = this.listaCarreras.filter( x => x.carrera === descCarreraSeleccionada )[ 0 ];
+    const carreraDestino = this.listaCarreras.filter( x => x.carrera === this.formCambioCarrera.controls[ 'idCarreraDestino' ].value ) [ 0 ];
 
-    console.log( `--> Carrera seleccionada : ${descCarreraSeleccionada}` );
-    console.log(`--> ID carrera seleccioanda : ${ infCarreraSeleccionada.idCarrera }`);
+    const cambioCarreraInsert: CambioCarreraInsert = {
+      idCarreraOrigen : this.datosEstudiante.idCarrera,
+      idCarreraDestino: carreraDestino.idCarrera,
+      motivo          : this.formCambioCarrera.controls['motivo'].value,
+      idEstudiante    : this.datosEstudiante.idEstudiante,
+      idTramite       : eTipoTramite.CAMBIO_DE_CARRERA,
+      idEstado        : eEstado.ACTIVADO,
+      idEntidad       : eEntidad.ESTUDIANTE,
+      observaciones   : undefined
+    };
 
-    // this.onClose();
+    this.cambioCarreraService.insertCambioCarrera( cambioCarreraInsert ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.onClose( resp.data );
+    });
+
   }
 
   onClose(object?: any): void {

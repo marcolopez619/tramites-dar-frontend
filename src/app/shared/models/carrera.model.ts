@@ -6,6 +6,4 @@ export interface CarreraModel{
   idCarrera?: number;
   carrera?: string;
   estadoCarrera?: number;
-  // idCarrera?: number;
-  // descCarrera?: string;
 }
