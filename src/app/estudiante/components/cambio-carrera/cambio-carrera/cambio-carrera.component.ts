@@ -4,10 +4,14 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
 import { startWith } from 'rxjs/internal/operators/startWith';
+import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from '../../../../shared/base.component';
 import { CarreraModel } from '../../../../shared/models/carrera.model';
+import { UniversidadService } from '../../../../shared/services/universidad.service';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
+import { EstudianteModel } from '../../../../shared/models/estudiante.model';
+import { EstudianteService } from '../../../estudiante.service';
 
 @Component({
   selector: 'app-cambio-carrera',
@@ -19,18 +23,22 @@ export class CambioCarreraComponent extends BaseComponent implements OnInit {
   formCambioCarrera: FormGroup;
   listaCarreras: Array<CarreraModel> = [];
   listaCarrerasFiltradas: Observable<Array<CarreraModel>>;
+  datosEstudiante: EstudianteModel;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<any>,
     public langService: LangService,
     public contextService: ContextoService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private estudianteService: EstudianteService,
+    private universidadService: UniversidadService
   ) {
     super();
   }
 
   ngOnInit(): void {
+    this.getInformacionEstudiante( 1 );
     this.getListaCarreras();
 
     this.formCambioCarrera = this.formBuilder.group({
@@ -39,36 +47,34 @@ export class CambioCarreraComponent extends BaseComponent implements OnInit {
 
     this.listaCarrerasFiltradas = this.formCambioCarrera.controls['idCarreraDestino'].valueChanges.pipe(
       startWith( '' ),
-      map( ( value : string | null ) => this.filtrarValores(value))
+      map( ( value: string | null ) => this.filtrarValores(value))
     );
 
   }
 
+  private getInformacionEstudiante(pIdEstudiante: number): void {
+    this.estudianteService.getInformacionEstudiante(pIdEstudiante).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.datosEstudiante = resp.data;
+    });
+  }
 
   private getListaCarreras(): void {
-    const data: Array<CarreraModel> = [{
-      idCarrera : 1,
-      descCarrera : 'CONTADURIA PUBLICA'
-    },{
-      idCarrera : 2,
-      descCarrera : 'ENFERMERIA'
-    },{
-      idCarrera : 3,
-      descCarrera : 'INGENIERIA COMERCIAL'
-    }];
+    const idUniversidad = 1; // Por default sera la Tomas frias para este caso
 
-    this.listaCarreras = data;
+    this.universidadService.getAllListaCarreras( idUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.listaCarreras = resp.data;
+    });
   }
 
   private filtrarValores(value: string): Array<CarreraModel> {
     const filterValue = value.toLowerCase();
-    const dataFiltrada = this.listaCarreras.filter(carrera => carrera.descCarrera.toLowerCase().includes( filterValue ));
+    const dataFiltrada = this.listaCarreras.filter(carrera => carrera.carrera.toLowerCase().includes( filterValue ));
     return dataFiltrada;
   }
 
-  onFinalizarSolicitud(): void{
+  onFinalizarSolicitud(): void {
     const descCarreraSeleccionada = this.formCambioCarrera.controls['idCarreraDestino'].value;
-    const infCarreraSeleccionada = this.listaCarreras.filter( x => x.descCarrera == descCarreraSeleccionada )[ 0 ];
+    const infCarreraSeleccionada = this.listaCarreras.filter( x => x.carrera === descCarreraSeleccionada )[ 0 ];
 
     console.log( `--> Carrera seleccionada : ${descCarreraSeleccionada}` );
     console.log(`--> ID carrera seleccioanda : ${ infCarreraSeleccionada.idCarrera }`);
@@ -81,5 +87,3 @@ export class CambioCarreraComponent extends BaseComponent implements OnInit {
   }
 
 }
-
-

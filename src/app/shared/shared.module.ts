@@ -68,6 +68,7 @@ import { DatosFormatoTablaComponent } from './components/datos-formato-tabla/dat
 import { UniversidadCarreraComponent } from './components/universidad-carrera/universidad-carrera.component';
 import { TramitesAcademicosService } from './services/tramites-academicos.service';
 import { EstadoToLiteralPipe } from './pipes/estado-to-literal.pipe';
+import { UniversidadService } from './services/universidad.service';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -219,7 +220,8 @@ import { EstadoToLiteralPipe } from './pipes/estado-to-literal.pipe';
       HojaRutaService,
       BusquedaService,
       MotivoService,
-      TramitesAcademicosService
+      TramitesAcademicosService,
+      UniversidadService
     ]
 })
 export class SharedModule { }

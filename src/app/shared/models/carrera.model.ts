@@ -1,4 +1,11 @@
 export interface CarreraModel{
+  idUniversidad?: number;
+  idFacultad?: number;
+  facultad?: string;
+  estadofacultad?: number;
   idCarrera?: number;
-  descCarrera?: string;
+  carrera?: string;
+  estadoCarrera?: number;
+  // idCarrera?: number;
+  // descCarrera?: string;
 }

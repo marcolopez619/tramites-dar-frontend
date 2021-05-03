@@ -70,7 +70,7 @@ export class BandejaCambioCarreraComponent extends BaseComponent  implements OnI
     dlgNuevoCambioCarrera.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
         console.log( `---> ${result}` );
-        // TODO: ACTUALIZAR LA BANDEJA PRINCIPAL.
+        this.getListaCambiosCarrera();
       }
     });
   }
