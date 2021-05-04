@@ -9,3 +9,14 @@ export interface SuspencionInsert{
   idEntidad?: number;
   observaciones?: number;
 }
+
+
+export interface SuspencionModel{
+  idSuspencion?: number;
+  idCarrera?: number;
+  tiempoSolicitado?: number;
+  descripcion?:string;
+  fechaSolicitud?: Date;
+  motivo?: string;
+  idEstudiante?: number;
+}

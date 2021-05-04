@@ -9,6 +9,7 @@ import { BaseComponent } from '../../../../shared/base.component';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { BandejaReadmision } from '../../../../tramites/models/tramites.models';
+import { ReadmisionService } from '../readmision.service';
 import { ReadmisionComponent } from '../readmision/readmision.component';
 
 @Component({
@@ -20,22 +21,24 @@ import { ReadmisionComponent } from '../readmision/readmision.component';
 })
 export class BandejaReadmisionComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
 
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
   displayedColumns = ['carrera', 'fechaSolicitudSuspencion', 'fechaSolicitudReadmision', 'tiempo', 'estado', 'acciones' ];
   dataSource = new MatTableDataSource<BandejaReadmision>([]);
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(
     public langService: LangService,
     public contextService: ContextoService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private readmisionService: ReadmisionService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.getListaReadmisiones(32926);
+    this.getListaReadmisiones();
   }
 
   ngAfterViewInit(): void {
@@ -49,25 +52,12 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
     this.unsubscribe$.next(true);
   }
 
-  private getListaReadmisiones(pRu: number ): void {
-    const data :  Array<BandejaReadmision> = [{
-      idReadmision            : 1,
-      idCarrera               : 1,
-      carrera                 : 'INGENIERIA MECANICA',
-      fechaSolicitudSuspencion: new Date(),
-      fechaSolicitudReadmision: new Date(),
-      tiempo                  : '1 Gestion',
-      estado                  : 4
-    },{
-      idReadmision            : 2,
-      idCarrera               : 2,
-      carrera                 : 'INGENIERIA MECANICA',
-      fechaSolicitudSuspencion: new Date(),
-      fechaSolicitudReadmision: new Date(),
-      tiempo                  : '4 Gestiones',
-      estado                  : 3
-    }];
-    this.dataSource.data = data;
+  private getListaReadmisiones(): void {
+    const idEstudiante = 1; // FIXME: dato quemado para recuperar del contexto
+
+    this.readmisionService.getAllListaSuspenciones( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.dataSource.data = resp.data;
+    });
   }
 
   onNuevaSolicitud(): void {

@@ -1,3 +1,4 @@
+import { SuspencionModel } from '../../estudiante/models/suspencion.model';
 import { BandejaAbstract } from '../../shared/models/abstract.models';
 
 export interface BandejaTramite extends BandejaAbstract {
@@ -42,9 +43,15 @@ export interface BandejaReadmision extends BandejaAbstract {
   idReadmision?: number;
   idCarrera?: number;
   carrera?: string;
-  fechaSolicitudSuspencion?: Date;
   fechaSolicitudReadmision?: Date;
-  tiempo?: string;
+  motivo?: string;
+  fechaProceso?: Date;
+  observaciones?: string;
+  idTramite?: number;
+  tramite?: string;
+  estado?: number;
+
+  suspencion?: SuspencionModel;
 }
 export interface BandejaTraspasoUniversidad extends BandejaAbstract {
   idTramite?: number;
