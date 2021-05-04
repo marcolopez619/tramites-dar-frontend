@@ -37,7 +37,7 @@ export class BandejaSuspencionComponent extends BaseComponent  implements OnInit
   }
 
   ngOnInit(): void {
-    this.getListaSuspenciones(32926);
+    this.getListaSuspenciones();
   }
 
   ngAfterViewInit(): void {
@@ -51,7 +51,7 @@ export class BandejaSuspencionComponent extends BaseComponent  implements OnInit
     this.unsubscribe$.next(true);
   }
 
-  private getListaSuspenciones(pRu: number ): void {
+  private getListaSuspenciones(): void {
     const idEstudiante = 1;
 
     this.suspencionService.getAllListaSuspenciones(idEstudiante).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
@@ -68,7 +68,7 @@ export class BandejaSuspencionComponent extends BaseComponent  implements OnInit
     dlgSuspencion.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
         console.log( `---> ${result}` );
-        // TODO: ACTUALIZAR LA BANDEJA PRINCIPAL.
+        this.getListaSuspenciones();
       }
     });
   }

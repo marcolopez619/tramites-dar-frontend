@@ -1,4 +1,4 @@
-<shared-loader-spinner></shared-loader-spinner>
+
 
 <mat-card>
   <mat-card-header class="alt-theme">
@@ -14,7 +14,9 @@
 <mat-dialog-content>
 <mat-card-content>
 
-  <mat-horizontal-stepper labelPosition="bottom" #stepper >
+  <shared-loader-spinner></shared-loader-spinner>
+
+  <mat-horizontal-stepper labelPosition="bottom" #stepper *ngIf="datoEstudiante">
 
     <mat-step>
       <ng-template matStepLabel>{{langService.getLang(eModulo.Estudiante, 'lbl-datos-estudiante' )}}</ng-template>
@@ -50,7 +52,7 @@
                      {{tipoSuspencion.motivoSuspencion}}
                    </mat-option>
                  </mat-select>
-                 <mat-error *ngIf="formSuspencion.controls['motivo'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-motivo-suspencion-error') }}</mat-error>
+                 <mat-error *ngIf="formSuspencion.controls['idMotivoSuspencion'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-motivo-suspencion-error') }}</mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -60,8 +62,8 @@
             <mat-form-field fxFlex>
               <mat-label>Breve descripcion :</mat-label>
               <input type="text" min="0" max="250" minlength="1" maxlength="250" autocomplete="off" matInput required
-                placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-descripcion-suspencion')}}" formControlName="motivo">
-              <mat-error *ngIf="formSuspencion.controls['motivo'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-descripcion-suspencion-error') }}</mat-error>
+                placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-descripcion-suspencion')}}" formControlName="descripcion">
+              <mat-error *ngIf="formSuspencion.controls['descripcion'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-descripcion-suspencion-error') }}</mat-error>
             </mat-form-field>
           </div>
 
@@ -102,7 +104,7 @@
 
           <tr>
             <td style="text-align: end;"><span><strong>Breve descripcion : </strong></span></td>
-            <td><span>&nbsp;{{formSuspencion.controls['motivo'].value}}</span></td>
+            <td><span>&nbsp;{{formSuspencion.controls['descripcion'].value}}</span></td>
           </tr>
 
         </table>

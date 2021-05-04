@@ -4,11 +4,17 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from '../../../../shared/base.component';
+import { eEstado } from '../../../../shared/enums/estado.enum';
+import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
+import { eEntidad } from '../../../../shared/enums/tipo_entidad.enum';
 import { EstudianteModel } from '../../../../shared/models/estudiante.model';
 import { MotivoSuspencion } from '../../../../shared/models/motivos.models';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { MotivoService } from '../../../../shared/services/motivo.service';
+import { EstudianteService } from '../../../estudiante.service';
+import { SuspencionInsert } from '../../../models/suspencion.model';
+import { SuspencionService } from '../suspencion.service';
 
 @Component({
   selector: 'app-suspencion',
@@ -28,7 +34,9 @@ export class SuspencionComponent extends BaseComponent implements OnInit {
     public langService: LangService,
     public contextService: ContextoService,
     private formBuilder: FormBuilder,
-    private motivoService: MotivoService
+    private motivoService: MotivoService,
+    private estudianteService: EstudianteService,
+    private suspencionService: SuspencionService
   ) {
     super();
   }
@@ -40,41 +48,48 @@ export class SuspencionComponent extends BaseComponent implements OnInit {
     this.formSuspencion = this.formBuilder.group({
       idMotivoSuspencion : [undefined, Validators.compose([ Validators.required ])],
       tiempoSuspencion   : [undefined, Validators.compose([ Validators.required ])],
-      motivo             : ['', Validators.compose([ Validators.required ])],
+      descripcion        : [undefined, Validators.compose([ Validators.required ])]
     });
   }
 
-  private getDatosEstudiante(): void{
-    this.datoEstudiante = {
-      ru            : 32926,
-      ci            : '5550155',
-      nombreCompleto: 'MOLINA LOPEZ MARCO ANTONIO',
-      fotografia    : 'https://imagenes.elpais.com/resizer/Y6ooftjQIqJ38yuds-ss-PDsMxY=/768x0/cloudfront-eu-central-1.images.arcpublishing.com/prisa/ICWTJEOAHJBRXAPAO4ACVRSTQ4.jpg',
-      idCarrera     : 1,
-      carrera       : 'INGENIERIA DE SISTEMAS',
-      idFacultad    : 1,
-      facultad      : 'VICERRECTORADO',
-      tipoTramite   : 'SUSPENCION DE ESTUDIOS',
-      fechaSolicitud: new Date()
-    };
+  private getDatosEstudiante(): void {
+
+    const idEstudiante = 1; // FIXME: dato quemado
+
+    this.estudianteService.getInformacionEstudiante( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.datoEstudiante = resp.data;
+    });
+
   }
 
-  private getListaMotivoSuspencion(): void{
+  private getListaMotivoSuspencion(): void {
+    // TODO: integrar a la BD este servicio
     this.motivoService.getMotivoSuspencion().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.listaTipoSuspenciones = resp.data;
     });
   }
 
-
-  onMotivoSuspencionChange(event: MatSelectChange): void{
-    this.motivoSelected = this.listaTipoSuspenciones.find( x => x.idMotivoSuspencion == event.value );
+  onMotivoSuspencionChange(event: MatSelectChange): void {
+    this.motivoSelected = this.listaTipoSuspenciones.find( x => x.idMotivoSuspencion === event.value );
   }
 
+  onFinalizarSolicitud(): void {
+    const suspencionInsert: SuspencionInsert = {
+      idCarrera       : this.datoEstudiante.idCarrera,
+      tiempoSolicitado: this.formSuspencion.controls[ 'tiempoSuspencion' ].value,
+      descripcion     : this.formSuspencion.controls[ 'descripcion' ].value,
+      idMotivo        : this.formSuspencion.controls[ 'idMotivoSuspencion' ].value,
+      idEstudiante    : this.datoEstudiante.idEstudiante,
+      idTramite       : eTipoTramite.SUSPENCION,
+      idEstado        : eEstado.ACTIVADO,
+      idEntidad       : eEntidad.ESTUDIANTE,
+      observaciones   : undefined
+    };
 
-  onFinalizarSolicitud(): void{
-    this.onClose();
+    this.suspencionService.insertSuspencion( suspencionInsert ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp =>{
+      this.onClose(resp.data);
+    });
   }
-
 
   onClose(object?: any): void {
     this.dialogRef.close(object);

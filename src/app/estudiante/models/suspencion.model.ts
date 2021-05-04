@@ -2,7 +2,7 @@ export interface SuspencionInsert{
   idCarrera?: number;
   tiempoSolicitado?: number;
   descripcion?: number;
-  motivo?: number;
+  idMotivo?: number;
   idEstudiante?: number;
   idTramite?: number;
   idEstado?: number;
