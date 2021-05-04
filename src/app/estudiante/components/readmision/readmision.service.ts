@@ -15,11 +15,11 @@ export class ReadmisionService {
     private contextoService: ContextoService
   ) { }
 
-  getAllListaSuspenciones(pIdEstudiante: number): Observable<Resultado> {
+  getAllListaReadmisiones(pIdEstudiante: number): Observable<Resultado> {
     return this.httpClient.get<Resultado>(`${this.baseURL}/${pIdEstudiante}`);
   }
 
-  insertSuspencion(cambioCarreraInsert: ReadmisionInsert): Observable<Resultado> {
+  insertReadmision(cambioCarreraInsert: ReadmisionInsert): Observable<Resultado> {
     return this.httpClient.post<Resultado>(`${this.baseURL}`, cambioCarreraInsert );
   }
 }

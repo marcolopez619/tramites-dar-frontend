@@ -24,9 +24,8 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  displayedColumns = ['carrera', 'fechaSolicitudSuspencion', 'fechaSolicitudReadmision', 'tiempo', 'estado', 'acciones' ];
+  displayedColumns = ['carrera', 'fechaSolicitudSuspencion', 'fechaSolicitudReadmision', 'motivo', 'tiempo', 'estado', 'acciones' ];
   dataSource = new MatTableDataSource<BandejaReadmision>([]);
-
 
   constructor(
     public langService: LangService,
@@ -55,7 +54,7 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
   private getListaReadmisiones(): void {
     const idEstudiante = 1; // FIXME: dato quemado para recuperar del contexto
 
-    this.readmisionService.getAllListaSuspenciones( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+    this.readmisionService.getAllListaReadmisiones( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.dataSource.data = resp.data;
     });
   }
@@ -69,7 +68,7 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
     dlgReadmision.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
         console.log( `---> ${result}` );
-        // TODO: ACTUALIZAR LA BANDEJA PRINCIPAL.
+        this.getListaReadmisiones();
       }
     });
   }

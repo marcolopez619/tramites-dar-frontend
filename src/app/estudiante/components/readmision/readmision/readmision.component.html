@@ -14,7 +14,7 @@
 <mat-dialog-content>
 <mat-card-content>
 
-  <mat-horizontal-stepper labelPosition="bottom" #stepper >
+  <mat-horizontal-stepper labelPosition="bottom" #stepper *ngIf="datoEstudiante">
 
     <mat-step>
       <ng-template matStepLabel>{{langService.getLang(eModulo.Estudiante, 'lbl-datos-estudiante' )}}</ng-template>
@@ -38,7 +38,7 @@
               <mat-form-field fxFlex>
                 <mat-select formControlName="idSuspencionSelected" (selectionChange)="onSuspencionSelectedChange($event)" placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-tiempo-suspencion-solicitado')}}">
                    <mat-option *ngFor="let suspencion of listaSuspenciones" [value]="suspencion.idSuspencion">
-                     {{suspencion.fechaInicial | date : 'dd-mm-yyyy' }} &nbsp; al &nbsp; {{suspencion.fechaFinal | date : 'dd-mm-yyyy' }}
+                     De fecha : &nbsp;{{suspencion.fechaSolicitud | date : 'dd-MM-yyyy' }} &nbsp;{{suspencion.tiempoSolicitado}}&nbsp;( Gestiones )
                    </mat-option>
                  </mat-select>
                  <mat-error *ngIf="formReadmision.controls['idSuspencionSelected'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-tiempo-suspencion-solicitado-error') }}</mat-error>
@@ -93,7 +93,8 @@
 
           <tr>
             <td style="text-align: end;"><span><strong>{{langService.getLang(eModulo.Estudiante,'lbl-seleccion-suspencion')}}</strong></span></td>
-            <td><span>&nbsp;{{this.rangoLiteralSeleccionado}}</span></td>
+            <!-- <td><span>&nbsp;{{this.rangoLiteralSeleccionado}}</span></td> -->
+            <td><span>Del: &nbsp;{{ datoSuspencionSeleceted.fechaSolicitud | date : 'dd-MM-yyyy' }} &nbsp;{{datoSuspencionSeleceted.tiempoSolicitado}}&nbsp;( Gestiones )</span></td>
           </tr>
 
           <tr>

@@ -1,6 +1,6 @@
 export interface ReadmisionInsert{
   idCarrera?: number;
-  idMotivo?: number;
+  motivo?: number;
   idSuspencion?: number;
   idEstudiante?: number;
   idTramite?: number;
