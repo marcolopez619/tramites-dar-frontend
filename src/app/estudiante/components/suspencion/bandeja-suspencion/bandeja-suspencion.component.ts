@@ -9,7 +9,7 @@ import { BaseComponent } from '../../../../shared/base.component';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { BandejaSuspencion } from '../../../../tramites/models/tramites.models';
-import { CambioCarreraComponent } from '../../cambio-carrera/cambio-carrera/cambio-carrera.component';
+import { SuspencionService } from '../suspencion.service';
 import { SuspencionComponent } from '../suspencion/suspencion.component';
 
 @Component({
@@ -21,7 +21,7 @@ import { SuspencionComponent } from '../suspencion/suspencion.component';
 })
 export class BandejaSuspencionComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['carrera', 'tiempo', 'rango', 'motivo', 'fechaSolicitud', 'estado', 'acciones' ];
+  displayedColumns = ['carrera', 'tiempo', 'motivo', 'fechaSolicitud', 'estado', 'acciones' ];
   dataSource = new MatTableDataSource<BandejaSuspencion>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -30,7 +30,8 @@ export class BandejaSuspencionComponent extends BaseComponent  implements OnInit
   constructor(
     public langService: LangService,
     public contextService: ContextoService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private suspencionService: SuspencionService
   ) {
     super();
   }
@@ -51,29 +52,11 @@ export class BandejaSuspencionComponent extends BaseComponent  implements OnInit
   }
 
   private getListaSuspenciones(pRu: number ): void {
-    const data :  Array<
-    BandejaSuspencion> = [{
-      idSuspencion  : 1,
-      idCarrera     : 1,
-      carrera       : 'INGENIERIA MECANICA',
-      tiempo        : '1 Gestion',
-      fechaInicio   : new Date(),
-      fechaFinal    : new Date(),
-      motivo        : 'ALGUN MOTIVO LARRRGOOO QUE NO ME INTERASA',
-      fechaSolicitud: new Date(),
-      estado        : 5
-    },{
-      idSuspencion  : 2,
-      idCarrera     : 2,
-      carrera       : 'INGENIERIA MECANICA',
-      tiempo        : '4 Gestiones',
-      fechaInicio   : new Date(),
-      fechaFinal    : new Date(),
-      motivo        : 'MOTIVOS LABORALES Y FAMILIARES',
-      fechaSolicitud: new Date(),
-      estado        : 4
-    }];
-    this.dataSource.data = data;
+    const idEstudiante = 1;
+
+    this.suspencionService.getAllListaSuspenciones(idEstudiante).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.dataSource.data = resp.data;
+    });
   }
 
   onNuevaSolicitud(): void {

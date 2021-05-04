@@ -16,6 +16,7 @@ import { TraspasoUniversidadComponent } from './components/traspaso-universidad/
 import { BandejaTraspasoUniversidadComponent } from './components/traspaso-universidad/bandeja-traspaso-universidad/bandeja-traspaso-universidad.component';
 import { AnulacionService } from './components/anulacion/anulacion.service';
 import { CambioCarreraService } from './components/cambio-carrera.service';
+import { SuspencionService } from './components/suspencion/suspencion.service';
 
 @NgModule({
   declarations: [AnulacionComponent, BandejaAnulacionComponent, CambioCarreraComponent, BandejaCambioCarreraComponent, BandejaSuspencionComponent, SuspencionComponent, BandejaReadmisionComponent, ReadmisionComponent, TraspasoUniversidadComponent, BandejaTraspasoUniversidadComponent],
@@ -31,6 +32,7 @@ import { CambioCarreraService } from './components/cambio-carrera.service';
     EstudianteService,
     AnulacionService,
     CambioCarreraService,
+    SuspencionService,
     DatePipe
   ]
 })
