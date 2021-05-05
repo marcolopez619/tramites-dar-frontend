@@ -4,12 +4,17 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { BaseComponent } from '../../../../shared/base.component';
+import { eEstado } from '../../../../shared/enums/estado.enum';
+import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
+import { eEntidad } from '../../../../shared/enums/tipo_entidad.enum';
 import { EstudianteModel } from '../../../../shared/models/estudiante.model';
 import { AllInformationUniversity, Carrera, MotivoTraspaso, Universidad } from '../../../../shared/models/traspaso.universidad.model';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { UniversidadService } from '../../../../shared/services/universidad.service';
 import { EstudianteService } from '../../../estudiante.service';
+import { TraspasoInsert } from '../../../models/traspaso.model';
+import { TraspasoUniversidadService } from '../traspaso-universidad.service';
 
 @Component({
   selector: 'app-traspaso-universidad',
@@ -35,7 +40,8 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
     public contextService: ContextoService,
     private formBuilder: FormBuilder,
     private universidadService: UniversidadService,
-    private estudianteService: EstudianteService
+    private estudianteService: EstudianteService,
+    private traspasoUniversidadService: TraspasoUniversidadService
   ) {
     super();
   }
@@ -116,7 +122,24 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
   }
 
   onFinalizarSolicitud(): void {
-    this.onClose();
+    const traspasoInsert: TraspasoInsert = {
+      idUnivDestino     : this.formTraspaso.controls[ 'idUnivDestino' ].value,
+      idCarreraDestino  : this.formTraspaso.controls[ 'idCarreraDestino' ].value,
+      descripcion       : this.formTraspaso.controls[ 'descripcionTraspaso' ].value,
+      anioIngreso       : this.datoEstudiante.anioIngreso,
+      materiasAprobadas : this.datoEstudiante.cantMateriasAprobadas,
+      materiasReprobadas: this.datoEstudiante.cantMateriasReprobadas,
+      motivo            : this.formTraspaso.controls[ 'idMotivoTraspaso' ].value, // FIXME, se guarda un integer
+      idEstudiante      : this.datoEstudiante.idEstudiante,
+      idTramite         : eTipoTramite.TRASPASO_DE_UNIVERSIDAD,
+      idEstado          : eEstado.ACTIVADO,
+      idEntidad         : eEntidad.ESTUDIANTE,
+      observaciones     : undefined
+    };
+
+    this.traspasoUniversidadService.insertTraspaso(traspasoInsert ).pipe( takeUntil( this.unsubscribe$ )).subscribe( respInsert => {
+      this.onClose( respInsert.data );
+    });
   }
 
   onClose(object?: any): void {

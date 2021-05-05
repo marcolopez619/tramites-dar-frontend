@@ -23,10 +23,8 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-
   displayedColumns = ['universidadDestino', 'carreraDestino', 'periodo', 'motivo', 'fechaSolicitud', 'estado', 'acciones' ];
   dataSource = new MatTableDataSource<BandejaTraspasoUniversidad>([]);
-
 
   constructor(
     public langService: LangService,
@@ -70,7 +68,7 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
     });
     dlgTraspasoUniversidad.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
-        console.log( `---> ${result}` );
+        console.log( `---> ${JSON.stringify(result) }` );
         this.getListaTraspasos();
       }
     });
