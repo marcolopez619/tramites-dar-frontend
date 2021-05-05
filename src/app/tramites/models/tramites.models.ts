@@ -54,15 +54,15 @@ export interface BandejaReadmision extends BandejaAbstract {
   suspencion?: SuspencionModel;
 }
 export interface BandejaTraspasoUniversidad extends BandejaAbstract {
-  idTramite?: number;
-  idUniversidadDestino?: number;
-  universidadDestino?: string;
-  idCarreraDestino?: number;
-  carreraDestino?: string;
-  idPeriodo?: number;
+  idTraspaso?: number;
+  iduniversidaddestino?: number;
+  nombreuniversidaddestino?: string;
+  idcarreradestino?: number;
+  nombrecarreradestino?: string;
   periodo?: string;
-  motivo?: string;
   fechaSolicitud?: Date;
+  motivo?: string;
+  estado?: number;
 }
 
 export interface BandejaDar extends BandejaAbstract {

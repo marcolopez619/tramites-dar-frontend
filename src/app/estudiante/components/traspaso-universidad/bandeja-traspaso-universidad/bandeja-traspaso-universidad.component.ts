@@ -9,6 +9,7 @@ import { BaseComponent } from '../../../../shared/base.component';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { BandejaTraspasoUniversidad } from '../../../../tramites/models/tramites.models';
+import { TraspasoUniversidadService } from '../traspaso-universidad.service';
 import { TraspasoUniversidadComponent } from '../traspaso-universidad/traspaso-universidad.component';
 
 @Component({
@@ -19,22 +20,25 @@ import { TraspasoUniversidadComponent } from '../traspaso-universidad/traspaso-u
   host: { class: 'container-fluid', '[@fadeInAnim]': 'true' }
 })
 export class BandejaTraspasoUniversidadComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+
   displayedColumns = ['universidadDestino', 'carreraDestino', 'periodo', 'motivo', 'fechaSolicitud', 'estado', 'acciones' ];
   dataSource = new MatTableDataSource<BandejaTraspasoUniversidad>([]);
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(
     public langService: LangService,
     public contextService: ContextoService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private traspasoUniversidadService: TraspasoUniversidadService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.getListaTraspasoUniversidad(32926);
+    this.getListaTraspasos();
   }
 
   ngAfterViewInit(): void {
@@ -48,32 +52,14 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
     this.unsubscribe$.next(true);
   }
 
-  private getListaTraspasoUniversidad(pRu: number ): void {
-    const data :  Array<BandejaTraspasoUniversidad> = [{
-      idTramite : 1,
-      idUniversidadDestino : 1,
-      universidadDestino : 'UNIVERSIDAD MAYOR, REAL Y PONTIFICIA DE SAN FRANCISCO XAVIER DE CHUQUISACA',
-      idCarreraDestino : 1,
-      carreraDestino : 'INGENIERIA EN SISTEMAS',
-      idPeriodo : 1,
-      periodo : '1/2021',
-      motivo : 'ALGUN MOTIVO DE MIERDA PARA Q NO JODAN',
-      estado : 0,
-      fechaSolicitud : new Date(2020, 0)
-    },{
-      idTramite : 2,
-      idUniversidadDestino : 2,
-      universidadDestino : 'UNIVERSIDAD AUTONOMA GABRIEL RENE MORENO',
-      idCarreraDestino : 2,
-      carreraDestino : 'ingeniería Agrícola (Montero)'.toUpperCase(),
-      idPeriodo : 2,
-      periodo : '2/2021',
-      motivo : 'SOLICITUD REALIZADA POR MOTIVOS LABORALES Y FAMILIARES',
-      estado : 1,
-      fechaSolicitud : new Date(2020, 3)
-    }
-     ];
-    this.dataSource.data = data;
+  private getListaTraspasos(): void {
+
+    const idEstudiante = 1; // FIXME: dato quemado para recuperar del contexto
+
+    this.traspasoUniversidadService.getAllTraspasos( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.dataSource.data = resp.data;
+    });
+
   }
 
   onNuevaSolicitud(): void {

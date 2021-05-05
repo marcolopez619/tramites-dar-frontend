@@ -18,6 +18,7 @@ import { AnulacionService } from './components/anulacion/anulacion.service';
 import { CambioCarreraService } from './components/cambio-carrera.service';
 import { SuspencionService } from './components/suspencion/suspencion.service';
 import { ReadmisionService } from './components/readmision/readmision.service';
+import { TraspasoUniversidadService } from './components/traspaso-universidad/traspaso-universidad.service';
 
 @NgModule({
   declarations: [AnulacionComponent, BandejaAnulacionComponent, CambioCarreraComponent, BandejaCambioCarreraComponent, BandejaSuspencionComponent, SuspencionComponent, BandejaReadmisionComponent, ReadmisionComponent, TraspasoUniversidadComponent, BandejaTraspasoUniversidadComponent],
@@ -35,6 +36,7 @@ import { ReadmisionService } from './components/readmision/readmision.service';
     CambioCarreraService,
     SuspencionService,
     ReadmisionService,
+    TraspasoUniversidadService,
     DatePipe
   ]
 })
