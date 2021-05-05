@@ -71,7 +71,7 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
     dlgTraspasoUniversidad.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
         console.log( `---> ${result}` );
-        // TODO: ACTUALIZAR LA BANDEJA PRINCIPAL.
+        this.getListaTraspasos();
       }
     });
   }

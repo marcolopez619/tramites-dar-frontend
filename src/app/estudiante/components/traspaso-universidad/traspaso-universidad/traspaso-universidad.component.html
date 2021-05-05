@@ -14,7 +14,7 @@
 <mat-dialog-content>
 <mat-card-content>
 
-  <mat-horizontal-stepper labelPosition="bottom" #stepper >
+  <mat-horizontal-stepper labelPosition="bottom" #stepper *ngIf="datoEstudiante">
 
     <mat-step>
       <ng-template matStepLabel>{{langService.getLang(eModulo.Estudiante, 'lbl-datos-estudiante' )}}</ng-template>
@@ -38,7 +38,7 @@
               <mat-form-field fxFlex>
                 <mat-select formControlName="idUnivDestino" (selectionChange)="onUniversidadSelectionChange($event)" placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-universidad-destino')}}">
                    <mat-option *ngFor="let universidad of listaUniversidades" [value]="universidad.idUniversidad">
-                     {{universidad.descUniversidad}}
+                     {{universidad.nombre}}
                    </mat-option>
                  </mat-select>
                  <mat-error *ngIf="formTraspaso.controls['idUnivDestino'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-univ-destino-error') }}</mat-error>
@@ -49,7 +49,7 @@
               <mat-form-field fxFlex>
                 <mat-select formControlName="idCarreraDestino" (selectionChange)="onCarreraSelectionChange($event)" placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-carrera-destino')}}">
                    <mat-option *ngFor="let carrera of listaCarreras" [value]="carrera.idCarrera">
-                     {{carrera.descCarrera}}
+                     {{carrera.nombre}}
                    </mat-option>
                  </mat-select>
                  <mat-error *ngIf="formTraspaso.controls['idCarreraDestino'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-carrera-destino-error') }}</mat-error>
@@ -156,9 +156,9 @@
           <h3>Datos universidad destino : </h3>
 
           <div fxLayout="row" fxLayoutAlign="start center" >
-            <mat-label><strong>Universidad : </strong>&nbsp; {{this.universidadSelected?.descUniversidad}}</mat-label>
+            <mat-label><strong>Universidad : </strong>&nbsp; {{this.universidadSelected?.nombre}}</mat-label>
             &nbsp;&nbsp;&nbsp;
-            <mat-label><strong>Carrera :</strong>&nbsp; {{this.carreraSelected?.descCarrera}}</mat-label>
+            <mat-label><strong>Carrera :</strong>&nbsp; {{this.carreraSelected?.nombre}}</mat-label>
             &nbsp;&nbsp;&nbsp;
             <mat-label><strong>Motivo :</strong>&nbsp; {{this.motivoSelected?.motivoTraspaso}}</mat-label>
 

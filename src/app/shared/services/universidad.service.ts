@@ -14,8 +14,17 @@ export class UniversidadService {
     private contextoService: ContextoService
   ) { }
 
-  getAllListaCarreras(pIdUniversidad: number): Observable<Resultado> {
-    return this.httpClient.get<Resultado>(`${this.baseURL}/carreras/${pIdUniversidad}`);
+  getAllListaUniversidades(): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/universidad`);
   }
+
+  getAllListaCarreras(pIdUniversidad: number): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/carrera/${pIdUniversidad}`);
+  }
+
+  getAllInformation(pIdUniversidad: number): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/universidad/${pIdUniversidad}/all`);
+  }
+
 
 }

@@ -2,11 +2,14 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { BaseComponent } from '../../../../shared/base.component';
 import { EstudianteModel } from '../../../../shared/models/estudiante.model';
-import { Carrera, MotivoTraspaso, Universidad } from '../../../../shared/models/traspaso.universidad.model';
+import { AllInformationUniversity, Carrera, MotivoTraspaso, Universidad } from '../../../../shared/models/traspaso.universidad.model';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
+import { UniversidadService } from '../../../../shared/services/universidad.service';
+import { EstudianteService } from '../../../estudiante.service';
 
 @Component({
   selector: 'app-traspaso-universidad',
@@ -17,20 +20,22 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
 
   formTraspaso: FormGroup;
   datoEstudiante: EstudianteModel;
-  listaUniversidades: Array<Universidad>=[];
-  listaCarreras: Array<Carrera>=[];
-  listaMotivoTraspaso : Array<MotivoTraspaso> = [];
+  listaUniversidades: Array<Universidad> = [];
+  listaCarreras: Array<Carrera> = [];
+  listaMotivoTraspaso: Array<MotivoTraspaso> = [];
 
-  universidadSelected : Universidad;
-  carreraSelected : Carrera;
-  motivoSelected : MotivoTraspaso;
+  universidadSelected: Universidad;
+  carreraSelected: Carrera;
+  motivoSelected: MotivoTraspaso;
 
    constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<any>,
     public langService: LangService,
     public contextService: ContextoService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private universidadService: UniversidadService,
+    private estudianteService: EstudianteService
   ) {
     super();
   }
@@ -46,38 +51,32 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
       idUnivDestino      : [undefined, Validators.compose([ Validators.required ])],
       idCarreraDestino   : [undefined, Validators.compose([ Validators.required ])],
       idMotivoTraspaso   : [undefined, Validators.compose([ Validators.required ])],
-      descripcionTraspaso: [undefined , Validators.compose([ Validators.required ])],
+      descripcionTraspaso: [undefined , Validators.compose([ Validators.required ])]
     });
   }
+
   private getListaUniversidades(): void {
-    const listaUniversidades: Array<Universidad> = [{
-      idUniversidad : 1,
-      descUniversidad : 'UNIVERSIDAD TECNICA DE ORURO'
-    },{
-      idUniversidad : 2,
-      descUniversidad : 'UNIVERSIDAD AUTONOMA MAYOR DE SAN ANDRES'
-    }];
-    this.listaUniversidades = listaUniversidades;
+    this.universidadService.getAllListaUniversidades().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      // Filtra las universideades que no pertenescan a la universidad en la cual se haya loggeado el usuario.
+      const idUniversidadEstudianteLogeado = 1; // FIXME: obtener este valor del contexto del usuario
+      this.listaUniversidades = resp.data.filter( x => x.idUniversidad !== idUniversidadEstudianteLogeado );
+    });
   }
 
   private getListaCarreras( pIdUniversidad: number ): void {
-    // TODO: FILTRAR LAS CARRERAS POR EL ID DE LA UNIVERSIDAD
-    const listaCarreras: Array<Carrera> = [{
-      idCarrera : 1,
-      descCarrera : 'INGENIERIA DE SISTEMAS'
-    },{
-      idCarrera : 2,
-      descCarrera : 'ADMINISTRACION DE EMPRESAS'
-    }];
-
-    this.listaCarreras = listaCarreras;
+    this.universidadService.getAllListaCarreras( pIdUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.listaCarreras = resp.data;
+    });
   }
 
   private getListaMotivos(): void {
+
+    // TODO: integrar a la BD este servicio
+
     const listaMotivos: Array<MotivoTraspaso> = [{
       idMotivoTraspaso : 1,
       motivoTraspaso : 'FAMILIAR'
-    },{
+    }, {
       idMotivoTraspaso : 2,
       motivoTraspaso : 'LABORALES'
     }];
@@ -85,49 +84,43 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
     this.listaMotivoTraspaso = listaMotivos;
   }
 
-  private getDatosEstudiante(): void{
-    this.datoEstudiante = {
-      ru            : 32926,
-      ci            : '5550155',
-      nombreCompleto: 'MOLINA LOPEZ MARCO ANTONIO',
-      fotografia    : 'https://imagenes.elpais.com/resizer/Y6ooftjQIqJ38yuds-ss-PDsMxY=/768x0/cloudfront-eu-central-1.images.arcpublishing.com/prisa/ICWTJEOAHJBRXAPAO4ACVRSTQ4.jpg',
-      idCarrera     : 1,
-      carrera       : 'INGENIERIA DE SISTEMAS',
-      idFacultad    : 1,
-      facultad      : 'VICERRECTORADO',
-      tipoTramite   : 'SUSPENCION DE ESTUDIOS',
-      fechaSolicitud: new Date(),
-      anioIngreso   : 2010,
-      cantMateriasAprobadas : 55,
-      cantMateriasReprobadas : 10,
-      promedioGeneral : 47.49
-    };
+  private getDatosEstudiante(): void {
+    const idEstudiante = 1; // FIXME: dato quemado
+
+    this.estudianteService.getInformacionEstudiante( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.datoEstudiante = resp.data;
+      this.datoEstudiante.anioIngreso = 2000;
+      this.datoEstudiante.cantMateriasAprobadas = 83;
+      this.datoEstudiante.cantMateriasReprobadas = 34;
+      this.datoEstudiante.promedioGeneral = this.datoEstudiante.cantMateriasAprobadas / this.datoEstudiante.cantMateriasReprobadas;
+    });
   }
 
+  private getAllInformacionFromUniversity(pIdUniversidad: number): void {
+    this.universidadService.getAllInformation( pIdUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      const allInformationUniversity = resp.data as Array<AllInformationUniversity>;
+    });
+  }
 
-
-
-  onUniversidadSelectionChange(event: MatSelectChange): void{
+  onUniversidadSelectionChange(event: MatSelectChange): void {
     this.universidadSelected = this.listaUniversidades.find( x => x.idUniversidad = event.value );
+    this.getListaCarreras(this.universidadSelected.idUniversidad);
   }
 
-  onCarreraSelectionChange(event: MatSelectChange): void{
+  onCarreraSelectionChange(event: MatSelectChange): void {
     this.carreraSelected = this.listaCarreras.find( x => x.idCarrera = event.value );
   }
 
-  onMotivoSelectionChange(event: MatSelectChange): void{
+  onMotivoSelectionChange(event: MatSelectChange): void {
     this.motivoSelected = this.listaMotivoTraspaso.find( x => x.idMotivoTraspaso = event.value );
   }
 
-
-  onFinalizarSolicitud(): void{
+  onFinalizarSolicitud(): void {
     this.onClose();
   }
-
 
   onClose(object?: any): void {
     this.dialogRef.close(object);
   }
-
 
 }
