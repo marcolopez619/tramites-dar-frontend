@@ -3,6 +3,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntil } from 'rxjs/operators';
+import { AnulacionService } from '../../../estudiante/components/anulacion/anulacion.service';
+import { CambioCarreraService } from '../../../estudiante/components/cambio-carrera.service';
+import { ReadmisionService } from '../../../estudiante/components/readmision/readmision.service';
+import { SuspencionService } from '../../../estudiante/components/suspencion/suspencion.service';
+import { TraspasoUniversidadService } from '../../../estudiante/components/traspaso-universidad/traspaso-universidad.service';
+import { EstudianteService } from '../../../estudiante/estudiante.service';
+import { BandejaAnulacion } from '../../../estudiante/models/anulacion.models';
 import { FinalizarParticipacionQueryParameter } from '../../../hoja-de-ruta/models/hoja-de-ruta.model';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
@@ -24,47 +31,71 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
   datoEstudiante: EstudianteModel;
   listaLabelColumnas : Array<string>;
   listaValoresColumnas : Array<string>;
+  detalleTramite: BandejaAnulacion;
 
   constructor(
     public langService: LangService,
     public contextService: ContextoService,
     private dialog: MatDialog,
     private datePipe: DatePipe,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private estudianteService: EstudianteService,
+
+    private anulacionService: AnulacionService,
+    private cambioDeCarrera: CambioCarreraService,
+    private suspencionService: SuspencionService,
+    private readmisionService: ReadmisionService,
+    // private transferenciaService: TransferenciaService,
+    private traspasoService: TraspasoUniversidadService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.getDatosEstudiante();
-    this.setColumnas(2);
-
     this.formDetalleTramite = this.formBuilder.group({
       observaciones : [undefined, Validators.compose([ Validators.minLength(5), Validators.maxLength(200)])]
     });
+
+    this.getDatosEstudiante();
+
+    const idTramite = eTipoTramite.ANULACION; // FIXME: dato quemado q tiene q ser obtenido del localstorage cuando se elija una fila de la bandeja de solicitudes por atender.
+    const idTipoTramite = 14; // FIXME: dato quemado q tiene q ser obtenido del localstorage cuando se elija una fila de la bandeja de solicitudes por atender.
+    const idEstudiante = 1; // FIXME: dato quemado q tiene q ser obtenido del localstorage cuando se elija una fila de la bandeja de solicitudes por atender.
+    this.getDetalleTramite(idTramite, idEstudiante, idTipoTramite);
+    // this.setColumnas(2);
+
   }
+
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(true);
   }
 
-  private getDatosEstudiante(): void{
-    this.datoEstudiante = {
-      ru            : 32926,
-      ci            : '5550155',
-      nombreCompleto: 'MOLINA LOPEZ MARCO ANTONIO',
-      fotografia    : 'https://imagenes.elpais.com/resizer/Y6ooftjQIqJ38yuds-ss-PDsMxY=/768x0/cloudfront-eu-central-1.images.arcpublishing.com/prisa/ICWTJEOAHJBRXAPAO4ACVRSTQ4.jpg',
-      idCarrera     : 1,
-      carrera       : 'INGENIERIA DE SISTEMAS',
-      idFacultad    : 1,
-      facultad      : 'VICERRECTORADO',
-      tipoTramite   : 'ANULACION DE CARRERA',
-      fechaSolicitud: new Date(),
-      anioIngreso   : 2010,
-      cantMateriasAprobadas : 55,
-      cantMateriasReprobadas : 10,
-      promedioGeneral : 47.49
-    };
+  private getDatosEstudiante(): void {
+
+    const idEstudiante = 1; // FIXME: dato quemado
+
+    this.estudianteService.getInformacionEstudiante( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.datoEstudiante = resp.data;
+    });
+
+  }
+
+  private getDetalleTramite(pIdTramite: number, pIdeEstudiante: number, pIdTipoTramite: number): void {
+
+
+
+    switch (pIdTramite) {
+      case eTipoTramite.ANULACION:{
+        this.anulacionService.getAllListaAnulaciones( pIdeEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+          this.detalleTramite = (resp.data as Array<BandejaAnulacion>).filter( x => x.idAnulacion == pIdTipoTramite)[ 0 ];
+        });
+        break;
+      }
+      default:
+        break;
+    }
+
   }
 
   private setColumnas(pTipoTramite: number): void{

@@ -56,7 +56,7 @@ export class BandejaDarComponent extends BaseComponent  implements OnInit, After
 
   private getListaTramites(): void {
 
-    this.darService.getSolicitudesPorAtender().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp =>{
+    this.darService.getTramitesPorAtender().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp =>{
       this.dataSource.data = resp.data;
     });
   }

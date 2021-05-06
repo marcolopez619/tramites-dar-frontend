@@ -74,6 +74,8 @@ export interface BandejaDar extends BandejaAbstract {
   idEstudianteTramite?: number;
   fechaSolicitud?: Date;
   estado?: number;
+  idTipoTramite?: number;
+  idTramite?: number;
   tipoTramite?: string;
 }
 
