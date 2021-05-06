@@ -66,12 +66,15 @@ export interface BandejaTraspasoUniversidad extends BandejaAbstract {
 }
 
 export interface BandejaDar extends BandejaAbstract {
-  idSolicitudTramite?: number;
-  nombreCompleto?: string;
+  idEstudiante?: number;
+  paterno?: string;
+  materno?: string;
+  nombres?: string;
   carrera?: string;
-  idTipoTramite?: number;
-  descTipoTramite?: string;
+  idEstudianteTramite?: number;
   fechaSolicitud?: Date;
+  estado?: number;
+  tipoTramite?: string;
 }
 
 export interface BandejaUniversidades extends BandejaAbstract {

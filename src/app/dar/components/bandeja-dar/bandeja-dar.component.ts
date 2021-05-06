@@ -3,11 +3,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { BandejaDar } from '../../../tramites/models/tramites.models';
+import { DarService } from '../../dar.service';
 
 @Component({
   selector: 'app-bandeja-dar',
@@ -26,7 +28,8 @@ export class BandejaDarComponent extends BaseComponent  implements OnInit, After
 
   constructor(
     public langService: LangService,
-    public contextService: ContextoService
+    public contextService: ContextoService,
+    private darService: DarService
   ) {
     super();
   }
@@ -52,28 +55,14 @@ export class BandejaDarComponent extends BaseComponent  implements OnInit, After
   }
 
   private getListaTramites(): void {
-    const data :  Array<BandejaDar> = [{
-      idSolicitudTramite: 1,
-      nombreCompleto    : 'MALUMA CONDORI SARDIAN',
-      carrera           : 'INGENIERIA DE SISTEMAS',
-      idTipoTramite     : 1,
-      descTipoTramite   : 'TRAMITE DE SUSPENCION',
-      fechaSolicitud    : new Date( 2019, 2 ),
-      estado            : 1
-    },{
-      idSolicitudTramite: 2,
-      nombreCompleto    : 'ANUEL AAA ZORRINO',
-      carrera           : 'INGENIERIA DE AGROINDUSTRIAL',
-      idTipoTramite     : 2,
-      descTipoTramite   : 'TRAMITE DE CAMBIO DE CARRERA',
-      fechaSolicitud    : new Date( 2010, 5 ),
-      estado            : 1
-    }  ];
-    this.dataSource.data = data;
+
+    this.darService.getSolicitudesPorAtender().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp =>{
+      this.dataSource.data = resp.data;
+    });
   }
 
   onVerDetalleTramite(pElement : BandejaDar ): void {
-    console.log( `Seleccionaste : ${pElement.idSolicitudTramite}` );
+    // console.log( `Seleccionaste : ${pElement.idSolicitudTramite}` );
 
     /* const dlgTraspasoUniversidad = this.dialog.open( TraspasoUniversidadComponent,  {
       disableClose: false,

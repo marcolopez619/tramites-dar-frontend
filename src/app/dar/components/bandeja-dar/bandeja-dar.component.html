@@ -23,17 +23,17 @@
 
       <ng-container matColumnDef="nombreCompleto">
         <mat-header-cell *matHeaderCellDef fxFlex="35" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-nombre-completo') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="35"> {{element.nombreCompleto}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="35"> {{element.paterno}}&nbsp;{{element.materno}}&nbsp;{{element.nombres}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="carrera">
-        <mat-header-cell *matHeaderCellDef fxFlex="35" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-nombre-completo') }} </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="35" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-carrera') }} </mat-header-cell>
         <mat-cell *matCellDef="let element" fxFlex="35"> {{element.carrera}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="tipoTramite">
         <mat-header-cell *matHeaderCellDef fxFlex="20" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-tipo-tramite') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="20"> {{element.descTipoTramite}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="20"> {{element.tipoTramite}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="fechaSolicitud" >
@@ -43,7 +43,7 @@
 
       <ng-container matColumnDef="estado" >
         <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.estado}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.estado | estadoToLiteral }} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="acciones">
@@ -65,7 +65,7 @@
 
       <mat-row
         shRowHover
-        [ngClass]="{'row-action': idSeleccionado === row.idSolicitudTramite}"
+        [ngClass]="{'row-action': idSeleccionado === row.idEstudianteTramite}"
         [@fadeInAnim]="true"
         (click)="onVerDetalleTramite(row)"
         *matRowDef="let row; columns: displayedColumns;">
