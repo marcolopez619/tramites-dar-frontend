@@ -27,6 +27,10 @@ export class UniversidadService {
     return this.httpClient.get<Resultado>(`${this.baseURL}/universidad/${pIdUniversidad}/all`);
   }
 
+  insertUniversidad(pUniversidad: BandejaUniversidades): Observable<Resultado> {
+    return this.httpClient.post<Resultado>(`${this.baseURL}/universidad/`, pUniversidad );
+  }
+
   updateUniversidad(pUniversidad: BandejaUniversidades): Observable<Resultado> {
     return this.httpClient.patch<Resultado>(`${this.baseURL}/universidad/`, pUniversidad );
   }

@@ -66,12 +66,13 @@ export class BandejaUniversidadesComponent extends BaseComponent  implements OnI
     });
   }
 
-  onEditUniversidad(universidadSelected: BandejaUniversidades): void{
+  onAnadirEditUniversidad(universidadSelected?: BandejaUniversidades): void{
     const dlgEditUniversidad = this.dialog.open( UniversidadCarreraComponent,  {
       disableClose: false,
       width: '1000px',
       data: {
         universidadSelected : universidadSelected,
+        isUniversidadOperation : true
         /* isEditarUniversidad : true,
         selectedData: { nombre: 'ALGUNA UNIVERSIDAD', estado : true } */
       }

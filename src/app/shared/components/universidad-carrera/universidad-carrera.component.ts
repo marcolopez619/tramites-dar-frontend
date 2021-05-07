@@ -21,7 +21,8 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
   selectedData: any;
   titToolBar: string;
   activado: boolean;
-  universidadSelected : BandejaUniversidades;
+  universidadSelected: BandejaUniversidades;
+  isUniversidadOperation: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -35,12 +36,23 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
   }
 
   ngOnInit(): void {
-    this.universidadSelected = this.data.universidadSelected as BandejaUniversidades;
 
-    if ( this.universidadSelected ) {
-      // => es edicion
+    this.isUniversidadOperation = this.data.isUniversidadOperation as boolean;
+
+    if ( this.isUniversidadOperation ) {
+      // Operaciones con universidades
+      this.universidadSelected = this.data.universidadSelected as BandejaUniversidades;
+      this.setDataosInsercionEdicionUniversidad();
+
+      /* if ( this.universidadSelected ) {
+        // => Edicion de datos de universidad
+      } else {
+        // => Insercion de nueva universidad
+        this.setDatosAdicionUniversidad();
+      } */
+
     } else {
-      // => Insercion de nueva universidad
+      // Operaciones con carreras
     }
 
     const isEditarUniversidad = this.universidadSelected !== undefined;
@@ -57,7 +69,7 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
         nombre : [this.selectedData.nombre, Validators.compose([Validators.required, Validators.minLength( 5 ), Validators.maxLength( 100 )])],
         estado : [!!this.selectedData.estado]
       });
-    } else if ( isAnadirCarrera ){
+    } else if ( isAnadirCarrera ) {
       this.titToolBar = this.langService.getLang(eModulo.Base, 'lbl-anadir' ).concat(' carrera');
 
       // Crear un formulario Vacio
@@ -82,25 +94,60 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
     this.unsubscribe$.next(true);
   }
 
-  onChangeSlideToggleValue( event:MatSlideToggleChange ): void{
+  private setDataosInsercionEdicionUniversidad(): void {
+    this.titToolBar = this.langService.getLang(eModulo.Base, 'lbl-editar').concat(' universidad');
+    this.activado = !!this.universidadSelected?.estado;
+
+    this.formulario = this.formBuilder.group({
+        nombre : [this.universidadSelected?.nombre ?? undefined, Validators.compose([Validators.required, Validators.minLength( 5 ), Validators.maxLength( 100 )])],
+        estado : [!!this.universidadSelected?.estado ?? undefined ]
+    });
+
+  }
+
+  private onSaveUniversidad(): void {
+    console.log(` Nombres : ${this.formulario.controls['nombre'].value} `);
+    console.log(` Estado : ${this.activado}`);
+
+    if ( this.universidadSelected ) {
+      // => Actualizacion de datos de la universidad
+      const univUpdate: BandejaUniversidades = {
+        idUniversidad: this.universidadSelected.idUniversidad,
+        nombre       : this.formulario.controls['nombre'].value,
+        estado       : +this.activado
+      };
+
+      // Actualizacion de datos de la universidad
+      this.universidadService.updateUniversidad( univUpdate ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+        this.onClose( resp.data );
+      });
+    } else {
+      // => Insercion de nueva universidad
+      const insertUniv: BandejaUniversidades = {
+        idUniversidad: undefined,
+        nombre       : this.formulario.controls['nombre'].value,
+        estado       : +this.activado
+      };
+
+      // Actualizacion de datos de la universidad
+      this.universidadService.insertUniversidad( insertUniv ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+        this.onClose( resp.data );
+      });
+    }
+
+  }
+
+  onChangeSlideToggleValue( event: MatSlideToggleChange ): void {
     this.activado = event.checked;
   }
 
   onSave(): void {
-    console.log(` Nombres : ${this.formulario.controls['nombre'].value} `);
-    console.log(` Estado : ${this.activado}`);
 
-    const univUpdate : BandejaUniversidades = {
-      idUniversidad : this.universidadSelected.idUniversidad,
-      nombre : this.formulario.controls['nombre'].value,
-      estado : +this.activado
+    if ( this.isUniversidadOperation ) {
+      this.onSaveUniversidad();
+    } else {
+      // ..
     }
-
-    // Actualizacion de datos de la universidad
-    this.universidadService.updateUniversidad( univUpdate ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-      this.onClose( resp.data );
-    });
-
 
   }
 
