@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../../shared/base.component';
+import { UniversidadCarreraComponent } from '../../../../shared/components/universidad-carrera/universidad-carrera.component';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { UniversidadService } from '../../../../shared/services/universidad.service';
@@ -21,7 +22,7 @@ import { UniversidadComponent } from '../universidad/universidad.component';
 })
 export class BandejaUniversidadesComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['universidad', 'estado' ];
+  displayedColumns = ['universidad', 'estado' , 'acciones'];
   dataSource = new MatTableDataSource<BandejaUniversidades>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -65,7 +66,24 @@ export class BandejaUniversidadesComponent extends BaseComponent  implements OnI
     });
   }
 
-  onAnadirEditarUniversidad(isAnadir?: boolean): void{
+  onEditUniversidad(universidadSelected: BandejaUniversidades): void{
+    const dlgEditUniversidad = this.dialog.open( UniversidadCarreraComponent,  {
+      disableClose: false,
+      width: '1000px',
+      data: {
+        universidadSelected : universidadSelected,
+        /* isEditarUniversidad : true,
+        selectedData: { nombre: 'ALGUNA UNIVERSIDAD', estado : true } */
+      }
+    });
+    dlgEditUniversidad.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
+      if (result) {
+        this.getListaUniversidades()
+      }
+    });
+  }
+
+  /* onAnadirEditarUniversidad(isAnadir?: boolean): void{
     const dlgAnadirUniversidad = this.dialog.open( UniversidadComponent,  {
       disableClose: false,
       width: '1000px',
@@ -79,6 +97,6 @@ export class BandejaUniversidadesComponent extends BaseComponent  implements OnI
         // TODO: ACTUALIZAR LA BANDEJA PRINCIPAL.
       }
     });
-  }
+  } */
 
 }

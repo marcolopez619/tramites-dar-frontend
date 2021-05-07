@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
+import { BandejaUniversidades } from '../../tramites/models/tramites.models';
 import { Resultado } from '../models/resultado.model';
 import { ContextoService } from './contexto.service';
 
@@ -25,6 +26,12 @@ export class UniversidadService {
   getAllInformation(pIdUniversidad: number): Observable<Resultado> {
     return this.httpClient.get<Resultado>(`${this.baseURL}/universidad/${pIdUniversidad}/all`);
   }
+
+  updateUniversidad(pUniversidad: BandejaUniversidades): Observable<Resultado> {
+    return this.httpClient.patch<Resultado>(`${this.baseURL}/universidad/`, pUniversidad );
+  }
+
+
 
 
 }
