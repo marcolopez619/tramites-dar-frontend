@@ -19,6 +19,7 @@
     <br>
 
     <div fxLayout="column" fxLayoutAlign="center center" >
+
       <sh-datos-formato-tabla [listaLabelColumnas]="listaLabelColumnas" [listaValoresColumnas]="listaValoresColumnas"></sh-datos-formato-tabla>
 
       <div fxLayout="row" fxLayoutAlign="center center" fxLayout.lt-sm="column" fxLayoutGap="5px" fxFill >
@@ -31,7 +32,7 @@
         </form>
       </div>
 
-    -->{{this.detalleTramite | json }}
+
 
       <div fxLayout="row" fxLayoutAlign="center center" fxLayout.lt-sm="column" fxLayoutGap="5px" fxFill >
         <button mat-raised-button color="warn" fxFlex="25" (click)="onAprobarTramite()" >Aprobar</button>

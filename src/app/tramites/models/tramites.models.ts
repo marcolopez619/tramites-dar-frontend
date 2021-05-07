@@ -36,7 +36,7 @@ export interface BandejaSuspencion extends BandejaAbstract {
   fechaProceso?: Date;
   observaciones?: string;
   idTramite?: number;
-  tipoTramite?: number;
+  tipoTramite?: string;
   estado?: number;
 }
 export interface BandejaReadmision extends BandejaAbstract {
@@ -49,6 +49,7 @@ export interface BandejaReadmision extends BandejaAbstract {
   observaciones?: string;
   idTramite?: number;
   tramite?: string;
+  tipoTramite?: string;
   estado?: number;
 
   suspencion?: SuspencionModel;
@@ -62,6 +63,10 @@ export interface BandejaTraspasoUniversidad extends BandejaAbstract {
   periodo?: string;
   fechaSolicitud?: Date;
   motivo?: string;
+  anioingreso?: number;
+  materiasaprobadas?: number;
+  materiasreprobadas?: number;
+  tipoTramite?: string;
   estado?: number;
 }
 

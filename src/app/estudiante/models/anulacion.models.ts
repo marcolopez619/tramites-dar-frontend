@@ -13,7 +13,7 @@ export interface BandejaAnulacion extends BandejaAbstract {
   idAnulacion?: number;
   fechaSolicitud?: Date;
   motivo?: string;
-  Carrera?: string;
+  carrera?: string;
   fechaProceso?: Date;
   observaciones?: string;
   idTramite?: number;
