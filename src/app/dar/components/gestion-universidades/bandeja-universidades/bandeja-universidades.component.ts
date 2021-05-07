@@ -8,6 +8,7 @@ import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/templ
 import { BaseComponent } from '../../../../shared/base.component';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
+import { UniversidadService } from '../../../../shared/services/universidad.service';
 import { BandejaUniversidades } from '../../../../tramites/models/tramites.models';
 import { UniversidadComponent } from '../universidad/universidad.component';
 
@@ -29,7 +30,8 @@ export class BandejaUniversidadesComponent extends BaseComponent  implements OnI
   constructor(
     public langService: LangService,
     public contextService: ContextoService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private universidadService: UniversidadService
   ) {
     super();
   }
@@ -55,16 +57,12 @@ export class BandejaUniversidadesComponent extends BaseComponent  implements OnI
   } */
 
   private getListaUniversidades(): void {
-    const data :  Array<BandejaUniversidades> = [{
-      idUniversidad  : 1,
-      descUniversidad: 'UNIVERSIDAD MAYOR, REAL Y PONTIFICIA DE SAN FRANCISCO XAVIER DE CHUQUISACA',
-      estado         : 1
-    },{
-      idUniversidad  : 2,
-      descUniversidad: 'Universidad Autónoma Gabriel René Moreno'.toUpperCase(),
-      estado         : 0
-    }  ];
-    this.dataSource.data = data;
+    this.universidadService.getAllListaUniversidades().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      /* // TODO:  Filtrar la suniversidades que no pertenescan al usuario loggeado
+      const idUniversidadUsuarioLoggeado = 1; // FIXME: dato quemado
+      this.dataSource.data = (resp.data as Array<BandejaUniversidades>).filter( x=> x.idUniversidad != idUniversidadUsuarioLoggeado); */
+      this.dataSource.data = (resp.data as Array<BandejaUniversidades>);
+    });
   }
 
   onAnadirEditarUniversidad(isAnadir?: boolean): void{

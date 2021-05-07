@@ -24,12 +24,12 @@
 
       <ng-container matColumnDef="universidad">
         <mat-header-cell *matHeaderCellDef fxFlex="70" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-universidad') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="70"> {{element.descUniversidad}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="70"> {{element.nombre}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="estado" >
         <mat-header-cell *matHeaderCellDef fxFlex="15"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="15" > {{element.estado}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="15" > {{element.estado | estadoToLiteral }} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="acciones">
