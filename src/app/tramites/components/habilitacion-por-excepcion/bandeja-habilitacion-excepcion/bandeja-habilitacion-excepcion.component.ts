@@ -11,6 +11,7 @@ import { LangService } from '../../../../shared/services/lang.service';
 import { BandejaHabilitacionPorExcepcion, BandejaTramite } from '../../../models/tramites.models';
 import { TramitesService } from '../../../tramites.service';
 import { NuevoTramiteComponent } from '../../nuevo-tramite/nuevo-tramite.component';
+import { HabilitacionPorExcepcionComponent } from '../habilitacion-por-excepcion/habilitacion-por-excepcion.component';
 
 @Component({
   selector: 'app-bandeja-habilitacion-excepcion',
@@ -57,12 +58,12 @@ export class BandejaHabilitacionExcepcionComponent  extends BaseComponent implem
     });
   }
 
-  onAddEditTramite(elementToEdit?: BandejaTramite): void {
-    const dlgNuevoTramite = this.dialog.open( NuevoTramiteComponent,  {
+  onAddEditTramite(elementToEdit?: BandejaHabilitacionPorExcepcion): void {
+    const dlgNuevoTramite = this.dialog.open( HabilitacionPorExcepcionComponent,  {
       disableClose: false,
       width: '1000px',
       data: {
-        elementBandejaTramite : elementToEdit
+        selectedHabilitacion : elementToEdit
        }
     });
     dlgNuevoTramite.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {

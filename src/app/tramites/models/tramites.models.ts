@@ -129,3 +129,21 @@ export interface BandejaHabilitacionPorExcepcion  extends BandejaAbstract {
   estado?: number;
   tramite?: string;
 }
+
+export interface BusquedaEstudianteResponse {
+  idFacultad?: number;
+  facultad?: string;
+  idCarrera?: number;
+  carrera?: string;
+  idEstudiante?: number;
+  ru?: number;
+  ci?: string;
+  complemento?: string;
+  paterno?: string;
+  materno?: string;
+  nombres?: string;
+  fechaNacimiento?: Date;
+  sexo?: boolean;
+  nombreCompleto?: string;
+
+}

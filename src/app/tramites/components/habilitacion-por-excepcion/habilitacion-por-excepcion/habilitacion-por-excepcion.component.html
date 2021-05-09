@@ -1,0 +1,168 @@
+<shared-loader-spinner></shared-loader-spinner>
+
+<mat-card>
+  <mat-card-header class="alt-theme">
+  <mat-toolbar shToolbarModal color="primary">
+      <h3>{{ langService.getLang(eModulo.Cites, 'lbl-crear-nuevo-cite') }}</h3>
+      <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
+          <mat-icon>close</mat-icon>
+      </a>
+  </mat-toolbar>
+</mat-card-header>
+
+<mat-dialog-content>
+<mat-card-content>
+
+  <mat-horizontal-stepper labelPosition="bottom" #stepper >
+
+    <!-- Verificacion de requisitos por medio del sistema -->
+    <mat-step [stepControl]="formBusqueda">
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-crear-nuevo-cite' )}}</ng-template>
+
+      <form [formGroup]="formBusqueda" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
+
+        <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
+
+
+          <div fxLayout="row" fxLayoutAlign="space-evenly center" fxFlexFill>
+
+            <mat-form-field fxFill>
+              <mat-label>Busqueda</mat-label>
+              <input matInput placeholder="RU" type="text" formControlName="busquedaRU" shAutofocus fxFlexFill>
+              <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="onBuscarEstudianteByRU()">
+                <mat-icon style="transform: scale(2);">search</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+
+            <mat-table #table [dataSource]="dataSource" matSort fxFlexFill >
+
+              <ng-container matColumnDef="ci">
+                <mat-header-cell *matHeaderCellDef fxFlex="15" mat-sort-header> {{ langService.getLang(eModulo.Tramite, 'lbl-ci') }} </mat-header-cell>
+                <mat-cell *matCellDef="let element" fxFlex="15"> {{element.ci}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="nombreCompleto" >
+                <mat-header-cell *matHeaderCellDef fxFlex="35"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-nombre-completo') }} </mat-header-cell>
+                <mat-cell *matCellDef="let element" fxFlex="35" > {{element.nombreCompleto}} &nbsp; </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="fechaNacimiento" >
+                <mat-header-cell *matHeaderCellDef fxFlex="15"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-nacimiento') }} </mat-header-cell>
+                <mat-cell *matCellDef="let element" fxFlex="15" > {{element.fechaNacimiento | date : 'dd/MM/yyyy' }} &nbsp; </mat-cell>
+              </ng-container>
+
+
+              <ng-container matColumnDef="carrera" >
+                <mat-header-cell *matHeaderCellDef fxFlex="35"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-carrera') }} </mat-header-cell>
+                <mat-cell *matCellDef="let element" fxFlex="35" > {{element.carrera }} </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+              <mat-row
+                shRowHover
+                [ngClass]="{'row-action': idSeleccionado === row.ru2}"
+                [@fadeInAnim]="true"
+                *matRowDef="let row; columns: displayedColumns;">
+              </mat-row>
+
+            </mat-table>
+            <shared-table-empty [datasource]="dataSource"></shared-table-empty>
+
+         <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>
+          <button mat-raised-button color="primary" disabled="{{formHabilitacionExcepcion.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+         </div>
+        </div>
+
+      </form>
+    </mat-step>
+
+<!--     <mat-step [stepControl]="formHabilitacionExcepcion">
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-vista-previa-cite' )}}</ng-template>
+
+      <form [formGroup]="formHabilitacionExcepcion" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
+
+        <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
+
+          <div fxLayout="column" fxLayoutAlign="center center" fxFill>
+            <mat-form-field fxFlexFill>
+              <mat-label>{{langService.getLang(eModulo.Estudiante, 'lbl-carrera-destino' )}} : </mat-label>
+                <input type="text"
+                  placeholder="Seleccione carrera destino"
+                  matInput
+                  formControlName="idCarreraDestino"
+                  [matAutocomplete]="auto">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                  <mat-option *ngFor="let carrera of listaCarrerasFiltradas | async" [value]="carrera.carrera">
+                    {{carrera.carrera}}
+                  </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+
+            <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
+              <mat-form-field fxFlexFill>
+                <input type="text" required matInput min="5" max="200" minlength="5" maxlength="200" autocomplete="off" placeholder="Motivo de cambio de carrera" formControlName="motivo">
+                <mat-error *ngIf="formHabilitacionExcepcion.controls['motivo'].invalid">El motivo de la anulacion es obligatoria</mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+
+        </div>
+
+      </form>
+
+
+
+      <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlexFill>
+        <button mat-raised-button color="primary" disabled="{{formHabilitacionExcepcion.invalid || contextService.isLoading}}" matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
+        <button mat-raised-button color="primary" disabled="{{formHabilitacionExcepcion.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+      </div>
+
+
+
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-confirmar-creacion-cite' )}}</ng-template>
+
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <div fxLayout="column" fxLayoutAlign="center center" fxFlex="15" >
+            <mat-icon [inline]="true" style="font-size: 50px !important" color="primary">help_outline</mat-icon>
+        </div>
+        <span style="font-size: 20px; text-align: center">{{langService.getLang(eModulo.Estudiante, 'lbl-confir-sol-nuevo-tramite-cambio-carrera' )}}</span>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center center" >
+        <div fxLayout="column" fxLayoutAlign="space-around center" >
+          <span> <strong>Carrera origen : </strong> {{datosEstudiante.carrera}}</span>
+          <span> <strong>Carrera destino : </strong> {{formHabilitacionExcepcion.get('idCarreraDestino').value}}</span>
+          <span> <strong>Motivo : </strong> {{formHabilitacionExcepcion.controls['motivo'].value}}</span>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span style="font-size: 15px; text-align: center">&nbsp;</span>
+      </div>
+      <br>
+      <br>
+      <br>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlexFill>
+        <button mat-raised-button color="primary" matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
+
+        <div fxLayout="row" fxLayoutAlign="center center" fxFlex >
+          <button mat-raised-button color="accent" (click)="onFinalizarSolicitud()">{{langService.getLang(eModulo.Estudiante, 'lbl-finalizar-tramite' )}}</button>
+        </div>
+      </div>
+    </mat-step> -->
+  </mat-horizontal-stepper>
+
+
+
+</mat-card-content>
+</mat-dialog-content>
+</mat-card>

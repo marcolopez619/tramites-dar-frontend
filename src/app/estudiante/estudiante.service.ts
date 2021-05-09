@@ -18,5 +18,9 @@ export class EstudianteService {
     return this.httpClient.get<Resultado>(`${this.baseURL}/${pIdEstudiante}`);
   }
 
+  getInformacionEstudianteByRU(pRu: number): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/search/${pRu}`);
+  }
+
 
 }
