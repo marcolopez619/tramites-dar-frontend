@@ -1,1 +1,163 @@
-<p>transferencia works!</p>
+<shared-loader-spinner></shared-loader-spinner>
+
+<mat-card>
+  <mat-card-header class="alt-theme">
+  <mat-toolbar shToolbarModal color="primary">
+      <h3>{{ langService.getLang(eModulo.Cites, 'lbl-crear-nuevo-cite') }}</h3>
+      <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
+          <mat-icon>close</mat-icon>
+      </a>
+  </mat-toolbar>
+</mat-card-header>
+
+<mat-dialog-content>
+<mat-card-content>
+
+  <mat-horizontal-stepper labelPosition="bottom" #stepper *ngIf="datosEstudiante" >
+
+    <!-- Verificacion de requisitos por medio del sistema -->
+    <mat-step [stepControl]="formTransferencia">
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-crear-nuevo-cite' )}}</ng-template>
+
+      <form [formGroup]="formTransferencia" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
+
+        <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
+
+
+          <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+
+            <sh-datos-estudiante [datoEstudiante]="datosEstudiante" ></sh-datos-estudiante>
+
+            <div fxLayout="row" fxLayoutAlign="center center" >
+              <div fxLayout="column" fxLayoutAlign="center end" fxLayoutAlign.lt-sm="center start">
+                <span><strong>ALUMNO REGULAR: </strong></span>
+                <span><strong>PERMANENCIA EN CARRERA ACTUAL: </strong> </span>
+                <span><strong>CANTIDAD SOLICITUDES DE TRANSFERENCIA REALIZADAS: </strong></span>
+            </div>
+
+            <div fxLayout="column" fxLayoutAlign="center start" >
+              <span>&nbsp;SI </span>
+              <span>&nbsp;1 AÑO </span>
+              <span>&nbsp;1 DE UN PERMITIDO DE 2 </span>
+            </div>
+          </div>
+
+
+        </div>
+
+
+        <br>
+        <br>
+
+        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxFlexFill>
+          <strong><span>CUMPLE CON TODOS LOS REQUISITOS SOLICITADOS : <strong> **SI** </strong></span></strong>
+        </div>
+
+
+
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>
+            <button mat-raised-button color="primary" disabled="{{formTransferencia.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+          </div>
+        </div> <!-- Contenedor principal -->
+
+      </form>
+    </mat-step>
+
+    <!-- Seleccion de carrera destino -->
+    <mat-step [stepControl]="formTransferencia">
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-vista-previa-cite' )}}</ng-template>
+
+      <form [formGroup]="formTransferencia" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
+
+        <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
+
+          <div fxLayout="column" fxLayoutAlign="center center" fxFill>
+            <mat-form-field fxFlexFill>
+              <mat-label>{{langService.getLang(eModulo.Estudiante, 'lbl-carrera-destino' )}} : </mat-label>
+                <input type="text"
+                  placeholder="Seleccione carrera destino"
+                  matInput
+                  formControlName="idCarreraDestino"
+                  [matAutocomplete]="auto">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                  <mat-option *ngFor="let carrera of listaCarrerasFiltradas | async" [value]="carrera.carrera">
+                    {{carrera.carrera}}
+                  </mat-option>
+                </mat-autocomplete>
+              <!-- <mat-select formControlName="idTramite" placeholder="Seleccione">
+                <mat-option *ngFor="let carrera of listaCarreras" [value]="carrera.idCarrera">
+                  {{carrera.descCarrera}}
+                </mat-option>
+              </mat-select> -->
+
+
+            </mat-form-field>
+
+
+            <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
+              <mat-form-field fxFlexFill>
+                <input type="text" required matInput min="5" max="200" minlength="5" maxlength="200" autocomplete="off" placeholder="Motivo de cambio de carrera" formControlName="motivo">
+                <mat-error *ngIf="formTransferencia.controls['motivo'].invalid">El motivo de la anulacion es obligatoria</mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+
+        </div> <!-- Contenedor principal -->
+
+      </form>
+
+
+
+      <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlexFill>
+        <button mat-raised-button color="primary" disabled="{{formTransferencia.invalid || contextService.isLoading}}" matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
+        <button mat-raised-button color="primary" disabled="{{formTransferencia.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+      </div>
+
+
+
+    </mat-step>
+
+    <!-- Finalizacion de creación de cite -->
+    <mat-step>
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-confirmar-creacion-cite' )}}</ng-template>
+
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <div fxLayout="column" fxLayoutAlign="center center" fxFlex="15" >
+            <mat-icon [inline]="true" style="font-size: 50px !important" color="primary">help_outline</mat-icon>
+        </div>
+        <span style="font-size: 20px; text-align: center">{{langService.getLang(eModulo.Estudiante, 'lbl-confir-sol-nuevo-tramite-transferencia-carrera' )}}</span>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center center" >
+        <div fxLayout="column" fxLayoutAlign="space-around center" >
+          <span> <strong>Carrera origen : </strong> {{datosEstudiante.carrera}}</span>
+          <span> <strong>Carrera destino : </strong> {{formTransferencia.get('idCarreraDestino').value}}</span>
+          <span> <strong>Motivo : </strong> {{formTransferencia.controls['motivo'].value}}</span>
+        </div>
+      </div>
+
+
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span style="font-size: 15px; text-align: center">&nbsp;</span>
+      </div>
+      <br>
+      <br>
+      <br>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlexFill>
+        <button mat-raised-button color="primary" matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
+
+        <div fxLayout="row" fxLayoutAlign="center center" fxFlex >
+          <button mat-raised-button color="accent" (click)="onFinalizarSolicitud()">{{langService.getLang(eModulo.Estudiante, 'lbl-finalizar-tramite' )}}</button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+
+
+
+</mat-card-content>
+</mat-dialog-content>
+</mat-card>

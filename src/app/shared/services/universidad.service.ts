@@ -20,7 +20,7 @@ export class UniversidadService {
   }
 
   getAllListaCarrerasByIdUniversidad(pIdUniversidad: number): Observable<Resultado> {
-    return this.httpClient.get<Resultado>(`${this.baseURL}/carrera/${pIdUniversidad}`);
+    return this.httpClient.get<Resultado>(`${this.baseURL}/universidad/${pIdUniversidad}/carreras`);
   }
 
   getAllInformation(pIdUniversidad: number): Observable<Resultado> {
