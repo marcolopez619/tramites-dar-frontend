@@ -19,16 +19,19 @@ import { CambioCarreraService } from './components/cambio-carrera.service';
 import { SuspencionService } from './components/suspencion/suspencion.service';
 import { ReadmisionService } from './components/readmision/readmision.service';
 import { TraspasoUniversidadService } from './components/traspaso-universidad/traspaso-universidad.service';
+import { BandejaTransferenciaComponent } from './components/transferencia/bandeja-transferencia/bandeja-transferencia.component';
+import { TransferenciaService } from './components/transferencia/transferencia.service';
+import { TransferenciaComponent } from './components/transferencia/transferencia/transferencia.component';
 
 @NgModule({
-  declarations: [AnulacionComponent, BandejaAnulacionComponent, CambioCarreraComponent, BandejaCambioCarreraComponent, BandejaSuspencionComponent, SuspencionComponent, BandejaReadmisionComponent, ReadmisionComponent, TraspasoUniversidadComponent, BandejaTraspasoUniversidadComponent],
+  declarations: [AnulacionComponent, BandejaAnulacionComponent, CambioCarreraComponent, BandejaCambioCarreraComponent, BandejaSuspencionComponent, SuspencionComponent, BandejaReadmisionComponent, ReadmisionComponent, TraspasoUniversidadComponent, BandejaTraspasoUniversidadComponent, BandejaTransferenciaComponent, TransferenciaComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(estudianteRoutes),
     SharedModule
   ],
   exports : [
-    AnulacionComponent, BandejaAnulacionComponent, CambioCarreraComponent, BandejaCambioCarreraComponent, BandejaSuspencionComponent, BandejaReadmisionComponent, BandejaTraspasoUniversidadComponent
+    AnulacionComponent, BandejaAnulacionComponent, CambioCarreraComponent, BandejaCambioCarreraComponent, BandejaSuspencionComponent, BandejaReadmisionComponent, BandejaTraspasoUniversidadComponent, BandejaTransferenciaComponent
   ],
   providers : [
     EstudianteService,
@@ -37,6 +40,7 @@ import { TraspasoUniversidadService } from './components/traspaso-universidad/tr
     SuspencionService,
     ReadmisionService,
     TraspasoUniversidadService,
+    TransferenciaService,
     DatePipe
   ]
 })

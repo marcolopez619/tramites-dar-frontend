@@ -26,6 +26,21 @@ export interface BandejaCambioCarrera extends BandejaAbstract {
   estado?: number;
 }
 
+export interface BandejaTranseferencia extends BandejaAbstract{
+  idTransferencia?: number;
+  idCarreraOrigen?: number;
+  carreraorigen?: string;
+  idCarreraDestino?: number;
+  carreradestino?: string;
+  fechaSolicitud?: Date;
+  motivo?: string;
+  fechaProceso?: Date;
+  observaciones?: string;
+  idTramite?: number;
+  tipoTramite?: string;
+  estado?: number;
+}
+
 export interface BandejaSuspencion extends BandejaAbstract {
   idSuspencion?: number;
   idCarrera?: number;

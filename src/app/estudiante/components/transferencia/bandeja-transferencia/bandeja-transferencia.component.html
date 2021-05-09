@@ -1,0 +1,72 @@
+<shared-loader-spinner></shared-loader-spinner>
+
+<mat-card>
+  <mat-card-header class="alt-theme">
+  <mat-toolbar color="primary">
+      {{ langService.getLang(eModulo.Estudiante,'tit-lista-transferencias') }}
+      <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Estudiante, 'tit-nueva-solicitud') }}" (click)="onNuevaSolicitud()">
+          <mat-icon>add_circle</mat-icon>
+      </a>
+  </mat-toolbar>
+</mat-card-header>
+
+<mat-card-content>
+
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="origen">
+        <mat-header-cell *matHeaderCellDef fxFlex="30" mat-sort-header> {{ langService.getLang(eModulo.Estudiante, 'lbl-carrera-origen') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="30"> {{element.carreraorigen}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="destino">
+        <mat-header-cell *matHeaderCellDef fxFlex="30" mat-sort-header> {{ langService.getLang(eModulo.Estudiante, 'lbl-carrera-destino') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="30"> {{element.carreradestino}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="fechaSolicitud" >
+        <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-solicitud') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaSolicitud | date : 'dd/MM/yyyy' }} &nbsp; </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="motivo">
+        <mat-header-cell *matHeaderCellDef fxFlex="40" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-motivo') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="40"> {{element.motivo}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="estado" >
+        <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.estado | estadoToLiteral }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef fxFlex="10" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element;" fxFlex="10" fxLayoutAlign="center center">
+          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-imprimir') }}">
+            <mat-icon>print</mat-icon>
+          </a>
+          <!-- <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}">
+            <mat-icon>edit</mat-icon>
+          </a>
+          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}" >
+            <mat-icon>delete_forever</mat-icon>
+          </a> -->
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+      <mat-row
+        shRowHover
+        [ngClass]="{'row-action': idSeleccionado === row.idTransferencia}"
+        [@fadeInAnim]="true"
+        *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+
+    </mat-table>
+    <shared-table-empty [datasource]="dataSource"></shared-table-empty>
+    <mat-paginator #paginator [pageSize]="config.paginatorSize" [pageSizeOptions]="config.paginatorOptions" [showFirstLastButtons]="true"></mat-paginator>
+
+  </mat-card-content>
+</mat-card>

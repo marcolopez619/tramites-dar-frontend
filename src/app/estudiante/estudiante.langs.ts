@@ -5,6 +5,7 @@ export const estudianteLang = {
     'tit-lista-suspenciones-carrera' : 'Solicitud de suspenciónes de carrera',
     'tit-lista-readmision-carrera' : 'Solicitudes de readmisiones de carrera',
     'tit-lista-traspaso-universidad' : 'Solicitudes de traspaso de universidades',
+    'tit-lista-transferencias' : 'Solicitudes de transferencias',
     'tit-nueva-solicitud' : 'Nueva solicitud',
     'tit-nueva-solicitud-anulacion' : 'Nueva solicitud de anulación',
     'tit-nueva-solicitud-suspencion' : 'Nueva solicitud de suspención',
