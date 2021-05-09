@@ -1,0 +1,64 @@
+<shared-loader-spinner></shared-loader-spinner>
+
+<mat-card>
+  <mat-card-header class="alt-theme">
+  <mat-toolbar color="primary">
+      {{tituloFacultad}}
+      <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Dar, 'tit-nueva-facultad') }}" (click)="onAnadirEditFacultad()">
+          <mat-icon>add_circle</mat-icon>
+      </a>
+  </mat-toolbar>
+</mat-card-header>
+
+<mat-card-content>
+
+ <!--  <mat-form-field fxFill>
+    <mat-label>Buscar</mat-label>
+    <input matInput (keyup)="aplicarFiltro($event)">
+
+  </mat-form-field> -->
+
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="facultad">
+        <mat-header-cell *matHeaderCellDef fxFlex="70" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-facultad') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="70"> {{element.nombre}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="estado" >
+        <mat-header-cell *matHeaderCellDef fxFlex="15"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="15" > {{element.estado | estadoToLiteral }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef fxFlex="15" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element;" fxFlex="15" fxLayoutAlign="center center">
+          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}" (click)="onAnadirEditFacultad(element)">
+            <mat-icon>edit</mat-icon>
+          </a>
+          <!--
+            <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-imprimir') }}">
+              <mat-icon>print</mat-icon>
+            </a>
+          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}" >
+            <mat-icon>delete_forever</mat-icon>
+          </a> -->
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+      <mat-row
+        shRowHover
+        [ngClass]="{'row-action': idSeleccionado === row.idFacultad}"
+        [@fadeInAnim]="true"
+        *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+
+    </mat-table>
+    <shared-table-empty [datasource]="dataSource"></shared-table-empty>
+    <mat-paginator #paginator [pageSize]="config.paginatorSize" [pageSizeOptions]="config.paginatorOptions" [showFirstLastButtons]="true"></mat-paginator>
+
+  </mat-card-content>
+</mat-card>

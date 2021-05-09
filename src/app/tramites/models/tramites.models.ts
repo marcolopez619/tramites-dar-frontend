@@ -89,6 +89,12 @@ export interface BandejaUniversidades extends BandejaAbstract {
   nombre?: string;
   estado?: number;
 }
+export interface BandejaFacultad extends BandejaAbstract {
+  idFacultad?: number;
+  nombre?: string;
+  estado?: number;
+  idUniversidad? : number;
+}
 export interface BandejaCarreras extends BandejaAbstract {
   idCarrera?: number;
   descCarrera?: string;

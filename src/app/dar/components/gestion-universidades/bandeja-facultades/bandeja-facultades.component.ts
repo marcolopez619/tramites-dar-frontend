@@ -12,20 +12,20 @@ import { eTipoOperacion } from '../../../../shared/enums/tipo_operacion.enum';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { UniversidadService } from '../../../../shared/services/universidad.service';
-import { BandejaUniversidades } from '../../../../tramites/models/tramites.models';
-import { UniversidadComponent } from '../universidad/universidad.component';
+import { BandejaFacultad, BandejaUniversidades } from '../../../../tramites/models/tramites.models';
 
 @Component({
-  selector: 'app-bandeja-universidades',
-  templateUrl: './bandeja-universidades.component.html',
-  styleUrls: ['./bandeja-universidades.component.css'],
+  selector: 'app-bandeja-facultades',
+  templateUrl: './bandeja-facultades.component.html',
+  styleUrls: ['./bandeja-facultades.component.css'],
   animations: [fadeInAnim, slideInLeftAnim],
   host: { class: 'container-fluid', '[@fadeInAnim]': 'true' }
 })
-export class BandejaUniversidadesComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
+export class BandejaFacultadesComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['universidad', 'estado' , 'acciones'];
-  dataSource = new MatTableDataSource<BandejaUniversidades>([]);
+  displayedColumns = ['facultad', 'estado' , 'acciones'];
+  dataSource = new MatTableDataSource<BandejaFacultad>([]);
+  tituloFacultad: string;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -40,7 +40,9 @@ export class BandejaUniversidadesComponent extends BaseComponent  implements OnI
   }
 
   ngOnInit(): void {
-    this.getListaUniversidades();
+    const nombreUniversidad = 'ALGUNA UNIVERSIDAD'; // FIXME: Conseguir el nombre de la U de la U seleccionada.
+    this.tituloFacultad = this.langService.getLang(this.eModulo.Dar, 'tit-bandeja-facultades').replace('$nombreUniversidad', '' );
+    this.getListaFacultades();
   }
 
   ngAfterViewInit(): void {
@@ -59,46 +61,29 @@ export class BandejaUniversidadesComponent extends BaseComponent  implements OnI
     this.dataSource.filter = filterValue.trim().toLowerCase();
   } */
 
-  private getListaUniversidades(): void {
-    this.universidadService.getAllListaUniversidades().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-      /* // TODO:  Filtrar la suniversidades que no pertenescan al usuario loggeado
-      const idUniversidadUsuarioLoggeado = 1; // FIXME: dato quemado
-      this.dataSource.data = (resp.data as Array<BandejaUniversidades>).filter( x=> x.idUniversidad != idUniversidadUsuarioLoggeado); */
-      this.dataSource.data = (resp.data as Array<BandejaUniversidades>);
+  private getListaFacultades(): void {
+    const idUniversidad = 1; // FIXME: Traer el id de la universidad
+
+    this.universidadService.getListaFacultades( idUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.dataSource.data = resp.data;
     });
   }
 
-  onAnadirEditUniversidad(universidadSelected?: BandejaUniversidades): void{
+  onAnadirEditFacultad(facultadSelected?: BandejaFacultad): void {
     const dlgEditUniversidad = this.dialog.open( UniversidadCarreraComponent,  {
       disableClose: false,
       width: '1000px',
       data: {
-        objetoUniversidad: eTipoObjetoUniversidad.UNIVERSIDAD,
-        operationType    : universidadSelected ? eTipoOperacion.ACTUALIZACION : eTipoOperacion.INSERCION,
-        selectedData     : universidadSelected
+        objetoUniversidad: eTipoObjetoUniversidad.FACULTAD,
+        operationType    : facultadSelected ? eTipoOperacion.ACTUALIZACION : eTipoOperacion.INSERCION,
+        selectedData     : facultadSelected
       }
     });
     dlgEditUniversidad.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
-        this.getListaUniversidades()
+        this.getListaFacultades();
       }
     });
   }
-
-  /* onAnadirEditarUniversidad(isAnadir?: boolean): void{
-    const dlgAnadirUniversidad = this.dialog.open( UniversidadComponent,  {
-      disableClose: false,
-      width: '1000px',
-      data: {
-        isAnadir : isAnadir
-      }
-    });
-    dlgAnadirUniversidad.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
-      if (result) {
-        console.log( `---> ${result}` );
-        // TODO: ACTUALIZAR LA BANDEJA PRINCIPAL.
-      }
-    });
-  } */
 
 }

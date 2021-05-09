@@ -8,6 +8,10 @@ export const darLang = {
     'tit-bandeja-universidades' : 'Lista de universidades registradas',
     'tit-detalle-universidad' : 'Detalle de universidad',
 
+    'lbl-facultad' : 'Facultad',
+    'tit-bandeja-facultades' : 'Lista de facultades de : $nombreUniversidad',
+    'tit-nueva-facultad' : 'Añadir facultad',
+
     'lbl-universidad' : 'Universidad',
     'lbl-universidad-error' : 'La universidad es inválida',
     'lbl-nombre-completo' : 'Nombre completo',
