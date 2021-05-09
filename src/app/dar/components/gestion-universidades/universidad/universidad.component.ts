@@ -9,6 +9,7 @@ import { BaseComponent } from '../../../../shared/base.component';
 import { UniversidadCarreraComponent } from '../../../../shared/components/universidad-carrera/universidad-carrera.component';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
+import { UniversidadService } from '../../../../shared/services/universidad.service';
 import { BandejaCarreras } from '../../../../tramites/models/tramites.models';
 
 @Component({
@@ -29,7 +30,8 @@ export class UniversidadComponent extends BaseComponent  implements OnInit, Afte
     constructor(
       public langService: LangService,
       public contextService: ContextoService,
-      private dialog: MatDialog
+      private dialog: MatDialog,
+      private universidadService: UniversidadService
     ) {
       super();
     }
@@ -56,7 +58,11 @@ export class UniversidadComponent extends BaseComponent  implements OnInit, Afte
     } */
 
     private getListaCarreras(pIdUniversidad: number): void {
-      const data :  Array<BandejaCarreras> = [{
+
+      this.universidadService.getAllListaCarrerasByIdUniversidad( pIdUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+        this.dataSource.data = resp.data;
+      });
+      /* const data :  Array<BandejaCarreras> = [{
         idCarrera  : 1,
         descCarrera: 'ENFERMERIA',
         estado     : 6
@@ -69,7 +75,7 @@ export class UniversidadComponent extends BaseComponent  implements OnInit, Afte
         descCarrera: 'INGENIERIA AGROINDUSTRIAL Y AGROPECUARIA',
         estado     : 8
       }];
-      this.dataSource.data = data;
+      this.dataSource.data = data; */
     }
 
     onEditUniversidad(): void{
@@ -97,7 +103,7 @@ export class UniversidadComponent extends BaseComponent  implements OnInit, Afte
         width: '1000px',
         data: {
           isAnadirCarrera: isAnadir,
-          selectedData   : (isAnadir) ? undefined :  { nombre: pCarrera.descCarrera, estado : true }
+          selectedData   : (isAnadir) ? undefined :  { nombre: pCarrera.nombre, estado : true }
         }
       });
       dlgEditCarrera.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { BandejaFacultad, BandejaUniversidades } from '../../tramites/models/tramites.models';
+import { BandejaCarreras, BandejaFacultad, BandejaUniversidades } from '../../tramites/models/tramites.models';
 import { Resultado } from '../models/resultado.model';
 import { ContextoService } from './contexto.service';
 
@@ -19,7 +19,7 @@ export class UniversidadService {
     return this.httpClient.get<Resultado>(`${this.baseURL}/universidad`);
   }
 
-  getAllListaCarreras(pIdUniversidad: number): Observable<Resultado> {
+  getAllListaCarrerasByIdUniversidad(pIdUniversidad: number): Observable<Resultado> {
     return this.httpClient.get<Resultado>(`${this.baseURL}/carrera/${pIdUniversidad}`);
   }
 
@@ -47,5 +47,16 @@ export class UniversidadService {
     return this.httpClient.patch<Resultado>(`${this.baseURL}/facultad`, datosFacultad );
   }
 
+  getListaCarreras(pIdFacultad: number): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/carrera/${pIdFacultad}`);
+  }
+
+  insertCarrera(pCarrera: BandejaCarreras): Observable<Resultado> {
+    return this.httpClient.post<Resultado>(`${this.baseURL}/carrera`, pCarrera );
+  }
+
+  updateCarrera(datosCarrera: BandejaCarreras): Observable<Resultado> {
+    return this.httpClient.patch<Resultado>(`${this.baseURL}/carrera`, datosCarrera );
+  }
 
 }

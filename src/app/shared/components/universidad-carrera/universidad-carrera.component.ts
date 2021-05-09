@@ -69,7 +69,7 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
         // Insercion de datos
         this.setDatosInsercion();
       }
-    } else {
+    } else if (this.objetoUniversidad === eTipoObjetoUniversidad.CARRERA) {
       // Operaciones con carreras
       if ( this.operationType === eTipoOperacion.ACTUALIZACION) {
         // Modificacion de datos
@@ -173,10 +173,38 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
           this.onClose( resp.data );
         });
       }
+    } else if( this.objetoUniversidad === eTipoObjetoUniversidad.CARRERA ){
+
+      if ( this.operationType === eTipoOperacion.INSERCION) {
+        // => Insercion de nueva facultad
+        const insertCarrera: BandejaCarreras = {
+          nombre    : this.formulario.controls['nombre'].value,
+          estado    : +this.activado,
+          idFacultad: 1 // FIXME: obtenerlo de la facultad seleccioanda
+        };
+
+        // Actualizacion de datos de la carrera
+        this.universidadService.insertCarrera( insertCarrera ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+          this.onClose( resp.data );
+        });
+
+      } else {
+        // => Actualizacion de datos de la carrera
+        const carreraUpdate: BandejaCarreras = {
+          idCarrera : this.selectedData.idCarrera,
+          nombre    : this.formulario.controls['nombre'].value,
+          estado    : +this.activado
+        };
+
+        // Actualizacion de datos de la carrera
+        this.universidadService.updateCarrera( carreraUpdate ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+          this.onClose( resp.data );
+        });
+      }
     }
-
-
   }
+
+
 
   onChangeSlideToggleValue( event: MatSlideToggleChange ): void {
     this.activado = event.checked;

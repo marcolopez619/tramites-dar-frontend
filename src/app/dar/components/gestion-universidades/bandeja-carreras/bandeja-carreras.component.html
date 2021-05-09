@@ -3,11 +3,8 @@
 <mat-card>
   <mat-card-header class="alt-theme">
   <mat-toolbar color="primary">
-      {{ langService.getLang(eModulo.Dar, 'tit-detalle-universidad') }}
+      {{tituloFacultad}}
       <span class="flex-spacer"></span>
-      <a mat-button matTooltip="{{ langService.getLang(eModulo.Dar, 'tit-editar-universidad') }}" (click)="onEditUniversidad()">
-          <mat-icon>edit</mat-icon>
-      </a>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Dar, 'tit-nueva-carrera') }}" (click)="onAnadirEditCarrera()">
           <mat-icon>add_circle</mat-icon>
       </a>
@@ -24,14 +21,14 @@
 
     <mat-table #table [dataSource]="dataSource" matSort>
 
-      <ng-container matColumnDef="descCarrera">
-        <mat-header-cell *matHeaderCellDef fxFlex="80" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-universidad') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="80"> {{element.nombre}} </mat-cell>
+      <ng-container matColumnDef="carrera">
+        <mat-header-cell *matHeaderCellDef fxFlex="70" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-carrera') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="70"> {{element.nombre}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="estado" >
         <mat-header-cell *matHeaderCellDef fxFlex="15"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="15" > {{element.estado | estadoToLiteral}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="15" > {{element.estado | estadoToLiteral }} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="acciones">
@@ -40,6 +37,13 @@
           <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}" (click)="onAnadirEditCarrera(element)">
             <mat-icon>edit</mat-icon>
           </a>
+          <!--
+            <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-imprimir') }}">
+              <mat-icon>print</mat-icon>
+            </a>
+          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}" >
+            <mat-icon>delete_forever</mat-icon>
+          </a> -->
         </mat-cell>
       </ng-container>
 
@@ -47,7 +51,7 @@
 
       <mat-row
         shRowHover
-        [ngClass]="{'row-action': idSeleccionado === row.idCarrera}"
+        [ngClass]="{'row-action': idSeleccionado === row.idFacultad}"
         [@fadeInAnim]="true"
         *matRowDef="let row; columns: displayedColumns;">
       </mat-row>

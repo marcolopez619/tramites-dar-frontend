@@ -68,7 +68,7 @@ export class CambioCarreraComponent extends BaseComponent implements OnInit {
   private getListaCarreras(): void {
     const idUniversidad = 1; // Por default sera la Tomas frias para este caso
 
-    this.universidadService.getAllListaCarreras( idUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+    this.universidadService.getListaCarreras( idUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.listaCarreras = resp.data;
     });
   }

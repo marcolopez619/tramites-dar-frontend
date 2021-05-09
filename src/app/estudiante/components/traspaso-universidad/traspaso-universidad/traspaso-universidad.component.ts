@@ -70,7 +70,7 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
   }
 
   private getListaCarreras( pIdUniversidad: number ): void {
-    this.universidadService.getAllListaCarreras( pIdUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+    this.universidadService.getAllListaCarrerasByIdUniversidad( pIdUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.listaCarreras = resp.data;
     });
   }

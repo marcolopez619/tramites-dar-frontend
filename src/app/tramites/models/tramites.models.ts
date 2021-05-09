@@ -97,5 +97,7 @@ export interface BandejaFacultad extends BandejaAbstract {
 }
 export interface BandejaCarreras extends BandejaAbstract {
   idCarrera?: number;
-  descCarrera?: string;
+  nombre?: string;
+  estado?: number;
+  idFacultad?: number;
 }
