@@ -30,7 +30,7 @@ export class HabilitacionPorExcepcionComponent extends BaseComponent implements 
   listaTramites: Array<TramiteModel> = [];
 
   fechaLimiteSuperior = new Date();
-  fechaLimiteInferior = new Date( this.fechaLimiteSuperior.getFullYear() - 1, 0, 1);
+  fechaLimiteInferior = new Date( this.fechaLimiteSuperior.getFullYear(), this.fechaLimiteSuperior.getMonth(), 1);
 
   displayedColumns = ['ci', 'nombreCompleto', 'fechaNacimiento', 'carrera' ];
   dataSource = new MatTableDataSource<BusquedaEstudianteResponse>([]);

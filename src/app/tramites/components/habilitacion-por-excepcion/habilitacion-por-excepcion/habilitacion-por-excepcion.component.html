@@ -30,7 +30,7 @@
             <mat-form-field fxFill>
               <mat-label>Busqueda</mat-label>
               <input matInput placeholder="RU" type="text" formControlName="busquedaRU" shAutofocus fxFlexFill>
-              <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="onBuscarEstudianteByRU()">
+              <button mat-button matSuffix mat-icon-button [disabled]="formBusqueda.invalid || contextService.isLoading" (click)="onBuscarEstudianteByRU()">
                 <mat-icon style="transform: scale(2);">search</mat-icon>
               </button>
             </mat-form-field>
