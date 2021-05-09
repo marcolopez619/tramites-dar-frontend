@@ -6,18 +6,19 @@ import { SharedModule } from '../shared/shared.module';
 import { tramiteRoutes } from './tramite.routing';
 import { TramitesService } from './tramites.service';
 import { RouterModule } from '@angular/router';
+import { BandejaHabilitacionExcepcionComponent } from './components/habilitacion-por-excepcion/bandeja-habilitacion-excepcion/bandeja-habilitacion-excepcion.component';
 
 
 
 @NgModule({
-  declarations: [BandejaTramitesComponent, NuevoTramiteComponent],
+  declarations: [BandejaTramitesComponent, NuevoTramiteComponent, BandejaHabilitacionExcepcionComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(tramiteRoutes),
     SharedModule
   ],
   exports : [
-    BandejaTramitesComponent
+    BandejaTramitesComponent, BandejaHabilitacionExcepcionComponent
   ],
   providers: [
     TramitesService

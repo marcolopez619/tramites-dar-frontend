@@ -8,7 +8,7 @@ import { ContextoService } from '../shared/services/contexto.service';
 @Injectable()
 export class TramitesService {
 
-  readonly baseURL = this.contextoService.getConfig(`backendApi`).concat('/habilitacion/tramite');
+  readonly baseURL = this.contextoService.getConfig(`backendApi`).concat('/habilitacion');
 
   constructor(
     private httpClient: HttpClient,
@@ -16,15 +16,18 @@ export class TramitesService {
   ) { }
 
   getAllListaTramites(): Observable<Resultado> {
-    return this.httpClient.get<Resultado>(`${this.baseURL}`);
+    return this.httpClient.get<Resultado>(`${this.baseURL}/tramite`);
   }
 
   insertHabilitaconTramite(habilitacionTramiteModelInsert: HabilitacionTramiteModelInsert): Observable<Resultado> {
-    return this.httpClient.post<Resultado>(`${this.baseURL}`, habilitacionTramiteModelInsert );
+    return this.httpClient.post<Resultado>(`${this.baseURL}/tramite`, habilitacionTramiteModelInsert );
   }
 
   updateHabilitaconTramite(habilitacionTramiteModelUpdate: HabilitacionTramiteModelUpdate): Observable<Resultado> {
-    return this.httpClient.patch<Resultado>(`${this.baseURL}`, habilitacionTramiteModelUpdate );
+    return this.httpClient.patch<Resultado>(`${this.baseURL}/tramite`, habilitacionTramiteModelUpdate );
   }
 
+  getAllListaTramitesPorExcepcion(): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/excepcion`);
+  }
 }

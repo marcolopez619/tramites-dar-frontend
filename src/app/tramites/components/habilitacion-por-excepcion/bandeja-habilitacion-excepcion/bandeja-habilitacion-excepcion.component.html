@@ -1,0 +1,79 @@
+<shared-loader-spinner></shared-loader-spinner>
+
+<mat-card>
+  <mat-card-header class="alt-theme">
+  <mat-toolbar color="primary">
+      {{ langService.getLang(eModulo.Tramite, 'tit-lista-habilitacion-tramites-por-excepcion' ) }}
+      <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Tramite, 'tit-nueva-habilitacion') }}" (click)="onAddEditTramite()">
+          <mat-icon>add_circle</mat-icon>
+      </a>
+  </mat-toolbar>
+</mat-card-header>
+
+<mat-card-content>
+
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="ci">
+        <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.Tramite, 'lbl-ci') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10"> {{element.ci}}{{element.complemento? '-'.concat( element.complemento ): undefined}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="nombreCompleto">
+        <mat-header-cell *matHeaderCellDef fxFlex="25" mat-sort-header> {{ langService.getLang(eModulo.Tramite, 'lbl-nombre-compleo') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="25"> {{element.nombrecompleto}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="carrera">
+        <mat-header-cell *matHeaderCellDef fxFlex="25" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-carrera') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="25"> {{element.carrera}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="rangoFechas" >
+        <mat-header-cell *matHeaderCellDef fxFlex="28"  mat-sort-header> {{ langService.getLang(eModulo.Tramite, 'lbl-rango-fechas') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="28" > {{element.fechaInicial | date : 'dd/MM/yyyy' }} al {{element.fechaFinal | date : 'dd/MM/yyyy' }} &nbsp; </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="tiempo" >
+        <mat-header-cell *matHeaderCellDef fxFlex="5"  mat-sort-header> {{ langService.getLang(eModulo.Tramite, 'lbl-tiempo') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="5" > {{element.tiempo}} &nbsp; </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="tramite" >
+        <mat-header-cell *matHeaderCellDef fxFlex="13"  mat-sort-header> {{ langService.getLang(eModulo.Tramite, 'lbl-tramite') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="13" > {{element.tramite}} &nbsp; </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="estado" >
+        <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.estado | estadoToLiteral}} </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef fxFlex="10" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element;" fxFlex="10" fxLayoutAlign="center center">
+          <a mat-icon-button (click)="onAddEditTramite(element)" matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}">
+            <mat-icon>edit</mat-icon>
+          </a>
+          <!-- <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}" >
+            <mat-icon>delete_forever</mat-icon>
+          </a> -->
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+      <mat-row
+        shRowHover
+        [ngClass]="{'row-action': idSeleccionado === row.idHabilitacionPorExcepcion}"
+        [@fadeInAnim]="true"
+        *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+
+    </mat-table>
+    <shared-table-empty [datasource]="dataSource"></shared-table-empty>
+    <mat-paginator #paginator [pageSize]="config.paginatorSize" [pageSizeOptions]="config.paginatorOptions" [showFirstLastButtons]="true"></mat-paginator>
+
+  </mat-card-content>
+</mat-card>

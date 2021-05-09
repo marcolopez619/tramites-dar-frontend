@@ -26,7 +26,7 @@ export interface BandejaCambioCarrera extends BandejaAbstract {
   estado?: number;
 }
 
-export interface BandejaTranseferencia extends BandejaAbstract{
+export interface BandejaTranseferencia extends BandejaAbstract {
   idTransferencia?: number;
   idCarreraOrigen?: number;
   carreraorigen?: string;
@@ -108,11 +108,24 @@ export interface BandejaFacultad extends BandejaAbstract {
   idFacultad?: number;
   nombre?: string;
   estado?: number;
-  idUniversidad? : number;
+  idUniversidad?: number;
 }
 export interface BandejaCarreras extends BandejaAbstract {
   idCarrera?: number;
   nombre?: string;
   estado?: number;
   idFacultad?: number;
+}
+
+export interface BandejaHabilitacionPorExcepcion  extends BandejaAbstract {
+  ci?: string;
+  complemento?: string;
+  nombrecompleto?: string;
+  carrera?: string;
+  tiempo?: string;
+  idHabilitacionPorExcepcion?: number;
+  fechaInicial?: Date;
+  fechaFinal?: Date;
+  estado?: number;
+  tramite?: string;
 }
