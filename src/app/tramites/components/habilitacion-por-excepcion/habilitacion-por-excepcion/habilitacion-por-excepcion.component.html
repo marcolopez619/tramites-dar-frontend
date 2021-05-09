@@ -70,45 +70,47 @@
 
             </mat-table>
             <shared-table-empty [datasource]="dataSource"></shared-table-empty>
+            <br>
 
          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>
-          <button mat-raised-button color="primary" disabled="{{formHabilitacionExcepcion.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+          <button mat-raised-button color="primary" disabled="{{formBusqueda.invalid || dataSource.data.length == 0 || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
          </div>
         </div>
 
       </form>
     </mat-step>
 
-<!--     <mat-step [stepControl]="formHabilitacionExcepcion">
+    <mat-step [stepControl]="formHabilitacionExcepcion">
       <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-vista-previa-cite' )}}</ng-template>
 
       <form [formGroup]="formHabilitacionExcepcion" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
 
-        <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
+        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
 
-          <div fxLayout="column" fxLayoutAlign="center center" fxFill>
-            <mat-form-field fxFlexFill>
-              <mat-label>{{langService.getLang(eModulo.Estudiante, 'lbl-carrera-destino' )}} : </mat-label>
-                <input type="text"
-                  placeholder="Seleccione carrera destino"
-                  matInput
-                  formControlName="idCarreraDestino"
-                  [matAutocomplete]="auto">
-                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                  <mat-option *ngFor="let carrera of listaCarrerasFiltradas | async" [value]="carrera.carrera">
-                    {{carrera.carrera}}
-                  </mat-option>
-                </mat-autocomplete>
+          <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
+            <mat-form-field fxFlex>
+              <mat-label>{{langService.getLang(eModulo.Tramite, 'lbl-tramite' )}} : </mat-label>
+              <mat-select formControlName="idTramite" placeholder="Seleccione">
+                <mat-option *ngFor="let tramite of listaTramites" [value]="tramite.idTramite">
+                  {{tramite.descripcionTramite}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
+          </div>
 
-
-            <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
-              <mat-form-field fxFlexFill>
-                <input type="text" required matInput min="5" max="200" minlength="5" maxlength="200" autocomplete="off" placeholder="Motivo de cambio de carrera" formControlName="motivo">
-                <mat-error *ngIf="formHabilitacionExcepcion.controls['motivo'].invalid">El motivo de la anulacion es obligatoria</mat-error>
+          <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
+            <div formGroupName="rangoFechaGroup" fxFill>
+              <mat-form-field fxFill>
+                <mat-label>{{langService.getLang(eModulo.Tramite, 'lbl-rango-fechas' )}} : </mat-label>
+                <mat-date-range-input [min]="fechaLimiteInferior" [max]="fechaLimiteSuperior"  [rangePicker]="picker">
+                  <input matStartDate formControlName="fechaInicial" placeholder="Fecha inicial">
+                  <input matEndDate formControlName="fechaFinal" placeholder="Fecha final">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+                <!-- <p>Selected range: {{formBusquedaAvanzada.controls['rangoFechaGroup'].value | json}}</p> -->
               </mat-form-field>
             </div>
-
           </div>
 
         </div>
@@ -126,7 +128,7 @@
 
     </mat-step>
 
-    <mat-step>
+   <!--  <mat-step>
       <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-confirmar-creacion-cite' )}}</ng-template>
 
       <div fxLayout="row" fxLayoutAlign="center center">

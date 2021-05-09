@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,8 +8,10 @@ import { takeUntil } from 'rxjs/operators';
 import { EstudianteService } from '../../../../estudiante/estudiante.service';
 import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../../shared/base.component';
+import { TramiteModel } from '../../../../shared/models/tramites.models';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
+import { TramitesAcademicosService } from '../../../../shared/services/tramites-academicos.service';
 import { BandejaHabilitacionPorExcepcion, BusquedaEstudianteResponse } from '../../../models/tramites.models';
 
 @Component({
@@ -25,7 +27,10 @@ export class HabilitacionPorExcepcionComponent extends BaseComponent implements 
   formBusqueda: FormGroup;
   selectedHabilitacion: BandejaHabilitacionPorExcepcion;
   busquedaRU: string;
-  // respuestaBusquedaEstudiante: BusquedaEstudianteResponse;
+  listaTramites: Array<TramiteModel> = [];
+
+  fechaLimiteSuperior = new Date();
+  fechaLimiteInferior = new Date( this.fechaLimiteSuperior.getFullYear() - 1, 0, 1);
 
   displayedColumns = ['ci', 'nombreCompleto', 'fechaNacimiento', 'carrera' ];
   dataSource = new MatTableDataSource<BusquedaEstudianteResponse>([]);
@@ -39,12 +44,15 @@ export class HabilitacionPorExcepcionComponent extends BaseComponent implements 
     public langService: LangService,
     public contextService: ContextoService,
     private formBuilder: FormBuilder,
-    private estudianteService: EstudianteService
+    private estudianteService: EstudianteService,
+    private tramitesAcademicosService: TramitesAcademicosService
   ) {
     super();
   }
 
   ngOnInit(): void {
+
+    this.getListaTramites();
 
     this.selectedHabilitacion = this.data.selectedHabilitacion as BandejaHabilitacionPorExcepcion;
 
@@ -66,7 +74,11 @@ export class HabilitacionPorExcepcionComponent extends BaseComponent implements 
       // Insercion
 
       this.formHabilitacionExcepcion = this.formBuilder.group({
-
+        idTramite : [undefined, Validators.required],
+        rangoFechaGroup: this.formBuilder.group({
+          fechaInicial: [ undefined, Validators.compose([ Validators.required ]) ],
+          fechaFinal  : [ undefined, Validators.compose([ Validators.required ]) ]
+        })
       });
 
     }
@@ -84,6 +96,13 @@ export class HabilitacionPorExcepcionComponent extends BaseComponent implements 
     this.unsubscribe$.next(true);
   }
 
+  private getListaTramites(): void {
+
+    this.tramitesAcademicosService.getTramitesHabilitados().pipe( takeUntil( this.unsubscribe$ ) ).subscribe( listaTramitesAcademicos => {
+      this.listaTramites = listaTramitesAcademicos.data as Array<TramiteModel>;
+    });
+  }
+
   onBuscarEstudianteByRU(): void {
     const ru = this.formBusqueda.controls['busquedaRU'].value as number;
 
@@ -92,6 +111,8 @@ export class HabilitacionPorExcepcionComponent extends BaseComponent implements 
         this.dataSource.data = resp.data;
       } else {
         this.dataSource.data = [];
+        this.formBusqueda.controls[ 'busquedaRU' ].setValue(undefined);
+        this.formBusqueda.controls[ 'busquedaRU' ].updateValueAndValidity();
       }
     });
   }
