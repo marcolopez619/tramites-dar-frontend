@@ -53,12 +53,12 @@
       <ng-container matColumnDef="acciones">
         <mat-header-cell *matHeaderCellDef fxFlex="10" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
         <mat-cell *matCellDef="let element;" fxFlex="10" fxLayoutAlign="center center">
-          <a mat-icon-button (click)="onAddEditTramite(element)" matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}">
+          <!-- <a mat-icon-button (click)="onAddEditTramite(element)" matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}">
             <mat-icon>edit</mat-icon>
-          </a>
-          <!-- <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}" >
-            <mat-icon>delete_forever</mat-icon>
           </a> -->
+          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}" >
+            <mat-icon>delete_forever</mat-icon>
+          </a>
         </mat-cell>
       </ng-container>
 

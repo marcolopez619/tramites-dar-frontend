@@ -71,6 +71,7 @@
             </mat-table>
             <shared-table-empty [datasource]="dataSource"></shared-table-empty>
             <br>
+            <br>
 
          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>
           <button mat-raised-button color="primary" disabled="{{formBusqueda.invalid || dataSource.data.length == 0 || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
@@ -121,29 +122,25 @@
 
       <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlexFill>
         <button mat-raised-button color="primary" disabled="{{formHabilitacionExcepcion.invalid || contextService.isLoading}}" matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
-        <button mat-raised-button color="primary" disabled="{{formHabilitacionExcepcion.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+        <button mat-raised-button color="primary" disabled="{{formHabilitacionExcepcion.invalid || contextService.isLoading}}" matStepperNext (click)="fillLabelsAndValuesColumns()">{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
       </div>
 
 
 
     </mat-step>
 
-   <!--  <mat-step>
+   <mat-step>
       <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-confirmar-creacion-cite' )}}</ng-template>
 
       <div fxLayout="row" fxLayoutAlign="center center">
         <div fxLayout="column" fxLayoutAlign="center center" fxFlex="15" >
             <mat-icon [inline]="true" style="font-size: 50px !important" color="primary">help_outline</mat-icon>
         </div>
-        <span style="font-size: 20px; text-align: center">{{langService.getLang(eModulo.Estudiante, 'lbl-confir-sol-nuevo-tramite-cambio-carrera' )}}</span>
+        <span style="font-size: 20px; text-align: center">{{langService.getLang(eModulo.Tramite, 'lbl-confir-sol-habilitacion-por-excepcion' )}}</span>
       </div>
 
       <div fxLayout="row" fxLayoutAlign="center center" >
-        <div fxLayout="column" fxLayoutAlign="space-around center" >
-          <span> <strong>Carrera origen : </strong> {{datosEstudiante.carrera}}</span>
-          <span> <strong>Carrera destino : </strong> {{formHabilitacionExcepcion.get('idCarreraDestino').value}}</span>
-          <span> <strong>Motivo : </strong> {{formHabilitacionExcepcion.controls['motivo'].value}}</span>
-        </div>
+        <sh-datos-formato-tabla [listaLabelColumnas]="this.listaLabelColumnas" [listaValoresColumnas]="this.listaValoresColumnas" ></sh-datos-formato-tabla>
       </div>
 
       <div fxLayout="row" fxLayoutAlign="center center">
@@ -157,10 +154,10 @@
         <button mat-raised-button color="primary" matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
 
         <div fxLayout="row" fxLayoutAlign="center center" fxFlex >
-          <button mat-raised-button color="accent" (click)="onFinalizarSolicitud()">{{langService.getLang(eModulo.Estudiante, 'lbl-finalizar-tramite' )}}</button>
+          <button mat-raised-button color="accent" (click)="onFinalizarTramite()"  >{{langService.getLang(eModulo.Estudiante, 'lbl-finalizar-tramite' )}}</button>
         </div>
       </div>
-    </mat-step> -->
+    </mat-step>
   </mat-horizontal-stepper>
 
 

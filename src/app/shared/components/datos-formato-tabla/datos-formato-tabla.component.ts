@@ -9,9 +9,9 @@ import { BaseComponent } from '../../base.component';
 export class DatosFormatoTablaComponent extends BaseComponent implements OnInit {
 
   @Input()
-  listaLabelColumnas: Array<string>;
+  listaLabelColumnas: Array<string> = [];
   @Input()
-  listaValoresColumnas: Array<string>;
+  listaValoresColumnas: Array<any> = [];
 
   constructor() {
     super();

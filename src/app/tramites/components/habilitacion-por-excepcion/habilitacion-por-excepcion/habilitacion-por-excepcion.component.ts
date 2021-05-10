@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -8,11 +9,13 @@ import { takeUntil } from 'rxjs/operators';
 import { EstudianteService } from '../../../../estudiante/estudiante.service';
 import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../../shared/base.component';
+import { eEstado } from '../../../../shared/enums/estado.enum';
 import { TramiteModel } from '../../../../shared/models/tramites.models';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { TramitesAcademicosService } from '../../../../shared/services/tramites-academicos.service';
-import { BandejaHabilitacionPorExcepcion, BusquedaEstudianteResponse } from '../../../models/tramites.models';
+import { BandejaHabilitacionPorExcepcion, BusquedaEstudianteResponse, HabilitacionPorExcepcionInsert } from '../../../models/tramites.models';
+import { TramitesService } from '../../../tramites.service';
 
 @Component({
   selector: 'app-habilitacion-por-excepcion',
@@ -29,6 +32,9 @@ export class HabilitacionPorExcepcionComponent extends BaseComponent implements 
   busquedaRU: string;
   listaTramites: Array<TramiteModel> = [];
 
+  listaLabelColumnas: Array<string>;
+  listaValoresColumnas: Array<any>;
+
   fechaLimiteSuperior = new Date();
   fechaLimiteInferior = new Date( this.fechaLimiteSuperior.getFullYear(), this.fechaLimiteSuperior.getMonth(), 1);
 
@@ -44,7 +50,9 @@ export class HabilitacionPorExcepcionComponent extends BaseComponent implements 
     public langService: LangService,
     public contextService: ContextoService,
     private formBuilder: FormBuilder,
+    private datePipe: DatePipe,
     private estudianteService: EstudianteService,
+    private tramitesService: TramitesService,
     private tramitesAcademicosService: TramitesAcademicosService
   ) {
     super();
@@ -114,6 +122,38 @@ export class HabilitacionPorExcepcionComponent extends BaseComponent implements 
         this.formBusqueda.controls[ 'busquedaRU' ].setValue(undefined);
         this.formBusqueda.controls[ 'busquedaRU' ].updateValueAndValidity();
       }
+    });
+  }
+
+  fillLabelsAndValuesColumns(): void {
+    const data = this.dataSource.data[ 0 ];
+    const tramite = this.listaTramites.filter( x => x.idTramite === this.formHabilitacionExcepcion.get( 'idTramite' ).value )[ 0 ];
+    const rangoFechas = this.formHabilitacionExcepcion.controls['rangoFechaGroup'].value;
+    const fechaIncial = rangoFechas.fechaInicial;
+    const fechaFinal  = rangoFechas.fechaFinal;
+    const rangoFechasString = this.datePipe.transform( fechaIncial, 'dd-MM-yyyy').concat( ' al ' ).concat( this.datePipe.transform( fechaFinal, 'dd-MM-yyyy' ));
+
+    this.listaLabelColumnas = [ 'CI', 'Nombre completo', 'Carrera', 'Tramite', 'Rango de Fechas' ];
+    this.listaValoresColumnas = [ data.ci, data.nombreCompleto, data.carrera, tramite.descripcionTramite, rangoFechasString];
+
+  }
+
+  onFinalizarTramite(): void {
+    const data = this.dataSource.data[ 0 ];
+    const rangoFechas = this.formHabilitacionExcepcion.controls['rangoFechaGroup'].value;
+    const fechaIncial = rangoFechas.fechaInicial;
+    const fechaFinal  = rangoFechas.fechaFinal;
+
+    const habilitacionPorExcepcionInsert: HabilitacionPorExcepcionInsert = {
+      fechaInicial: fechaIncial,
+      fechaFinal  : fechaFinal,
+      idEstudiante: data.idEstudiante,
+      idTramite   : this.formHabilitacionExcepcion.get( 'idTramite' ).value,
+      estado      : eEstado.ACTIVADO
+    };
+
+    this.tramitesService.insertTramitePorExcepcion( habilitacionPorExcepcionInsert ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.onClose( resp.data );
     });
   }
 

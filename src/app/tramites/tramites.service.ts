@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Resultado } from '../shared/models/resultado.model';
 import { HabilitacionTramiteModelInsert, HabilitacionTramiteModelUpdate } from '../shared/models/tramites.models';
 import { ContextoService } from '../shared/services/contexto.service';
+import { HabilitacionPorExcepcionInsert } from './models/tramites.models';
 
 @Injectable()
 export class TramitesService {
@@ -25,6 +26,10 @@ export class TramitesService {
 
   updateHabilitaconTramite(habilitacionTramiteModelUpdate: HabilitacionTramiteModelUpdate): Observable<Resultado> {
     return this.httpClient.patch<Resultado>(`${this.baseURL}/tramite`, habilitacionTramiteModelUpdate );
+  }
+
+  insertTramitePorExcepcion(habilitacionTramitePirExcepcion: HabilitacionPorExcepcionInsert): Observable<Resultado> {
+    return this.httpClient.post<Resultado>(`${this.baseURL}/excepcion`, habilitacionTramitePirExcepcion );
   }
 
   getAllListaTramitesPorExcepcion(): Observable<Resultado> {

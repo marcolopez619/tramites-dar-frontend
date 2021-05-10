@@ -7,6 +7,7 @@ export const tramiteLang = {
     'lbl-rango-fechas' : 'Rango de fechas',
     'lbl-tiempo' : 'Tiempo',
     'lbl-nombre-compleo' : 'Nombre completo',
-    'lbl-ci' : 'CI'
+    'lbl-ci' : 'CI',
+    'lbl-confir-sol-habilitacion-por-excepcion' : '¿Desea habilitar el tramite seleccionado por excepcion?'
   }
 };

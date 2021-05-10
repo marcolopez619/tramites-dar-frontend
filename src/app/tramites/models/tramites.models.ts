@@ -147,3 +147,11 @@ export interface BusquedaEstudianteResponse {
   nombreCompleto?: string;
 
 }
+
+export interface HabilitacionPorExcepcionInsert {
+  fechaInicial?: Date;
+  fechaFinal?: Date;
+  idEstudiante?: number;
+  idTramite?: number;
+  estado?: number;
+}
