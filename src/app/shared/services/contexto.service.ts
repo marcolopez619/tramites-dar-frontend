@@ -89,7 +89,7 @@ export class ContextoService {
      */
     getListaSchemas(): Array<any> {
         const listaSchemas = [];
-        const item = this.getItemContexto('recursosUsuario');
+        const item = this.getItemContexto('recursos');
         if (item) {
             for (const modulo of item) {
                 // for(let schema of modulo.RecursosHijos) {
@@ -128,7 +128,7 @@ export class ContextoService {
      */
     setContexto(pContextoUsuario: any): void {
         // this.ls.set('context', pContextoUsuario); // Anteriormente
-        this.userName = pContextoUsuario.samActName;
+        this.userName = pContextoUsuario.nombre;
         this.ls.set(`contex-${this.userName}`, pContextoUsuario);
     }
 

@@ -41,26 +41,26 @@ export class AuthService {
      * @param password password del usuario para acceder al sistema
      */
     loginUser(pUsername: string, pPassword: string): void {
-        const params = {
+        /* const params = {
           Usuario: pUsername,
           Password: pPassword,
             lsr : localStorage.length === 0 // Envía si se borró la cache del navegador
         };
 
-        this.http.post<Resultado>(`${this.contextoService.getConfig('backendApi')}/Autentificacion/login`, params)
+        this.http.post<Resultado>(`${this.contextoService.getConfig('backendApi')}/Autentificacion/login`, params) */
 
-        /* const params = {
-            user: pUsername,
-            pass: pPassword,
-            lsr : localStorage.length === 0 // Envía si se borró la cache del navegador
+        const params = {
+            usuario : pUsername,
+            password: pPassword,
+            lsr     : localStorage.length === 0
         };
 
-        this.http.post<Resultado>(`${this.contextoService.getConfig('backendApi.back')}/login`, params) */
+        this.http.post<Resultado>(`${this.contextoService.getConfig('backendApi')}/login`, params)
             .subscribe(
                 response => {
                     if (response.data) {
                         // Setea el contexto.
-                        this.contextoService.setContexto(response.data);
+                        this.contextoService.setContexto(response.data[ 0 ]);
                         // Si existe una url de retorno, se redirecciona ahi.
                         if (this.returnUrl) {
                             this.router.navigate([this.returnUrl]);
