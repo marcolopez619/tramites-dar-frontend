@@ -5,13 +5,18 @@
   <mat-toolbar color="primary">
       {{ langService.getLang(eModulo.Usuario, 'tit-lista-usurios' ) }}
       <span class="flex-spacer"></span>
-      <a mat-button matTooltip="{{ langService.getLang(eModulo.Tramite, 'tit-nueva-habilitacion') }}" (click)="onAddEditTramite()">
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Tramite, 'tit-nueva-habilitacion') }}" (click)="onAddEditusuario()">
           <mat-icon>add_circle</mat-icon>
       </a>
   </mat-toolbar>
 </mat-card-header>
 
 <mat-card-content>
+
+  <mat-form-field fxFill>
+    <mat-label>Búsqueda</mat-label>
+    <input matInput (keyup)="aplicarFiltro($event)" placeholder="" #input>
+  </mat-form-field>
 
     <mat-table #table [dataSource]="dataSource" matSort>
 
@@ -34,7 +39,7 @@
       <ng-container matColumnDef="acciones">
         <mat-header-cell *matHeaderCellDef fxFlex="10" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
         <mat-cell *matCellDef="let element;" fxFlex="10" fxLayoutAlign="center center">
-          <a mat-icon-button (click)="onAddEditTramite(element)" matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}">
+          <a mat-icon-button (click)="onAddEditusuario(element)" matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}">
             <mat-icon>edit</mat-icon>
           </a>
           <!-- <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}" >

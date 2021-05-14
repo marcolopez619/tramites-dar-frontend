@@ -59,10 +59,16 @@ export class BandejaUsuariosComponent extends BaseComponent implements OnInit, A
     });
   }
 
-  onAddEditTramite(pSelectedUser?: BandejaUsuarios): void {
+  aplicarFiltro(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  onAddEditusuario(pSelectedUser?: BandejaUsuarios): void {
     const dlgAnadirEditarUsuario = this.dialog.open( UsuarioComponent,  {
       disableClose: false,
       width: '1000px',
+      autoFocus: true,
       data: {
         selectedUser : pSelectedUser
        }
