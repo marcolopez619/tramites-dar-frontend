@@ -52,7 +52,7 @@
                 shUppercase
                 matInput
                 minlength="5"
-                maxlength="15"
+                maxlength="10"
                 placeholder="{{ langService.getLang(eModulo.Usuario, 'lbl-celular') }}"
                 formControlName="celular">
               <mat-error *ngIf="formUsuario.controls['celular'].errors?.required">{{langService.getLang(eModulo.Usuario,'lbl-celular-invalido')}}</mat-error>

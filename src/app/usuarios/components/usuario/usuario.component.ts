@@ -1,15 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { take, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
-import { UsuarioService } from '../../../shared/services/usuario.service';
 import { BandejaUsuarios } from '../../../tramites/models/tramites.models';
-import { Perfil } from '../../models/usuario.models';
+import { Perfil, UsuarioInsert, UsuarioUpdate } from '../../models/usuario.models';
 import { UsuariosService } from '../../usuarios.service';
 
 @Component({
@@ -53,17 +52,16 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
 
       this.formUsuario = this.formBuilder.group({
         nombre  : [ this.selectedUser.nombre , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
-        password: [ this.selectedUser , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
+        password: [ this.selectedUser , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 10 )])],
         celular : [ this.selectedUser.celular , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 15 )])],
         estado  : [ +this.activado , Validators.compose( [ Validators.required ])],
         idPerfil: [ this.selectedUser.idPerfil , Validators.compose( [ Validators.required ])]
       });
     } else {
       // => Nueva insercion
-
       this.formUsuario = this.formBuilder.group({
         nombre  : [ undefined , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
-        password: [ undefined, Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
+        password: [ undefined, Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 10 )])],
         celular : [ undefined , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 15 )])],
         estado  : [ false , Validators.compose( [ Validators.required ])],
         idPerfil: [ undefined , Validators.compose( [ Validators.required ])]
@@ -84,7 +82,36 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
   }
 
   onSaveUsuario(): void {
-    //..
+    if ( this.selectedUser ) {
+      // => edicion
+      const usuarioUpdate: UsuarioUpdate = {
+        idUsuario: this.selectedUser.idUsuario,
+        idPerfil : this.formUsuario.controls[ 'idPerfil' ].value,
+        nombre   : this.formUsuario.controls[ 'nombre' ].value,
+        password : this.formUsuario.controls[ 'password' ].value,
+        celular  : this.formUsuario.controls[ 'celular' ].value,
+        estado   : +this.activado
+      };
+
+      this.usuariosService.updateUsuario( usuarioUpdate ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+        this.onClose( resp.data )
+      });
+
+    } else {
+      // => Nueva insercion
+      const usuarioInsert: UsuarioInsert = {
+        idPerfil: this.formUsuario.controls[ 'idPerfil' ].value,
+        nombre  : this.formUsuario.controls[ 'nombre' ].value,
+        password: this.formUsuario.controls[ 'password' ].value,
+        celular : this.formUsuario.controls[ 'celular' ].value,
+        estado  : +this.activado
+      };
+
+      this.usuariosService.insertUsuario( usuarioInsert ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+        this.onClose( resp.data )
+      });
+    }
+
   }
 
   onClose(object?: any): void {
