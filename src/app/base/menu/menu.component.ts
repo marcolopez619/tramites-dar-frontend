@@ -77,11 +77,11 @@ export class MenuComponent extends BaseComponent implements OnInit {
         this.contextoService.breadCrumbs.push(pMenu);
 
         // Obtiene sus items hijos.
-        this.contextoService.listaMenu = pMenu.RecursosHijos;
+        // this.contextoService.listaMenu = pMenu.RecursosHijos;
 
         // Si el item seleccionado tiene una ruta cargada, se usa el router para cargarla.
-        if (pMenu.Ejecutable) {
-            this.router.navigate([pMenu.Ejecutable]);
+        if (pMenu.ruta) {
+            this.router.navigate([pMenu.ruta]);
         } else if (this.searchField) {
             // Setea el focus en el buscador.
             this.searchField.focus();
@@ -113,7 +113,7 @@ export class MenuComponent extends BaseComponent implements OnInit {
             if (!this.backupList) {
                 this.backupList = this.contextoService.listaMenu;
             }
-            this.contextoService.listaMenu = this.backupList.filter(s => s.Etiqueta.toLowerCase().includes(searchValue));
+            this.contextoService.listaMenu = this.backupList.filter(s => s.nombreModulo.toLowerCase().includes(searchValue));
         } else if (searchValue === '') {
             this.contextoService.listaMenu = this.backupList;
             this.backupList = undefined;
