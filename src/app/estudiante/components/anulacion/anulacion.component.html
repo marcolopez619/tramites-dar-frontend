@@ -16,7 +16,7 @@
       <form [formGroup]="formAnulacion" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
         <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
           <mat-form-field fxFlexFill>
-            <input type="text" required matInput min="5" max="200" minlength="5" maxlength="200" autocomplete="off"
+            <input type="text" required matInput min="5" max="200" minlength="5" maxlength="200" autocomplete="off" shUppercase
               placeholder="Motivo de anulación" formControlName="motivo">
             <mat-error *ngIf="formAnulacion.controls['motivo'].invalid">El motivo de la anulacion es obligatoria</mat-error>
           </mat-form-field>

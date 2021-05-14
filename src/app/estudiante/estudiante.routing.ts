@@ -6,7 +6,7 @@ export const estudianteRoutes: Routes = [
       path: 'estudiante',
       children: [
           {
-              path: 'index',
+              path: 'anulacion/index',
               component: BandejaAnulacionComponent,
           }
       ]

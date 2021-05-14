@@ -52,7 +52,7 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
   }
 
   private getListaAnulaciones(): void {
-    const idEstudiante = 1; // FIXME: DATO QUEMADO, OBTENERLO DEL CONTEXTO
+    const idEstudiante = this.contextService.getItemContexto('idEstudiante');
 
     this.anulacionService.getAllListaAnulaciones( idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
       this.dataSource.data = resp.data;
@@ -60,12 +60,16 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
 
   }
 
+  actualizarBandeja(): void {
+    this.getListaAnulaciones();
+  }
+
   onNuevaSolicitud(): void {
     const dlgNuevaSolicitud = this.dialog.open( AnulacionComponent,  {
       disableClose: false,
       width: '1000px',
       data: {
-        idEstudiante : 1 // FIXME: DATO QUEMADO, SACARLO DEL CONTEXTO CUANDO INICIE SESSION EL ESTUDIANTE
+        idEstudiante : this.contextService.getItemContexto('idEstudiante')
       }
     });
     dlgNuevaSolicitud.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
