@@ -1,15 +1,94 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { take, takeUntil } from 'rxjs/operators';
+import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
+import { BaseComponent } from '../../../shared/base.component';
+import { ContextoService } from '../../../shared/services/contexto.service';
+import { LangService } from '../../../shared/services/lang.service';
+import { UsuarioService } from '../../../shared/services/usuario.service';
+import { BandejaUsuarios } from '../../../tramites/models/tramites.models';
+import { Perfil } from '../../models/usuario.models';
+import { UsuariosService } from '../../usuarios.service';
 
 @Component({
   selector: 'app-usuario',
   templateUrl: './usuario.component.html',
-  styleUrls: ['./usuario.component.css']
+  styleUrls: ['./usuario.component.css'],
+  animations: [fadeInAnim, slideInLeftAnim],
+  host: { class: 'container-fluid', '[@fadeInAnim]': 'true' }
 })
-export class UsuarioComponent implements OnInit {
+export class UsuarioComponent extends BaseComponent implements OnInit {
 
-  constructor() { }
+  tituloDialog: string;
+  formUsuario: FormGroup;
+  selectedUser: BandejaUsuarios;
+  activado = true;
+  listaPerfiles: Array<Perfil>;
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<any>,
+    public langService: LangService,
+    public contextService: ContextoService,
+    private formBuilder: FormBuilder,
+    private usuariosService: UsuariosService
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
+
+    this.getListaPerfiles();
+
+    this.selectedUser = this.data.selectedUser as BandejaUsuarios;
+
+    this.tituloDialog = this.langService.getLang(this.eModulo.Usuario, this.selectedUser ? 'tit-editar-usuario' : 'tit-anadir-usuario' );
+
+    if ( this.selectedUser ) {
+
+      // => edicion
+      this.activado = !!this.selectedUser.estado;
+
+      this.formUsuario = this.formBuilder.group({
+        nombre  : [ this.selectedUser.nombre , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
+        password: [ this.selectedUser , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
+        celular : [ this.selectedUser.celular , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 15 )])],
+        estado  : [ +this.activado , Validators.compose( [ Validators.required ])],
+        idPerfil: [ this.selectedUser.idPerfil , Validators.compose( [ Validators.required ])]
+      });
+    } else {
+      // => Nueva insercion
+
+      this.formUsuario = this.formBuilder.group({
+        nombre  : [ undefined , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
+        password: [ undefined, Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
+        celular : [ undefined , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 15 )])],
+        estado  : [ false , Validators.compose( [ Validators.required ])],
+        idPerfil: [ undefined , Validators.compose( [ Validators.required ])]
+      });
+    }
+
+  }
+
+  private getListaPerfiles(): void {
+
+    this.usuariosService.getListaPerfiles().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.listaPerfiles = resp.data;
+    });
+  }
+
+  onChangeSlideToggleValue( event: MatSlideToggleChange ): void {
+    this.activado = event.checked;
+  }
+
+  onSaveUsuario(): void {
+    //..
+  }
+
+  onClose(object?: any): void {
+    this.dialogRef.close(object);
   }
 
 }

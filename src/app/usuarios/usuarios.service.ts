@@ -7,7 +7,7 @@ import { ContextoService } from '../shared/services/contexto.service';
 @Injectable()
 export class UsuariosService {
 
-  readonly baseURL = this.contextoService.getConfig(`backendApi`).concat('/usuario');
+  readonly baseURL = this.contextoService.getConfig(`backendApi`);
 
   constructor(
     private httpClient: HttpClient,
@@ -15,7 +15,11 @@ export class UsuariosService {
   ) { }
 
   getAllListaUsuarios(): Observable<Resultado> {
-    return this.httpClient.get<Resultado>(`${this.baseURL}`);
+    return this.httpClient.get<Resultado>(`${this.baseURL}/usuario`);
+  }
+
+  getListaPerfiles(): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/perfiles`);
   }
 
   /* insertHabilitaconTramite(habilitacionTramiteModelInsert: HabilitacionTramiteModelInsert): Observable<Resultado> {

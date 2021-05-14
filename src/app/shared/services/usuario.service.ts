@@ -21,7 +21,6 @@ export class UsuarioService {
 
   getAllUsuarios(pIdtipoTramite: number): Observable<Resultado> {
     const params = new HttpParams().set( 'idTipoTramite' , pIdtipoTramite.toString() );
-
     return this.httpClient.get<Resultado>(`${this.baseURL}/usuario`, { params: params});
   }
 }
