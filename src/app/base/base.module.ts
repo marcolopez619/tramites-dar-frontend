@@ -17,6 +17,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { EstudianteModule } from '../estudiante/estudiante.module';
 import { TramitesModule } from '../tramites/tramites.module';
 import { DarModule } from '../dar/dar.module';
+import { UsuarioModule } from '../usuarios/usuario.module';
 
 /**
  * Modulo base del sistema.
@@ -34,7 +35,8 @@ import { DarModule } from '../dar/dar.module';
     BandejaPrincipalModule,
     EstudianteModule,
     TramitesModule,
-    DarModule
+    DarModule,
+    UsuarioModule
   ],
   declarations: [
     LayoutComponent,

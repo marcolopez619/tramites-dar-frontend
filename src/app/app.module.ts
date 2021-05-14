@@ -1,27 +1,28 @@
-import { BandejaPrincipalModule } from './bandeja-principal/bandeja-principal.module';
-import { HojaDeRutaModule } from './hoja-de-ruta/hoja-de-ruta.module';
-import { CitesModule } from './cites/cites.module';
+import { registerLocaleData } from '@angular/common';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import localeEs from '@angular/common/locales/es';
+import { APP_INITIALIZER, LOCALE_ID, NgModule } from '@angular/core';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule,  HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BaseModule } from './base/base.module';
 import { appRoutes } from './app.routing';
-import { AuthService } from './shared/services/auth.service';
+import { BandejaPrincipalModule } from './bandeja-principal/bandeja-principal.module';
+import { BaseModule } from './base/base.module';
+import { LayoutComponent } from './base/layout/layout.component';
+import { CitesModule } from './cites/cites.module';
+import { EstudianteModule } from './estudiante/estudiante.module';
+import { HojaDeRutaModule } from './hoja-de-ruta/hoja-de-ruta.module';
+import { CustomMatPaginator } from './shared/custom.matpaginator';
+import { BackendInterceptor } from './shared/interceptors/backend.interceptor';
 import { AuthGuardService } from './shared/services/auth-guard.service';
+import { AuthService } from './shared/services/auth.service';
 import { ContextoService } from './shared/services/contexto.service';
 import { LangService } from './shared/services/lang.service';
-import { UtilService } from './shared/services/util.service';
 import { NotificacionService } from './shared/services/notificacion.service';
-import { BackendInterceptor } from './shared/interceptors/backend.interceptor';
-import { MatPaginatorIntl } from '@angular/material/paginator';
-import { CustomMatPaginator } from './shared/custom.matpaginator';
-import { registerLocaleData } from '@angular/common';
-import localeEs from '@angular/common/locales/es';
-import { LayoutComponent } from './base/layout/layout.component';
-import { EstudianteModule } from './estudiante/estudiante.module';
+import { UtilService } from './shared/services/util.service';
 import { TramitesModule } from './tramites/tramites.module';
+import { UsuarioModule } from './usuarios/usuario.module';
 
 registerLocaleData(localeEs);
 
@@ -37,7 +38,8 @@ registerLocaleData(localeEs);
         HojaDeRutaModule,
         BandejaPrincipalModule,
         EstudianteModule,
-        TramitesModule
+        TramitesModule,
+        UsuarioModule
     ],
     providers: [
         AuthService,
