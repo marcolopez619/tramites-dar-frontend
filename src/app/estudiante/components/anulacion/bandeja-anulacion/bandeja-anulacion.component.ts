@@ -21,7 +21,7 @@ import { AnulacionService } from '../anulacion.service';
 })
 export class BandejaAnulacionComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['carrera', 'fechaSolicitud', 'motivo', 'estado'];
+  displayedColumns = ['carrera', 'fechaSolicitud', 'motivo', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<BandejaAnulacion>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
