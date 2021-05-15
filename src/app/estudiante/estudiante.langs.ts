@@ -11,6 +11,7 @@ export const estudianteLang = {
     'tit-nueva-solicitud-anulacion' : 'Nueva solicitud de anulación',
     'tit-nueva-solicitud-suspencion' : 'Nueva solicitud de suspención',
     'tit-nueva-solicitud-readmision' : 'Nueva solicitud de readmisión',
+    'tit-nueva-solicitud-transferencia' : 'Nueva solicitud de transferencia',
     'tit-nueva-solicitud-traspaso' : 'Nueva solicitud de traspaso de universidad',
 
     'lbl-traspaso-univ-destino' : 'Universidad destino',

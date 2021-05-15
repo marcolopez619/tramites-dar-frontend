@@ -9,8 +9,6 @@ import { BaseComponent } from '../../../../shared/base.component';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { BandejaTranseferencia } from '../../../../tramites/models/tramites.models';
-import { CambioCarreraService } from '../../cambio-carrera.service';
-import { CambioCarreraComponent } from '../../cambio-carrera/cambio-carrera/cambio-carrera.component';
 import { TransferenciaService } from '../transferencia.service';
 import { TransferenciaComponent } from '../transferencia/transferencia.component';
 
@@ -53,12 +51,12 @@ export class BandejaTransferenciaComponent extends BaseComponent implements OnIn
     this.unsubscribe$.next(true);
   }
 
-  private getListaTranseferencias(): void {
+  getListaTranseferencias(): void {
 
-    const idEstudiante = 1; // FIXME: Obtener del contexto del sistema
+    const idEstudiante = this.contextService.getItemContexto('idEstudiante');
 
     this.transferenciaService.getListaTransferencias( idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp =>{
-      this.dataSource.data = resp.data;
+      this.dataSource.data = resp.data ?? [];
     });
 
   }

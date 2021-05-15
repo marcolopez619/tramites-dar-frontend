@@ -3,7 +3,7 @@
 <mat-card>
   <mat-card-header class="alt-theme">
   <mat-toolbar shToolbarModal color="primary">
-      <h3>{{ langService.getLang(eModulo.Cites, 'lbl-crear-nuevo-cite') }}</h3>
+      <h3>{{ langService.getLang(eModulo.Estudiante, 'tit-nueva-solicitud-transferencia') }}</h3>
       <span class="flex-spacer"></span>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
           <mat-icon>close</mat-icon>
@@ -18,7 +18,7 @@
 
     <!-- Verificacion de requisitos por medio del sistema -->
     <mat-step [stepControl]="formTransferencia">
-      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-crear-nuevo-cite' )}}</ng-template>
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Estudiante, 'lbl-step-1-datos-estudiante' )}}</ng-template>
 
       <form [formGroup]="formTransferencia" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
 
@@ -57,7 +57,7 @@
 
 
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>
-            <button mat-raised-button color="primary" disabled="{{formTransferencia.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+            <button mat-raised-button color="primary" disabled="{{contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
           </div>
         </div> <!-- Contenedor principal -->
 
@@ -66,7 +66,7 @@
 
     <!-- Seleccion de carrera destino -->
     <mat-step [stepControl]="formTransferencia">
-      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-vista-previa-cite' )}}</ng-template>
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Estudiante, 'lbl-step-2-carrera-destino' )}}</ng-template>
 
       <form [formGroup]="formTransferencia" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
 
@@ -81,8 +81,8 @@
                   formControlName="idCarreraDestino"
                   [matAutocomplete]="auto">
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                  <mat-option *ngFor="let carrera of listaCarrerasFiltradas | async" [value]="carrera.carrera">
-                    {{carrera.carrera}}
+                  <mat-option *ngFor="let carrera of listaCarrerasFiltradas | async" [value]="carrera.nombre">
+                    {{carrera.nombre}}
                   </mat-option>
                 </mat-autocomplete>
               <!-- <mat-select formControlName="idTramite" placeholder="Seleccione">
@@ -97,7 +97,7 @@
 
             <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
               <mat-form-field fxFlexFill>
-                <input type="text" required matInput min="5" max="200" minlength="5" maxlength="200" autocomplete="off" placeholder="Motivo de cambio de carrera" formControlName="motivo">
+                <input type="text" required shUppercase matInput min="5" max="200" minlength="5" maxlength="200" autocomplete="off" placeholder="Motivo de cambio de carrera" formControlName="motivo">
                 <mat-error *ngIf="formTransferencia.controls['motivo'].invalid">El motivo de la anulacion es obligatoria</mat-error>
               </mat-form-field>
             </div>
@@ -112,7 +112,7 @@
 
       <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlexFill>
         <button mat-raised-button color="primary" disabled="{{formTransferencia.invalid || contextService.isLoading}}" matStepperPrevious>{{langService.getLang(eModulo.Cites, 'lbl-atras' )}}</button>
-        <button mat-raised-button color="primary" disabled="{{formTransferencia.invalid || contextService.isLoading}}" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+        <button mat-raised-button color="primary" disabled="{{formTransferencia.invalid || contextService.isLoading}}" matStepperNext (click)="setDatosFormatoTabla()">{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
       </div>
 
 
@@ -121,7 +121,7 @@
 
     <!-- Finalizacion de creación de cite -->
     <mat-step>
-      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-confirmar-creacion-cite' )}}</ng-template>
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Estudiante, 'lbl-step-3-confirmacion' )}}</ng-template>
 
       <div fxLayout="row" fxLayoutAlign="center center">
         <div fxLayout="column" fxLayoutAlign="center center" fxFlex="15" >
@@ -130,14 +130,10 @@
         <span style="font-size: 20px; text-align: center">{{langService.getLang(eModulo.Estudiante, 'lbl-confir-sol-nuevo-tramite-transferencia-carrera' )}}</span>
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="center center" >
-        <div fxLayout="column" fxLayoutAlign="space-around center" >
-          <span> <strong>Carrera origen : </strong> {{datosEstudiante.carrera}}</span>
-          <span> <strong>Carrera destino : </strong> {{formTransferencia.get('idCarreraDestino').value}}</span>
-          <span> <strong>Motivo : </strong> {{formTransferencia.controls['motivo'].value}}</span>
-        </div>
-      </div>
 
+      <div fxLayout="row" fxLayoutAlign="center center" >
+        <sh-datos-formato-tabla [listaLabelColumnas]="listaLabelColumnas" [listaValoresColumnas]="listaValoresColumnas"></sh-datos-formato-tabla>
+      </div>
 
       <div fxLayout="row" fxLayoutAlign="center center">
         <span style="font-size: 15px; text-align: center">&nbsp;</span>

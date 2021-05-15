@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { startWith, map, takeUntil } from 'rxjs/operators';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 import { BaseComponent } from '../../../../shared/base.component';
 import { eEstado } from '../../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
@@ -13,9 +13,7 @@ import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { UniversidadService } from '../../../../shared/services/universidad.service';
 import { EstudianteService } from '../../../estudiante.service';
-import { CambioCarreraInsert } from '../../../models/cambio_carrera.model';
 import { TransferenciaInsert } from '../../../models/transferencia.model';
-import { CambioCarreraService } from '../../cambio-carrera.service';
 import { TransferenciaService } from '../transferencia.service';
 
 @Component({
@@ -29,6 +27,9 @@ export class TransferenciaComponent extends BaseComponent implements OnInit {
   listaCarreras: Array<CarreraModel> = [];
   listaCarrerasFiltradas: Observable<Array<CarreraModel>>;
   datosEstudiante: EstudianteModel;
+
+  listaLabelColumnas: Array<string> = [];
+  listaValoresColumnas: Array<any> = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -44,7 +45,7 @@ export class TransferenciaComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getInformacionEstudiante( 1 );
+    this.getInformacionEstudiante( );
     this.getListaCarreras();
 
     this.formTransferencia = this.formBuilder.group({
@@ -59,8 +60,10 @@ export class TransferenciaComponent extends BaseComponent implements OnInit {
 
   }
 
-  private getInformacionEstudiante(pIdEstudiante: number): void {
-    this.estudianteService.getInformacionEstudiante(pIdEstudiante).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+  private getInformacionEstudiante(): void {
+    const idEstudiante = this.contextService.getItemContexto('idEstudiante');
+
+    this.estudianteService.getInformacionEstudiante(idEstudiante).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.datosEstudiante = resp.data;
     });
   }
@@ -68,7 +71,7 @@ export class TransferenciaComponent extends BaseComponent implements OnInit {
   private getListaCarreras(): void {
     const idUniversidad = 1; // Por default sera la Tomas frias para este caso
 
-    this.universidadService.getAllListaCarrerasByIdUniversidad( idUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+    this.universidadService.getListaCarreras().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       // TODO: La transferencia se realiza solo entre iguales carreras de la ambas sedes o subsedes
       this.listaCarreras = resp.data;
     });
@@ -80,6 +83,11 @@ export class TransferenciaComponent extends BaseComponent implements OnInit {
     return dataFiltrada;
   }
 
+  setDatosFormatoTabla(): void{
+    this.listaLabelColumnas = ['Carrera origen', 'Carrera destino', 'Motivo'];
+    this.listaValoresColumnas = [this.datosEstudiante.carrera , this.formTransferencia.get('idCarreraDestino').value, this.formTransferencia.controls['motivo'].value];
+  }
+
   onFinalizarSolicitud(): void {
     const carreraDestino = this.listaCarreras.filter( x => x.nombre === this.formTransferencia.controls[ 'idCarreraDestino' ].value ) [ 0 ];
 
@@ -88,7 +96,7 @@ export class TransferenciaComponent extends BaseComponent implements OnInit {
       idCarreraDestino: carreraDestino.idCarrera,
       motivo          : this.formTransferencia.controls['motivo'].value,
       idEstudiante    : this.datosEstudiante.idEstudiante,
-      idTramite       : eTipoTramite.CAMBIO_DE_CARRERA,
+      idTramite       : eTipoTramite.TRANSFERENCIA,
       idEstado        : eEstado.ACTIVADO,
       idEntidad       : eEntidad.ESTUDIANTE,
       observaciones   : undefined
