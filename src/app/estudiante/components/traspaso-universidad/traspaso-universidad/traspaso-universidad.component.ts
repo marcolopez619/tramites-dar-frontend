@@ -8,9 +8,11 @@ import { eEstado } from '../../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
 import { eEntidad } from '../../../../shared/enums/tipo_entidad.enum';
 import { EstudianteModel } from '../../../../shared/models/estudiante.model';
+import { Motivo } from '../../../../shared/models/motivos.models';
 import { AllInformationUniversity, Carrera, MotivoTraspaso, Universidad } from '../../../../shared/models/traspaso.universidad.model';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
+import { MotivoService } from '../../../../shared/services/motivo.service';
 import { UniversidadService } from '../../../../shared/services/universidad.service';
 import { EstudianteService } from '../../../estudiante.service';
 import { TraspasoInsert } from '../../../models/traspaso.model';
@@ -27,11 +29,11 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
   datoEstudiante: EstudianteModel;
   listaUniversidades: Array<Universidad> = [];
   listaCarreras: Array<Carrera> = [];
-  listaMotivoTraspaso: Array<MotivoTraspaso> = [];
+  listaMotivoTraspaso: Array<Motivo> = [];
 
   universidadSelected: Universidad;
   carreraSelected: Carrera;
-  motivoSelected: MotivoTraspaso;
+  motivoSelected: Motivo;
 
    constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -41,6 +43,7 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
     private formBuilder: FormBuilder,
     private universidadService: UniversidadService,
     private estudianteService: EstudianteService,
+    private motivoService: MotivoService,
     private traspasoUniversidadService: TraspasoUniversidadService
   ) {
     super();
@@ -50,7 +53,7 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
     this.getDatosEstudiante();
 
     this.getListaUniversidades();
-    this.getListaCarreras( 1 );
+    // this.getListaCarreras( 1 );
     this.getListaMotivos();
 
     this.formTraspaso = this.formBuilder.group({
@@ -64,7 +67,7 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
   private getListaUniversidades(): void {
     this.universidadService.getAllListaUniversidades().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       // Filtra las universideades que no pertenescan a la universidad en la cual se haya loggeado el usuario.
-      const idUniversidadEstudianteLogeado = 1; // FIXME: obtener este valor del contexto del usuario
+      const idUniversidadEstudianteLogeado = this.contextService.getItemContexto('idUniversidad');
       this.listaUniversidades = resp.data.filter( x => x.idUniversidad !== idUniversidadEstudianteLogeado );
     });
   }
@@ -77,21 +80,14 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
 
   private getListaMotivos(): void {
 
-    // TODO: integrar a la BD este servicio
+    this.motivoService.getListaMotivos().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp =>{
+      this.listaMotivoTraspaso = resp.data;
+    });
 
-    const listaMotivos: Array<MotivoTraspaso> = [{
-      idMotivoTraspaso : 1,
-      motivoTraspaso : 'FAMILIAR'
-    }, {
-      idMotivoTraspaso : 2,
-      motivoTraspaso : 'LABORALES'
-    }];
-
-    this.listaMotivoTraspaso = listaMotivos;
   }
 
   private getDatosEstudiante(): void {
-    const idEstudiante = 1; // FIXME: dato quemado
+    const idEstudiante = this.contextService.getItemContexto('idEstudiante');
 
     this.estudianteService.getInformacionEstudiante( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.datoEstudiante = resp.data;
@@ -102,23 +98,17 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
     });
   }
 
-  private getAllInformacionFromUniversity(pIdUniversidad: number): void {
-    this.universidadService.getAllInformation( pIdUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-      const allInformationUniversity = resp.data as Array<AllInformationUniversity>;
-    });
-  }
-
   onUniversidadSelectionChange(event: MatSelectChange): void {
-    this.universidadSelected = this.listaUniversidades.find( x => x.idUniversidad = event.value );
+    this.universidadSelected = this.listaUniversidades.find( x => x.idUniversidad === event.value );
     this.getListaCarreras(this.universidadSelected.idUniversidad);
   }
 
   onCarreraSelectionChange(event: MatSelectChange): void {
-    this.carreraSelected = this.listaCarreras.find( x => x.idCarrera = event.value );
+    this.carreraSelected = this.listaCarreras.find( x => x.idCarrera === event.value );
   }
 
   onMotivoSelectionChange(event: MatSelectChange): void {
-    this.motivoSelected = this.listaMotivoTraspaso.find( x => x.idMotivoTraspaso = event.value );
+    this.motivoSelected = this.listaMotivoTraspaso.find( x => x.idMotivo === event.value );
   }
 
   onFinalizarSolicitud(): void {
@@ -129,7 +119,7 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
       anioIngreso       : this.datoEstudiante.anioIngreso,
       materiasAprobadas : this.datoEstudiante.cantMateriasAprobadas,
       materiasReprobadas: this.datoEstudiante.cantMateriasReprobadas,
-      motivo            : this.formTraspaso.controls[ 'idMotivoTraspaso' ].value, // FIXME, se guarda un integer
+      idMotivo          : this.formTraspaso.controls[ 'idMotivoTraspaso' ].value,
       idEstudiante      : this.datoEstudiante.idEstudiante,
       idTramite         : eTipoTramite.TRASPASO_DE_UNIVERSIDAD,
       idEstado          : eEstado.ACTIVADO,

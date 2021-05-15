@@ -78,7 +78,8 @@ export interface BandejaTraspasoUniversidad extends BandejaAbstract {
   nombrecarreradestino?: string;
   periodo?: string;
   fechaSolicitud?: Date;
-  motivo?: string;
+  idMotivo?: number;
+  descripcionMotivo?: string;
   anioingreso?: number;
   materiasaprobadas?: number;
   materiasreprobadas?: number;

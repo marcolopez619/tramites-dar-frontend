@@ -172,7 +172,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
       case eTipoTramite.TRASPASO_DE_UNIVERSIDAD:
         const dataTraspaso = data as BandejaTraspasoUniversidad;
         this.listaLabelColumnas = ['Tramite solicitado', 'Universidad destino', 'Carrera destino', 'Periodo' , 'Año ingreso', 'Materias aprobadas', 'Materias reprobadas', 'Promedio General', 'Fecha solicitud', 'Motivo'];
-        this.listaValoresColumnas = [dataTraspaso.tipoTramite, dataTraspaso.nombreuniversidaddestino, dataTraspaso.nombrecarreradestino, dataTraspaso.periodo, dataTraspaso.anioingreso, dataTraspaso.materiasaprobadas , dataTraspaso.materiasreprobadas, (dataTraspaso.materiasaprobadas / dataTraspaso.materiasreprobadas).toFixed( 2 ), this.datePipe.transform( dataTraspaso.fechaSolicitud, 'dd-MM-yyyy' ), dataTraspaso.motivo ];
+        this.listaValoresColumnas = [dataTraspaso.tipoTramite, dataTraspaso.nombreuniversidaddestino, dataTraspaso.nombrecarreradestino, dataTraspaso.periodo, dataTraspaso.anioingreso, dataTraspaso.materiasaprobadas , dataTraspaso.materiasreprobadas, (dataTraspaso.materiasaprobadas / dataTraspaso.materiasreprobadas).toFixed( 2 ), this.datePipe.transform( dataTraspaso.fechaSolicitud, 'dd-MM-yyyy' ), dataTraspaso.descripcionMotivo ];
         break;
 
       default:

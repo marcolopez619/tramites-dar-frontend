@@ -5,7 +5,7 @@ export interface TraspasoInsert {
   anioIngreso ?: number;
   materiasAprobadas ?: number;
   materiasReprobadas ?: number;
-  motivo ?: string;
+  idMotivo ?: number;
   idEstudiante ?: number;
 
   idTramite ?: number;

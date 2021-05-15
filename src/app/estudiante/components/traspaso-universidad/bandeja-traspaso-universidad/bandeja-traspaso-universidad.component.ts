@@ -50,12 +50,12 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
     this.unsubscribe$.next(true);
   }
 
-  private getListaTraspasos(): void {
+  getListaTraspasos(): void {
 
-    const idEstudiante = 1; // FIXME: dato quemado para recuperar del contexto
+    const idEstudiante = this.contextService.getItemContexto('idEstudiante');
 
     this.traspasoUniversidadService.getAllTraspasos( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-      this.dataSource.data = resp.data;
+      this.dataSource.data = resp.data ?? [];
     });
 
   }

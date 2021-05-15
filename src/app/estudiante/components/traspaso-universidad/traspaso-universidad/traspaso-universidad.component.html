@@ -49,7 +49,7 @@
               <mat-form-field fxFlex>
                 <mat-select formControlName="idCarreraDestino" (selectionChange)="onCarreraSelectionChange($event)" placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-carrera-destino')}}">
                    <mat-option *ngFor="let carrera of listaCarreras" [value]="carrera.idCarrera">
-                     {{carrera.nombre}}
+                     {{carrera.carrera}}
                    </mat-option>
                  </mat-select>
                  <mat-error *ngIf="formTraspaso.controls['idCarreraDestino'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-carrera-destino-error') }}</mat-error>
@@ -68,8 +68,8 @@
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
               <mat-form-field fxFlex>
                 <mat-select formControlName="idMotivoTraspaso" (selectionChange)="onMotivoSelectionChange($event)" placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-motivo-traspaso')}}">
-                   <mat-option *ngFor="let motivo of listaMotivoTraspaso" [value]="motivo.idMotivoTraspaso">
-                     {{motivo.motivoTraspaso}}
+                   <mat-option *ngFor="let motivo of listaMotivoTraspaso" [value]="motivo.idMotivo">
+                     {{motivo.descripcionMotivo}}
                    </mat-option>
                  </mat-select>
                  <mat-error *ngIf="formTraspaso.controls['idMotivoTraspaso'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-motivo-traspaso-error') }}</mat-error>
@@ -78,7 +78,7 @@
 
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
               <mat-form-field fxFlex>
-                <input type="text" required matInput minlength="5" maxlength="100" autocomplete="off"
+                <input type="text" shUppercase required matInput minlength="5" maxlength="100" autocomplete="off"
                   placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-descripcion-traspaso')}}" formControlName="descripcionTraspaso">
                   <mat-label>&nbsp; {{langService.getLang(eModulo.Estudiante,'lbl-descripcion-traspaso')}} </mat-label>
                 <mat-error *ngIf="formTraspaso.controls['descripcionTraspaso'].invalid">{{langService.getLang(eModulo.Estudiante,'lbl-descripcion-traspaso-error') }}</mat-error>
@@ -158,9 +158,9 @@
           <div fxLayout="row" fxLayoutAlign="start center" >
             <mat-label><strong>Universidad : </strong>&nbsp; {{this.universidadSelected?.nombre}}</mat-label>
             &nbsp;&nbsp;&nbsp;
-            <mat-label><strong>Carrera :</strong>&nbsp; {{this.carreraSelected?.nombre}}</mat-label>
+            <mat-label><strong>Carrera :</strong>&nbsp; {{this.carreraSelected?.carrera}}</mat-label>
             &nbsp;&nbsp;&nbsp;
-            <mat-label><strong>Motivo :</strong>&nbsp; {{this.motivoSelected?.motivoTraspaso}}</mat-label>
+            <mat-label><strong>Motivo :</strong>&nbsp; {{this.motivoSelected?.descripcionMotivo}}</mat-label>
 
           </div>
         </div>

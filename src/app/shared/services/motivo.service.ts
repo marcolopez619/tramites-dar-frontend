@@ -16,7 +16,7 @@ export class MotivoService {
     private contextoService: ContextoService
   ) {}
 
-  getMotivoSuspencion(): Observable<Resultado> {
+  getListaMotivos(): Observable<Resultado> {
     return this.httpClient.get<Resultado>(`${this.baseURL}`);
   }
 

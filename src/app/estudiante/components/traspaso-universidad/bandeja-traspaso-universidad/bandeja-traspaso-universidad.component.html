@@ -3,8 +3,14 @@
 <mat-card>
   <mat-card-header class="alt-theme">
   <mat-toolbar color="primary">
+      <a mat-button routerLink="/menu" matTooltip="{{ langService.getLang(eModulo.Base, 'tit-volver') }}">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </a>
       {{ langService.getLang(eModulo.Estudiante,'tit-lista-traspaso-universidad') }}
       <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-actualizar') }}" (click)="getListaTraspasos()">
+        <mat-icon>refresh</mat-icon>
+      </a>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Estudiante, 'tit-nueva-solicitud') }}" (click)="onNuevaSolicitud()">
           <mat-icon>add_circle</mat-icon>
       </a>
@@ -16,8 +22,8 @@
     <mat-table #table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="universidadDestino">
-        <mat-header-cell *matHeaderCellDef fxFlex="25" mat-sort-header> {{ langService.getLang(eModulo.Estudiante, 'lbl-traspaso-univ-destino') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="25"> {{element.nombreuniversidaddestino}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="45" mat-sort-header> {{ langService.getLang(eModulo.Estudiante, 'lbl-traspaso-univ-destino') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="45"> {{element.nombreuniversidaddestino}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="carreraDestino">
@@ -31,8 +37,8 @@
       </ng-container>
 
       <ng-container matColumnDef="motivo">
-        <mat-header-cell *matHeaderCellDef fxFlex="25" mat-sort-header> {{ langService.getLang(eModulo.Estudiante, 'lbl-motivo') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="25"> {{element.motivo}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.Estudiante, 'lbl-motivo') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10"> {{element.descripcionMotivo}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="fechaSolicitud" >

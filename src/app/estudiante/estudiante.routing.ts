@@ -4,6 +4,7 @@ import { BandejaCambioCarreraComponent } from './components/cambio-carrera/bande
 import { BandejaReadmisionComponent } from './components/readmision/bandeja-readmision/bandeja-readmision.component';
 import { BandejaSuspencionComponent } from './components/suspencion/bandeja-suspencion/bandeja-suspencion.component';
 import { BandejaTransferenciaComponent } from './components/transferencia/bandeja-transferencia/bandeja-transferencia.component';
+import { BandejaTraspasoUniversidadComponent } from './components/traspaso-universidad/bandeja-traspaso-universidad/bandeja-traspaso-universidad.component';
 
 export const estudianteRoutes: Routes = [
   {
@@ -28,6 +29,10 @@ export const estudianteRoutes: Routes = [
           {
             path : 'transferencias/index',
             component : BandejaTransferenciaComponent
+          },
+          {
+            path : 'traspasos/index',
+            component : BandejaTraspasoUniversidadComponent
           }
       ]
   }

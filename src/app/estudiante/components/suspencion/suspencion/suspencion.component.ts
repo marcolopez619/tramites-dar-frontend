@@ -63,8 +63,7 @@ export class SuspencionComponent extends BaseComponent implements OnInit {
   }
 
   private getListaMotivoSuspencion(): void {
-    // TODO: integrar a la BD este servicio
-    this.motivoService.getMotivoSuspencion().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+    this.motivoService.getListaMotivos().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.listaTipoSuspenciones = resp.data;
     });
   }
