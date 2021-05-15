@@ -51,11 +51,11 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
     this.unsubscribe$.next(true);
   }
 
-  private getListaReadmisiones(): void {
-    const idEstudiante = 1; // FIXME: dato quemado para recuperar del contexto
+  getListaReadmisiones(): void {
+    const idEstudiante = this.contextService.getItemContexto('idEstudiante');
 
     this.readmisionService.getAllListaReadmisiones( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-      this.dataSource.data = resp.data;
+      this.dataSource.data = resp.data ?? [];
     });
   }
 

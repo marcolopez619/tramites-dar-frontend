@@ -55,14 +55,14 @@ export class ReadmisionComponent  extends BaseComponent implements OnInit {
   }
 
   private getDatosEstudiante(): void {
-    const idEstudiante = 1; // FIXME: data quemada
+    const idEstudiante = this.contextService.getItemContexto('idEstudiante');
     this.estudianteService.getInformacionEstudiante( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.datoEstudiante = resp.data;
     });
   }
 
   private getListSuspenciones(): void {
-    const idEstudiante = 1; // FIXME: data quemada
+    const idEstudiante = this.contextService.getItemContexto('idEstudiante');
 
     this.suspencionService.getAllListaSuspenciones( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.listaSuspenciones = resp.data;
