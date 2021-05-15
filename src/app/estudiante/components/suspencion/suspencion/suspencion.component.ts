@@ -54,7 +54,7 @@ export class SuspencionComponent extends BaseComponent implements OnInit {
 
   private getDatosEstudiante(): void {
 
-    const idEstudiante = 1; // FIXME: dato quemado
+    const idEstudiante = this.contextService.getItemContexto('idEstudiante');
 
     this.estudianteService.getInformacionEstudiante( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.datoEstudiante = resp.data;

@@ -39,7 +39,7 @@
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
               <mat-form-field fxFlex>
                 <input type="number" style="text-align: center;" min="1" max="50" minlength="1" maxlength="2" autocomplete="off" matInput required
-                  placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-tiempo-suspencion-solicitado')}}" formControlName="tiempoSuspencion">
+                  formControlName="tiempoSuspencion">
                   <mat-label>&nbsp; {{langService.getLang(eModulo.Estudiante,'lbl-tiempo-solicitado')}} </mat-label>
                 <mat-error *ngIf="formSuspencion.controls['tiempoSuspencion'].invalid">{{langService.getLang(eModulo.Estudiante,'lbl-tiempo-suspencion-solicitado-error') }}</mat-error>
               </mat-form-field>
@@ -61,7 +61,7 @@
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
             <mat-form-field fxFlex>
               <mat-label>Breve descripcion :</mat-label>
-              <input type="text" min="0" max="250" minlength="1" maxlength="250" autocomplete="off" matInput required
+              <input type="text" min="0" max="250" minlength="1" maxlength="250" autocomplete="off" matInput required shUppercase
                 placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-descripcion-suspencion')}}" formControlName="descripcion">
               <mat-error *ngIf="formSuspencion.controls['descripcion'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-descripcion-suspencion-error') }}</mat-error>
             </mat-form-field>
@@ -93,7 +93,7 @@
           </tr>
 
           <tr>
-            <td style="text-align: end;"><span><strong>{{langService.getLang(eModulo.Estudiante,'lbl-tiempo-suspencion-solicitado')}}</strong></span></td>
+            <td style="text-align: end;"><span><strong>{{langService.getLang(eModulo.Estudiante,'lbl-tiempo-solicitado')}} : </strong></span></td>
             <td><span>&nbsp;{{this.formSuspencion.controls['tiempoSuspencion'].value}}</span></td>
           </tr>
 
