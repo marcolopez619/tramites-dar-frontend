@@ -22,8 +22,8 @@
     <mat-table #table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="carrera">
-        <mat-header-cell *matHeaderCellDef fxFlex="20" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-carrera') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="20"> {{element.carrera}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="40" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-carrera') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="40"> {{element.carrera}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="tiempo">
@@ -37,13 +37,13 @@
       </ng-container> -->
 
       <ng-container matColumnDef="motivo">
-        <mat-header-cell *matHeaderCellDef fxFlex="40" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-motivo') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="40"> {{element.motivo}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-motivo') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10"> {{element.descripcionMotivo}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="fechaSolicitud" >
-        <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-solicitud') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaSolicitud | date : 'dd/MM/yyyy' }} &nbsp;</mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="15"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-solicitud') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="15" > {{element.fechaSolicitud | date : 'dd/MM/yyyy' }} &nbsp;</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="estado" >

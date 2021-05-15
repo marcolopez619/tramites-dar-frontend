@@ -8,7 +8,7 @@ import { eEstado } from '../../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
 import { eEntidad } from '../../../../shared/enums/tipo_entidad.enum';
 import { EstudianteModel } from '../../../../shared/models/estudiante.model';
-import { MotivoSuspencion } from '../../../../shared/models/motivos.models';
+import { Motivo } from '../../../../shared/models/motivos.models';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { MotivoService } from '../../../../shared/services/motivo.service';
@@ -25,8 +25,8 @@ export class SuspencionComponent extends BaseComponent implements OnInit {
 
   formSuspencion: FormGroup;
   datoEstudiante: EstudianteModel;
-  listaTipoSuspenciones: Array<MotivoSuspencion> = [];
-  motivoSelected: MotivoSuspencion = {};
+  listaTipoSuspenciones: Array<Motivo> = [];
+  motivoSelected: Motivo = {};
 
    constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -70,7 +70,7 @@ export class SuspencionComponent extends BaseComponent implements OnInit {
   }
 
   onMotivoSuspencionChange(event: MatSelectChange): void {
-    this.motivoSelected = this.listaTipoSuspenciones.find( x => x.idMotivoSuspencion === event.value );
+    this.motivoSelected = this.listaTipoSuspenciones.find( x => x.idMotivo === event.value );
   }
 
   onFinalizarSolicitud(): void {

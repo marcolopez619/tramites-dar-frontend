@@ -48,8 +48,8 @@
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
               <mat-form-field fxFlex>
                 <mat-select formControlName="idMotivoSuspencion" (selectionChange)="onMotivoSuspencionChange($event)" placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-motivo-suspencion')}}">
-                   <mat-option *ngFor="let tipoSuspencion of listaTipoSuspenciones" [value]="tipoSuspencion.idMotivoSuspencion">
-                     {{tipoSuspencion.motivoSuspencion}}
+                   <mat-option *ngFor="let motivo of listaTipoSuspenciones" [value]="motivo.idMotivo">
+                     {{motivo.descripcionMotivo}}
                    </mat-option>
                  </mat-select>
                  <mat-error *ngIf="formSuspencion.controls['idMotivoSuspencion'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-motivo-suspencion-error') }}</mat-error>

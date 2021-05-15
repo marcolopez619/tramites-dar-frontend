@@ -162,7 +162,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
       case eTipoTramite.SUSPENCION:
         const dataSuspencion = data as BandejaSuspencion;
         this.listaLabelColumnas = ['Tramite solicitado', 'Carrera origen', 'Tiempo',  'Fecha solicitud', 'Motivo'];
-        this.listaValoresColumnas = [dataSuspencion.tipoTramite, dataSuspencion.carrera, dataSuspencion.tiempoSolicitado.toString().concat(` Gestiones`),  dataSuspencion.fechaSolicitud.toString(), dataSuspencion.motivo ];
+        this.listaValoresColumnas = [dataSuspencion.tipoTramite, dataSuspencion.carrera, dataSuspencion.tiempoSolicitado.toString().concat(` Gestiones`),  dataSuspencion.fechaSolicitud.toString(), dataSuspencion.descripcionMotivo ];
         break;
       case eTipoTramite.READMISION:
         const dataReadmision = data as BandejaReadmision;

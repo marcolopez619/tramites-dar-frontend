@@ -47,7 +47,8 @@ export interface BandejaSuspencion extends BandejaAbstract {
   carrera?: string;
   tiempoSolicitado?: number;
   fechaSolicitud?: Date;
-  motivo?: string;
+  idMotivo?: number;
+  descripcionMotivo?: string;
   fechaProceso?: Date;
   observaciones?: string;
   idTramite?: number;
