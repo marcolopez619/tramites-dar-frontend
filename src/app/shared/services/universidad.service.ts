@@ -47,8 +47,12 @@ export class UniversidadService {
     return this.httpClient.patch<Resultado>(`${this.baseURL}/facultad`, datosFacultad );
   }
 
-  getListaCarreras(pIdFacultad: number): Observable<Resultado> {
+  getListaCarrerasByIdFacultad(pIdFacultad: number): Observable<Resultado> {
     return this.httpClient.get<Resultado>(`${this.baseURL}/carrera/${pIdFacultad}`);
+  }
+
+  getListaCarreras(): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/carrera`);
   }
 
   insertCarrera(pCarrera: BandejaCarreras): Observable<Resultado> {

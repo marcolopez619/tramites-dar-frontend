@@ -64,7 +64,7 @@ export class BandejaCarrerasComponent extends BaseComponent  implements OnInit, 
   private getListaCarreras(): void {
     const idFacultad = 1; // FIXME: Traer el id de la universidad
 
-    this.universidadService.getListaCarreras( idFacultad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+    this.universidadService.getListaCarrerasByIdFacultad( idFacultad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.dataSource.data = resp.data;
     });
   }

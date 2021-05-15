@@ -76,12 +76,12 @@ export class TransferenciaComponent extends BaseComponent implements OnInit {
 
   private filtrarValores(value: string): Array<CarreraModel> {
     const filterValue = value.toLowerCase();
-    const dataFiltrada = this.listaCarreras.filter(carrera => carrera.carrera.toLowerCase().includes( filterValue ));
+    const dataFiltrada = this.listaCarreras.filter(carrera => carrera.nombre.toLowerCase().includes( filterValue ));
     return dataFiltrada;
   }
 
   onFinalizarSolicitud(): void {
-    const carreraDestino = this.listaCarreras.filter( x => x.carrera === this.formTransferencia.controls[ 'idCarreraDestino' ].value ) [ 0 ];
+    const carreraDestino = this.listaCarreras.filter( x => x.nombre === this.formTransferencia.controls[ 'idCarreraDestino' ].value ) [ 0 ];
 
     const cambioCarreraInsert: TransferenciaInsert = {
       idCarreraOrigen : this.datosEstudiante.idCarrera,

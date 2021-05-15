@@ -44,7 +44,7 @@ export class CambioCarreraComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getInformacionEstudiante( 1 );
+    this.getInformacionEstudiante( );
     this.getListaCarreras();
 
     this.formCambioCarrera = this.formBuilder.group({
@@ -59,28 +59,28 @@ export class CambioCarreraComponent extends BaseComponent implements OnInit {
 
   }
 
-  private getInformacionEstudiante(pIdEstudiante: number): void {
+  private getInformacionEstudiante(): void {
+    const pIdEstudiante = this.contextService.getItemContexto('idEstudiante');
+
     this.estudianteService.getInformacionEstudiante(pIdEstudiante).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.datosEstudiante = resp.data;
     });
   }
 
   private getListaCarreras(): void {
-    const idUniversidad = 1; // Por default sera la Tomas frias para este caso
-
-    this.universidadService.getListaCarreras( idUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+    this.universidadService.getListaCarreras( ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.listaCarreras = resp.data;
     });
   }
 
   private filtrarValores(value: string): Array<CarreraModel> {
     const filterValue = value.toLowerCase();
-    const dataFiltrada = this.listaCarreras.filter(carrera => carrera.carrera.toLowerCase().includes( filterValue ));
+    const dataFiltrada = this.listaCarreras.filter(carrera => carrera.nombre.toLowerCase().includes( filterValue ));
     return dataFiltrada;
   }
 
   onFinalizarSolicitud(): void {
-    const carreraDestino = this.listaCarreras.filter( x => x.carrera === this.formCambioCarrera.controls[ 'idCarreraDestino' ].value ) [ 0 ];
+    const carreraDestino = this.listaCarreras.filter( x => x.nombre === this.formCambioCarrera.controls[ 'idCarreraDestino' ].value ) [ 0 ];
 
     const cambioCarreraInsert: CambioCarreraInsert = {
       idCarreraOrigen : this.datosEstudiante.idCarrera,

@@ -22,7 +22,7 @@ import { CambioCarreraComponent } from '../cambio-carrera/cambio-carrera.compone
 export class BandejaCambioCarreraComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
 
   displayedColumns = ['origen', 'destino', 'fechaSolicitud', 'motivo', 'estado', 'acciones'];
-  dataSource = new MatTableDataSource<BandejaCambioCarrera>([]);
+  dataSource = new MatTableDataSource<BandejaCambioCarrera>();
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -51,12 +51,12 @@ export class BandejaCambioCarreraComponent extends BaseComponent  implements OnI
     this.unsubscribe$.next(true);
   }
 
-  private getListaCambiosCarrera(): void {
+  getListaCambiosCarrera(): void {
 
-    const idEstudiante = 1; // FIXME: Obtener del contexto del sistema
+    const idEstudiante = this.contextService.getItemContexto('idEstudiante');
 
     this.cambioCarreraService.getAllListaCambiosCarrera( idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp =>{
-      this.dataSource.data = resp.data;
+      this.dataSource.data = resp.data ?? [];
     });
 
   }

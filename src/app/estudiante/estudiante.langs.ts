@@ -2,6 +2,7 @@ export const estudianteLang = {
   'es' : {
     'tit-lista-anulaciones' : 'Solicitud de anulaciones',
     'tit-lista-cambios-carrera' : 'Solicitud de cambios de carrera',
+    'tit-nuevo-cambio-carrera' : 'Nuevo cambio de carrera',
     'tit-lista-suspenciones-carrera' : 'Solicitud de suspenciónes de carrera',
     'tit-lista-readmision-carrera' : 'Solicitudes de readmisiones de carrera',
     'tit-lista-traspaso-universidad' : 'Solicitudes de traspaso de universidades',
@@ -20,6 +21,9 @@ export const estudianteLang = {
     'lbl-motivo' : 'Motivo',
     'lbl-motivo-gestiones' : 'Motivo y gestiones',
 
+    'lbl-step-1-datos-estudiante' : 'Datos del estudiante',
+    'lbl-step-2-carrera-destino' : 'Carrera destino',
+    'lbl-step-3-confirmacion' : 'Confirmación',
     'lbl-carrera-origen' : 'carrera origen',
     'lbl-carrera-destino' : 'Carrera destino',
     'lbl-confir-sol-nuevo-tramite-cambio-carrera' : '¿ Seguro de finalizar la solicitud de cambio de carrera ?',
