@@ -55,7 +55,7 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
     const idEstudiante = this.contextService.getItemContexto('idEstudiante');
 
     this.anulacionService.getAllListaAnulaciones( idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
-      this.dataSource.data = resp.data;
+      this.dataSource.data = resp.data ?? [];
     });
 
   }
