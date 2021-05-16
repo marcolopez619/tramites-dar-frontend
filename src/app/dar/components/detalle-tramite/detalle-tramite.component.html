@@ -3,7 +3,11 @@
 <mat-card>
   <mat-card-header class="alt-theme">
   <mat-toolbar shToolbarModal color="primary">
-      <h3>{{ langService.getLang(eModulo.Dar, 'ti-detalle-tramite') }}</h3>
+    <a mat-button routerLink="/dar/encargado/index" matTooltip="{{ langService.getLang(eModulo.Base, 'tit-volver') }}">
+      <mat-icon>keyboard_backspace</mat-icon>
+    </a>
+    <h3>{{ langService.getLang(eModulo.Dar, 'ti-detalle-tramite') }}</h3>
+
       <!-- <span class="flex-spacer"></span>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
           <mat-icon>close</mat-icon>
@@ -25,7 +29,7 @@
       <div fxLayout="row" fxLayoutAlign="center center" fxLayout.lt-sm="column" fxLayoutGap="5px" fxFill >
         <form [formGroup]="formDetalleTramite" fxFlexFill>
           <mat-form-field fxFlex>
-            <input type="text" matInput minlength="5" maxlength="200" autocomplete="off" formControlName="observaciones">
+            <input type="text" shUppercase shAutofocus matInput minlength="5" maxlength="200" autocomplete="off" formControlName="observaciones">
             <mat-label>&nbsp; {{langService.getLang(eModulo.Dar,'lbl-observaciones')}} </mat-label>
             <mat-error *ngIf="formDetalleTramite.invalid">{{langService.getLang(eModulo.Dar,'lbl-observaciones-error') }}</mat-error>
           </mat-form-field>

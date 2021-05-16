@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
@@ -29,7 +30,8 @@ export class BandejaDarComponent extends BaseComponent  implements OnInit, After
   constructor(
     public langService: LangService,
     public contextService: ContextoService,
-    private darService: DarService
+    private darService: DarService,
+    private router: Router
   ) {
     super();
   }
@@ -49,32 +51,21 @@ export class BandejaDarComponent extends BaseComponent  implements OnInit, After
     this.unsubscribe$.next(true);
   }
 
-  aplicarFiltro(event: Event) {
+  aplicarFiltro(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  private getListaTramites(): void {
+  getListaTramites(): void {
 
-    this.darService.getTramitesPorAtender().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp =>{
+    this.darService.getTramitesPorAtender().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.dataSource.data = resp.data;
     });
   }
 
-  onVerDetalleTramite(pElement : BandejaDar ): void {
-    // console.log( `Seleccionaste : ${pElement.idSolicitudTramite}` );
-
-    /* const dlgTraspasoUniversidad = this.dialog.open( TraspasoUniversidadComponent,  {
-      disableClose: false,
-      width: '1000px',
-      data: { }
-    });
-    dlgTraspasoUniversidad.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
-      if (result) {
-        console.log( `---> ${result}` );
-        // TODO: ACTUALIZAR LA BANDEJA PRINCIPAL.
-      }
-    }); */
+  onVerDetalleTramite(pElement: BandejaDar ): void {
+    localStorage.setItem( 'selectedTramite', JSON.stringify( pElement ) );
+    this.router.navigate([ 'dar/detalle/tramite' ])
   }
 
 }

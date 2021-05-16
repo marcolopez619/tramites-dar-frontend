@@ -3,7 +3,14 @@
 <mat-card>
   <mat-card-header class="alt-theme">
   <mat-toolbar color="primary">
+      <a mat-button routerLink="/menu" matTooltip="{{ langService.getLang(eModulo.Base, 'tit-volver') }}">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </a>
       {{ langService.getLang(eModulo.Dar, 'tit-bandeja-dar') }}
+      <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-actualizar') }}" (click)="getListaTramites()">
+        <mat-icon>refresh</mat-icon>
+      </a>
       <!-- <span class="flex-spacer"></span>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Estudiante, 'tit-nueva-solicitud') }}" (click)="onVerDetalleTramite()">
           <mat-icon>add_circle</mat-icon>

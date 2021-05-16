@@ -7,6 +7,7 @@ import { AnulacionService } from '../../../estudiante/components/anulacion/anula
 import { CambioCarreraService } from '../../../estudiante/components/cambio-carrera.service';
 import { ReadmisionService } from '../../../estudiante/components/readmision/readmision.service';
 import { SuspencionService } from '../../../estudiante/components/suspencion/suspencion.service';
+import { TransferenciaService } from '../../../estudiante/components/transferencia/transferencia.service';
 import { TraspasoUniversidadService } from '../../../estudiante/components/traspaso-universidad/traspaso-universidad.service';
 import { EstudianteService } from '../../../estudiante/estudiante.service';
 import { BandejaAnulacion } from '../../../estudiante/models/anulacion.models';
@@ -17,7 +18,7 @@ import { eTipoTramite } from '../../../shared/enums/tipoTramite.enum';
 import { EstudianteModel } from '../../../shared/models/estudiante.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
-import { BandejaCambioCarrera, BandejaReadmision, BandejaSuspencion, BandejaTraspasoUniversidad } from '../../../tramites/models/tramites.models';
+import { BandejaCambioCarrera, BandejaDar, BandejaReadmision, BandejaSuspencion, BandejaTranseferencia, BandejaTraspasoUniversidad } from '../../../tramites/models/tramites.models';
 
 @Component({
   selector: 'app-detalle-tramite',
@@ -32,6 +33,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
   listaLabelColumnas: Array<string>;
   listaValoresColumnas: Array<any>;
   detalleTramite: any;
+  selectedTramite : BandejaDar;
 
   constructor(
     public langService: LangService,
@@ -45,7 +47,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
     private cambioDeCarreraService: CambioCarreraService,
     private suspencionService: SuspencionService,
     private readmisionService: ReadmisionService,
-    // private transferenciaService: TransferenciaService,
+    private transferenciaService: TransferenciaService,
     private traspasoService: TraspasoUniversidadService
   ) {
     super();
@@ -56,7 +58,15 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
       observaciones : [undefined, Validators.compose([ Validators.minLength(5), Validators.maxLength(200)])]
     });
 
+    this.selectedTramite = JSON.parse(localStorage.getItem( 'selectedTramite' ) ) as BandejaDar;
+
     this.getDatosEstudiante();
+
+    const idTramite = this.getTipoTramite( this.selectedTramite.idTramite) ;
+    const idTipoTramite = this.selectedTramite.idTipoTramite;
+    const idEstudiante = this.selectedTramite.idEstudiante;
+
+    this.getDetalleTramite(idTramite, idEstudiante, idTipoTramite);
 
     /* const idTramite = eTipoTramite.ANULACION; // FIXME: dato quemado q tiene q ser obtenido del localstorage cuando se elija una fila de la bandeja de solicitudes por atender.
     const idTipoTramite = 14; // FIXME: dato quemado q tiene q ser obtenido del localstorage cuando se elija una fila de la bandeja de solicitudes por atender.
@@ -78,10 +88,10 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
     const idEstudiante = 1;
     this.getDetalleTramite(idTramite, idEstudiante, idTipoTramite); */
 
-    const idTramite = eTipoTramite.TRASPASO_DE_UNIVERSIDAD;
+    /* const idTramite = eTipoTramite.TRASPASO_DE_UNIVERSIDAD;
     const idTipoTramite = 5;
     const idEstudiante = 1;
-    this.getDetalleTramite(idTramite, idEstudiante, idTipoTramite);
+    this.getDetalleTramite(idTramite, idEstudiante, idTipoTramite); */
 
   }
 
@@ -91,7 +101,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
 
   private getDatosEstudiante(): void {
 
-    const idEstudiante = 1; // FIXME: dato quemado
+    const idEstudiante = this.selectedTramite.idEstudiante;
 
     this.estudianteService.getInformacionEstudiante( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.datoEstudiante = resp.data;
@@ -134,6 +144,13 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
         break;
       }
 
+      case eTipoTramite.TRANSFERENCIA: {
+        this.transferenciaService.getListaTransferencias( pIdeEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+          this.detalleTramite = (resp.data as Array<BandejaTranseferencia>).filter( x => x.idTransferencia === pIdTipoTramite) [ 0 ];
+          this.setColumnas( eTipoTramite.TRANSFERENCIA, this.detalleTramite);
+        });
+        break;
+      }
       case eTipoTramite.TRASPASO_DE_UNIVERSIDAD: {
         this.traspasoService.getAllTraspasos( pIdeEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
           this.detalleTramite = (resp.data as Array<BandejaTraspasoUniversidad>).filter( x => x.idTraspaso === pIdTipoTramite) [ 0 ];
@@ -169,6 +186,11 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
         this.listaLabelColumnas = ['Tramite solicitado', 'Carrera origen', 'Fecha solicitud suspencion', 'Tiempo suspencion solicitado', 'Fecha solicitud readmision', 'Motivo'];
         this.listaValoresColumnas = [ dataReadmision.tipoTramite, dataReadmision.carrera, dataReadmision.suspencion[ 0 ].fechaSolicitud.toString(), dataReadmision.suspencion[ 0 ].tiempoSolicitado.toString() , dataReadmision.fechaSolicitudReadmision.toString(), dataReadmision.motivo ];
         break;
+      case eTipoTramite.TRANSFERENCIA:
+        const dataTransferencia = data as BandejaTranseferencia;
+        this.listaLabelColumnas = ['Tramite solicitado', 'Carrera origen', 'Carrera destino', 'Fecha solicitud' , 'Motivo'];
+        this.listaValoresColumnas = [dataTransferencia.tipoTramite, dataTransferencia.carreraorigen, dataTransferencia.carreradestino, this.datePipe.transform( dataTransferencia.fechaSolicitud, 'dd-MM-yyyy' ), dataTransferencia.motivo ];
+        break;
       case eTipoTramite.TRASPASO_DE_UNIVERSIDAD:
         const dataTraspaso = data as BandejaTraspasoUniversidad;
         this.listaLabelColumnas = ['Tramite solicitado', 'Universidad destino', 'Carrera destino', 'Periodo' , 'Año ingreso', 'Materias aprobadas', 'Materias reprobadas', 'Promedio General', 'Fecha solicitud', 'Motivo'];
@@ -179,6 +201,19 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
         break;
     }
 
+  }
+
+  private getTipoTramite( pIdTramite: number ): eTipoTramite {
+    switch (pIdTramite) {
+      case 1: return eTipoTramite.ANULACION;
+      case 2: return eTipoTramite.CAMBIO_DE_CARRERA;
+      case 3: return eTipoTramite.SUSPENCION;
+      case 4: return eTipoTramite.READMISION;
+      case 5: return eTipoTramite.TRANSFERENCIA;
+      case 6: return eTipoTramite.TRASPASO_DE_UNIVERSIDAD;
+      default:
+        return undefined;
+    }
   }
 
   onAprobarTramite(): void {
