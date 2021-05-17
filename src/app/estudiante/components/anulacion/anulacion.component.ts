@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
@@ -55,12 +55,13 @@ export class AnulacionComponent extends BaseComponent  implements OnInit {
   onImprimirFormulario(): void {
 
     const anulacionInsert: AnulacionInsert = {
-      motivo       : this.formAnulacion.controls[ 'motivo' ].value,
-      idEstudiante : this.datosEstudiante.idEstudiante,
-      idTramite    : eTipoTramite.ANULACION,
-      idEstado     : eEstado.ACTIVADO,
-      idEntidad    : eEntidad.ESTUDIANTE,
-      observaciones: undefined
+      motivo         : this.formAnulacion.controls[ 'motivo' ].value,
+      idCarreraOrigen: this.datosEstudiante.idCarrera,
+      idEstudiante   : this.datosEstudiante.idEstudiante,
+      idTramite      : eTipoTramite.ANULACION,
+      idEstado       : eEstado.ACTIVADO,
+      idEntidad      : eEntidad.ESTUDIANTE,
+      observaciones  : undefined
     };
 
     // Inserta la nueva anulacion

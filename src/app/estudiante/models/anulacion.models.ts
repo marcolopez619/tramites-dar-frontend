@@ -12,8 +12,9 @@ export interface BandejaAnulacion extends BandejaAbstract {
   sexo?: boolean;
   idAnulacion?: number;
   fechaSolicitud?: Date;
-  motivo?: string;
+  idCarreraOrigen?: number;
   carrera?: string;
+  motivo?: string;
   fechaProceso?: Date;
   observaciones?: string;
   idTramite?: number;
@@ -23,6 +24,7 @@ export interface BandejaAnulacion extends BandejaAbstract {
 
 export interface AnulacionInsert {
   motivo?: string;
+  idCarreraOrigen?: number;
   idEstudiante?: number;
 
   idTramite?: number;
