@@ -51,9 +51,9 @@ export class BandejaTramitesComponent extends BaseComponent implements OnInit, A
     this.unsubscribe$.next(true);
   }
 
-  private getListaTramites(): void {
+  getListaTramites(): void {
     this.tramitesService.getAllListaTramites().pipe( takeUntil(this.unsubscribe$)).subscribe( allTramites => {
-      this.dataSource.data = allTramites.data;
+      this.dataSource.data = allTramites.data ?? [];
     });
   }
 

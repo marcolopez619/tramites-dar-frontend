@@ -8,9 +8,8 @@ import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/templ
 import { BaseComponent } from '../../../../shared/base.component';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
-import { BandejaHabilitacionPorExcepcion, BandejaTramite } from '../../../models/tramites.models';
+import { BandejaHabilitacionPorExcepcion } from '../../../models/tramites.models';
 import { TramitesService } from '../../../tramites.service';
-import { NuevoTramiteComponent } from '../../nuevo-tramite/nuevo-tramite.component';
 import { HabilitacionPorExcepcionComponent } from '../habilitacion-por-excepcion/habilitacion-por-excepcion.component';
 
 @Component({
@@ -52,9 +51,9 @@ export class BandejaHabilitacionExcepcionComponent  extends BaseComponent implem
     this.unsubscribe$.next(true);
   }
 
-  private getListaTramitesPorExcepcion(): void {
+  getListaTramitesPorExcepcion(): void {
     this.tramitesService.getAllListaTramitesPorExcepcion().pipe( takeUntil(this.unsubscribe$)).subscribe( allTramites => {
-      this.dataSource.data = allTramites.data;
+      this.dataSource.data = allTramites.data ?? [];
     });
   }
 

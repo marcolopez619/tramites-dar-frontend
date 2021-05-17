@@ -3,8 +3,14 @@
 <mat-card>
   <mat-card-header class="alt-theme">
   <mat-toolbar color="primary">
+      <a mat-button routerLink="/menu" matTooltip="{{ langService.getLang(eModulo.Base, 'tit-volver') }}">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </a>
       {{ langService.getLang(eModulo.Tramite, 'tit-lista-habilitacion-tramites-por-excepcion' ) }}
       <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-actualizar') }}" (click)="getListaTramitesPorExcepcion()">
+        <mat-icon>refresh</mat-icon>
+      </a>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Tramite, 'tit-nueva-habilitacion') }}" (click)="onAddEditTramite()">
           <mat-icon>add_circle</mat-icon>
       </a>
@@ -35,7 +41,7 @@
       </ng-container>
 
       <ng-container matColumnDef="tiempo" >
-        <mat-header-cell *matHeaderCellDef fxFlex="5"  mat-sort-header> {{ langService.getLang(eModulo.Tramite, 'lbl-tiempo') }} </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="5"  mat-sort-header> {{ langService.getLang(eModulo.Tramite, 'lbl-tiempo') }} <br> ( Días ) </mat-header-cell>
         <mat-cell *matCellDef="let element" fxFlex="5" > {{element.tiempo}} &nbsp; </mat-cell>
       </ng-container>
 
