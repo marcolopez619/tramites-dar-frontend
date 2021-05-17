@@ -1,0 +1,55 @@
+<shared-loader-spinner></shared-loader-spinner>
+
+<mat-card>
+  <mat-card-header class="alt-theme">
+  <mat-toolbar shToolbarModal color="primary">
+    <a mat-button routerLink="/dar/encargado/index" matTooltip="{{ langService.getLang(eModulo.Base, 'tit-volver') }}">
+      <mat-icon>keyboard_backspace</mat-icon>
+    </a>
+    <h3>{{ langService.getLang(eModulo.Dar, 'ti-detalle-tramite') }}</h3>
+
+      <!-- <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
+          <mat-icon>close</mat-icon>
+      </a> -->
+  </mat-toolbar>
+</mat-card-header>
+
+<mat-dialog-content>
+  <mat-card-content>
+
+    <sh-datos-estudiante [datoEstudiante]="datoEstudiante" *ngIf="this.datoEstudiante"></sh-datos-estudiante>
+    <br>
+    <br>
+
+    <div fxLayout="column" fxLayoutAlign="center center" >
+
+      <sh-datos-formato-tabla [listaLabelColumnas]="listaLabelColumnas" [listaValoresColumnas]="listaValoresColumnas"></sh-datos-formato-tabla>
+
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayout.lt-sm="column" fxLayoutGap="5px" fxFill >
+        <form [formGroup]="formDetalleTramite" fxFlexFill>
+          <mat-form-field fxFlex>
+            <input type="text" shUppercase shAutofocus matInput minlength="5" maxlength="200" autocomplete="off" formControlName="observaciones">
+            <mat-label>&nbsp; {{langService.getLang(eModulo.Dar,'lbl-observaciones')}} </mat-label>
+            <mat-error *ngIf="formDetalleTramite.invalid">{{langService.getLang(eModulo.Dar,'lbl-observaciones-error') }}</mat-error>
+          </mat-form-field>
+        </form>
+      </div>
+
+
+
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayout.lt-sm="column" fxLayoutGap="5px" fxFill >
+        <button mat-raised-button color="warn" fxFlex="25" (click)="onAprobarTramite()" >Aprobar</button>
+        <button mat-raised-button color="accent" fxFlex="25" (click)="onRechazarTramite()">Rechazar</button>
+        <button mat-raised-button color="primary" fxFlex="25" (click)="onEnviarTramite()">Enviar</button>
+        <button mat-raised-button fxFlex="25" (click)="onFinalizarTramite()">Finalizar</button>
+      </div>
+    </div>
+
+    <br>
+    <br>
+
+
+  </mat-card-content>
+</mat-dialog-content>
+</mat-card>

@@ -95,7 +95,8 @@ export const baseLang = {
             'lbl-gestion' : 'Gestión',
             'lbl-finalizar' : 'Finalizar',
             'lbl-nombre-completo' : 'Nombre completo',
-            'lbl-fecha-nacimiento' : 'Fecha nacimiento'
+            'lbl-fecha-nacimiento' : 'Fecha nacimiento',
+            'lbl-busqueda' : 'Búsqueda'
         },
         'en': {
             'lang-error': 'Lang not found',

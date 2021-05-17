@@ -8,6 +8,7 @@ import { estudianteLang } from '../../estudiante/estudiante.langs';
 import { tramiteLang } from '../../tramites/tramites.langs';
 import { darLang } from '../../dar/dar.langs';
 import { usuarioLang } from '../../usuarios/usuario.langs';
+import { directorLang } from '../../director/director.langs';
 
 /**
  * Servicio para manejar langs de forma global en el sistema.
@@ -54,6 +55,10 @@ export class LangService {
       {
         id: eModulo.Usuario,
         contenido : usuarioLang
+      },
+      {
+        id: eModulo.Director,
+        contenido : directorLang
       }
       );
   }

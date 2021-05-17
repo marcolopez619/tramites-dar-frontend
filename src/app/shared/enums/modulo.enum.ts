@@ -11,5 +11,6 @@ export enum eModulo {
     Estudiante,
     Tramite,
     Dar,
-    Usuario
+    Usuario,
+    Director
 }

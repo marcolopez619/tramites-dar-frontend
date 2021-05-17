@@ -18,6 +18,7 @@ import { EstudianteModule } from '../estudiante/estudiante.module';
 import { TramitesModule } from '../tramites/tramites.module';
 import { DarModule } from '../dar/dar.module';
 import { UsuarioModule } from '../usuarios/usuario.module';
+import { DirectorModule } from '../director/director.module';
 
 /**
  * Modulo base del sistema.
@@ -36,7 +37,8 @@ import { UsuarioModule } from '../usuarios/usuario.module';
     EstudianteModule,
     TramitesModule,
     DarModule,
-    UsuarioModule
+    UsuarioModule,
+    DirectorModule
   ],
   declarations: [
     LayoutComponent,
