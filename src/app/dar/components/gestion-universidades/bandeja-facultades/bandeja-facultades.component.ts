@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../../shared/base.component';
@@ -26,6 +27,8 @@ export class BandejaFacultadesComponent extends BaseComponent  implements OnInit
   displayedColumns = ['facultad', 'estado' , 'acciones'];
   dataSource = new MatTableDataSource<BandejaFacultad>([]);
   tituloFacultad: string;
+  selectedUniversidad: BandejaUniversidades;
+  isButtonAddEditPressed: boolean;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -34,14 +37,15 @@ export class BandejaFacultadesComponent extends BaseComponent  implements OnInit
     public langService: LangService,
     public contextService: ContextoService,
     private dialog: MatDialog,
+    private router: Router,
     private universidadService: UniversidadService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    const nombreUniversidad = 'ALGUNA UNIVERSIDAD'; // FIXME: Conseguir el nombre de la U de la U seleccionada.
-    this.tituloFacultad = this.langService.getLang(this.eModulo.Dar, 'tit-bandeja-facultades').replace('$nombreUniversidad', '' );
+    this.selectedUniversidad = JSON.parse( localStorage.getItem( 'selectedUniversidad' ) );
+    this.tituloFacultad = this.langService.getLang(this.eModulo.Dar, 'tit-bandeja-facultades').replace('$nombreUniversidad', this.selectedUniversidad.nombre );
     this.getListaFacultades();
   }
 
@@ -61,22 +65,24 @@ export class BandejaFacultadesComponent extends BaseComponent  implements OnInit
     this.dataSource.filter = filterValue.trim().toLowerCase();
   } */
 
-  private getListaFacultades(): void {
-    const idUniversidad = 1; // FIXME: Traer el id de la universidad
+  getListaFacultades(): void {
+    const idUniversidad = this.selectedUniversidad.idUniversidad;
 
     this.universidadService.getListaFacultades( idUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-      this.dataSource.data = resp.data;
+      this.dataSource.data = resp.data ?? [];
     });
   }
 
   onAnadirEditFacultad(facultadSelected?: BandejaFacultad): void {
+    this.isButtonAddEditPressed = true;
     const dlgEditUniversidad = this.dialog.open( UniversidadCarreraComponent,  {
       disableClose: false,
       width: '1000px',
       data: {
         objetoUniversidad: eTipoObjetoUniversidad.FACULTAD,
         operationType    : facultadSelected ? eTipoOperacion.ACTUALIZACION : eTipoOperacion.INSERCION,
-        selectedData     : facultadSelected
+        selectedData     : facultadSelected,
+        idUniversidad    : this.selectedUniversidad.idUniversidad
       }
     });
     dlgEditUniversidad.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
@@ -84,6 +90,14 @@ export class BandejaFacultadesComponent extends BaseComponent  implements OnInit
         this.getListaFacultades();
       }
     });
+  }
+
+  goToCarrerasFacultadSelected( selectedFacultad: BandejaFacultad ): void{
+    if ( !this.isButtonAddEditPressed ) {
+      localStorage.setItem( 'selectedFacultad', JSON.stringify( selectedFacultad ) );
+      this.router.navigate( [ 'dar/universidad/facultad/carreras' ] );
+    }
+    this.isButtonAddEditPressed = false;
   }
 
 }

@@ -2,6 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle/slide-toggle';
+import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { BandejaCarreras, BandejaFacultad, BandejaUniversidades } from '../../../tramites/models/tramites.models';
 import { BaseComponent } from '../../base.component';
@@ -27,6 +28,8 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
   facultadSelected: BandejaFacultad;
   operationType: eTipoOperacion;
   objetoUniversidad: eTipoObjetoUniversidad;
+  idUniversidadSelectedForInsert: number;
+  idFacultadSelectedForInsert: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -34,6 +37,7 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
     public langService: LangService,
     public contextService: ContextoService,
     private formBuilder: FormBuilder,
+    private router: Router,
     private universidadService: UniversidadService
   ) {
     super();
@@ -43,6 +47,8 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
 
     this.objetoUniversidad = this.data.objetoUniversidad as eTipoObjetoUniversidad;
     this.operationType = this.data.operationType as eTipoOperacion;
+    this.idUniversidadSelectedForInsert = this.data.idUniversidad;
+    this.idFacultadSelectedForInsert = this.data.idFacultad;
 
     this.setTitulosFormulario();
 
@@ -122,7 +128,7 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
         // => Insercion de nueva universidad
         const insertUniv: BandejaUniversidades = {
           idUniversidad: undefined,
-          nombre       : this.formulario.controls['nombre'].value,
+          nombre       : this.formulario.controls['nombre'].value.trim(),
           estado       : +this.activado
         };
 
@@ -135,13 +141,14 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
         // => Actualizacion de datos de la universidad
         const univUpdate: BandejaUniversidades = {
           idUniversidad: this.selectedData.idUniversidad,
-          nombre       : this.formulario.controls['nombre'].value,
+          nombre       : this.formulario.controls['nombre'].value.trim(),
           estado       : +this.activado
         };
 
         // Actualizacion de datos de la universidad
         this.universidadService.updateUniversidad( univUpdate ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
           this.onClose( resp.data );
+          // this.router.navigate[ 'dar/universidades/index' ];
         });
       }
     } else if ( this.objetoUniversidad === eTipoObjetoUniversidad.FACULTAD ) {
@@ -150,9 +157,9 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
         // => Insercion de nueva universidad
         const insertFacultad: BandejaFacultad = {
           idFacultad   : undefined,
-          nombre       : this.formulario.controls['nombre'].value,
+          nombre       : this.formulario.controls['nombre'].value.trim(),
           estado       : +this.activado,
-          idUniversidad: 1 // FIXME: obtenerlo de la universidad seleccioanda
+          idUniversidad: this.idUniversidadSelectedForInsert
         };
 
         // Actualizacion de datos de la universidad
@@ -164,7 +171,7 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
         // => Actualizacion de datos de la universidad
         const facultadUpdate: BandejaFacultad = {
           idFacultad: this.selectedData.idFacultad,
-          nombre    : this.formulario.controls['nombre'].value,
+          nombre    : this.formulario.controls['nombre'].value.trim(),
           estado    : +this.activado
         };
 
@@ -178,9 +185,9 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
       if ( this.operationType === eTipoOperacion.INSERCION) {
         // => Insercion de nueva facultad
         const insertCarrera: BandejaCarreras = {
-          nombre    : this.formulario.controls['nombre'].value,
+          nombre    : this.formulario.controls['nombre'].value.trim(),
           estado    : +this.activado,
-          idFacultad: 1 // FIXME: obtenerlo de la facultad seleccioanda
+          idFacultad: this.idFacultadSelectedForInsert
         };
 
         // Actualizacion de datos de la carrera
@@ -192,7 +199,7 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
         // => Actualizacion de datos de la carrera
         const carreraUpdate: BandejaCarreras = {
           idCarrera : this.selectedData.idCarrera,
-          nombre    : this.formulario.controls['nombre'].value,
+          nombre    : this.formulario.controls['nombre'].value.trim(),
           estado    : +this.activado
         };
 

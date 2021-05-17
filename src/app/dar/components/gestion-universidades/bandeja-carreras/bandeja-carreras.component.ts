@@ -12,7 +12,7 @@ import { eTipoOperacion } from '../../../../shared/enums/tipo_operacion.enum';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { UniversidadService } from '../../../../shared/services/universidad.service';
-import { BandejaCarreras } from '../../../../tramites/models/tramites.models';
+import { BandejaCarreras, BandejaFacultad } from '../../../../tramites/models/tramites.models';
 
 @Component({
   selector: 'app-bandeja-carreras',
@@ -26,6 +26,7 @@ export class BandejaCarrerasComponent extends BaseComponent  implements OnInit, 
   displayedColumns = ['carrera', 'estado' , 'acciones'];
   dataSource = new MatTableDataSource<BandejaCarreras>([]);
   tituloFacultad: string;
+  selectedFacultad: BandejaFacultad;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -40,8 +41,9 @@ export class BandejaCarrerasComponent extends BaseComponent  implements OnInit, 
   }
 
   ngOnInit(): void {
-    const nombreUniversidad = 'ALGUNA UNIVERSIDAD'; // FIXME: Conseguir el nombre de la U de la U seleccionada.
-    this.tituloFacultad = this.langService.getLang(this.eModulo.Dar, 'tit-bandeja-carreras').replace('$nombreUniversidad', '' );
+    this.selectedFacultad = JSON.parse( localStorage.getItem('selectedFacultad')) as BandejaFacultad;
+
+    this.tituloFacultad = this.langService.getLang(this.eModulo.Dar, 'tit-bandeja-carreras').replace('$nombreFacultad', this.selectedFacultad.nombre );
     this.getListaCarreras();
   }
 
@@ -56,16 +58,11 @@ export class BandejaCarrerasComponent extends BaseComponent  implements OnInit, 
     this.unsubscribe$.next(true);
   }
 
-  /* aplicarFiltro(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  } */
-
-  private getListaCarreras(): void {
-    const idFacultad = 1; // FIXME: Traer el id de la universidad
+  getListaCarreras(): void {
+    const idFacultad = this.selectedFacultad.idFacultad;
 
     this.universidadService.getListaCarrerasByIdFacultad( idFacultad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-      this.dataSource.data = resp.data;
+      this.dataSource.data = resp.data ?? [];
     });
   }
 
@@ -76,7 +73,8 @@ export class BandejaCarrerasComponent extends BaseComponent  implements OnInit, 
       data: {
         objetoUniversidad: eTipoObjetoUniversidad.CARRERA,
         operationType    : carreraSelected ? eTipoOperacion.ACTUALIZACION : eTipoOperacion.INSERCION,
-        selectedData     : carreraSelected
+        selectedData     : carreraSelected,
+        idFacultad       : this.selectedFacultad.idFacultad
       }
     });
     dlgEditUniversidad.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {

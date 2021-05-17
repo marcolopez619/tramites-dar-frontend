@@ -8,11 +8,11 @@ export const darLang = {
     'tit-detalle-universidad' : 'Detalle de universidad',
 
     'lbl-facultad' : 'Facultad',
-    'tit-bandeja-facultades' : 'Lista de facultades de : $nombreUniversidad',
+    'tit-bandeja-facultades' : 'Facultades de:$nombreUniversidad',
     'tit-nueva-facultad' : 'Añadir facultad',
 
     'lbl-carrera' : 'Carrera',
-    'tit-bandeja-carreras' : 'Lista de carreras',
+    'tit-bandeja-carreras' : 'Carreras de: $nombreFacultad',
     'tit-nueva-carrera' : 'Añadir carrera',
 
     'lbl-universidad' : 'Universidad',

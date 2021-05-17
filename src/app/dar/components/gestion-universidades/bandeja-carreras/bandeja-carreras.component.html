@@ -2,9 +2,15 @@
 
 <mat-card>
   <mat-card-header class="alt-theme">
-  <mat-toolbar color="primary">
+    <mat-toolbar color="primary">
+      <a mat-button routerLink="/dar/universidad/facultades" matTooltip="{{ langService.getLang(eModulo.Base, 'tit-volver') }}">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </a>
       {{tituloFacultad}}
       <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-actualizar') }}" (click)="getListaCarreras()">
+        <mat-icon>refresh</mat-icon>
+      </a>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Dar, 'tit-nueva-carrera') }}" (click)="onAnadirEditCarrera()">
           <mat-icon>add_circle</mat-icon>
       </a>

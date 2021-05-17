@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../../shared/base.component';
@@ -13,7 +14,6 @@ import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { UniversidadService } from '../../../../shared/services/universidad.service';
 import { BandejaUniversidades } from '../../../../tramites/models/tramites.models';
-import { UniversidadComponent } from '../universidad/universidad.component';
 
 @Component({
   selector: 'app-bandeja-universidades',
@@ -26,6 +26,7 @@ export class BandejaUniversidadesComponent extends BaseComponent  implements OnI
 
   displayedColumns = ['universidad', 'estado' , 'acciones'];
   dataSource = new MatTableDataSource<BandejaUniversidades>([]);
+  isButtonAddEditPressed: boolean;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -34,6 +35,7 @@ export class BandejaUniversidadesComponent extends BaseComponent  implements OnI
     public langService: LangService,
     public contextService: ContextoService,
     private dialog: MatDialog,
+    private router: Router,
     private universidadService: UniversidadService
   ) {
     super();
@@ -54,21 +56,17 @@ export class BandejaUniversidadesComponent extends BaseComponent  implements OnI
     this.unsubscribe$.next(true);
   }
 
-  /* aplicarFiltro(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  } */
-
-  private getListaUniversidades(): void {
+  getListaUniversidades(): void {
     this.universidadService.getAllListaUniversidades().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-      /* // TODO:  Filtrar la suniversidades que no pertenescan al usuario loggeado
-      const idUniversidadUsuarioLoggeado = 1; // FIXME: dato quemado
-      this.dataSource.data = (resp.data as Array<BandejaUniversidades>).filter( x=> x.idUniversidad != idUniversidadUsuarioLoggeado); */
-      this.dataSource.data = (resp.data as Array<BandejaUniversidades>);
+      /* Filtrar la suniversidades que no pertenescan al usuario loggeado */
+      const idUniversidadUsuarioLoggeado = this.contextService.getItemContexto( 'idUniversidad' );
+      this.dataSource.data = (resp.data as Array<BandejaUniversidades>).filter( x => x.idUniversidad !== idUniversidadUsuarioLoggeado);
     });
   }
 
-  onAnadirEditUniversidad(universidadSelected?: BandejaUniversidades): void{
+  onAnadirEditUniversidad(universidadSelected?: BandejaUniversidades): void {
+    this.isButtonAddEditPressed = true;
+
     const dlgEditUniversidad = this.dialog.open( UniversidadCarreraComponent,  {
       disableClose: false,
       width: '1000px',
@@ -80,25 +78,17 @@ export class BandejaUniversidadesComponent extends BaseComponent  implements OnI
     });
     dlgEditUniversidad.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
-        this.getListaUniversidades()
+        this.getListaUniversidades();
       }
     });
   }
 
-  /* onAnadirEditarUniversidad(isAnadir?: boolean): void{
-    const dlgAnadirUniversidad = this.dialog.open( UniversidadComponent,  {
-      disableClose: false,
-      width: '1000px',
-      data: {
-        isAnadir : isAnadir
-      }
-    });
-    dlgAnadirUniversidad.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
-      if (result) {
-        console.log( `---> ${result}` );
-        // TODO: ACTUALIZAR LA BANDEJA PRINCIPAL.
-      }
-    });
-  } */
+  goToFacultades(selectedUniversidad: BandejaUniversidades): void {
+    if ( !this.isButtonAddEditPressed ) {
+      localStorage.setItem( 'selectedUniversidad', JSON.stringify( selectedUniversidad ) );
+      this.router.navigate( [ 'dar/universidad/facultades' ] );
+    }
+    this.isButtonAddEditPressed = false;
+  }
 
 }

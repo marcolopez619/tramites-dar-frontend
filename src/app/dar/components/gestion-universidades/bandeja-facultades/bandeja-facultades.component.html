@@ -3,8 +3,14 @@
 <mat-card>
   <mat-card-header class="alt-theme">
   <mat-toolbar color="primary">
+    <a mat-button routerLink="/dar/universidades/index" matTooltip="{{ langService.getLang(eModulo.Base, 'tit-volver') }}">
+      <mat-icon>keyboard_backspace</mat-icon>
+    </a>
       {{tituloFacultad}}
       <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-actualizar') }}" (click)="getListaFacultades()">
+        <mat-icon>refresh</mat-icon>
+      </a>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Dar, 'tit-nueva-facultad') }}" (click)="onAnadirEditFacultad()">
           <mat-icon>add_circle</mat-icon>
       </a>
@@ -52,6 +58,7 @@
       <mat-row
         shRowHover
         [ngClass]="{'row-action': idSeleccionado === row.idFacultad}"
+        (click)="goToCarrerasFacultadSelected( row )"
         [@fadeInAnim]="true"
         *matRowDef="let row; columns: displayedColumns;">
       </mat-row>

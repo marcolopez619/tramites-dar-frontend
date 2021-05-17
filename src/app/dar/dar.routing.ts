@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
 import { BandejaDarComponent } from './components/bandeja-dar/bandeja-dar.component';
 import { DetalleTramiteComponent } from './components/detalle-tramite/detalle-tramite.component';
+import { BandejaCarrerasComponent } from './components/gestion-universidades/bandeja-carreras/bandeja-carreras.component';
+import { BandejaFacultadesComponent } from './components/gestion-universidades/bandeja-facultades/bandeja-facultades.component';
+import { BandejaUniversidadesComponent } from './components/gestion-universidades/bandeja-universidades/bandeja-universidades.component';
 
 export const darRoutes: Routes = [
   {
@@ -16,7 +19,15 @@ export const darRoutes: Routes = [
           },
           {
               path: 'universidades/index',
-              component: BandejaDarComponent
+              component: BandejaUniversidadesComponent
+          },
+          {
+              path: 'universidad/facultades',
+              component: BandejaFacultadesComponent
+          },
+          {
+              path: 'universidad/facultad/carreras',
+              component: BandejaCarrerasComponent
           }
       ]
   }

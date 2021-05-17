@@ -3,9 +3,14 @@
 <mat-card>
   <mat-card-header class="alt-theme">
   <mat-toolbar color="primary">
+      <a mat-button routerLink="/menu" matTooltip="{{ langService.getLang(eModulo.Base, 'tit-volver') }}">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </a>
       {{ langService.getLang(eModulo.Dar, 'tit-bandeja-universidades') }}
-
       <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-actualizar') }}" (click)="getListaUniversidades()">
+        <mat-icon>refresh</mat-icon>
+      </a>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Dar, 'tit-nueva-universidad') }}" (click)="onAnadirEditUniversidad()">
           <mat-icon>add_circle</mat-icon>
       </a>
@@ -54,6 +59,7 @@
         shRowHover
         [ngClass]="{'row-action': idSeleccionado === row.idUniversidad}"
         [@fadeInAnim]="true"
+        (click)="goToFacultades(row)"
         *matRowDef="let row; columns: displayedColumns;">
       </mat-row>
 
