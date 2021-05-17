@@ -8,9 +8,7 @@ import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template
 import { BaseComponent } from '../../../shared/base.component';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
-import { NuevoTramiteComponent } from '../../../tramites/components/nuevo-tramite/nuevo-tramite.component';
 import { BandejaUsuarios } from '../../../tramites/models/tramites.models';
-import { TramitesService } from '../../../tramites/tramites.service';
 import { UsuariosService } from '../../usuarios.service';
 import { UsuarioComponent } from '../usuario/usuario.component';
 
@@ -39,7 +37,7 @@ export class BandejaUsuariosComponent extends BaseComponent implements OnInit, A
   }
 
   ngOnInit(): void {
-    this.getListaTramites();
+    this.getListaUsuarios();
   }
 
   ngAfterViewInit(): void {
@@ -53,7 +51,7 @@ export class BandejaUsuariosComponent extends BaseComponent implements OnInit, A
     this.unsubscribe$.next(true);
   }
 
-  private getListaTramites(): void {
+  getListaUsuarios(): void {
     this.usuariosService.getAllListaUsuarios().pipe( takeUntil(this.unsubscribe$)).subscribe( allUsuarios => {
       this.dataSource.data = allUsuarios.data;
     });
@@ -75,7 +73,7 @@ export class BandejaUsuariosComponent extends BaseComponent implements OnInit, A
     });
     dlgAnadirEditarUsuario.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
-        this.getListaTramites();
+        this.getListaUsuarios();
       }
     });
   }

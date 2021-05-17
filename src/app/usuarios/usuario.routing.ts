@@ -4,7 +4,7 @@ import { BandejaUsuariosComponent } from './components/bandeja-usuarios/bandeja-
 
 export const usuarioRoutes: Routes = [
   {
-      path: 'usuario',
+      path: 'usuarios',
       children: [
           {
               path: 'index',
