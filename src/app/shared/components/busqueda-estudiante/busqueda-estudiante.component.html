@@ -1,0 +1,64 @@
+<shared-loader-spinner></shared-loader-spinner>
+
+<mat-card>
+  <mat-card-header class="alt-theme">
+    <mat-toolbar shToolbarModal color="primary">
+      <h3>Busqueda de nuevo usuario</h3>
+      <span class="flex-spacer"></span>
+      <!-- <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+      </a> -->
+    </mat-toolbar>
+  </mat-card-header>
+
+
+
+  <mat-card-content>
+
+    <form (submit)="onBuscarEstudianteByRU()" [formGroup]="formBusqueda" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
+
+      <mat-form-field fxFlexFill appearance="outline">
+        <span matPrefix><mat-icon>search</mat-icon>&nbsp;</span>
+        <mat-label>{{this.langService.getLang(eModulo.Base, 'lbl-busqueda' )}} por ru</mat-label>
+        <input matInput formControlName="busquedaRU"  shAutofocus shUppercase required minlength="5" maxlength="7" #input>
+      </mat-form-field>
+    </form>
+
+      <mat-table #table [dataSource]="dataSource" matSort fxFlexFill>
+
+        <ng-container matColumnDef="ci">
+          <mat-header-cell *matHeaderCellDef fxFlex="15" mat-sort-header> {{ langService.getLang(eModulo.Tramite,'lbl-ci') }} </mat-header-cell>
+          <mat-cell *matCellDef="let element" fxFlex="15"> {{element.ci}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="nombreCompleto">
+          <mat-header-cell *matHeaderCellDef fxFlex="35" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-nombre-completo') }} </mat-header-cell>
+          <mat-cell *matCellDef="let element" fxFlex="35"> {{element.nombreCompleto}} &nbsp; </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fechaNacimiento">
+          <mat-header-cell *matHeaderCellDef fxFlex="15" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-nacimiento') }} </mat-header-cell>
+          <mat-cell *matCellDef="let element" fxFlex="15"> {{element.fechaNacimiento | date : 'dd/MM/yyyy' }} &nbsp;
+          </mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="carrera">
+          <mat-header-cell *matHeaderCellDef fxFlex="35" mat-sort-header> {{ langService.getLang(eModulo.Base,'lbl-carrera') }} </mat-header-cell>
+          <mat-cell *matCellDef="let element" fxFlex="35"> {{element.carrera }} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <mat-row #algo (click)="onSelectedUserFromTable(row);" style="cursor: pointer;" [ngClass]="{'row-action': isSelected }" [@fadeInAnim]="true" *matRowDef="let row; columns: displayedColumns;">
+        </mat-row>
+
+      </mat-table>
+      <shared-table-empty [datasource]="dataSource"></shared-table-empty>
+      <br>
+      <br>
+
+
+
+    </mat-card-content>
+</mat-card>
