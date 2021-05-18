@@ -35,8 +35,8 @@ export class HabilitacionPorExcepcionComponent extends BaseComponent implements 
   listaLabelColumnas: Array<string>;
   listaValoresColumnas: Array<any>;
 
-  fechaLimiteSuperior = new Date();
-  fechaLimiteInferior = new Date( this.fechaLimiteSuperior.getFullYear(), this.fechaLimiteSuperior.getMonth(), 1);
+  fechaLimiteInferior = new Date();
+  fechaLimiteSuperior = new Date( this.fechaLimiteInferior.getFullYear(), this.fechaLimiteInferior.getMonth(), this.fechaLimiteInferior.getDate() + 7 );
 
   displayedColumns = ['ci', 'nombreCompleto', 'fechaNacimiento', 'carrera' ];
   dataSource = new MatTableDataSource<BusquedaEstudianteResponse>([]);

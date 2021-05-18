@@ -3,7 +3,7 @@
 <mat-card>
   <mat-card-header class="alt-theme">
   <mat-toolbar shToolbarModal color="primary">
-      <h3>{{ langService.getLang(eModulo.Cites, 'lbl-crear-nuevo-cite') }}</h3>
+      <h3>Nueva habilitacion por excepcion</h3>
       <span class="flex-spacer"></span>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
           <mat-icon>close</mat-icon>
@@ -18,7 +18,7 @@
 
     <!-- Verificacion de requisitos por medio del sistema -->
     <mat-step [stepControl]="formBusqueda">
-      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-crear-nuevo-cite' )}}</ng-template>
+      <ng-template matStepLabel>{{langService.getLang(eModulo.Estudiante, 'lbl-step-1-datos-estudiante' )}}</ng-template>
 
       <form [formGroup]="formBusqueda" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
 
@@ -82,7 +82,7 @@
     </mat-step>
 
     <mat-step [stepControl]="formHabilitacionExcepcion">
-      <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-vista-previa-cite' )}}</ng-template>
+      <ng-template matStepLabel>Tramite y rango de fechas</ng-template>
 
       <form [formGroup]="formHabilitacionExcepcion" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
 

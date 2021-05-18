@@ -23,8 +23,8 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
   formTramite: FormGroup;
   listaTramites: Array<TramiteModel> = [];
   activado = true;
-  fechaLimiteSuperior = new Date();
-  fechaLimiteInferior = new Date( this.fechaLimiteSuperior.getFullYear() - 1, 0, 1);
+  fechaLimiteInferior = new Date();
+  fechaLimiteSuperior = new Date( this.fechaLimiteInferior.getFullYear(), this.fechaLimiteInferior.getMonth() + 3, this.fechaLimiteInferior.getDate() );
 
   elementBandejaSelected: BandejaTramite;
 
