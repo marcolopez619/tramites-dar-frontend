@@ -19,9 +19,16 @@
 
 <mat-card-content>
 
-  <mat-form-field fxFill>
+<!--   <mat-form-field fxFlexFill appearance="outline">
+    <span matPrefix><mat-icon>search</mat-icon>&nbsp;</span>
+    <mat-label>{{this.langService.getLang(eModulo.Base, 'lbl-busqueda' )}} por ru</mat-label>
+    <input matInput formControlName="busquedaRU"  shAutofocus shUppercase required minlength="5" maxlength="7" #input>
+  </mat-form-field> -->
+
+  <mat-form-field fxFill appearance="outline">
+    <span matPrefix><mat-icon>search</mat-icon>&nbsp;</span>
     <mat-label>Búsqueda</mat-label>
-    <input matInput (keyup)="aplicarFiltro($event)" placeholder="" #input>
+    <input matInput (keyup)="aplicarFiltro($event)" placeholder="" #input autocomplete="off">
   </mat-form-field>
 
     <mat-table #table [dataSource]="dataSource" matSort>
