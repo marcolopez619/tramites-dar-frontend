@@ -59,11 +59,13 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
       });
     } else {
       // => Nueva insercion
+      this.activado = true;
+
       this.formUsuario = this.formBuilder.group({
         nombre  : [ undefined , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
         password: [ undefined, Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 10 )])],
         celular : [ undefined , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 15 )])],
-        estado  : [ false , Validators.compose( [ Validators.required ])],
+        estado  : [ this.activado , Validators.compose( [ Validators.required ])],
         idPerfil: [ undefined , Validators.compose( [ Validators.required ])]
       });
     }
