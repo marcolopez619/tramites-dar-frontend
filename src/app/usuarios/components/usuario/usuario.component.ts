@@ -134,7 +134,8 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
   }
 
   onSelectedUser(estudentSelected: BusquedaEstudianteResponse): void {
-    this.formUsuario.controls[ 'idEstudiante' ].setValue( estudentSelected.idEstudiante );
+    this.formUsuario.controls[ 'idEstudiante' ].setValue( estudentSelected.idEstudiante)
+    this.formUsuario.controls[ 'idCarrera' ].setValue( estudentSelected.idCarrera );
   }
 
   onSaveUsuario(): void {
