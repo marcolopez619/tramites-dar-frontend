@@ -105,15 +105,27 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
       // Mostrar el componente de busqueda de estudiante por RU
       this.showSearchEstudianteComponent = true;
       this.showSearchCarreraComponent = false;
+      this.formUsuario.controls[ 'idEstudiante' ].setValue( undefined );
+      this.formUsuario.controls[ 'idEstudiante' ].setValidators( Validators.required );
+      this.formUsuario.controls[ 'idEstudiante' ].updateValueAndValidity();
+      this.formUsuario.controls[ 'idCarrera' ].setValidators( undefined );
+      this.formUsuario.controls[ 'idCarrera' ].updateValueAndValidity();
     } else if ( event.value === ePerfil.DIRECTOR_DE_CARRERA ) {
+      this.getListaCarreras();
       this.showSearchCarreraComponent = true;
       this.showSearchEstudianteComponent = false;
-      this.getListaCarreras();
+      this.formUsuario.controls[ 'idEstudiante' ].setValidators( undefined );
+      this.formUsuario.controls[ 'idEstudiante' ].updateValueAndValidity();
+      this.formUsuario.controls[ 'idCarrera' ].setValue( undefined );
+      this.formUsuario.controls[ 'idCarrera' ].setValidators( Validators.required );
+      this.formUsuario.controls[ 'idCarrera' ].updateValueAndValidity();
     } else {
       this.showSearchCarreraComponent = false;
       this.showSearchEstudianteComponent = false;
-
-      this.formUsuario.controls[ 'idEstudiante' ].setValue( -1 ); // Con -1, indicamos q no es un estudiante.
+      this.formUsuario.controls[ 'idCarrera' ].setValidators( undefined );
+      this.formUsuario.controls[ 'idCarrera' ].updateValueAndValidity();
+      this.formUsuario.controls[ 'idEstudiante' ].setValidators( undefined );
+      this.formUsuario.controls[ 'idEstudiante' ].updateValueAndValidity();
     }
   }
 

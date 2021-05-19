@@ -140,6 +140,7 @@ export interface BandejaUsuarios extends BandejaAbstract {
   estado?: number;
   idPerfil?: number;
   nombrePerfil?: string;
+  carrera?: string;
 }
 
 export interface BusquedaEstudianteResponse {
