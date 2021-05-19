@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Resultado } from '../shared/models/resultado.model';
@@ -26,6 +26,11 @@ export class UsuariosService {
 
   insertUsuario(usuarioInsert: UsuarioInsert): Observable<Resultado> {
     return this.httpClient.post<Resultado>(`${this.baseURL}/usuario`, usuarioInsert );
+  }
+
+  deleteUsuario(pIdUsuario: number): Observable<Resultado> {
+    const params = new HttpParams().set( 'idUsuario' , pIdUsuario.toString() );
+    return this.httpClient.delete<Resultado>(`${this.baseURL}/usuario`,{ params: params } );
   }
 
   updateUsuario(usuarioUpdate: UsuarioUpdate): Observable<Resultado> {

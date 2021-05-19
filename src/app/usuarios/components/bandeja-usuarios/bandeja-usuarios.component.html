@@ -55,9 +55,9 @@
           <a mat-icon-button (click)="onAddEditusuario(element)" matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}">
             <mat-icon>edit</mat-icon>
           </a>
-          <!-- <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}" >
+          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}" (click)="onDeleteUsuario(element)">
             <mat-icon>delete_forever</mat-icon>
-          </a> -->
+          </a>
         </mat-cell>
       </ng-container>
 

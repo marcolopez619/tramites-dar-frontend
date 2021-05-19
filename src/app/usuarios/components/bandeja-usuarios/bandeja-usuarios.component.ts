@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { BandejaUsuarios } from '../../../tramites/models/tramites.models';
@@ -74,6 +75,27 @@ export class BandejaUsuariosComponent extends BaseComponent implements OnInit, A
     dlgAnadirEditarUsuario.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
         this.getListaUsuarios();
+      }
+    });
+  }
+
+  onDeleteUsuario(pSelectedUser?: BandejaUsuarios): void {
+    const dlgEliminarUsuario = this.dialog.open( ConfirmDialogComponent,  {
+      disableClose: false,
+      width: '500px',
+      data: {
+        title  : 'Eliminar',
+        icon   : 'contact_support',
+        content: `¿Seguro de eliminar a : ${pSelectedUser.nombre} ?`
+       }
+    });
+    dlgEliminarUsuario.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
+      if (result) {
+
+        this.usuariosService.deleteUsuario( pSelectedUser.idUsuario ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+          this.getListaUsuarios();
+        });
+
       }
     });
   }
