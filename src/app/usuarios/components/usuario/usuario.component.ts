@@ -29,6 +29,7 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
   activado = true;
   listaPerfiles: Array<Perfil>;
   listaCarreras: Array<CarreraModel>;
+  estudentSelected: BusquedaEstudianteResponse;
   showSearchEstudianteComponent: boolean;
   showSearchCarreraComponent: boolean;
 
@@ -134,6 +135,7 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
   }
 
   onSelectedUser(estudentSelected: BusquedaEstudianteResponse): void {
+    this.estudentSelected = estudentSelected;
     this.formUsuario.controls[ 'idEstudiante' ].setValue( estudentSelected.idEstudiante)
     this.formUsuario.controls[ 'idCarrera' ].setValue( estudentSelected.idCarrera );
   }
@@ -158,8 +160,8 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
       // => Nueva insercion
       const usuarioInsert: UsuarioInsert = {
         idPerfil    : this.formUsuario.controls[ 'idPerfil' ].value,
-        idEstudiante: this.formUsuario.controls[ 'idEstudiante' ].value,
-        idCarrera   : this.formUsuario.controls[ 'idCarrera' ].value,
+        idEstudiante: (this.estudentSelected) ? this.formUsuario.controls[ 'idEstudiante' ].value : -1,
+        idCarrera   : this.formUsuario.controls[ 'idCarrera' ].value ?? 1000,
         nombre      : this.formUsuario.controls[ 'nombre' ].value,
         password    : this.formUsuario.controls[ 'password' ].value,
         celular     : this.formUsuario.controls[ 'celular' ].value,
