@@ -51,6 +51,10 @@ export class UniversidadService {
     return this.httpClient.get<Resultado>(`${this.baseURL}/carrera/${pIdFacultad}`);
   }
 
+  getListaCarrerasByIdUniversidad(pIdUniversidad: number): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/carrera/${pIdUniversidad}`);
+  }
+
   getListaCarreras(): Observable<Resultado> {
     return this.httpClient.get<Resultado>(`${this.baseURL}/carrera`);
   }

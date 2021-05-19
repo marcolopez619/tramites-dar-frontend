@@ -4,6 +4,7 @@ export interface Perfil {
 }
 export interface UsuarioInsert {
   idPerfil?: number;
+  idEstudiante?: number;
   nombre?: string;
   password?: string;
   celular?: string;

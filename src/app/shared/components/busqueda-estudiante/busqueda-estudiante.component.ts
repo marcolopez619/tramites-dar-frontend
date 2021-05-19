@@ -1,9 +1,8 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import * as EventEmitter from 'events';
 import { takeUntil } from 'rxjs/operators';
 import { EstudianteService } from '../../../estudiante/estudiante.service';
 import { BusquedaEstudianteResponse } from '../../../tramites/models/tramites.models';
@@ -78,7 +77,7 @@ export class BusquedaEstudianteComponent  extends BaseComponent implements OnIni
 
   onSelectedUserFromTable(userSelected: BusquedaEstudianteResponse): void {
     this.isSelected = !this.isSelected;
-    this.onSelectedUser.emit( userSelected as any );
+    this.onSelectedUser.next( userSelected as any );
   }
 
 }

@@ -1,15 +1,15 @@
 <shared-loader-spinner></shared-loader-spinner>
 
 <mat-card>
-  <mat-card-header class="alt-theme">
+  <!-- <mat-card-header class="alt-theme">
     <mat-toolbar shToolbarModal color="primary">
       <h3>Busqueda de nuevo usuario</h3>
       <span class="flex-spacer"></span>
-      <!-- <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
+       <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
         <mat-icon>close</mat-icon>
-      </a> -->
+        </a>
     </mat-toolbar>
-  </mat-card-header>
+  </mat-card-header> -->
 
 
 
@@ -19,7 +19,7 @@
 
       <mat-form-field fxFlexFill appearance="outline">
         <span matPrefix><mat-icon>search</mat-icon>&nbsp;</span>
-        <mat-label>{{this.langService.getLang(eModulo.Base, 'lbl-busqueda' )}} por ru</mat-label>
+        <mat-label>{{this.langService.getLang(eModulo.Base, 'lbl-busqueda' )}} de estudiante por R.U.</mat-label>
         <input matInput formControlName="busquedaRU"  shAutofocus shUppercase required minlength="5" maxlength="7" #input>
       </mat-form-field>
     </form>

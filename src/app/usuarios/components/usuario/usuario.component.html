@@ -59,7 +59,7 @@
              <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
                <mat-form-field fxFlex>
                  <mat-label>{{langService.getLang(eModulo.Usuario, 'lbl-perfil' )}} : </mat-label>
-                 <mat-select formControlName="idPerfil" placeholder="Seleccione perfil: ">
+                 <mat-select formControlName="idPerfil" placeholder="Seleccione perfil: " (selectionChange)="onChangePerfil($event)">
                    <mat-option *ngFor="let perfil of listaPerfiles" [value]="perfil.idPerfil">
                      {{perfil.nombrePerfil}}
                    </mat-option>
@@ -73,6 +73,8 @@
               <span>Estado: </span>
               <mat-slide-toggle [formControl]="this.formUsuario.get('estado')" [checked]="activado" (change)="onChangeSlideToggleValue($event)"></mat-slide-toggle>
           </div>
+
+          <sh-busqueda-estudiante *ngIf="showSearchEstudianteComponent" (onSelectedUser)="onSelectedUser($event)"></sh-busqueda-estudiante>
 
 
         </div>
