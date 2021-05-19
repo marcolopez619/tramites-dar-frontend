@@ -9,8 +9,9 @@ import { BaseComponent } from '../../../shared/base.component';
 import { ePerfil } from '../../../shared/enums/perfil.enum';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
+import { UniversidadService } from '../../../shared/services/universidad.service';
 import { BandejaUsuarios, BusquedaEstudianteResponse } from '../../../tramites/models/tramites.models';
-import { Perfil, UsuarioInsert, UsuarioUpdate } from '../../models/usuario.models';
+import { CarreraModel, Perfil, UsuarioInsert, UsuarioUpdate } from '../../models/usuario.models';
 import { UsuariosService } from '../../usuarios.service';
 
 @Component({
@@ -27,6 +28,7 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
   selectedUser: BandejaUsuarios;
   activado = true;
   listaPerfiles: Array<Perfil>;
+  listaCarreras: Array<CarreraModel>;
   showSearchEstudianteComponent: boolean;
   showSearchCarreraComponent: boolean;
 
@@ -36,7 +38,8 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
     public langService: LangService,
     public contextService: ContextoService,
     private formBuilder: FormBuilder,
-    private usuariosService: UsuariosService
+    private usuariosService: UsuariosService,
+    private universidadService: UniversidadService
   ) {
     super();
   }
@@ -71,6 +74,7 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
         celular     : [ undefined , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 15 )])],
         estado      : [ this.activado , Validators.compose( [ Validators.required ])],
         idEstudiante: [ undefined , Validators.compose( [ Validators.required ])],
+        idCarrera   : [ undefined , Validators.compose( [ Validators.required ])],
         idPerfil    : [ undefined , Validators.compose( [ Validators.required ])]
       });
     }
@@ -81,6 +85,14 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
 
     this.usuariosService.getListaPerfiles().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.listaPerfiles = resp.data;
+    });
+  }
+
+  private getListaCarreras(): void{
+    const idUniversidad = this.contextService.getItemContexto('idUniversidad');
+
+    this.universidadService.getListaCarrerasByIdUniversidad( idUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.listaCarreras = resp.data;
     });
   }
 
@@ -96,13 +108,17 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
     } else if ( event.value === ePerfil.DIRECTOR_DE_CARRERA ) {
       this.showSearchCarreraComponent = true;
       this.showSearchEstudianteComponent = false;
-      //..
+      this.getListaCarreras();
     } else {
       this.showSearchCarreraComponent = false;
       this.showSearchEstudianteComponent = false;
 
       this.formUsuario.controls[ 'idEstudiante' ].setValue( -1 ); // Con -1, indicamos q no es un estudiante.
     }
+  }
+
+  onChangeCarrera(event: MatSelectChange): void{
+    this.formUsuario.controls[ 'idCarrera' ].setValue( event.value );
   }
 
   onSelectedUser(estudentSelected: BusquedaEstudianteResponse): void {
@@ -130,6 +146,7 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
       const usuarioInsert: UsuarioInsert = {
         idPerfil    : this.formUsuario.controls[ 'idPerfil' ].value,
         idEstudiante: this.formUsuario.controls[ 'idEstudiante' ].value,
+        idCarrera   : this.formUsuario.controls[ 'idCarrera' ].value,
         nombre      : this.formUsuario.controls[ 'nombre' ].value,
         password    : this.formUsuario.controls[ 'password' ].value,
         celular     : this.formUsuario.controls[ 'celular' ].value,

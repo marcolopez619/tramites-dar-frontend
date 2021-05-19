@@ -14,6 +14,9 @@ export const usuarioLang = {
     'lbl-celular-invalido' : 'Celular invalido',
 
     'lbl-estado'         : 'Estado',
-    'lbl-perfil'         : 'Perfil'
+    'lbl-perfil'         : 'Perfil',
+
+    'lbl-carrera' : 'Carrera',
+    'lbl-carrera-invalida' : 'La carrera es obligatoria',
   }
 };

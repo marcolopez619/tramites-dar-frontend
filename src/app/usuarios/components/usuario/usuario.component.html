@@ -74,7 +74,26 @@
               <mat-slide-toggle [formControl]="this.formUsuario.get('estado')" [checked]="activado" (change)="onChangeSlideToggleValue($event)"></mat-slide-toggle>
           </div>
 
+
+
+
           <sh-busqueda-estudiante *ngIf="showSearchEstudianteComponent" (onSelectedUser)="onSelectedUser($event)"></sh-busqueda-estudiante>
+
+
+
+
+
+          <div  fxLayout="row" fxLayoutAlign="center center" fxFlexFill  *ngIf="showSearchCarreraComponent">
+              <mat-form-field fxFlex>
+                <mat-label>{{langService.getLang(eModulo.Usuario, 'lbl-carrera' )}} : </mat-label>
+                <mat-select formControlName="idCarrera" (selectionChange)="onChangeCarrera($event)" >
+                  <mat-option *ngFor="let carrera of listaCarreras" [value]="carrera.idCarrera">
+                    {{carrera.nombre}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formUsuario.controls['idCarrera'].invalid">{{ langService.getLang(eModulo.Usuario,'lbl-carrera-invalida') }}</mat-error>
+              </mat-form-field>
+          </div>
 
 
         </div>

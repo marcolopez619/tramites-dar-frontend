@@ -5,6 +5,7 @@ export interface Perfil {
 export interface UsuarioInsert {
   idPerfil?: number;
   idEstudiante?: number;
+  idCarrera?: number;
   nombre?: string;
   password?: string;
   celular?: string;
@@ -13,4 +14,12 @@ export interface UsuarioInsert {
 
 export interface UsuarioUpdate extends UsuarioInsert {
   idUsuario?: number;
+}
+
+
+export interface CarreraModel{
+  idCarrera?: number;
+  nombre?: string;
+  estado?: number;
+  idFacultad?: number;
 }
