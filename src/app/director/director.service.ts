@@ -14,8 +14,8 @@ export class DirectorService {
     private contextoService: ContextoService
   ) { }
 
-  getTramitesPorAtender(): Observable<Resultado> {
-    return this.httpClient.get<Resultado>(`${this.baseURL}`);
+  getTramitesPorAtender(pIdeCarrera: number): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/${pIdeCarrera}`);
   }
 
   /* getDetalleTramitePorAtender(pIdTramite: number, pIdEstudiante: number): Observable<Resultado> {

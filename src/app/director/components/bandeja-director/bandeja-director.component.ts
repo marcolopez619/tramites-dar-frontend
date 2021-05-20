@@ -9,7 +9,7 @@ import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template
 import { BaseComponent } from '../../../shared/base.component';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
-import { BandejaDar } from '../../../tramites/models/tramites.models';
+import { BandejaDirector } from '../../../tramites/models/tramites.models';
 import { DirectorService } from '../../director.service';
 
 @Component({
@@ -22,7 +22,7 @@ import { DirectorService } from '../../director.service';
 export class BandejaDirectorComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
 
   displayedColumns = ['nombreCompleto', 'carrera', 'tipoTramite', 'fechaSolicitud', 'estado', 'acciones' ];
-  dataSource = new MatTableDataSource<BandejaDar>([]); // FIXME:
+  dataSource = new MatTableDataSource<BandejaDirector>([]); // FIXME:
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -57,14 +57,15 @@ export class BandejaDirectorComponent extends BaseComponent  implements OnInit, 
   }
 
   getListaTramites(): void {
+    const idCarrera = this.contextService.getItemContexto( 'idCarrera' );
 
-    this.directorService.getTramitesPorAtender().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+    this.directorService.getTramitesPorAtender( idCarrera ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.dataSource.data = resp.data;
     });
   }
 
-  onVerDetalleTramite(pElement: BandejaDar ): void {
+  onVerDetalleTramite(pElement: BandejaDirector ): void {
     localStorage.setItem( 'selectedTramite', JSON.stringify( pElement ) );
-    this.router.navigate([ 'dar/detalle/tramite' ]); // FIXME:
+    this.router.navigate([ 'director/detalle/tramite' ]); // FIXME:
   }
 }

@@ -40,17 +40,17 @@
 
       <ng-container matColumnDef="tipoTramite">
         <mat-header-cell *matHeaderCellDef fxFlex="20" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-tipo-tramite') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="20"> {{element.tipoTramite}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="20"> {{element.tramite}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="fechaSolicitud" >
         <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-solicitud') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaSolicitud | date : 'dd/MM/yyyy' }} &nbsp;</mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaProceso | date : 'dd/MM/yyyy' }} &nbsp;</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="estado" >
         <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.estado | estadoToLiteral }} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.estado }} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="acciones">
@@ -72,7 +72,7 @@
 
       <mat-row
         shRowHover
-        [ngClass]="{'row-action': idSeleccionado === row.idEstudianteTramite}"
+        [ngClass]="{'row-action': idSeleccionado === row.idEstudianteAnulacion}"
         [@fadeInAnim]="true"
         (click)="onVerDetalleTramite(row)"
         *matRowDef="let row; columns: displayedColumns;">

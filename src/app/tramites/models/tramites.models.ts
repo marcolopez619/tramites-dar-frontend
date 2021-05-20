@@ -101,6 +101,31 @@ export interface BandejaDar extends BandejaAbstract {
   tipoTramite?: string;
 }
 
+export interface BandejaDirector {
+  idEstudiante?: number;
+  ru?: number;
+  ci?: string;
+  complemento?: string;
+  paterno?: string;
+  materno?: string;
+  nombres?: string;
+  fechaNacimiento?: Date;
+  sexo?: string;
+  idAnulacion?: number;
+  fechaSolicitud?: Date;
+  idCarreraOrigen?: number;
+  carrera?: string;
+  motivo?: string;
+  idEstudianteAnulacion?: number;
+  fechaProceso?: Date;
+  observaciones?: string;
+  idTramite?: number;
+  tramite?: string;
+  estado?: string;
+  idEntidad?: number;
+  entidad?: string;
+}
+
 export interface BandejaUniversidades extends BandejaAbstract {
   idUniversidad?: number;
   nombre?: string;
