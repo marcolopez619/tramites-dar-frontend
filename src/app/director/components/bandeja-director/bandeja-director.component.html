@@ -45,7 +45,7 @@
 
       <ng-container matColumnDef="fechaSolicitud" >
         <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-solicitud') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaProceso | date : 'dd/MM/yyyy' }} &nbsp;</mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaSolicitud | date : 'dd/MM/yyyy HH:mm:ss' }} &nbsp;</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="estado" >
@@ -72,7 +72,7 @@
 
       <mat-row
         shRowHover
-        [ngClass]="{'row-action': idSeleccionado === row.idEstudianteTipoTramite}"
+        [ngClass]="{'row-action': idSeleccionado === row.idEstudianteTipoTramiteTablaIntermedia}"
         [@fadeInAnim]="true"
         (click)="onVerDetalleTramite(row)"
         *matRowDef="let row; columns: displayedColumns;">

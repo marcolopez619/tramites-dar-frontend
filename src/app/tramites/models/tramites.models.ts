@@ -116,7 +116,7 @@ export interface BandejaDirector {
   idCarreraOrigen?: number;
   carrera?: string;
   motivo?: string;
-  idEstudianteTipoTramite?: number;
+  idEstudianteTipoTramiteTablaIntermedia?: number;
   fechaProceso?: Date;
   observaciones?: string;
   idTramite?: number;

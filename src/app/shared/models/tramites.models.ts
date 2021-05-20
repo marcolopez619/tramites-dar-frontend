@@ -22,3 +22,12 @@ export interface EstadoTramiteUpdate{
   idEstudianteTipoTramite?: number;
   estado?: number;
 }
+
+
+export interface TablaIntermediaInsert{
+  idTipoTramite?: number;
+  idEstudianteTipoTramite?: number;
+  idEstado?: number;
+  idEntidad?: number;
+  observaciones?: string;
+}

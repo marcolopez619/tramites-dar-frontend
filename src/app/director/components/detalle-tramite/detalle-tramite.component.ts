@@ -17,7 +17,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 import { eEstado } from '../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../shared/enums/tipoTramite.enum';
 import { EstudianteModel } from '../../../shared/models/estudiante.model';
-import { EstadoTramiteUpdate } from '../../../shared/models/tramites.models';
+import { EstadoTramiteUpdate, TablaIntermediaInsert } from '../../../shared/models/tramites.models';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { TramitesAcademicosService } from '../../../shared/services/tramites-academicos.service';
@@ -226,16 +226,28 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
 
     if ( this.selectedTramite.idEstado === eEstado.ENVIADO) {
 
+      const pTablaIntermediaInsert : TablaIntermediaInsert = {
+        idTipoTramite          : this.selectedTramite.idTramite,
+        idEstudianteTipoTramite: this.selectedTramite.idEstudianteTipoTramiteTablaIntermedia,
+        idEstado               : eEstado.RECEPCIONADO,
+        idEntidad              : this.selectedTramite.idEntidad,
+        observaciones          : undefined
+      }
+
+      this.tramiteAcademicoService.insertDataTablaIntermedia( pTablaIntermediaInsert ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+        console.log( `${resp.data}` );
+      });
+
       // Actualiza el estado del tramite a recepcionado
-      const estadoTramiteUpdate: EstadoTramiteUpdate = {
+      /* const estadoTramiteUpdate: EstadoTramiteUpdate = {
         idTipoTramite          : this.selectedTramite.idTramite, // Anulacion, cambio de carrera, etc
-        idEstudianteTipoTramite: this.selectedTramite.idEstudianteTipoTramite, // id de la tabla intermedia entre estudiante y anulaciones | cambio de carrera | suspenciones , etc
+        idEstudianteTipoTramite: this.selectedTramite.idEstudianteTipoTramiteTablaIntermedia, // id de la tabla intermedia entre estudiante y anulaciones | cambio de carrera | suspenciones , etc
         estado                 : eEstado.RECEPCIONADO // Nuevo estado del tramite en la tabla intermedia
       };
 
       this.tramiteAcademicoService.updateEstadoTramite( estadoTramiteUpdate ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
         console.log( `${resp.data}` );
-      });
+      }); */
 
     }
 
