@@ -14,10 +14,13 @@ import { BandejaAnulacion } from '../../../estudiante/models/anulacion.models';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { eEstado } from '../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../shared/enums/tipoTramite.enum';
 import { EstudianteModel } from '../../../shared/models/estudiante.model';
+import { EstadoTramiteUpdate } from '../../../shared/models/tramites.models';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
+import { TramitesAcademicosService } from '../../../shared/services/tramites-academicos.service';
 import { BandejaDar, BandejaCambioCarrera, BandejaSuspencion, BandejaReadmision, BandejaTranseferencia, BandejaTraspasoUniversidad, BandejaDirector } from '../../../tramites/models/tramites.models';
 
 @Component({
@@ -33,7 +36,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
   listaLabelColumnas: Array<string>;
   listaValoresColumnas: Array<any>;
   detalleTramite: any;
-  selectedTramite : BandejaDirector;
+  selectedTramite: BandejaDirector;
 
   constructor(
     public langService: LangService,
@@ -42,6 +45,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
     private datePipe: DatePipe,
     private formBuilder: FormBuilder,
     private estudianteService: EstudianteService,
+    private tramiteAcademicoService: TramitesAcademicosService,
 
     private anulacionService: AnulacionService,
     private cambioDeCarreraService: CambioCarreraService,
@@ -61,6 +65,8 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
     });
 
     this.getDatosEstudiante();
+
+    this.verificarEstadoTramite();
 
     const idTramite = this.getTipoTramite( this.selectedTramite.idTramite) ;
     const idEstudiante = this.selectedTramite.idEstudiante;
@@ -216,6 +222,25 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
     }
   }
 
+  private verificarEstadoTramite(): void {
+
+    if ( this.selectedTramite.idEstado === eEstado.ENVIADO) {
+
+      // Actualiza el estado del tramite a recepcionado
+      const estadoTramiteUpdate: EstadoTramiteUpdate = {
+        idTipoTramite          : this.selectedTramite.idTramite, // Anulacion, cambio de carrera, etc
+        idEstudianteTipoTramite: this.selectedTramite.idEstudianteTipoTramite, // id de la tabla intermedia entre estudiante y anulaciones | cambio de carrera | suspenciones , etc
+        estado                 : eEstado.RECEPCIONADO // Nuevo estado del tramite en la tabla intermedia
+      };
+
+      this.tramiteAcademicoService.updateEstadoTramite( estadoTramiteUpdate ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+        console.log( `${resp.data}` );
+      });
+
+    }
+
+  }
+
   onAprobarTramite(): void {
     const dlgAprobar = this.dialog.open( ConfirmDialogComponent , {
       disableClose: false,
@@ -289,4 +314,3 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
   }
 
 }
-

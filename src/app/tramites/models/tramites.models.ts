@@ -116,11 +116,12 @@ export interface BandejaDirector {
   idCarreraOrigen?: number;
   carrera?: string;
   motivo?: string;
-  idEstudianteAnulacion?: number;
+  idEstudianteTipoTramite?: number;
   fechaProceso?: Date;
   observaciones?: string;
   idTramite?: number;
   tramite?: string;
+  idEstado?: number;
   estado?: string;
   idEntidad?: number;
   entidad?: string;

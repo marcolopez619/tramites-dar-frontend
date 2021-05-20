@@ -16,3 +16,9 @@ export interface HabilitacionTramiteModelInsert{
 export interface HabilitacionTramiteModelUpdate extends HabilitacionTramiteModelInsert{
   idHabilitacionTramite?: number;
 }
+
+export interface EstadoTramiteUpdate{
+  idTipoTramite?: number;
+  idEstudianteTipoTramite?: number;
+  estado?: number;
+}

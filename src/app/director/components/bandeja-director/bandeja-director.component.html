@@ -72,7 +72,7 @@
 
       <mat-row
         shRowHover
-        [ngClass]="{'row-action': idSeleccionado === row.idTipoTramite}"
+        [ngClass]="{'row-action': idSeleccionado === row.idEstudianteTipoTramite}"
         [@fadeInAnim]="true"
         (click)="onVerDetalleTramite(row)"
         *matRowDef="let row; columns: displayedColumns;">

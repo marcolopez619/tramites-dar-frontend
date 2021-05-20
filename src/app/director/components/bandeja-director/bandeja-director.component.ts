@@ -7,9 +7,14 @@ import { takeUntil } from 'rxjs/operators';
 import { DarService } from '../../../dar/dar.service';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
+import { eEstado } from '../../../shared/enums/estado.enum';
+import { eTipoTramite } from '../../../shared/enums/tipoTramite.enum';
+import { EstadoTramiteUpdate } from '../../../shared/models/tramites.models';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
+import { TramitesAcademicosService } from '../../../shared/services/tramites-academicos.service';
 import { BandejaDirector } from '../../../tramites/models/tramites.models';
+import { TramitesService } from '../../../tramites/tramites.service';
 import { DirectorService } from '../../director.service';
 
 @Component({
