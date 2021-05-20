@@ -1,7 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { AnulacionService } from '../../../estudiante/components/anulacion/anulacion.service';
 import { CambioCarreraService } from '../../../estudiante/components/cambio-carrera.service';
@@ -16,12 +17,13 @@ import { BaseComponent } from '../../../shared/base.component';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { eEstado } from '../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../shared/enums/tipoTramite.enum';
+import { eEntidad } from '../../../shared/enums/tipo_entidad.enum';
 import { EstudianteModel } from '../../../shared/models/estudiante.model';
-import { EstadoTramiteUpdate, TablaIntermediaInsert } from '../../../shared/models/tramites.models';
+import { TablaIntermediaInsert } from '../../../shared/models/tramites.models';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { TramitesAcademicosService } from '../../../shared/services/tramites-academicos.service';
-import { BandejaDar, BandejaCambioCarrera, BandejaSuspencion, BandejaReadmision, BandejaTranseferencia, BandejaTraspasoUniversidad, BandejaDirector } from '../../../tramites/models/tramites.models';
+import { BandejaCambioCarrera, BandejaDirector, BandejaReadmision, BandejaSuspencion, BandejaTranseferencia, BandejaTraspasoUniversidad } from '../../../tramites/models/tramites.models';
 
 @Component({
   selector: 'app-detalle-tramite',
@@ -42,6 +44,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
     public langService: LangService,
     public contextService: ContextoService,
     private dialog: MatDialog,
+    private router: Router,
     private datePipe: DatePipe,
     private formBuilder: FormBuilder,
     private estudianteService: EstudianteService,
@@ -222,9 +225,35 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
     }
   }
 
+  private pasarSiguienteNivel(pEstado: eEstado, pEntidad: eEntidad | number, pObservaciones: string, redireccionarToBandeja?: boolean ): void {
+
+    const pTablaIntermediaInsert: TablaIntermediaInsert = {
+      idTipoTramite          : this.selectedTramite.idTramite,
+      idEstudianteTipoTramite: this.selectedTramite.idEstudianteTipoTramiteTablaIntermedia,
+      idEstado               : pEstado,
+      idEntidad              : pEntidad,
+      observaciones          : pObservaciones
+    };
+
+    this.tramiteAcademicoService.insertDataTablaIntermedia( pTablaIntermediaInsert ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      console.log( `${JSON.stringify(resp.data)}` );
+
+      if (redireccionarToBandeja) {
+        this.router.navigate([ 'director/bandeja/index' ]);
+      }
+
+    });
+  }
+
   private verificarEstadoTramite(): void {
 
     if ( this.selectedTramite.idEstado === eEstado.ENVIADO) {
+      this.pasarSiguienteNivel( eEstado.RECEPCIONADO, this.selectedTramite.idEntidad, undefined  );
+    }
+
+    //** SE EJECUTA CORREVTAMNETE **/
+
+    /* if ( this.selectedTramite.idEstado === eEstado.ENVIADO) {
 
       const pTablaIntermediaInsert : TablaIntermediaInsert = {
         idTipoTramite          : this.selectedTramite.idTramite,
@@ -236,7 +265,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
 
       this.tramiteAcademicoService.insertDataTablaIntermedia( pTablaIntermediaInsert ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
         console.log( `${resp.data}` );
-      });
+      }); */
 
       // Actualiza el estado del tramite a recepcionado
       /* const estadoTramiteUpdate: EstadoTramiteUpdate = {
@@ -251,8 +280,6 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
 
     }
 
-  }
-
   onAprobarTramite(): void {
     const dlgAprobar = this.dialog.open( ConfirmDialogComponent , {
       disableClose: false,
@@ -266,7 +293,9 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
 
     dlgAprobar.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe((result) => {
       if (result) {
+        const observaciones = this.formDetalleTramite.controls[ 'observaciones' ].value;
 
+        this.pasarSiguienteNivel( eEstado.APROBADO, eEntidad.ENCARGADO_DAR, observaciones, true );
       }
     });
   }
