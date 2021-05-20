@@ -55,12 +55,12 @@ export class AnulacionComponent extends BaseComponent  implements OnInit {
   onImprimirFormulario(): void {
 
     const anulacionInsert: AnulacionInsert = {
+      idEstudiante   : this.datosEstudiante.idEstudiante,
       motivo         : this.formAnulacion.controls[ 'motivo' ].value,
       idCarreraOrigen: this.datosEstudiante.idCarrera,
-      idEstudiante   : this.datosEstudiante.idEstudiante,
       idTramite      : eTipoTramite.ANULACION,
-      idEstado       : eEstado.ACTIVADO,
-      idEntidad      : eEntidad.ESTUDIANTE,
+      idEstado       : eEstado.ENVIADO,
+      idEntidad      : eEntidad.DIRECTOR_DE_CARRERA_ORIGEN,
       observaciones  : undefined
     };
 

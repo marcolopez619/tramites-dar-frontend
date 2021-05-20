@@ -76,6 +76,7 @@ export const baseLang = {
             'tit-documentos-adjuntos' : 'Documentos adjuntos',
             'tit-cantidad-documentos-adjuntos' : 'Cantidad permitida: $cantidadPermitida archivos',
             'lbl-estado' : 'Estado',
+            'lbl-entidad-destino' : 'Destino',
             'lbl-error-supero-cantidad-maxima-permitida' : 'Solo se permite $cantidadUsuario usuarios',
             'lbl-progreso-subida' : 'Progreso',
             'lbl-doc-adj-no-encontrado' : 'El documento seleccionado no se encuentra en el servidor para su descarga',

@@ -18,8 +18,10 @@ export interface BandejaAnulacion extends BandejaAbstract {
   fechaProceso?: Date;
   observaciones?: string;
   idTramite?: number;
-  tipoTramite?: string;
+  tramite?:string;
   estado?: number;
+  idEntidad?: number;
+  entidad?: string;
 }
 
 export interface AnulacionInsert {

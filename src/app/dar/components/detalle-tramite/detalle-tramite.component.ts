@@ -169,7 +169,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
       case eTipoTramite.ANULACION:
         const dataAnulacion = data as BandejaAnulacion;
         this.listaLabelColumnas = ['Tramite solicitado', 'Carrera a anular', 'Fecha solicitud', 'Motivo'];
-        this.listaValoresColumnas = [dataAnulacion.tipoTramite , dataAnulacion.carrera, dataAnulacion.fechaSolicitud.toString(), dataAnulacion.motivo];
+        this.listaValoresColumnas = [dataAnulacion.tramite , dataAnulacion.carrera, dataAnulacion.fechaSolicitud.toString(), dataAnulacion.motivo];
         break;
       case eTipoTramite.CAMBIO_DE_CARRERA:
         const dataCambioCarrera = data as BandejaCambioCarrera;
