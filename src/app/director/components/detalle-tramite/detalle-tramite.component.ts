@@ -11,18 +11,21 @@ import { TransferenciaService } from '../../../estudiante/components/transferenc
 import { TraspasoUniversidadService } from '../../../estudiante/components/traspaso-universidad/traspaso-universidad.service';
 import { EstudianteService } from '../../../estudiante/estudiante.service';
 import { BandejaAnulacion } from '../../../estudiante/models/anulacion.models';
+import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { eTipoTramite } from '../../../shared/enums/tipoTramite.enum';
 import { EstudianteModel } from '../../../shared/models/estudiante.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
-import { BandejaDar, BandejaCambioCarrera, BandejaSuspencion, BandejaReadmision, BandejaTranseferencia, BandejaTraspasoUniversidad } from '../../../tramites/models/tramites.models';
+import { BandejaDar, BandejaCambioCarrera, BandejaSuspencion, BandejaReadmision, BandejaTranseferencia, BandejaTraspasoUniversidad, BandejaDirector } from '../../../tramites/models/tramites.models';
 
 @Component({
   selector: 'app-detalle-tramite',
   templateUrl: './detalle-tramite.component.html',
-  styleUrls: ['./detalle-tramite.component.css']
+  styleUrls: ['./detalle-tramite.component.css'],
+  animations: [fadeInAnim, slideInLeftAnim],
+  host: { class: 'container-fluid', '[@fadeInAnim]': 'true' }
 })
 export class DetalleTramiteComponent extends BaseComponent implements OnInit, OnDestroy {
   formDetalleTramite: FormGroup;
@@ -30,7 +33,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
   listaLabelColumnas: Array<string>;
   listaValoresColumnas: Array<any>;
   detalleTramite: any;
-  selectedTramite : BandejaDar;
+  selectedTramite : BandejaDirector;
 
   constructor(
     public langService: LangService,
@@ -51,17 +54,17 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
   }
 
   ngOnInit(): void {
+    this.selectedTramite = JSON.parse(localStorage.getItem( 'selectedTramite' ) ) as BandejaDirector;
+
     this.formDetalleTramite = this.formBuilder.group({
       observaciones : [undefined, Validators.compose([ Validators.minLength(5), Validators.maxLength(200)])]
     });
 
-    this.selectedTramite = JSON.parse(localStorage.getItem( 'selectedTramite' ) ) as BandejaDar;
-
     this.getDatosEstudiante();
 
     const idTramite = this.getTipoTramite( this.selectedTramite.idTramite) ;
-    const idTipoTramite = this.selectedTramite.idTipoTramite;
     const idEstudiante = this.selectedTramite.idEstudiante;
+    const idTipoTramite = this.selectedTramite.idTipoTramite;
 
     this.getDetalleTramite(idTramite, idEstudiante, idTipoTramite);
 
@@ -165,8 +168,8 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
     switch (pTipoTramite) {
       case eTipoTramite.ANULACION:
         const dataAnulacion = data as BandejaAnulacion;
-        this.listaLabelColumnas = ['Tramite solicitado', 'Carrera a anular', 'Fecha solicitud', 'Motivo'];
-        this.listaValoresColumnas = [dataAnulacion.tramite , dataAnulacion.carrera, dataAnulacion.fechaSolicitud.toString(), dataAnulacion.motivo];
+        this.listaLabelColumnas = ['Tramite solicitado', 'Carrera a anular', 'Fecha solicitud', 'estado', 'Motivo'];
+        this.listaValoresColumnas = [dataAnulacion.tramite , dataAnulacion.carrera, dataAnulacion.fechaSolicitud.toString(), dataAnulacion.estado, dataAnulacion.motivo];
         break;
       case eTipoTramite.CAMBIO_DE_CARRERA:
         const dataCambioCarrera = data as BandejaCambioCarrera;

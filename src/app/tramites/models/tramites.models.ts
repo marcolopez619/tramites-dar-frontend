@@ -111,7 +111,7 @@ export interface BandejaDirector {
   nombres?: string;
   fechaNacimiento?: Date;
   sexo?: string;
-  idAnulacion?: number;
+  idTipoTramite?: number;
   fechaSolicitud?: Date;
   idCarreraOrigen?: number;
   carrera?: string;

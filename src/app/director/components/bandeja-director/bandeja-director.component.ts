@@ -22,7 +22,7 @@ import { DirectorService } from '../../director.service';
 export class BandejaDirectorComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
 
   displayedColumns = ['nombreCompleto', 'carrera', 'tipoTramite', 'fechaSolicitud', 'estado', 'acciones' ];
-  dataSource = new MatTableDataSource<BandejaDirector>([]); // FIXME:
+  dataSource = new MatTableDataSource<BandejaDirector>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -66,6 +66,6 @@ export class BandejaDirectorComponent extends BaseComponent  implements OnInit, 
 
   onVerDetalleTramite(pElement: BandejaDirector ): void {
     localStorage.setItem( 'selectedTramite', JSON.stringify( pElement ) );
-    this.router.navigate([ 'director/detalle/tramite' ]); // FIXME:
+    this.router.navigate([ 'director/detalle/tramite' ]);
   }
 }
