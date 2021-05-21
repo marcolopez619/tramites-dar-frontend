@@ -1,8 +1,8 @@
 export interface CambioCarreraInsert {
+  idEstudiante?: number;
   idCarreraOrigen?: number;
   idCarreraDestino?: number;
   motivo?: string;
-  idEstudiante?: number;
   idTramite?: number;
   idEstado?: number;
   idEntidad?: number;

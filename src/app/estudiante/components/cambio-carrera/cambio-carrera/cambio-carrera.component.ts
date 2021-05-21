@@ -68,8 +68,10 @@ export class CambioCarreraComponent extends BaseComponent implements OnInit {
   }
 
   private getListaCarreras(): void {
+    const idCarreraEstudiante = this.contextService.getItemContexto('idCarrera');
+
     this.universidadService.getListaCarreras( ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-      this.listaCarreras = resp.data;
+      this.listaCarreras = resp.data?.filter( x => x.idCarrera !== idCarreraEstudiante ) ?? [];
     });
   }
 
@@ -83,13 +85,13 @@ export class CambioCarreraComponent extends BaseComponent implements OnInit {
     const carreraDestino = this.listaCarreras.filter( x => x.nombre === this.formCambioCarrera.controls[ 'idCarreraDestino' ].value ) [ 0 ];
 
     const cambioCarreraInsert: CambioCarreraInsert = {
+      idEstudiante    : this.datosEstudiante.idEstudiante,
       idCarreraOrigen : this.datosEstudiante.idCarrera,
       idCarreraDestino: carreraDestino.idCarrera,
       motivo          : this.formCambioCarrera.controls['motivo'].value,
-      idEstudiante    : this.datosEstudiante.idEstudiante,
       idTramite       : eTipoTramite.CAMBIO_DE_CARRERA,
-      idEstado        : eEstado.ACTIVADO,
-      idEntidad       : eEntidad.ESTUDIANTE,
+      idEstado        : eEstado.ENVIADO,
+      idEntidad       : eEntidad.DIRECTOR_DE_CARRERA_ORIGEN,
       observaciones   : undefined
     };
 
