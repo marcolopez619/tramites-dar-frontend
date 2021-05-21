@@ -23,7 +23,7 @@
 
       <ng-container matColumnDef="origen">
         <mat-header-cell *matHeaderCellDef fxFlex="30" mat-sort-header> {{ langService.getLang(eModulo.Estudiante, 'lbl-carrera-origen') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="30"> {{element.carreraorigen}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="30"> {{element.carreraOrigen}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="destino">
@@ -32,18 +32,18 @@
       </ng-container>
 
       <ng-container matColumnDef="fechaSolicitud" >
-        <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-solicitud') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaSolicitud | date : 'dd/MM/yyyy' }} &nbsp; </mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="15"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-solicitud') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="15" > {{element.fechaSolicitud | date : 'dd/MM/yyyy HH:mm:ss' }} &nbsp; </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="motivo">
-        <mat-header-cell *matHeaderCellDef fxFlex="40" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-motivo') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="40"> {{element.motivo}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="35" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-motivo') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="35"> {{element.motivo}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="estado" >
         <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.estado | estadoToLiteral }} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.estado }} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="acciones">

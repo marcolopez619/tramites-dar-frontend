@@ -183,7 +183,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
       case eTipoTramite.CAMBIO_DE_CARRERA:
         const dataCambioCarrera = data as BandejaCambioCarrera;
         this.listaLabelColumnas = ['Tramite solicitado', 'Carrera origen', 'Carrera destino', 'Fecha solicitud', 'Motivo'];
-        this.listaValoresColumnas = [dataCambioCarrera.tipoTramite, dataCambioCarrera.carreraorigen, dataCambioCarrera.carreradestino, dataCambioCarrera.fechaSolicitud.toString(), dataCambioCarrera.motivo  ];
+        this.listaValoresColumnas = [dataCambioCarrera.tramite, dataCambioCarrera.carreraOrigen, dataCambioCarrera.carreradestino, dataCambioCarrera.fechaSolicitud.toString(), dataCambioCarrera.motivo  ];
         break;
       case eTipoTramite.SUSPENCION:
         const dataSuspencion = data as BandejaSuspencion;
