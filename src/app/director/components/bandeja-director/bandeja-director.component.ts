@@ -65,7 +65,7 @@ export class BandejaDirectorComponent extends BaseComponent  implements OnInit, 
     const idCarrera = this.contextService.getItemContexto( 'idCarrera' );
 
     this.directorService.getTramitesPorAtender( idCarrera ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-      this.dataSource.data = resp.data;
+      this.dataSource.data = resp.data ?? [];
     });
   }
 
