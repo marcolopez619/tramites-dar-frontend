@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { AnulacionService } from '../../../estudiante/components/anulacion/anulacion.service';
 import { CambioCarreraService } from '../../../estudiante/components/cambio-carrera.service';
@@ -14,10 +15,14 @@ import { BandejaAnulacion } from '../../../estudiante/models/anulacion.models';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { eEstado } from '../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../shared/enums/tipoTramite.enum';
+import { eEntidad } from '../../../shared/enums/tipo_entidad.enum';
 import { EstudianteModel } from '../../../shared/models/estudiante.model';
+import { TablaIntermediaInsert } from '../../../shared/models/tramites.models';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
+import { TramitesAcademicosService } from '../../../shared/services/tramites-academicos.service';
 import { BandejaCambioCarrera, BandejaDar, BandejaReadmision, BandejaSuspencion, BandejaTranseferencia, BandejaTraspasoUniversidad } from '../../../tramites/models/tramites.models';
 
 @Component({
@@ -35,13 +40,17 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
   detalleTramite: any;
   selectedTramite : BandejaDar;
 
+  eEstado = eEstado;
+
   constructor(
     public langService: LangService,
     public contextService: ContextoService,
     private dialog: MatDialog,
+    private router: Router,
     private datePipe: DatePipe,
     private formBuilder: FormBuilder,
     private estudianteService: EstudianteService,
+    private tramiteAcademicoService: TramitesAcademicosService,
 
     private anulacionService: AnulacionService,
     private cambioDeCarreraService: CambioCarreraService,
@@ -54,17 +63,20 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
   }
 
   ngOnInit(): void {
+    this.selectedTramite = JSON.parse(localStorage.getItem( 'selectedTramite' ) ) as BandejaDar;
+
     this.formDetalleTramite = this.formBuilder.group({
       observaciones : [undefined, Validators.compose([ Validators.minLength(5), Validators.maxLength(200)])]
     });
 
-    this.selectedTramite = JSON.parse(localStorage.getItem( 'selectedTramite' ) ) as BandejaDar;
 
     this.getDatosEstudiante();
 
+    this.verificarEstadoTramite();
+
     const idTramite = this.getTipoTramite( this.selectedTramite.idTramite) ;
-    const idTipoTramite = this.selectedTramite.idTipoTramite;
     const idEstudiante = this.selectedTramite.idEstudiante;
+    const idTipoTramite = this.selectedTramite.idTipoTramite;
 
     this.getDetalleTramite(idTramite, idEstudiante, idTipoTramite);
 
@@ -216,7 +228,34 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
     }
   }
 
-  onAprobarTramite(): void {
+  private pasarSiguienteNivel(pEstado: eEstado, pEntidad: eEntidad | number, pObservaciones: string, redireccionarToBandeja?: boolean ): void {
+
+    const pTablaIntermediaInsert: TablaIntermediaInsert = {
+      idTipoTramite          : this.selectedTramite.idTramite,
+      idEstudianteTipoTramite: this.selectedTramite.idEstudianteTipoTramiteTablaIntermedia,
+      idEstado               : pEstado,
+      idEntidad              : pEntidad,
+      observaciones          : pObservaciones
+    };
+
+    this.tramiteAcademicoService.insertDataTablaIntermedia( pTablaIntermediaInsert ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      console.log( `${JSON.stringify(resp.data)}` );
+
+      if (redireccionarToBandeja) {
+        this.router.navigate([ 'dar/encargado/index' ]);
+      }
+
+    });
+  }
+
+  private verificarEstadoTramite(): void {
+
+    if ( this.selectedTramite.idEstado === eEstado.ENVIADO || this.selectedTramite.idEstado === eEstado.APROBADO) {
+      this.pasarSiguienteNivel( eEstado.RECEPCIONADO, this.selectedTramite.idEntidad, undefined  );
+    }
+  }
+
+ /*  onAprobarTramite(): void {
     const dlgAprobar = this.dialog.open( ConfirmDialogComponent , {
       disableClose: false,
       width: '600px',
@@ -232,7 +271,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
 
       }
     });
-  }
+  } */
 
   onRechazarTramite(): void {
     const dlgRechazar = this.dialog.open( ConfirmDialogComponent , {
@@ -247,12 +286,14 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
 
     dlgRechazar.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe((result) => {
       if (result) {
+        const observaciones = this.formDetalleTramite.controls[ 'observaciones' ].value;
 
+        // this.pasarSiguienteNivel( eEstado.RECHAZADO, eEntidad.ESTUDIANTE, observaciones, true );
       }
     });
   }
 
-  onEnviarTramite(): void {
+  /* onEnviarTramite(): void {
     const dlgEnviar = this.dialog.open( ConfirmDialogComponent , {
       disableClose: false,
       width: '600px',
@@ -268,7 +309,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
 
       }
     });
-  }
+  } */
 
   onFinalizarTramite(): void {
     const dlgFinalizar = this.dialog.open( ConfirmDialogComponent , {
@@ -283,7 +324,9 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
 
     dlgFinalizar.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe((result) => {
       if (result) {
+        const observaciones = this.formDetalleTramite.controls[ 'observaciones' ].value;
 
+        this.pasarSiguienteNivel( eEstado.FINALIZADO, eEntidad.ENCARGADO_DAR, observaciones, true );
       }
     });
   }

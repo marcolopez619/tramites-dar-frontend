@@ -92,6 +92,7 @@ export const baseLang = {
             'lbl-confirmacion' : 'Confirmacion',
             'lbl-carrera' : 'Carrera',
             'lbl-fecha-solicitud' : 'Fecha solicitud',
+            'lbl-fecha-proceso' : 'Fecha proceso',
             'lbl-motivo' : 'Motivo',
             'lbl-gestion' : 'Gestión',
             'lbl-finalizar' : 'Finalizar',

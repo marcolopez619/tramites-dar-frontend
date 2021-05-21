@@ -21,7 +21,7 @@ import { DarService } from '../../dar.service';
 })
 export class BandejaDarComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['nombreCompleto', 'carrera', 'tipoTramite', 'fechaSolicitud', 'estado', 'acciones' ];
+  displayedColumns = ['nombreCompleto', 'carrera', 'tipoTramite', 'fechaProceso', 'estado', 'acciones' ];
   dataSource = new MatTableDataSource<BandejaDar>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -59,7 +59,7 @@ export class BandejaDarComponent extends BaseComponent  implements OnInit, After
   getListaTramites(): void {
 
     this.darService.getTramitesPorAtender().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-      this.dataSource.data = resp.data;
+      this.dataSource.data = resp.data ?? [];
     });
   }
 

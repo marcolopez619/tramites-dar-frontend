@@ -87,8 +87,8 @@ export interface BandejaTraspasoUniversidad extends BandejaAbstract {
   estado?: number;
 }
 
-export interface BandejaDar extends BandejaAbstract {
-  idEstudiante?: number;
+export interface BandejaDar extends BandejaDirector {
+  /* idEstudiante?: number;
   paterno?: string;
   materno?: string;
   nombres?: string;
@@ -98,7 +98,7 @@ export interface BandejaDar extends BandejaAbstract {
   estado?: number;
   idTipoTramite?: number;
   idTramite?: number;
-  tipoTramite?: string;
+  tipoTramite?: string; */
 }
 
 export interface BandejaDirector {

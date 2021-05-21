@@ -20,10 +20,10 @@
 
 <mat-card-content>
 
-  <mat-form-field fxFill>
-    <mat-label>Buscar</mat-label>
-    <input matInput (keyup)="aplicarFiltro($event)">
-
+  <mat-form-field fxFlexFill appearance="outline">
+    <span matPrefix><mat-icon>search</mat-icon>&nbsp;</span>
+    <mat-label>{{this.langService.getLang(eModulo.Base, 'lbl-busqueda' )}} </mat-label>
+    <input matInput (keyup)="aplicarFiltro($event)" shAutofocus shUppercase placeholder="" #input>
   </mat-form-field>
 
     <mat-table #table [dataSource]="dataSource" matSort>
@@ -40,17 +40,17 @@
 
       <ng-container matColumnDef="tipoTramite">
         <mat-header-cell *matHeaderCellDef fxFlex="20" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-tipo-tramite') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="20"> {{element.tipoTramite}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="20"> {{element.tramite}} </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="fechaSolicitud" >
-        <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-solicitud') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaSolicitud | date : 'dd/MM/yyyy' }} &nbsp;</mat-cell>
+      <ng-container matColumnDef="fechaProceso" >
+        <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-proceso') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaProceso | date : 'dd/MM/yyyy' }} &nbsp;</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="estado" >
         <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.estado | estadoToLiteral }} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.estado }} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="acciones">
@@ -72,7 +72,7 @@
 
       <mat-row
         shRowHover
-        [ngClass]="{'row-action': idSeleccionado === row.idEstudianteTramite}"
+        [ngClass]="{'row-action': idSeleccionado === row.idEstudianteTipoTramiteTablaIntermedia}"
         [@fadeInAnim]="true"
         (click)="onVerDetalleTramite(row)"
         *matRowDef="let row; columns: displayedColumns;">
