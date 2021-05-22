@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, TitleCasePipe } from '@angular/common';
 import { darRoutes } from './dar.routing';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
@@ -24,7 +24,8 @@ import { BandejaCarrerasComponent } from './components/gestion-universidades/ban
   exports: [BandejaDarComponent, DetalleTramiteComponent, BandejaUniversidadesComponent, UniversidadComponent, BandejaFacultadesComponent, BandejaCarrerasComponent],
   providers : [
     DarService,
-    DatePipe
+    DatePipe,
+    TitleCasePipe
   ]
 })
 export class DarModule { }
