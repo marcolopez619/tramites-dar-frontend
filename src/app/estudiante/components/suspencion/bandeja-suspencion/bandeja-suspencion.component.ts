@@ -55,7 +55,7 @@ export class BandejaSuspencionComponent extends BaseComponent  implements OnInit
     const idEstudiante = this.contextService.getItemContexto('idEstudiante');
 
     this.suspencionService.getAllListaSuspenciones(idEstudiante).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-      this.dataSource.data = resp.data;
+      this.dataSource.data = resp.data ?? [];
     });
   }
 

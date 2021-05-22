@@ -27,6 +27,7 @@ export const estudianteLang = {
     'lbl-step-3-confirmacion' : 'Confirmación',
     'lbl-carrera-origen' : 'carrera origen',
     'lbl-carrera-destino' : 'Carrera destino',
+    'lbl-confir-sol-nuevo-tramite-suspencion' : '¿ Seguro de finalizar la solicitud de suspención de estudios ?',
     'lbl-confir-sol-nuevo-tramite-cambio-carrera' : '¿ Seguro de finalizar la solicitud de cambio de carrera ?',
     'lbl-confir-sol-nuevo-tramite-transferencia-carrera' : '¿ Seguro de finalizar la solicitud de transferencia de carrera ?',
 

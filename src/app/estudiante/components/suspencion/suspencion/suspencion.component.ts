@@ -74,14 +74,14 @@ export class SuspencionComponent extends BaseComponent implements OnInit {
 
   onFinalizarSolicitud(): void {
     const suspencionInsert: SuspencionInsert = {
+      idEstudiante    : this.datoEstudiante.idEstudiante,
       idCarrera       : this.datoEstudiante.idCarrera,
       tiempoSolicitado: this.formSuspencion.controls[ 'tiempoSuspencion' ].value,
       descripcion     : this.formSuspencion.controls[ 'descripcion' ].value,
       idMotivo        : this.formSuspencion.controls[ 'idMotivoSuspencion' ].value,
-      idEstudiante    : this.datoEstudiante.idEstudiante,
       idTramite       : eTipoTramite.SUSPENCION,
-      idEstado        : eEstado.ACTIVADO,
-      idEntidad       : eEntidad.ESTUDIANTE,
+      idEstado        : eEstado.ENVIADO,
+      idEntidad       : eEntidad.ENCARGADO_DAR,
       observaciones   : undefined
     };
 

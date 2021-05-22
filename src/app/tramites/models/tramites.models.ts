@@ -62,19 +62,29 @@ export interface BandejaTranseferencia {
   entidad?: string;
 }
 
-export interface BandejaSuspencion extends BandejaAbstract {
+export interface BandejaSuspencion {
+  idEstudiante?: number;
+  ru?: number;
+  ci?: string;
+  complemento?: string;
+  paterno?: string;
+  materno?: string;
+  nombres?: string;
+  fechaNacimiento?: Date;
   idSuspencion?: number;
   idCarrera?: number;
   carrera?: string;
   tiempoSolicitado?: number;
-  fechaSolicitud?: Date;
-  idMotivo?: number;
   descripcionMotivo?: string;
+  fechaSolicitud?: Date;
+  descripcion?: string;
   fechaProceso?: Date;
   observaciones?: string;
   idTramite?: number;
-  tipoTramite?: string;
-  estado?: number;
+  tramite?: string;
+  estado?: string;
+  idEntidad?: number;
+  entidad?: string;
 }
 export interface BandejaReadmision extends BandejaAbstract {
   idReadmision?: number;
