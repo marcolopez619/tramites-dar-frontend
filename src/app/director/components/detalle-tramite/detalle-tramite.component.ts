@@ -16,6 +16,7 @@ import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template
 import { BaseComponent } from '../../../shared/base.component';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { eEstado } from '../../../shared/enums/estado.enum';
+import { eTipoArchivo } from '../../../shared/enums/tipo-archivo.enum';
 import { eTipoTramite } from '../../../shared/enums/tipoTramite.enum';
 import { eEntidad } from '../../../shared/enums/tipo_entidad.enum';
 import { EstudianteModel } from '../../../shared/models/estudiante.model';
@@ -246,39 +247,10 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
   }
 
   private verificarEstadoTramite(): void {
-
-    if ( this.selectedTramite.idEstado === eEstado.ENVIADO) {
+    if ( this.selectedTramite.idEstado === eEstado.ENVIADO || this.selectedTramite.idEstado === eEstado.APROBADO ) {
       this.pasarSiguienteNivel( eEstado.RECEPCIONADO, this.selectedTramite.idEntidad, undefined  );
     }
-
-    //** SE EJECUTA CORREVTAMNETE **/
-
-    /* if ( this.selectedTramite.idEstado === eEstado.ENVIADO) {
-
-      const pTablaIntermediaInsert : TablaIntermediaInsert = {
-        idTipoTramite          : this.selectedTramite.idTramite,
-        idEstudianteTipoTramite: this.selectedTramite.idEstudianteTipoTramiteTablaIntermedia,
-        idEstado               : eEstado.RECEPCIONADO,
-        idEntidad              : this.selectedTramite.idEntidad,
-        observaciones          : undefined
-      }
-
-      this.tramiteAcademicoService.insertDataTablaIntermedia( pTablaIntermediaInsert ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-        console.log( `${resp.data}` );
-      }); */
-
-      // Actualiza el estado del tramite a recepcionado
-      /* const estadoTramiteUpdate: EstadoTramiteUpdate = {
-        idTipoTramite          : this.selectedTramite.idTramite, // Anulacion, cambio de carrera, etc
-        idEstudianteTipoTramite: this.selectedTramite.idEstudianteTipoTramiteTablaIntermedia, // id de la tabla intermedia entre estudiante y anulaciones | cambio de carrera | suspenciones , etc
-        estado                 : eEstado.RECEPCIONADO // Nuevo estado del tramite en la tabla intermedia
-      };
-
-      this.tramiteAcademicoService.updateEstadoTramite( estadoTramiteUpdate ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-        console.log( `${resp.data}` );
-      }); */
-
-    }
+  }
 
   onAprobarTramite(): void {
     const dlgAprobar = this.dialog.open( ConfirmDialogComponent , {
@@ -295,7 +267,19 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
       if (result) {
         const observaciones = this.formDetalleTramite.controls[ 'observaciones' ].value;
 
-        this.pasarSiguienteNivel( eEstado.APROBADO, eEntidad.ENCARGADO_DAR, observaciones, true );
+        if ( this.selectedTramite.idTramite === eTipoTramite.CAMBIO_DE_CARRERA && this.selectedTramite.idEntidad === eEntidad.DIRECTOR_DE_CARRERA_ORIGEN) {
+          // => pasarselo al director destino
+          this.pasarSiguienteNivel( eEstado.APROBADO, eEntidad.DIRECTOR_DE_CARRERA_DESTINO, observaciones, true );
+        } else {
+          // => pasarsele al DAR
+          this.pasarSiguienteNivel( eEstado.APROBADO, eEntidad.ENCARGADO_DAR, observaciones, true );
+        }
+
+         /* else if ( this.selectedTramite.idTramite === eTipoTramite.CAMBIO_DE_CARRERA && this.selectedTramite.idEntidad === eEntidad.DIRECTOR_DE_CARRERA_DESTINO) {
+          // => pasarselo al director destino
+          this.pasarSiguienteNivel( eEstado.APROBADO, eEntidad.ENCARGADO_DAR, observaciones, true );
+        } */
+
       }
     });
   }
