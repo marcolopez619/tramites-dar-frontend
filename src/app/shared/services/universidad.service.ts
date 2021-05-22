@@ -55,6 +55,9 @@ export class UniversidadService {
     return this.httpClient.get<Resultado>(`${this.baseURL}/carrera/${pIdUniversidad}`);
   }
 
+  getListaCarrerasParaTransferencia(pNombreCarrera: string): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/carrera/transferencia/${pNombreCarrera}`);
+  }
   getListaCarreras(): Observable<Resultado> {
     return this.httpClient.get<Resultado>(`${this.baseURL}/carrera`);
   }

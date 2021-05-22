@@ -69,11 +69,12 @@ export class TransferenciaComponent extends BaseComponent implements OnInit {
   }
 
   private getListaCarreras(): void {
-    const idUniversidad = 1; // Por default sera la Tomas frias para este caso
+    const idCarreraEstudiante = this.contextService.getItemContexto('idCarrera');
+    const nombreCarreraEstudiante = this.contextService.getItemContexto('Carrera');
 
-    this.universidadService.getListaCarreras().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-      // TODO: La transferencia se realiza solo entre iguales carreras de la ambas sedes o subsedes
-      this.listaCarreras = resp.data;
+    this.universidadService.getListaCarrerasParaTransferencia( nombreCarreraEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      //** La transferencia se realiza solo entre iguales carreras de la ambas sedes o subsedes
+      this.listaCarreras = resp.data?.filter( x => x.idCarrera !== idCarreraEstudiante ) ?? [];
     });
   }
 
