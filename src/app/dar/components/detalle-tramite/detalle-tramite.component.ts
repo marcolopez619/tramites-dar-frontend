@@ -116,7 +116,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
     const idEstudiante = this.selectedTramite.idEstudiante;
 
     this.estudianteService.getInformacionEstudiante( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-      this.datoEstudiante = resp.data;
+      this.datoEstudiante = resp.data ?? [];
     });
 
   }
