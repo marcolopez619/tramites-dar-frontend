@@ -27,6 +27,15 @@
       <sh-datos-formato-tabla [listaLabelColumnas]="listaLabelColumnas" [listaValoresColumnas]="listaValoresColumnas"></sh-datos-formato-tabla>
 
       <div fxLayout="row" fxLayoutAlign="center center" fxLayout.lt-sm="column" fxLayoutGap="5px" fxFill >
+        <mat-checkbox
+          class="check-margin"
+          [(ngModel)]="cuentaConDocumentacion"
+          [labelPosition]="'after'">
+          CUENTA CON DOCUMENTOS PARA FINALIZAR EL TRAMITE
+      </mat-checkbox>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayout.lt-sm="column" fxLayoutGap="5px" fxFill >
         <form [formGroup]="formDetalleTramite" fxFlexFill>
           <mat-form-field fxFlex>
             <input type="text" shUppercase shAutofocus matInput minlength="5" maxlength="200" autocomplete="off" formControlName="observaciones">
@@ -40,7 +49,7 @@
 
       <div fxLayout="row" fxLayoutAlign="center center" fxLayout.lt-sm="column" fxLayoutGap="5px" fxFill >
         <!-- <button mat-raised-button color="warn" fxFlex="25" (click)="onAprobarTramite()" >Aprobar</button> -->
-        <button mat-raised-button color="accent" fxFlex="50" (click)="onFinalizarTramite()">Finalizar</button>
+        <button mat-raised-button color="accent" fxFlex="50" [disabled] ="!cuentaConDocumentacion"(click)="onFinalizarTramite()">Finalizar</button>
         <button mat-raised-button  color="warn" fxFlex="50" (click)="onRechazarTramite()">Rechazar</button>
         <!-- <button mat-raised-button color="primary" fxFlex="25" (click)="onEnviarTramite()">Enviar</button> -->
       </div>

@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -38,7 +38,9 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
   listaLabelColumnas: Array<string>;
   listaValoresColumnas: Array<any>;
   detalleTramite: any;
-  selectedTramite : BandejaDar;
+  selectedTramite: BandejaDar;
+
+  cuentaConDocumentacion = false;
 
   eEstado = eEstado;
 
@@ -48,6 +50,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
     private dialog: MatDialog,
     private router: Router,
     private datePipe: DatePipe,
+    private titleCasePipe: TitleCasePipe,
     private formBuilder: FormBuilder,
     private estudianteService: EstudianteService,
     private tramiteAcademicoService: TramitesAcademicosService,
@@ -68,7 +71,6 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
     this.formDetalleTramite = this.formBuilder.group({
       observaciones : [undefined, Validators.compose([ Validators.minLength(5), Validators.maxLength(200)])]
     });
-
 
     this.getDatosEstudiante();
 
@@ -317,7 +319,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
       width: '600px',
       data: {
         title  : 'Finalizar',
-        content: '¿Seguro de finalizar el tramite seleccionado?',
+        content: '¿Seguro de finalizar el tramite de : $tramite?'.replace( '$tramite', this.titleCasePipe.transform( this.selectedTramite.tramite ) ),
         icon   : 'contact_support'
       }
     });

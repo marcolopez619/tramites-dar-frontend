@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -65,7 +64,7 @@ export class BandejaDarComponent extends BaseComponent  implements OnInit, After
 
   onVerDetalleTramite(pElement: BandejaDar ): void {
     localStorage.setItem( 'selectedTramite', JSON.stringify( pElement ) );
-    this.router.navigate([ 'dar/detalle/tramite' ])
+    this.router.navigate([ 'dar/detalle/tramite' ]);
   }
 
 }
