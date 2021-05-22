@@ -93,13 +93,13 @@ export class TransferenciaComponent extends BaseComponent implements OnInit {
     const carreraDestino = this.listaCarreras.filter( x => x.nombre === this.formTransferencia.controls[ 'idCarreraDestino' ].value ) [ 0 ];
 
     const cambioCarreraInsert: TransferenciaInsert = {
+      idEstudiante    : this.datosEstudiante.idEstudiante,
       idCarreraOrigen : this.datosEstudiante.idCarrera,
       idCarreraDestino: carreraDestino.idCarrera,
       motivo          : this.formTransferencia.controls['motivo'].value,
-      idEstudiante    : this.datosEstudiante.idEstudiante,
       idTramite       : eTipoTramite.TRANSFERENCIA,
-      idEstado        : eEstado.ACTIVADO,
-      idEntidad       : eEntidad.ESTUDIANTE,
+      idEstado        : eEstado.ENVIADO,
+      idEntidad       : eEntidad.DIRECTOR_DE_CARRERA_ORIGEN,
       observaciones   : undefined
     };
 

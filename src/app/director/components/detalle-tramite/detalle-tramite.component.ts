@@ -199,7 +199,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
       case eTipoTramite.TRANSFERENCIA:
         const dataTransferencia = data as BandejaTranseferencia;
         this.listaLabelColumnas = ['Tramite solicitado', 'Carrera origen', 'Carrera destino', 'Fecha solicitud' , 'Motivo'];
-        this.listaValoresColumnas = [dataTransferencia.tipoTramite, dataTransferencia.carreraorigen, dataTransferencia.carreradestino, this.datePipe.transform( dataTransferencia.fechaSolicitud, 'dd-MM-yyyy' ), dataTransferencia.motivo ];
+        this.listaValoresColumnas = [dataTransferencia.tramite, dataTransferencia.carreraOrigen, dataTransferencia.carreradestino, this.datePipe.transform( dataTransferencia.fechaSolicitud, 'dd-MM-yyyy' ), dataTransferencia.motivo ];
         break;
       case eTipoTramite.TRASPASO_DE_UNIVERSIDAD:
         const dataTraspaso = data as BandejaTraspasoUniversidad;
