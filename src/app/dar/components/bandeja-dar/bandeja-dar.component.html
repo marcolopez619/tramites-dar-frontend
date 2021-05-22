@@ -39,13 +39,13 @@
       </ng-container>
 
       <ng-container matColumnDef="tipoTramite">
-        <mat-header-cell *matHeaderCellDef fxFlex="20" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-tipo-tramite') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="20"> {{element.tramite}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="15" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-tipo-tramite') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="15"> {{element.tramite}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="fechaProceso" >
-        <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-proceso') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaProceso | date : 'dd/MM/yyyy' }} &nbsp;</mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="15"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-fecha-proceso') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="15" > {{element.fechaProceso | date : 'dd/MM/yyyy HH:mm:ss' }} &nbsp;</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="estado" >

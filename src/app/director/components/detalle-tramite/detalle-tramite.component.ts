@@ -267,7 +267,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
       if (result) {
         const observaciones = this.formDetalleTramite.controls[ 'observaciones' ].value;
 
-        if ( this.selectedTramite.idTramite === eTipoTramite.CAMBIO_DE_CARRERA && this.selectedTramite.idEntidad === eEntidad.DIRECTOR_DE_CARRERA_ORIGEN) {
+        if ( (this.selectedTramite.idTramite === eTipoTramite.CAMBIO_DE_CARRERA || this.selectedTramite.idTramite === eTipoTramite.TRANSFERENCIA)  && this.selectedTramite.idEntidad === eEntidad.DIRECTOR_DE_CARRERA_ORIGEN) {
           // => pasarselo al director destino
           this.pasarSiguienteNivel( eEstado.APROBADO, eEntidad.DIRECTOR_DE_CARRERA_DESTINO, observaciones, true );
         } else {
