@@ -81,13 +81,13 @@ export class ReadmisionComponent  extends BaseComponent implements OnInit {
   onFinalizarSolicitud(): void {
 
     const readmisionInsert: ReadmisionInsert = {
+      idEstudiante : this.datoEstudiante.idEstudiante,
       idCarrera    : this.datoEstudiante.idCarrera,
       motivo       : this.formReadmision.controls[ 'motivo' ].value,
       idSuspencion : this.formReadmision.controls[ 'idSuspencionSelected' ].value,
-      idEstudiante : this.datoEstudiante.idEstudiante,
       idTramite    : eTipoTramite.READMISION,
-      idEstado     : eEstado.ACTIVADO,
-      idEntidad    : eEntidad.ESTUDIANTE,
+      idEstado     : eEstado.ENVIADO,
+      idEntidad    : eEntidad.ENCARGADO_DAR,
       observaciones: undefined
     };
 

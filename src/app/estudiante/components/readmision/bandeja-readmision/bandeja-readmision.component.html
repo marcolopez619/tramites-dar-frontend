@@ -28,12 +28,12 @@
 
       <ng-container matColumnDef="fechaSolicitudSuspencion" >
         <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Estudiante, 'lbl-fecha-solicitud-suspencion') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.suspencion[ 0 ].fechaSolicitud | date : 'dd/MM/yyyy' }} &nbsp;</mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.suspencion[ 0 ].fechaSolicitud | date : 'dd/MM/yyyy HH:mm:ss' }} &nbsp;</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="fechaSolicitudReadmision" >
         <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Estudiante, 'lbl-fecha-solicitud-readmision') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaSolicitudReadmision | date : 'dd/MM/yyyy' }} &nbsp;</mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaSolicitud | date : 'dd/MM/yyyy HH:mm:ss' }} &nbsp;</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="motivo">
@@ -49,7 +49,7 @@
 
       <ng-container matColumnDef="estado" >
         <mat-header-cell *matHeaderCellDef fxFlex="8"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="8" > {{element.estado | estadoToLiteral }} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="8" > {{element.estado }} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="acciones">

@@ -37,17 +37,17 @@
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
               <mat-form-field fxFlex>
                 <mat-select formControlName="idSuspencionSelected" (selectionChange)="onSuspencionSelectedChange($event)" placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-tiempo-suspencion-solicitado')}}">
-                   <mat-option *ngFor="let suspencion of listaSuspenciones" [value]="suspencion.idSuspencion">
-                     De fecha : &nbsp;{{suspencion.fechaSolicitud | date : 'dd-MM-yyyy' }} &nbsp;{{suspencion.tiempoSolicitado}}&nbsp;( Gestiones )
+                   <mat-option shAutofocus *ngFor="let suspencion of listaSuspenciones" [value]="suspencion.idSuspencion">
+                    {{suspencion.tiempoSolicitado}}&nbsp;( Gestiones ) , &nbsp; De fecha : &nbsp;{{suspencion.fechaSolicitud | date : 'dd-MM-yyyy HH:mm' }}
                    </mat-option>
                  </mat-select>
-                 <mat-error *ngIf="formReadmision.controls['idSuspencionSelected'].invalid">{{langService.getLang(eModulo.HojaDeRuta,'lbl-tiempo-suspencion-solicitado-error') }}</mat-error>
+                 <mat-error *ngIf="formReadmision.controls['idSuspencionSelected'].invalid">{{langService.getLang(eModulo.Estudiante,'lbl-tiempo-suspencion-solicitado-error') }}</mat-error>
               </mat-form-field>
             </div>
 
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
               <mat-form-field fxFlex>
-                <input type="text" required matInput min="5" max="200" minlength="5" maxlength="200" autocomplete="off"
+                <input type="text" required matInput shUppercase minlength="5" maxlength="120" autocomplete="off"
                   placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-motivo-readmision')}}" formControlName="motivo">
                   <mat-label>&nbsp; {{langService.getLang(eModulo.Estudiante,'lbl-motivo-readmision')}} </mat-label>
                 <mat-error *ngIf="formReadmision.controls['motivo'].invalid">{{langService.getLang(eModulo.Estudiante,'lbl-motivo-readmision-error') }}</mat-error>
@@ -83,7 +83,14 @@
     <mat-step>
       <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-confirmar-creacion-cite' )}}</ng-template>
 
-      <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+      <div fxLayout="column" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <div fxLayout="row" fxLayoutAlign="center center" fxFlex="15" >
+              <mat-icon [inline]="true" style="font-size: 50px !important" color="primary">help_outline</mat-icon>
+          </div>
+          <span style="font-size: 20px; text-align: center">{{langService.getLang(eModulo.Estudiante, 'lbl-confir-sol-nuevo-tramite-readmision' )}}</span>
+        </div>
 
         <table>
           <tr>
@@ -93,8 +100,9 @@
 
           <tr>
             <td style="text-align: end;"><span><strong>{{langService.getLang(eModulo.Estudiante,'lbl-seleccion-suspencion')}}</strong></span></td>
-            <!-- <td><span>&nbsp;{{this.rangoLiteralSeleccionado}}</span></td> -->
-            <td><span>Del: &nbsp;{{ datoSuspencionSeleceted.fechaSolicitud | date : 'dd-MM-yyyy' }} &nbsp;{{datoSuspencionSeleceted.tiempoSolicitado}}&nbsp;( Gestiones )</span></td>
+            <!-- {{suspencion.tiempoSolicitado}}&nbsp;( Gestiones ) , &nbsp; De fecha : &nbsp;{{suspencion.fechaSolicitud | date : 'dd-MM-yyyy HH:mm' }} -->
+
+            <td><span> {{datoSuspencionSeleceted.tiempoSolicitado}}&nbsp;( Gestiones ), De fecha: &nbsp;{{ datoSuspencionSeleceted.fechaSolicitud | date : 'dd-MM-yyyy HH:mm' }} &nbsp;</span></td>
           </tr>
 
           <tr>

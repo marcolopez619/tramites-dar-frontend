@@ -86,20 +86,28 @@ export interface BandejaSuspencion {
   idEntidad?: number;
   entidad?: string;
 }
-export interface BandejaReadmision extends BandejaAbstract {
+export interface BandejaReadmision{
+  idEstudiante?: number;
+  ru?: number;
+  ci?: string;
+  complemento?: string;
+  paterno?: string;
+  materno?: string;
+  nombres?: string;
+  fechaNacimiento?: Date;
   idReadmision?: number;
   idCarrera?: number;
   carrera?: string;
-  fechaSolicitudReadmision?: Date;
+  fechaSolicitud?: Date;
   motivo?: string;
   fechaProceso?: Date;
   observaciones?: string;
   idTramite?: number;
   tramite?: string;
-  tipoTramite?: string;
-  estado?: number;
-
-  suspencion?: SuspencionModel;
+  estado?: string;
+  idEntidad?: number;
+  entidad?: string;
+  suspencion: SuspencionModel;
 }
 export interface BandejaTraspasoUniversidad extends BandejaAbstract {
   idTraspaso?: number;

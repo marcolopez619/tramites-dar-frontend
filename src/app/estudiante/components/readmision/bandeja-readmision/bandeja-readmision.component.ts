@@ -67,7 +67,6 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
     });
     dlgReadmision.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
-        console.log( `---> ${result}` );
         this.getListaReadmisiones();
       }
     });
