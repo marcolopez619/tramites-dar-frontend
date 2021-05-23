@@ -9,7 +9,7 @@ import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
 import { eEntidad } from '../../../../shared/enums/tipo_entidad.enum';
 import { EstudianteModel } from '../../../../shared/models/estudiante.model';
 import { Motivo } from '../../../../shared/models/motivos.models';
-import { AllInformationUniversity, Carrera, MotivoTraspaso, Universidad } from '../../../../shared/models/traspaso.universidad.model';
+import { Carrera, Universidad } from '../../../../shared/models/traspaso.universidad.model';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { MotivoService } from '../../../../shared/services/motivo.service';
@@ -80,7 +80,7 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
 
   private getListaMotivos(): void {
 
-    this.motivoService.getListaMotivos().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp =>{
+    this.motivoService.getListaMotivos().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.listaMotivoTraspaso = resp.data;
     });
 
@@ -122,8 +122,8 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
       idMotivo          : this.formTraspaso.controls[ 'idMotivoTraspaso' ].value,
       idEstudiante      : this.datoEstudiante.idEstudiante,
       idTramite         : eTipoTramite.TRASPASO_DE_UNIVERSIDAD,
-      idEstado          : eEstado.ACTIVADO,
-      idEntidad         : eEntidad.ESTUDIANTE,
+      idEstado          : eEstado.ENVIADO,
+      idEntidad         : eEntidad.ENCARGADO_DAR,
       observaciones     : undefined
     };
 

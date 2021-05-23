@@ -31,6 +31,7 @@ export const estudianteLang = {
     'lbl-confir-sol-nuevo-tramite-readmision' : '¿ Seguro de finalizar la solicitud de readmisión de estudios ?',
     'lbl-confir-sol-nuevo-tramite-cambio-carrera' : '¿ Seguro de finalizar la solicitud de cambio de carrera ?',
     'lbl-confir-sol-nuevo-tramite-transferencia-carrera' : '¿ Seguro de finalizar la solicitud de transferencia de carrera ?',
+    'lbl-confir-sol-nuevo-tramite-traspaso' : '¿ Seguro de finalizar la solicitud de traspaso de universidad ?',
 
     'lbl-tiempo-solicitado' : 'Tiempo solicitado (Gestiones)',
     'lbl-tiempo' : 'Tiempo',
