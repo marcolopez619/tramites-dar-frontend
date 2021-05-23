@@ -23,12 +23,12 @@
 
       <ng-container matColumnDef="universidadDestino">
         <mat-header-cell *matHeaderCellDef fxFlex="45" mat-sort-header> {{ langService.getLang(eModulo.Estudiante, 'lbl-traspaso-univ-destino') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="45"> {{element.nombreuniversidaddestino}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="45"> {{element.universidaddestino}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="carreraDestino">
         <mat-header-cell *matHeaderCellDef fxFlex="20" mat-sort-header> {{ langService.getLang(eModulo.Estudiante, 'lbl-traspaso-carrera-destino') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="20"> {{element.nombrecarreradestino}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="20"> {{element.carreradestino}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="periodo">
@@ -38,17 +38,17 @@
 
       <ng-container matColumnDef="motivo">
         <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.Estudiante, 'lbl-motivo') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10"> {{element.descripcionMotivo}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10"> {{element.motivo}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="fechaSolicitud" >
-        <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Estudiante, 'lbl-fecha-solicitud-traspaso') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.fechaSolicitud | date : 'dd/MM/yyyy' }} &nbsp;</mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="12"  mat-sort-header> {{ langService.getLang(eModulo.Estudiante, 'lbl-fecha-solicitud-traspaso') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="12" > {{element.fechaSolicitud | date : 'dd/MM/yyyy HH:mm:ss' }} &nbsp;</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="estado" >
         <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.estado | estadoToLiteral }} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.estado }} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="acciones">
