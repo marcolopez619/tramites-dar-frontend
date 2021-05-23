@@ -1,6 +1,7 @@
 export interface TraspasoInsert {
   idUnivDestino ?: number;
   idCarreraDestino?: number;
+  idCarreraOrigen: number;
   descripcion ?: string;
   anioIngreso ?: number;
   materiasAprobadas ?: number;

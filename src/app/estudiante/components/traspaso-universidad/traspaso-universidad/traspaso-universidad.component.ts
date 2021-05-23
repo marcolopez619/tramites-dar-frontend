@@ -115,6 +115,7 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
     const traspasoInsert: TraspasoInsert = {
       idUnivDestino     : this.formTraspaso.controls[ 'idUnivDestino' ].value,
       idCarreraDestino  : this.formTraspaso.controls[ 'idCarreraDestino' ].value,
+      idCarreraOrigen   : this.datoEstudiante.idCarrera,
       descripcion       : this.formTraspaso.controls[ 'descripcionTraspaso' ].value,
       anioIngreso       : this.datoEstudiante.anioIngreso,
       materiasAprobadas : this.datoEstudiante.cantMateriasAprobadas,
