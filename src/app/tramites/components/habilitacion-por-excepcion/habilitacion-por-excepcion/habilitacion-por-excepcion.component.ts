@@ -10,9 +10,11 @@ import { EstudianteService } from '../../../../estudiante/estudiante.service';
 import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../../shared/base.component';
 import { eEstado } from '../../../../shared/enums/estado.enum';
+import { PeriodoGestion } from '../../../../shared/models/periodo_gestion.model';
 import { TramiteModel } from '../../../../shared/models/tramites.models';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
+import { PeriodoGestionService } from '../../../../shared/services/periodo-gestion.service';
 import { TramitesAcademicosService } from '../../../../shared/services/tramites-academicos.service';
 import { BandejaHabilitacionPorExcepcion, BusquedaEstudianteResponse, HabilitacionPorExcepcionInsert } from '../../../models/tramites.models';
 import { TramitesService } from '../../../tramites.service';
@@ -31,12 +33,13 @@ export class HabilitacionPorExcepcionComponent extends BaseComponent implements 
   selectedHabilitacion: BandejaHabilitacionPorExcepcion;
   busquedaRU: string;
   listaTramites: Array<TramiteModel> = [];
+  listaPeriodosGestiones: Array<PeriodoGestion> = [];
 
   listaLabelColumnas: Array<string>;
   listaValoresColumnas: Array<any>;
 
-  fechaLimiteInferior = new Date();
-  fechaLimiteSuperior = new Date( this.fechaLimiteInferior.getFullYear(), this.fechaLimiteInferior.getMonth(), this.fechaLimiteInferior.getDate() + 7 );
+  fechaLimiteSuperior = new Date();
+  fechaLimiteInferior = new Date( this.fechaLimiteSuperior.getFullYear(), this.fechaLimiteSuperior.getMonth() - 4  );
 
   displayedColumns = ['ci', 'nombreCompleto', 'fechaNacimiento', 'carrera' ];
   dataSource = new MatTableDataSource<BusquedaEstudianteResponse>([]);
@@ -53,6 +56,7 @@ export class HabilitacionPorExcepcionComponent extends BaseComponent implements 
     private datePipe: DatePipe,
     private estudianteService: EstudianteService,
     private tramitesService: TramitesService,
+    private periodoGestionService: PeriodoGestionService,
     private tramitesAcademicosService: TramitesAcademicosService
   ) {
     super();
@@ -61,6 +65,8 @@ export class HabilitacionPorExcepcionComponent extends BaseComponent implements 
   ngOnInit(): void {
 
     this.getListaTramites();
+
+    this.getAllPeriodos();
 
     this.selectedHabilitacion = this.data.selectedHabilitacion as BandejaHabilitacionPorExcepcion;
 
@@ -82,11 +88,10 @@ export class HabilitacionPorExcepcionComponent extends BaseComponent implements 
       // Insercion
 
       this.formHabilitacionExcepcion = this.formBuilder.group({
-        idTramite : [undefined, Validators.required],
-        rangoFechaGroup: this.formBuilder.group({
-          fechaInicial: [ undefined, Validators.compose([ Validators.required ]) ],
-          fechaFinal  : [ undefined, Validators.compose([ Validators.required ]) ]
-        })
+        idTramite          : [ undefined, Validators.required],
+        idPeriodoGestion   : [ undefined, Validators.required],
+        fechaRegularizacion: [ undefined, Validators.compose([ Validators.required ]) ],
+        motivoHabilitacion : [ undefined, Validators.compose([ Validators.required , Validators.minLength( 5 ), Validators.maxLength( 100 ) ]) ]
       });
 
     }
@@ -111,6 +116,19 @@ export class HabilitacionPorExcepcionComponent extends BaseComponent implements 
     });
   }
 
+  private getAllPeriodos(): void {
+
+    this.periodoGestionService.getAllPeriodos().pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
+      this.listaPeriodosGestiones = resp.data ?? [];
+    });
+  }
+
+  myFilter = (d: Date | null): boolean => {
+    const day = (d || new Date()).getDay();
+    // Prevent Saturday and Sunday from being selected.
+    return day !== 0 && day !== 6;
+  }
+
   onBuscarEstudianteByRU(): void {
     const ru = this.formBusqueda.controls['busquedaRU'].value as number;
 
@@ -128,28 +146,25 @@ export class HabilitacionPorExcepcionComponent extends BaseComponent implements 
   fillLabelsAndValuesColumns(): void {
     const data = this.dataSource.data[ 0 ];
     const tramite = this.listaTramites.filter( x => x.idTramite === this.formHabilitacionExcepcion.get( 'idTramite' ).value )[ 0 ];
-    const rangoFechas = this.formHabilitacionExcepcion.controls['rangoFechaGroup'].value;
-    const fechaIncial = rangoFechas.fechaInicial;
-    const fechaFinal  = rangoFechas.fechaFinal;
-    const rangoFechasString = this.datePipe.transform( fechaIncial, 'dd-MM-yyyy').concat( ' al ' ).concat( this.datePipe.transform( fechaFinal, 'dd-MM-yyyy' ));
+    const fechaRegularizacion = this.formHabilitacionExcepcion.controls[ 'fechaRegularizacion' ].value;
+    const periodo = this.listaPeriodosGestiones.filter( x => x.idPeriodoGestion === this.formHabilitacionExcepcion.controls[ 'idPeriodoGestion' ].value )[ 0 ];
+    const motivoHabilitacion = this.formHabilitacionExcepcion.controls[ 'motivoHabilitacion' ].value;
 
-    this.listaLabelColumnas = [ 'CI', 'Nombre completo', 'Carrera', 'Tramite', 'Rango de Fechas' ];
-    this.listaValoresColumnas = [ data.ci, data.nombreCompleto, data.carrera, tramite.descripcionTramite, rangoFechasString];
+    this.listaLabelColumnas = [ 'CI', 'Nombre completo', 'Carrera', 'Tramite', 'Periodo', 'Fecha regularización', 'Motivo habilitacion' ];
+    this.listaValoresColumnas = [ data.ci, data.nombreCompleto, data.carrera, tramite.descripcionTramite, String(periodo.periodo).concat('/').concat(periodo.gestion.toString() ), this.datePipe.transform( fechaRegularizacion, 'yyyy-MM-dd' ), motivoHabilitacion ];
 
   }
 
   onFinalizarTramite(): void {
     const data = this.dataSource.data[ 0 ];
-    const rangoFechas = this.formHabilitacionExcepcion.controls['rangoFechaGroup'].value;
-    const fechaIncial = rangoFechas.fechaInicial;
-    const fechaFinal  = rangoFechas.fechaFinal;
 
     const habilitacionPorExcepcionInsert: HabilitacionPorExcepcionInsert = {
-      fechaInicial: fechaIncial,
-      fechaFinal  : fechaFinal,
-      idEstudiante: data.idEstudiante,
-      idTramite   : this.formHabilitacionExcepcion.get( 'idTramite' ).value,
-      estado      : eEstado.ACTIVADO
+      idEstudiante       : data.idEstudiante,
+      idTramite          : this.formHabilitacionExcepcion.get( 'idTramite' ).value,
+      idPeriodoGestion   : this.formHabilitacionExcepcion.get( 'idPeriodoGestion').value,
+      fechaRegularizacion: this.formHabilitacionExcepcion.get( 'fechaRegularizacion' ).value,
+      motivoHabilitacion : this.formHabilitacionExcepcion.get( 'motivoHabilitacion').value,
+      estado             : eEstado.ACTIVADO
     };
 
     this.tramitesService.insertTramitePorExcepcion( habilitacionPorExcepcionInsert ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {

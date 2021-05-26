@@ -204,8 +204,9 @@ export interface BandejaHabilitacionPorExcepcion  extends BandejaAbstract {
   carrera?: string;
   tiempo?: string;
   idHabilitacionPorExcepcion?: number;
-  fechaInicial?: Date;
-  fechaFinal?: Date;
+  fechaHabilitacion: Date;
+  fechaRegularizacion: Date;
+  motivo?: string;
   estado?: number;
   tramite?: string;
 }
@@ -241,9 +242,12 @@ export interface BusquedaEstudianteResponse {
 }
 
 export interface HabilitacionPorExcepcionInsert {
-  fechaInicial?: Date;
-  fechaFinal?: Date;
-  idEstudiante?: number;
-  idTramite?: number;
-  estado?: number;
+  // fechaInicial?: Date;
+  // fechaFinal?: Date;
+  fechaRegularizacion: Date;
+  idPeriodoGestion: number;
+  idEstudiante: number;
+  idTramite: number;
+  motivoHabilitacion: string;
+  estado: number;
 }

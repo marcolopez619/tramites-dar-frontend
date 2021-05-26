@@ -21,7 +21,7 @@ import { HabilitacionPorExcepcionComponent } from '../habilitacion-por-excepcion
 })
 export class BandejaHabilitacionExcepcionComponent  extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['ci', 'nombreCompleto', 'carrera', 'rangoFechas', 'tiempo', 'tramite', 'estado', 'acciones'];
+  displayedColumns = ['ci', 'nombreCompleto', 'carrera', 'fechaHabilitacion', 'fechaRegularizacion', 'motivo', 'tramite', 'estado'];
   dataSource = new MatTableDataSource<BandejaHabilitacionPorExcepcion>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

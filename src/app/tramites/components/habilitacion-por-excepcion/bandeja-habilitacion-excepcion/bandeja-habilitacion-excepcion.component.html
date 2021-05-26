@@ -31,18 +31,23 @@
         <mat-cell *matCellDef="let element" fxFlex="25"> {{element.nombrecompleto}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="carrera">
-        <mat-header-cell *matHeaderCellDef fxFlex="25" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-carrera') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="25"> {{element.carrera}}</mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="21" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-carrera') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="21"> {{element.carrera}}</mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="rangoFechas" >
-        <mat-header-cell *matHeaderCellDef fxFlex="28"  mat-sort-header> {{ langService.getLang(eModulo.Tramite, 'lbl-rango-fechas') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="28" > {{element.fechaInicial | date : 'dd/MM/yyyy' }} al {{element.fechaFinal | date : 'dd/MM/yyyy' }} &nbsp; </mat-cell>
+      <ng-container matColumnDef="fechaHabilitacion" >
+        <mat-header-cell *matHeaderCellDef fxFlex="8"  mat-sort-header> {{ langService.getLang(eModulo.Tramite, 'lbl-fecha-habilitacion') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="8" > {{element.fechaHabilitacion | date : 'dd/MM/yyyy' }} </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="tiempo" >
-        <mat-header-cell *matHeaderCellDef fxFlex="5"  mat-sort-header> {{ langService.getLang(eModulo.Tramite, 'lbl-tiempo') }} <br> ( Días ) </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="5" > {{element.tiempo}} &nbsp; </mat-cell>
+      <ng-container matColumnDef="fechaRegularizacion" >
+        <mat-header-cell *matHeaderCellDef fxFlex="8"  mat-sort-header> {{ langService.getLang(eModulo.Tramite, 'lbl-fecha-regularizacon') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="8" > {{element.fechaRegularizacion | date : 'dd/MM/yyyy' }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="motivo" >
+        <mat-header-cell *matHeaderCellDef fxFlex="30"  mat-sort-header> {{ langService.getLang(eModulo.Tramite, 'lbl-motivo') }}</mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="30" > {{element.motivo}} &nbsp; </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="tramite" >
@@ -51,22 +56,22 @@
       </ng-container>
 
       <ng-container matColumnDef="estado" >
-        <mat-header-cell *matHeaderCellDef fxFlex="10"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="10" > {{element.estado | estadoToLiteral}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="6"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="6" > {{element.estado | estadoToLiteral}} </mat-cell>
       </ng-container>
 
 
-      <ng-container matColumnDef="acciones">
+     <!--  <ng-container matColumnDef="acciones">
         <mat-header-cell *matHeaderCellDef fxFlex="10" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
         <mat-cell *matCellDef="let element;" fxFlex="10" fxLayoutAlign="center center">
-          <!-- <a mat-icon-button (click)="onAddEditTramite(element)" matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}">
+          <a mat-icon-button (click)="onAddEditTramite(element)" matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}">
             <mat-icon>edit</mat-icon>
-          </a> -->
+          </a>
           <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}" >
             <mat-icon>delete_forever</mat-icon>
           </a>
         </mat-cell>
-      </ng-container>
+      </ng-container> -->
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 

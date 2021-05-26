@@ -5,9 +5,16 @@ export const tramiteLang = {
     'tit-nueva-habilitacion' : 'Nueva habilitación',
     'lbl-tramite' : 'Tramite',
     'lbl-rango-fechas' : 'Rango de fechas',
+    'lbl-fecha-habilitacion' : 'Fecha habilitacion',
+    'lbl-fecha-regularizacon' : 'Fecha regularizacion',
+    'lbl-fecha-regularizacion' : 'Fecha de regularización',
     'lbl-tiempo' : 'Tiempo',
+    'lbl-motivo' : 'Motivo',
     'lbl-nombre-compleo' : 'Nombre completo',
     'lbl-ci' : 'CI',
-    'lbl-confir-sol-habilitacion-por-excepcion' : '¿Desea habilitar el tramite seleccionado por excepcion?'
+    'lbl-confir-sol-habilitacion-por-excepcion' : '¿Desea habilitar el tramite seleccionado por excepcion?',
+    'lbl-periodo' : 'Periodo',
+    'lbl-descripcion-excepcion' : 'Motivo de habilitación',
+    'lbl-descripcion-excepcion-error' : 'El motivo de habilitación es obligatorio'
   }
 };
