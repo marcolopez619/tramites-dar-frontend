@@ -28,7 +28,7 @@
 
       <ng-container matColumnDef="rangoFechas" >
         <mat-header-cell *matHeaderCellDef fxFlex="25"  mat-sort-header> {{ langService.getLang(eModulo.Tramite, 'lbl-rango-fechas') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="25" > {{element.fechaInicial | date : 'dd/MM/yyyy' }} al {{element.fechaFinal | date : 'dd/MM/yyyy' }} &nbsp; </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="25" >{{element.fechaInicial | date : 'dd/MM/yyyy' }} al {{element.fechaFinal | date : 'dd/MM/yyyy' }} &nbsp; </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="gestion" >

@@ -11,6 +11,11 @@
   </mat-card-header>
   <mat-dialog-content>
     <mat-card-content>
+
+      <div fxLayout="row" fxLayoutAlign="center center" *ngIf="periodoActivo">
+        <h3> Periodo activo : {{periodoActivo.periodo}}/{{periodoActivo.gestion}}</h3>
+      </div>
+
       <form [formGroup]="formTramite" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
         <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
 
@@ -47,7 +52,7 @@
 
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
               <span>Estado: </span>
-              <mat-slide-toggle [formControl]="this.formTramite.get('estado')" [checked]="activado" (change)="onChangeSlideToggleValue($event)"></mat-slide-toggle>
+              <mat-slide-toggle formControlName="estado" [checked]="activado" (change)="onChangeSlideToggleValue($event)"></mat-slide-toggle>
           </div>
 
 
@@ -58,7 +63,7 @@
   </mat-dialog-content>
 
   <mat-dialog-actions fxLayout="row" fxLayoutGap="20px">
-    <button fxFlex mat-raised-button color="accent" (click)="onSaveTramite()" [disabled]="!this.formTramite.valid || !this.formTramite.dirty || contextService.isLoading">{{langService.getLang(eModulo.Base, 'lbl-guardar')}}</button>
+    <button fxFlex mat-raised-button color="accent" (click)="onSaveTramite()" [disabled]="!this.formTramite.dirty || this.formTramite.invalid || contextService.isLoading">{{langService.getLang(eModulo.Base, 'lbl-guardar')}}</button>
     <button fxFlex mat-raised-button color="warn" (click)="onClose()">{{langService.getLang(eModulo.Base, 'btnCancel')}}</button>
   </mat-dialog-actions>
 </mat-card>

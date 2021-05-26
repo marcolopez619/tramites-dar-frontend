@@ -9,7 +9,7 @@ export interface HabilitacionTramiteModelInsert{
   fechaInicial?: Date;
   fechaFinal?: Date;
   estado?: number;
-  gestion?: number;
+  idPeriodoGestion?: number;
   idTramite?: number;
 }
 

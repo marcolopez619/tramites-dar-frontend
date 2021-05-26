@@ -5,9 +5,11 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle/slide-toggl
 import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
+import { PeriodoGestion } from '../../../shared/models/periodo_gestion.model';
 import { HabilitacionTramiteModelInsert, HabilitacionTramiteModelUpdate, TramiteModel } from '../../../shared/models/tramites.models';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
+import { PeriodoGestionService } from '../../../shared/services/periodo-gestion.service';
 import { TramitesAcademicosService } from '../../../shared/services/tramites-academicos.service';
 import { BandejaTramite } from '../../models/tramites.models';
 import { TramitesService } from '../../tramites.service';
@@ -23,6 +25,7 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
   formTramite: FormGroup;
   listaTramites: Array<TramiteModel> = [];
   activado = true;
+  periodoActivo: PeriodoGestion;
   fechaLimiteInferior = new Date();
   fechaLimiteSuperior = new Date( this.fechaLimiteInferior.getFullYear(), this.fechaLimiteInferior.getMonth() + 3, this.fechaLimiteInferior.getDate() );
 
@@ -35,7 +38,8 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
     public contextService: ContextoService,
     private formBuilder: FormBuilder,
     private tramiteService: TramitesService,
-    private tramitesAcademicosService: TramitesAcademicosService
+    private tramitesAcademicosService: TramitesAcademicosService,
+    private periodoGestionService: PeriodoGestionService
   ) {
     super();
   }
@@ -43,12 +47,17 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.getListaTramites();
 
+    this.getPeriodoActivo();
+
     // Captura el elemento a editar si es que lo hay
     this.elementBandejaSelected = this.data.elementBandejaTramite as BandejaTramite;
 
     if ( this.elementBandejaSelected ) {
       // => es edicion
       this.activado = !!this.elementBandejaSelected.estado;
+
+      this.elementBandejaSelected.fechaInicial = new Date( this.elementBandejaSelected.fechaInicial );
+      this.elementBandejaSelected.fechaFinal   = new Date( this.elementBandejaSelected.fechaFinal );
 
       this.formTramite = this.formBuilder.group({
         idTramite      : [ this.elementBandejaSelected.idTramite, Validators.compose([ Validators.required ])],
@@ -80,6 +89,12 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
     });
   }
 
+  private getPeriodoActivo(): void {
+    this.periodoGestionService.getPeriodoActivo().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.periodoActivo = resp.data;
+    });
+  }
+
   onChangeSlideToggleValue( event: MatSlideToggleChange ): void {
     this.activado = event.checked;
   }
@@ -96,8 +111,8 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
         fechaInicial         : fechaIncial,
         fechaFinal           : fechaFinal,
         estado               : +this.activado,
-        gestion              : new Date().getFullYear(),
-        idTramite            : this.formTramite.controls['idTramite'].value
+        idTramite            : this.formTramite.controls['idTramite'].value,
+        idPeriodoGestion     : this.periodoActivo.idPeriodoGestion
       };
 
       this.tramiteService.updateHabilitaconTramite( habilitacionTramiteModelUpdate ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( respUpdate => {
@@ -107,11 +122,11 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
     } else {
       // => Nueva insercion
       const habilitacionTramiteInsert: HabilitacionTramiteModelInsert = {
-        fechaInicial: fechaIncial,
-        fechaFinal  : fechaFinal,
-        estado      : +this.activado, // Habilitado por default
-        gestion     : new Date().getFullYear(),
-        idTramite   : this.formTramite.controls['idTramite'].value
+        fechaInicial    : fechaIncial,
+        fechaFinal      : fechaFinal,
+        estado          : +this.activado,
+        idTramite       : this.formTramite.controls['idTramite'].value,
+        idPeriodoGestion: this.periodoActivo.idPeriodoGestion
       };
 
       this.tramiteService.insertHabilitaconTramite( habilitacionTramiteInsert ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( respInsert => {
