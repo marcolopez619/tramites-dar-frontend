@@ -70,6 +70,7 @@ import { TramitesAcademicosService } from './services/tramites-academicos.servic
 import { EstadoToLiteralPipe } from './pipes/estado-to-literal.pipe';
 import { UniversidadService } from './services/universidad.service';
 import { BusquedaEstudianteComponent } from './components/busqueda-estudiante/busqueda-estudiante.component';
+import { PeriodoGestionService } from './services/periodo-gestion.service';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -225,7 +226,8 @@ import { BusquedaEstudianteComponent } from './components/busqueda-estudiante/bu
       BusquedaService,
       MotivoService,
       TramitesAcademicosService,
-      UniversidadService
+      UniversidadService,
+      PeriodoGestionService
     ]
 })
 export class SharedModule { }
