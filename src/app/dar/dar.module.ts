@@ -11,17 +11,19 @@ import { UniversidadComponent } from './components/gestion-universidades/univers
 import { BandejaFacultadesComponent } from './components/gestion-universidades/bandeja-facultades/bandeja-facultades.component';
 import { FacultadComponent } from './components/gestion-universidades/facultad/facultad.component';
 import { BandejaCarrerasComponent } from './components/gestion-universidades/bandeja-carreras/bandeja-carreras.component';
+import { BandejaHabilitacionGestionesComponent } from './components/habilitacion-gestiones/bandeja-habilitacion-gestiones/bandeja-habilitacion-gestiones.component';
+import { HabilitacionGestionComponent } from './components/habilitacion-gestiones/habilitacion-gestion/habilitacion-gestion.component';
 
 
 
 @NgModule({
-  declarations: [BandejaDarComponent, DetalleTramiteComponent, BandejaUniversidadesComponent, UniversidadComponent, BandejaFacultadesComponent, FacultadComponent, BandejaCarrerasComponent],
+  declarations: [BandejaDarComponent, DetalleTramiteComponent, BandejaUniversidadesComponent, UniversidadComponent, BandejaFacultadesComponent, FacultadComponent, BandejaCarrerasComponent, BandejaHabilitacionGestionesComponent, HabilitacionGestionComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(darRoutes),
     SharedModule
   ],
-  exports: [BandejaDarComponent, DetalleTramiteComponent, BandejaUniversidadesComponent, UniversidadComponent, BandejaFacultadesComponent, BandejaCarrerasComponent],
+  exports: [BandejaDarComponent, DetalleTramiteComponent, BandejaUniversidadesComponent, UniversidadComponent, BandejaFacultadesComponent, BandejaCarrerasComponent, BandejaHabilitacionGestionesComponent],
   providers : [
     DarService,
     DatePipe,

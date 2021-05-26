@@ -4,6 +4,7 @@ import { DetalleTramiteComponent } from './components/detalle-tramite/detalle-tr
 import { BandejaCarrerasComponent } from './components/gestion-universidades/bandeja-carreras/bandeja-carreras.component';
 import { BandejaFacultadesComponent } from './components/gestion-universidades/bandeja-facultades/bandeja-facultades.component';
 import { BandejaUniversidadesComponent } from './components/gestion-universidades/bandeja-universidades/bandeja-universidades.component';
+import { BandejaHabilitacionGestionesComponent } from './components/habilitacion-gestiones/bandeja-habilitacion-gestiones/bandeja-habilitacion-gestiones.component';
 
 export const darRoutes: Routes = [
   {
@@ -28,6 +29,10 @@ export const darRoutes: Routes = [
           {
               path: 'universidad/facultad/carreras',
               component: BandejaCarrerasComponent
+          },
+          {
+              path: 'habilitaciones/index',
+              component: BandejaHabilitacionGestionesComponent
           }
       ]
   }

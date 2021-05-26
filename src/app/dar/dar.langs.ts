@@ -1,6 +1,7 @@
 export const darLang = {
   'es' : {
     'tit-bandeja-dar' : 'Solicitudes de tramites',
+    'tit-adm-periodos-gestiones' : 'Administracion de periodos y gestiones',
     'ti-detalle-tramite' : 'Detalle del tramite',
     'tit-nueva-universidad' : 'Añadir universidad',
     'tit-editar-universidad' : 'Editar universidad',
@@ -10,6 +11,7 @@ export const darLang = {
     'lbl-facultad' : 'Facultad',
     'tit-bandeja-facultades' : 'Facultades de:$nombreUniversidad',
     'tit-nueva-facultad' : 'Añadir facultad',
+    'tit-modificar-priodo-gestion' : 'Editar periodo y gestión',
 
     'lbl-carrera' : 'Carrera',
     'tit-bandeja-carreras' : 'Carreras de: $nombreFacultad',
@@ -20,6 +22,9 @@ export const darLang = {
     'lbl-nombre-completo' : 'Nombre completo',
     'lbl-tipo-tramite' : 'Tipo trámite',
     'lbl-observaciones' : 'Observaciones',
-    'lbl-observaciones-error' : 'La observacion es inválida'
+    'lbl-observaciones-error' : 'La observacion es inválida',
+
+    'lbl-gestiones' : 'Gestiones',
+    'lbl-fecha-modificacion' : 'Fecha modificación'
   }
 };
