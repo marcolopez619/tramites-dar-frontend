@@ -1,6 +1,7 @@
 export const tramiteLang = {
   'es' : {
     'tit-lista-habilitacion-tramites' : 'Habilitacion de trámites',
+    'tit-lista-edicion-gestiones' : 'Edición de gestiones',
     'tit-lista-habilitacion-tramites-por-excepcion' : 'Habilitacion de trámites por excepcion',
     'tit-nueva-habilitacion' : 'Nueva habilitación',
     'lbl-tramite' : 'Tramite',
@@ -12,6 +13,7 @@ export const tramiteLang = {
     'lbl-motivo' : 'Motivo',
     'lbl-nombre-compleo' : 'Nombre completo',
     'lbl-ci' : 'CI',
+    'lbl-gestion' : 'Gestión',
     'lbl-confir-sol-habilitacion-por-excepcion' : '¿Desea habilitar el tramite seleccionado por excepcion?',
     'lbl-periodo' : 'Periodo',
     'lbl-descripcion-excepcion' : 'Motivo de habilitación',

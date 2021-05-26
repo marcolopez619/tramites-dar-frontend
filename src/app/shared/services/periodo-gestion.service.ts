@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { PeriodoGestion } from '../models/periodo_gestion.model';
 import { Resultado } from '../models/resultado.model';
 import { ContextoService } from './contexto.service';
 
@@ -21,5 +22,9 @@ export class PeriodoGestionService {
   getPeriodoActivo(): Observable<Resultado> {
     const headers = new HttpHeaders().set('X-Notificador', 'false');
     return this.httpClient.get<Resultado>(`${this.baseURL}/activo`, {headers : headers });
+  }
+  updatePeriodo(parametro: PeriodoGestion): Observable<Resultado> {
+    // const headers = new HttpHeaders().set('X-Notificador', 'false');
+    return this.httpClient.patch<Resultado>(`${this.baseURL}`, parametro );
   }
 }

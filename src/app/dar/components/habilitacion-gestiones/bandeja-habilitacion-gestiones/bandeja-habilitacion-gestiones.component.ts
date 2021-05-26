@@ -51,10 +51,10 @@ export class BandejaHabilitacionGestionesComponent  extends BaseComponent  imple
     this.unsubscribe$.next(true);
   }
 
-  aplicarFiltro(event: Event): void {
+  /* aplicarFiltro(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+  } */
 
   getListaGestiones(): void {
     this.periodoGestionService.getAllPeriodos().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {

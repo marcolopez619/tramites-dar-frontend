@@ -11,19 +11,19 @@
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-actualizar') }}" (click)="getListaGestiones()">
         <mat-icon>refresh</mat-icon>
       </a>
-      <a mat-button matTooltip="{{ langService.getLang(eModulo.Dar, 'tit-modificar-priodo-gestion') }}" (click)="onAnadirEditarGestion()">
+     <!--  <a mat-button matTooltip="{{ langService.getLang(eModulo.Dar, 'tit-modificar-priodo-gestion') }}" (click)="onAnadirEditarGestion()">
           <mat-icon>add_circle</mat-icon>
-      </a>
+      </a> -->
   </mat-toolbar>
 </mat-card-header>
 
 <mat-card-content>
 
-  <mat-form-field fxFlexFill appearance="outline">
+  <!-- <mat-form-field fxFlexFill appearance="outline">
     <span matPrefix><mat-icon>search</mat-icon>&nbsp;</span>
     <mat-label>{{this.langService.getLang(eModulo.Base, 'lbl-busqueda' )}} </mat-label>
     <input matInput (keyup)="aplicarFiltro($event)" shAutofocus shUppercase placeholder="" #input>
-  </mat-form-field>
+  </mat-form-field> -->
 
     <mat-table #table [dataSource]="dataSource" matSort>
 
@@ -39,7 +39,7 @@
 
       <ng-container matColumnDef="estado" >
         <mat-header-cell *matHeaderCellDef fxFlex="30"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="30" > {{element.estado? 'ACTIVADO' : 'DESACTIVADO' }} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="30" > {{element.estado | estadoToLiteral}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="acciones">
