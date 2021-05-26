@@ -19,6 +19,10 @@ export class TramitesAcademicosService {
     return this.httpClient.get<Resultado>(`${this.baseURL}`);
   }
 
+  verificarHabilitacionTramite(pIdTramite: number) : Observable<Resultado>{
+    return this.httpClient.get<Resultado>(`${this.baseURL}/verificar/habilitacion/${pIdTramite}`);
+  }
+
   insertDataTablaIntermedia(pTablaIntermediaInsert : TablaIntermediaInsert ) : Observable<Resultado>{
     return this.httpClient.post<Resultado>(`${this.baseURL}/tabla/intermedia`, pTablaIntermediaInsert);
   }
@@ -26,4 +30,6 @@ export class TramitesAcademicosService {
   updateEstadoTramite( pEstadoTramiteUpdate: EstadoTramiteUpdate): Observable<Resultado> {
     return this.httpClient.patch<Resultado>(`${this.baseURL}/estado`, pEstadoTramiteUpdate );
   }
+
+
 }
