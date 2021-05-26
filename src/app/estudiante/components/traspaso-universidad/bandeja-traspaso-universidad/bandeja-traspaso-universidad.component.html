@@ -54,7 +54,7 @@
       <ng-container matColumnDef="acciones">
         <mat-header-cell *matHeaderCellDef fxFlex="10" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
         <mat-cell *matCellDef="let element;" fxFlex="10" fxLayoutAlign="center center">
-          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-imprimir') }}">
+          <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-imprimir') }}" *ngIf="(element.idEstado !== eEstado.RECHAZADO && element.idEstado !== eEstado.FINALIZADO)">
             <mat-icon>print</mat-icon>
           </a>
           <!-- <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}">

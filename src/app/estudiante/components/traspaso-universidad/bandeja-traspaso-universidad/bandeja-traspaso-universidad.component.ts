@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../../shared/base.component';
+import { eEstado } from '../../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
@@ -29,6 +30,7 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
   displayedColumns = ['universidadDestino', 'carreraDestino', 'periodo', 'motivo', 'fechaSolicitud', 'estado', 'acciones' ];
   dataSource = new MatTableDataSource<BandejaTraspasoUniversidad>([]);
   isTramiteHabilitado: boolean;
+  eEstado = eEstado;
 
   constructor(
     public langService: LangService,

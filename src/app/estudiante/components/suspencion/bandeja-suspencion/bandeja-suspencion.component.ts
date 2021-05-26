@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../../shared/base.component';
+import { eEstado } from '../../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
@@ -27,6 +28,7 @@ export class BandejaSuspencionComponent extends BaseComponent  implements OnInit
   displayedColumns = ['carrera', 'tiempo', 'motivo', 'fechaSolicitud', 'estado', 'acciones' ];
   dataSource = new MatTableDataSource<BandejaSuspencion>([]);
   isTramiteHabilitado: boolean;
+  eEstado = eEstado;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
