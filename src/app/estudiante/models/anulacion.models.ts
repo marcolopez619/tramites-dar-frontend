@@ -19,6 +19,7 @@ export interface BandejaAnulacion extends BandejaAbstract {
   observaciones?: string;
   idTramite?: number;
   tramite?:string;
+  idEstado?:number;
   estado?: number;
   idEntidad?: number;
   entidad?: string;

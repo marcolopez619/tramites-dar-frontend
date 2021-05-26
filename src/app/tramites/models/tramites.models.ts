@@ -31,6 +31,7 @@ export interface BandejaCambioCarrera {
   observaciones?: string;
   idTramite?: number;
   tramite?: string;
+  idEstado?: number;
   estado?: string;
   idEntidad?: number;
   entidad?: string;
@@ -57,6 +58,7 @@ export interface BandejaTranseferencia {
   observaciones?: string;
   idTramite?: number;
   tramite?: string;
+  idEstado?: number;
   estado?: string;
   idEntidad?: number;
   entidad?: string;
@@ -82,6 +84,7 @@ export interface BandejaSuspencion {
   observaciones?: string;
   idTramite?: number;
   tramite?: string;
+  idEstado?: number;
   estado?: string;
   idEntidad?: number;
   entidad?: string;
@@ -104,6 +107,7 @@ export interface BandejaReadmision {
   observaciones?: string;
   idTramite?: number;
   tramite?: string;
+  idEstado?: number;
   estado?: string;
   idEntidad?: number;
   entidad?: string;
@@ -134,6 +138,7 @@ export interface BandejaTraspasoUniversidad {
   observaciones?: string;
   idTramite?: number;
   tramite?: string;
+  idEstado?: number;
   estado?: string;
   idEntidad?: number;
   entidad?: string;
