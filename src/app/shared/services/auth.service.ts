@@ -21,6 +21,8 @@ export class AuthService {
      */
     returnUrl: string;
 
+    isUserAutentificado: boolean;
+
     /**
      *Creates an instance of AuthService.
      * @param {Router} router
@@ -61,6 +63,8 @@ export class AuthService {
                     if (response.data) {
                         // Setea el contexto.
                         this.contextoService.setContexto(response.data[ 0 ]);
+                        this.isUserAutentificado = true;
+
                         // Si existe una url de retorno, se redirecciona ahi.
                         if (this.returnUrl) {
                             this.router.navigate([this.returnUrl]);
@@ -77,7 +81,7 @@ export class AuthService {
      * Permite realizar el cierre de sesion del usuario
      */
     logoutUser(): void {
-      const user = this.contextoService.getItemContexto('samActName');
+      const user = this.contextoService.getItemContexto('nombre');
 
       const params = {
         UserName    : user,
@@ -85,6 +89,7 @@ export class AuthService {
       };
 
       if (user) {
+        this.isUserAutentificado = false;
         this.contextoService.finalizarContexto();
         // Redirecciona al login.
         this.router.navigate(['login']);
@@ -149,7 +154,8 @@ export class AuthService {
     * Método para determinar si el usuario esta autenticado en base al token.
     */
     isUserAuthenticated(): boolean {
-        return !this.isTokenExpired();
+      return this.isUserAutentificado;
+        // return !this.isTokenExpired();
         // return true;
     }
 

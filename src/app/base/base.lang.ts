@@ -49,6 +49,7 @@ export const baseLang = {
             'lbl-user': 'Usuario',
             'lbl-inst': 'Institución',
             'lbl-cargo-actual': 'Cargo',
+            'lbl-carrera-actual': 'Carrera',
             'menu-user': 'Información del usuario',
             'tit-search-menu': 'Buscar página',
             'msg-error-general-titulo' : 'ERROR',
