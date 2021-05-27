@@ -2,9 +2,11 @@
     <a mat-button [@fadeInLeftAnim] routerLink="/menu" (click)="onHomeClick()" matTooltip="{{langService.getLang(eModulo.Base,'tit-home')}}" *ngIf="authService.isUserAuthenticated()">
         <mat-icon>home</mat-icon>
     </a>
-    <ng-container *ngFor="let item of contextoService.breadCrumbs; let i = index">
+
+    <!-- FIXME: SE COMENTÓ DEBIDO A Q: item.recursosHijos.length ESTA CAUSANDO PROBLEMAS -->
+    <!-- <ng-container *ngFor="let item of contextoService.breadCrumbs; let i = index">
         <mat-icon>navigate_next</mat-icon>
         <a mat-button [@breadItemAnim] (click)="onBreadClick(item, i)" routerLink="/menu" *ngIf="item.recursosHijos.length > 0">{{item.etiqueta}}</a>
         <button mat-button [@breadItemAnim] *ngIf="item.recursosHijos.length == 0">{{item.etiqueta}}</button>
-    </ng-container>
+    </ng-container> -->
 </div>
