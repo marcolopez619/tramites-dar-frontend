@@ -63,7 +63,9 @@ export class BandejaCambioCarreraComponent extends BaseComponent  implements OnI
   }
 
   private verificarHabilitacionTramite(): void{
-    this.tramitesAcademicosService.verificarHabilitacionTramite( eTipoTramite.CAMBIO_DE_CARRERA ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
+    const idEstudiante = this.contextService.getItemContexto( 'idEstudiante' );
+
+    this.tramitesAcademicosService.verificarHabilitacionTramite( eTipoTramite.CAMBIO_DE_CARRERA, idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
       this.isTramiteHabilitado = resp.data.isTramiteHabilitado;
 
       if ( !this.isTramiteHabilitado ) {

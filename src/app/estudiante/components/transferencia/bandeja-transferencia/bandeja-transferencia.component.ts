@@ -62,7 +62,9 @@ export class BandejaTransferenciaComponent extends BaseComponent implements OnIn
   }
 
   private verificarHabilitacionTramite(): void{
-    this.tramitesAcademicosService.verificarHabilitacionTramite( eTipoTramite.TRANSFERENCIA ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
+    const idEstudiante = this.contextService.getItemContexto( 'idEstudiante' );
+
+    this.tramitesAcademicosService.verificarHabilitacionTramite( eTipoTramite.TRANSFERENCIA, idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
       this.isTramiteHabilitado = resp.data.isTramiteHabilitado;
 
       if ( !this.isTramiteHabilitado ) {

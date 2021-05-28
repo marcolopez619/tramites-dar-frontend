@@ -19,8 +19,8 @@ export class TramitesAcademicosService {
     return this.httpClient.get<Resultado>(`${this.baseURL}`);
   }
 
-  verificarHabilitacionTramite(pIdTramite: number) : Observable<Resultado>{
-    return this.httpClient.get<Resultado>(`${this.baseURL}/verificar/habilitacion/${pIdTramite}`);
+  verificarHabilitacionTramite(pIdTramite: number, pIdEstudiante: number) : Observable<Resultado>{
+    return this.httpClient.get<Resultado>(`${this.baseURL}/verificar/habilitacion/${pIdTramite}/estudiante/${pIdEstudiante}`);
   }
 
   insertDataTablaIntermedia(pTablaIntermediaInsert : TablaIntermediaInsert ) : Observable<Resultado>{

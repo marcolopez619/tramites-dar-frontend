@@ -71,7 +71,8 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
   }
 
   private verificarHabilitacionTramite(): void{
-    this.tramitesAcademicosService.verificarHabilitacionTramite( eTipoTramite.ANULACION ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
+    const idEstudiante = this.contextService.getItemContexto( 'idEstudiante' );
+    this.tramitesAcademicosService.verificarHabilitacionTramite( eTipoTramite.ANULACION, idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
       this.isTramiteHabilitado = resp.data.isTramiteHabilitado;
 
       if ( !this.isTramiteHabilitado ) {

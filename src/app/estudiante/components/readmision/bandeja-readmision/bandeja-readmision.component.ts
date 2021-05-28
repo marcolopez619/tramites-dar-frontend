@@ -61,7 +61,9 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
     this.matSnackBar.dismiss();
   }
   private verificarHabilitacionTramite(): void{
-    this.tramitesAcademicosService.verificarHabilitacionTramite( eTipoTramite.READMISION ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
+    const idEstudiante = this.contextService.getItemContexto( 'idEstudiante' );
+
+    this.tramitesAcademicosService.verificarHabilitacionTramite( eTipoTramite.READMISION, idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
       this.isTramiteHabilitado = resp.data.isTramiteHabilitado;
 
       if ( !this.isTramiteHabilitado ) {
