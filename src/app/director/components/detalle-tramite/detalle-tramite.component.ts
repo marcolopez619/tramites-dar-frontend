@@ -12,11 +12,11 @@ import { TransferenciaService } from '../../../estudiante/components/transferenc
 import { TraspasoUniversidadService } from '../../../estudiante/components/traspaso-universidad/traspaso-universidad.service';
 import { EstudianteService } from '../../../estudiante/estudiante.service';
 import { BandejaAnulacion } from '../../../estudiante/models/anulacion.models';
+import { CambioCarreraUpdate } from '../../../estudiante/models/cambio_carrera.model';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { eEstado } from '../../../shared/enums/estado.enum';
-import { eTipoArchivo } from '../../../shared/enums/tipo-archivo.enum';
 import { eTipoTramite } from '../../../shared/enums/tipoTramite.enum';
 import { eEntidad } from '../../../shared/enums/tipo_entidad.enum';
 import { EstudianteModel } from '../../../shared/models/estudiante.model';
@@ -40,6 +40,8 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
   listaValoresColumnas: Array<any>;
   detalleTramite: any;
   selectedTramite: BandejaDirector;
+  poseeConvalidacionMaterias = false;
+  eEntidad = eEntidad;
 
   constructor(
     public langService: LangService,
@@ -70,7 +72,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
 
     this.getDatosEstudiante();
 
-    this.verificarEstadoTramite();
+    // this.verificarEstadoTramite();
 
     const idTramite = this.getTipoTramite( this.selectedTramite.idTramite) ;
     const idEstudiante = this.selectedTramite.idEstudiante;
@@ -252,6 +254,17 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
     }
   }
 
+  private updateCambioCarrera(): void {
+    const cambioCarreraUpdate: CambioCarreraUpdate = {
+      idCambioCarrera: this.selectedTramite.idTipoTramite,
+      convalidacion  : this.poseeConvalidacionMaterias
+    };
+
+    this.cambioDeCarreraService.updateCambioCarrera( cambioCarreraUpdate ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      //..
+    });
+  }
+
   onAprobarTramite(): void {
     const dlgAprobar = this.dialog.open( ConfirmDialogComponent , {
       disableClose: false,
@@ -271,6 +284,11 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
           // => pasarselo al director destino
           this.pasarSiguienteNivel( eEstado.APROBADO, eEntidad.DIRECTOR_DE_CARRERA_DESTINO, observaciones, true );
         } else {
+          // Verifica si es el director de carrera Destino
+          if ( this.selectedTramite.idEntidad === eEntidad.DIRECTOR_DE_CARRERA_DESTINO ) {
+            // Actualiza el campo: convalidacion,  en la tabla Cambio de carrera
+            this.updateCambioCarrera();
+          }
           // => pasarsele al DAR
           this.pasarSiguienteNivel( eEstado.APROBADO, eEntidad.ENCARGADO_DAR, observaciones, true );
         }

@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Resultado } from '../../shared/models/resultado.model';
 import { ContextoService } from '../../shared/services/contexto.service';
-import { AnulacionInsert } from '../models/anulacion.models';
-import { CambioCarreraInsert } from '../models/cambio_carrera.model';
+import { CambioCarreraInsert, CambioCarreraUpdate } from '../models/cambio_carrera.model';
 
 @Injectable()
 export class CambioCarreraService {
@@ -22,5 +21,9 @@ export class CambioCarreraService {
 
   insertCambioCarrera(cambioCarreraInsert: CambioCarreraInsert): Observable<Resultado> {
     return this.httpClient.post<Resultado>(`${this.baseURL}`, cambioCarreraInsert );
+  }
+
+  updateCambioCarrera( cambioCarreraUpdate: CambioCarreraUpdate ): Observable<Resultado> {
+    return this.httpClient.patch<Resultado>(`${this.baseURL}`, cambioCarreraUpdate );
   }
 }

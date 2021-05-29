@@ -74,7 +74,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
 
     this.getDatosEstudiante();
 
-    this.verificarEstadoTramite();
+    // this.verificarEstadoTramite();
 
     const idTramite = this.getTipoTramite( this.selectedTramite.idTramite) ;
     const idEstudiante = this.selectedTramite.idEstudiante;

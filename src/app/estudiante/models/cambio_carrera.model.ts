@@ -8,3 +8,8 @@ export interface CambioCarreraInsert {
   idEntidad?: number;
   observaciones?: string;
 }
+
+export interface CambioCarreraUpdate {
+  idCambioCarrera: number;
+  convalidacion?: boolean;
+}
