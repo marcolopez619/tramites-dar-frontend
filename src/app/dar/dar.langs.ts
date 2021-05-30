@@ -9,11 +9,13 @@ export const darLang = {
     'tit-detalle-universidad' : 'Detalle de universidad',
 
     'lbl-facultad' : 'Facultad',
+    'lbl-facultad-error' : 'La facultad es inválida',
     'tit-bandeja-facultades' : 'Facultades de:$nombreUniversidad',
     'tit-nueva-facultad' : 'Añadir facultad',
     'tit-modificar-priodo-gestion' : 'Editar periodo y gestión',
 
     'lbl-carrera' : 'Carrera',
+    'lbl-carrera-error' : 'La carrera es inválida',
     'tit-bandeja-carreras' : 'Carreras de: $nombreFacultad',
     'tit-nueva-carrera' : 'Añadir carrera',
 
@@ -25,6 +27,8 @@ export const darLang = {
     'lbl-observaciones-error' : 'La observacion es inválida',
 
     'lbl-gestiones' : 'Gestiones',
-    'lbl-fecha-modificacion' : 'Fecha modificación'
+    'lbl-fecha-modificacion' : 'Fecha modificación',
+
+    'lbl-placeholder-invalido' : 'La $tipoElementoUniv es inválida'
   }
 };

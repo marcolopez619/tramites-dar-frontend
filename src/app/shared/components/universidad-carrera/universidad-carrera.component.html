@@ -25,10 +25,10 @@
                 matInput
                 required
                 shUppercase
-                placeholder="{{langService.getLang(eModulo.Dar,'lbl-universidad')}}"
+                placeholder="{{this.placeHolderEdicion}}"
                 maxlength="100"
                 formControlName="nombre">
-                <mat-error *ngIf="formulario.controls['nombre'].invalid">{{langService.getLang(eModulo.Dar,'lbl-universidad-error') }}</mat-error>
+                <mat-error *ngIf="formulario.controls['nombre'].invalid">{{this.placeHolderError}}</mat-error>
             </mat-form-field>
 
           </div>

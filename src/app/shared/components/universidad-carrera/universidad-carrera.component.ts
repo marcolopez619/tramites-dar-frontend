@@ -30,6 +30,8 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
   objetoUniversidad: eTipoObjetoUniversidad;
   idUniversidadSelectedForInsert: number;
   idFacultadSelectedForInsert: number;
+  placeHolderEdicion: string;
+  placeHolderError: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -113,10 +115,16 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
   private setTitulosFormulario(): void {
     if ( this.objetoUniversidad === eTipoObjetoUniversidad.UNIVERSIDAD) {
       this.titToolBar = this.langService.getLang(eModulo.Base, (this.operationType === eTipoOperacion.ACTUALIZACION) ? 'lbl-editar' : 'lbl-anadir').concat(' universidad');
+      this.placeHolderEdicion = this.langService.getLang(eModulo.Dar, 'lbl-universidad');
+      this.placeHolderError = this.langService.getLang(eModulo.Dar, 'lbl-universidad-error');
     } else if ( this.objetoUniversidad === eTipoObjetoUniversidad.FACULTAD ) {
       this.titToolBar = this.langService.getLang(eModulo.Base, (this.operationType === eTipoOperacion.ACTUALIZACION) ? 'lbl-editar' : 'lbl-anadir').concat(' facultad');
+      this.placeHolderEdicion = this.langService.getLang(eModulo.Dar, 'lbl-facultad');
+      this.placeHolderError = this.langService.getLang(eModulo.Dar, 'lbl-facultad-error');
     } else {
       this.titToolBar = this.langService.getLang(eModulo.Base, (this.operationType === eTipoOperacion.ACTUALIZACION) ? 'lbl-editar' : 'lbl-anadir').concat(' carrera');
+      this.placeHolderEdicion = this.langService.getLang(eModulo.Dar, 'lbl-carrera');
+      this.placeHolderError = this.langService.getLang(eModulo.Dar, 'lbl-carrera-error');
     }
   }
 
@@ -180,7 +188,7 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
           this.onClose( resp.data );
         });
       }
-    } else if( this.objetoUniversidad === eTipoObjetoUniversidad.CARRERA ){
+    } else if ( this.objetoUniversidad === eTipoObjetoUniversidad.CARRERA ) {
 
       if ( this.operationType === eTipoOperacion.INSERCION) {
         // => Insercion de nueva facultad
@@ -210,8 +218,6 @@ export class UniversidadCarreraComponent extends BaseComponent implements OnInit
       }
     }
   }
-
-
 
   onChangeSlideToggleValue( event: MatSlideToggleChange ): void {
     this.activado = event.checked;
