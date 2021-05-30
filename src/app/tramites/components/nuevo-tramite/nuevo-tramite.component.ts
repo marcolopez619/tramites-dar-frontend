@@ -26,8 +26,8 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
   listaTramites: Array<TramiteModel> = [];
   activado = true;
   periodoActivo: PeriodoGestion;
-  fechaLimiteInferior = new Date();
-  fechaLimiteSuperior = new Date( this.fechaLimiteInferior.getFullYear(), this.fechaLimiteInferior.getMonth() + 3, this.fechaLimiteInferior.getDate() );
+  fechaLimiteSuperior = new Date();
+  fechaLimiteInferior = new Date( this.fechaLimiteSuperior.getFullYear(), 0, 1 );
 
   elementBandejaSelected: BandejaTramite;
 
