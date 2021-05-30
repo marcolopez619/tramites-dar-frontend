@@ -71,6 +71,7 @@ import { EstadoToLiteralPipe } from './pipes/estado-to-literal.pipe';
 import { UniversidadService } from './services/universidad.service';
 import { BusquedaEstudianteComponent } from './components/busqueda-estudiante/busqueda-estudiante.component';
 import { PeriodoGestionService } from './services/periodo-gestion.service';
+import { AlfanumericoDirective } from './directives/alfanumerico.directive';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -92,6 +93,7 @@ import { PeriodoGestionService } from './services/periodo-gestion.service';
         RightClickOffDirective,
         RowHoverDirective,
         ToolbarErrorDirective,
+        AlfanumericoDirective,
 
         ConfirmDialogComponent,
         JsonViewerComponent,
@@ -109,7 +111,8 @@ import { PeriodoGestionService } from './services/periodo-gestion.service';
         UniversidadCarreraComponent,
         BusquedaEstudianteComponent,
 
-        EstadoToLiteralPipe
+        EstadoToLiteralPipe,
+
     ],
     imports: [
         CommonModule,
@@ -196,6 +199,7 @@ import { PeriodoGestionService } from './services/periodo-gestion.service';
         RightClickOffDirective,
         RowHoverDirective,
         ToolbarErrorDirective,
+        AlfanumericoDirective,
 
         ConfirmDialogComponent,
         JsonViewerComponent,
