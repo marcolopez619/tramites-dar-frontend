@@ -49,9 +49,11 @@ export class UppercaseDirective extends DefaultValueAccessor implements AfterVie
      * @memberof UppercaseDirective
      */
     @HostListener('input', ['$event']) onInputChange($event): void {
+        const cursorPosition = $event.target.selectionStart;
         const transformed = this.transformValue($event.target.value);
         super.writeValue(transformed);
         this.onChange(transformed);
+        this.elementRef.nativeElement.setSelectionRange( cursorPosition, cursorPosition, 'none');
     }
 
     /**
