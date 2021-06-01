@@ -24,7 +24,7 @@ import { BandejaUniversidades } from '../../../../tramites/models/tramites.model
 })
 export class BandejaUniversidadesComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['universidad', 'estado' , 'acciones'];
+  displayedColumns = ['universidad', 'sigla', 'estado' , 'acciones'];
   dataSource = new MatTableDataSource<BandejaUniversidades>([]);
   isButtonAddEditPressed: boolean;
 

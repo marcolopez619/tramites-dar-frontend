@@ -28,8 +28,13 @@
     <mat-table #table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="universidad">
-        <mat-header-cell *matHeaderCellDef fxFlex="70" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-universidad') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="70"> {{element.nombre}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="60" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-universidad') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="60"> {{element.nombre}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="sigla">
+        <mat-header-cell *matHeaderCellDef fxFlex="10" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-sigla-universidad') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10"> {{element.sigla}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="estado" >

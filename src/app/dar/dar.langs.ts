@@ -20,6 +20,7 @@ export const darLang = {
     'tit-nueva-carrera' : 'Añadir carrera',
 
     'lbl-universidad' : 'Universidad',
+    'lbl-sigla-universidad' : 'Sigla',
     'lbl-universidad-error' : 'La universidad es inválida',
     'lbl-nombre-completo' : 'Nombre completo',
     'lbl-tipo-tramite' : 'Tipo trámite',

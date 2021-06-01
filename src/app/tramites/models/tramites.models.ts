@@ -187,6 +187,7 @@ export interface BandejaDirector {
 export interface BandejaUniversidades extends BandejaAbstract {
   idUniversidad?: number;
   nombre?: string;
+  sigla?: string;
   estado?: number;
 }
 export interface BandejaFacultad extends BandejaAbstract {
