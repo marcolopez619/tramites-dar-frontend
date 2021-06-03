@@ -11,6 +11,7 @@ import { eEstado } from '../../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
+import { NotificacionService } from '../../../../shared/services/notificacion.service';
 import { TramitesAcademicosService } from '../../../../shared/services/tramites-academicos.service';
 import { BandejaAnulacion } from '../../../models/anulacion.models';
 import { AnulacionComponent } from '../anulacion.component';
@@ -39,7 +40,8 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
     private dialog: MatDialog,
     private anulacionService: AnulacionService,
     private matSnackBar: MatSnackBar,
-    private tramitesAcademicosService: TramitesAcademicosService
+    private tramitesAcademicosService: TramitesAcademicosService,
+    private notificationService: NotificacionService
   ) {
     super();
   }
@@ -70,7 +72,7 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
 
   }
 
-  private verificarHabilitacionTramite(): void{
+  private verificarHabilitacionTramite(): void {
     const idEstudiante = this.contextService.getItemContexto( 'idEstudiante' );
     this.tramitesAcademicosService.verificarHabilitacionTramite( eTipoTramite.ANULACION, idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
       this.isTramiteHabilitado = resp.data.isTramiteHabilitado;
@@ -81,11 +83,26 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
     });
   }
 
+  private verificarExitenciaAnulacionCarreraActual(): Boolean {
+    // Verifica si existe una anulacion realizada anteriormente para la carrera en la cual se encuentra actualmente ( Obtenida del contexto )
+    const idCarreraEstudiante = this.contextService.getItemContexto('idCarrera');
+    const existeAnulacionRealizadaAnteriormente = this.dataSource.data.some( x => x.idCarreraOrigen === idCarreraEstudiante );
+    return existeAnulacionRealizadaAnteriormente;
+  }
+
   actualizarBandeja(): void {
     this.getListaAnulaciones();
   }
 
   onNuevaSolicitud(): void {
+    // Verificar si ya existe una nueva solicitud de anulacion para la misma carrera
+
+    /* if (this.verificarExitenciaAnulacionCarreraActual()) {
+      const mensaje = this.langService.getLang( eModulo.Estudiante, 'msg-anulacion-inhabilitada' );
+      this.notificationService.showSnackbarMensaje(mensaje, 5000, eTipoNotificacion.Informativo);
+      return;
+    } */
+
     const dlgNuevaSolicitud = this.dialog.open( AnulacionComponent,  {
       disableClose: false,
       width: '1000px',
