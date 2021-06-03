@@ -139,6 +139,8 @@ export class ContextoService {
      */
     finalizarContexto(): void {
       // localStorage.removeItem('context'); // Anteriormente
+      this.breadCrumbs = [];
+      this.breadCrumbs.length = 0;
       localStorage.removeItem(`contex-${this.userName}`);
     }
 
