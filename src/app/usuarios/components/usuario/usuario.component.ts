@@ -59,7 +59,7 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
       this.activado = !!this.selectedUser.estado;
 
       this.formUsuario = this.formBuilder.group({
-        nombre  : [ this.selectedUser.nombre , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
+        nombre  : [ this.selectedUser.nickName , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
         password: [ this.selectedUser.password , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 10 )])],
         celular : [ this.selectedUser.celular , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 15 )])],
         estado  : [ +this.activado , Validators.compose( [ Validators.required ])],

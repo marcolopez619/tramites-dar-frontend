@@ -4,8 +4,8 @@ export const usuarioLang = {
     'tit-editar-usuario': 'Editar usuario',
     'tit-lista-usurios' : 'Lista de usuarios',
 
-    'lbl-nick-name'         : 'Nombre o nickname',
-    'lbl-nick-name-invalido': 'Nombre o nickname inválido',
+    'lbl-nick-name'         : 'Nickname',
+    'lbl-nick-name-invalido': 'Nickname inválido',
 
     'lbl-password'         : 'Password',
     'lbl-password-invalido': 'Password inválido',
@@ -18,5 +18,14 @@ export const usuarioLang = {
 
     'lbl-carrera' : 'Carrera',
     'lbl-carrera-invalida' : 'La carrera es obligatoria',
+
+    'lbl-paterno': 'Paterno',
+    'lbl-paterno-invalido': 'El paterno es inválido',
+
+    'lbl-materno': 'Materno',
+    'lbl-materno-invalido': 'El materno es inválido',
+
+    'lbl-nombres': 'Nombres',
+    'lbl-nombres-invalido': 'El nombre es inválido'
   }
 };

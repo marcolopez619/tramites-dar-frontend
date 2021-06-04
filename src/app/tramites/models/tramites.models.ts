@@ -219,8 +219,11 @@ export interface BandejaHabilitacionPorExcepcion  extends BandejaAbstract {
 
 export interface BandejaUsuarios extends BandejaAbstract {
   idUsuario?: number;
+  paterno?: string;
+  materno?: string;
+  nombres?: string;
+  nickName?: string;
   password?: string;
-  nombre?: string;
   celular?: string;
   estado?: number;
   idPerfil?: number;

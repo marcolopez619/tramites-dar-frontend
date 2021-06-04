@@ -22,7 +22,7 @@ import { UsuarioComponent } from '../usuario/usuario.component';
 })
 export class BandejaUsuariosComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['nombreUsuario', 'perfil', 'estado', 'acciones'];
+  displayedColumns = ['nickName', 'paterno', 'materno', 'nombres', 'perfil', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<BandejaUsuarios>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -54,7 +54,7 @@ export class BandejaUsuariosComponent extends BaseComponent implements OnInit, A
 
   getListaUsuarios(): void {
     this.usuariosService.getAllListaUsuarios().pipe( takeUntil(this.unsubscribe$)).subscribe( allUsuarios => {
-      this.dataSource.data = allUsuarios.data;
+      this.dataSource.data = allUsuarios.data ?? [];
     });
   }
 
@@ -82,11 +82,11 @@ export class BandejaUsuariosComponent extends BaseComponent implements OnInit, A
   onDeleteUsuario(pSelectedUser?: BandejaUsuarios): void {
     const dlgEliminarUsuario = this.dialog.open( ConfirmDialogComponent,  {
       disableClose: false,
-      width: '500px',
+      width: '600px',
       data: {
         title  : 'Eliminar',
         icon   : 'contact_support',
-        content: `¿Seguro de eliminar a : ${pSelectedUser.nombre} ?`
+        content: `¿Seguro de eliminar al usuario : ${pSelectedUser.nickName} ?`
        }
     });
     dlgEliminarUsuario.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
