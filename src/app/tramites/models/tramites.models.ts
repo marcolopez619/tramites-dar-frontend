@@ -228,7 +228,7 @@ export interface BandejaUsuarios extends BandejaAbstract {
   estado?: number;
   idPerfil?: number;
   nombrePerfil?: string;
-  idCarrera?: number;
+  idcarrera?: number;
   carrera?: string;
 }
 

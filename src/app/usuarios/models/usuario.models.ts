@@ -3,10 +3,13 @@ export interface Perfil {
   nombrePerfil?: string;
 }
 export interface UsuarioInsert {
+  paterno?: string;
+  materno?: string;
+  nombres?: string;
   idPerfil?: number;
   idEstudiante?: number;
   idCarrera?: number;
-  nombre?: string;
+  nickName?: string;
   password?: string;
   celular?: string;
   estado?: number;

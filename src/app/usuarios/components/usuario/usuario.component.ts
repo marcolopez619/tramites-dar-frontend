@@ -32,6 +32,8 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
   estudentSelected: BusquedaEstudianteResponse;
   showSearchEstudianteComponent: boolean;
   showSearchCarreraComponent: boolean;
+  isEdicion: boolean;
+  ePerfil = ePerfil;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -48,6 +50,7 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
 
     this.getListaPerfiles();
+    this.getListaCarreras();
 
     this.selectedUser = this.data.selectedUser as BandejaUsuarios;
 
@@ -56,21 +59,31 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
     if ( this.selectedUser ) {
 
       // => edicion
+      this.isEdicion = true;
       this.activado = !!this.selectedUser.estado;
 
       this.formUsuario = this.formBuilder.group({
-        nombre  : [ this.selectedUser.nickName , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
-        password: [ this.selectedUser.password , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 10 )])],
-        celular : [ this.selectedUser.celular , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 15 )])],
-        estado  : [ +this.activado , Validators.compose( [ Validators.required ])],
-        idPerfil: [ this.selectedUser.idPerfil , Validators.compose( [ Validators.required ])]
+        paterno  : [ this.selectedUser.paterno , Validators.compose( [ Validators.maxLength( 100 )])],
+        materno  : [ this.selectedUser.materno , Validators.compose( [ Validators.maxLength( 100 )])],
+        nombres  : [ this.selectedUser.nombres , Validators.compose( [ Validators.minLength( 3 ), Validators.maxLength( 100 )])],
+        nickName : [ this.selectedUser.nickName , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
+        password : [ this.selectedUser.password , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 10 )])],
+        celular  : [ this.selectedUser.celular , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 15 )])],
+        estado   : [ +this.activado , Validators.compose( [ Validators.required ])],
+        idCarrera: [ this.selectedUser.idcarrera , Validators.compose( [ Validators.required ])],
+        idPerfil : [ this.selectedUser.idPerfil , Validators.compose( [ Validators.required ])]
       });
+//       this.selectedUser.idPerfil == ePerfil.ADMINISTRADOR_DEL_SISTEMA || this.selectedUser.idPerfil == ePerfil.ENCARGADO_DAR
     } else {
       // => Nueva insercion
       this.activado = true;
+      this.isEdicion = false;
 
       this.formUsuario = this.formBuilder.group({
-        nombre      : [ undefined , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
+        paterno     : [ undefined , Validators.compose( [ Validators.maxLength( 100 )])],
+        materno     : [ undefined , Validators.compose( [ Validators.maxLength( 100 )])],
+        nombres     : [ undefined , Validators.compose( [ Validators.minLength( 3 ), Validators.maxLength( 100 )])],
+        nickName    : [ undefined , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
         password    : [ undefined, Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 10 )])],
         celular     : [ undefined , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 15 )])],
         estado      : [ this.activado , Validators.compose( [ Validators.required ])],
@@ -89,7 +102,7 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
     });
   }
 
-  private getListaCarreras(): void{
+  private getListaCarreras(): void {
     const idUniversidad = this.contextService.getItemContexto('idUniversidad');
 
     this.universidadService.getListaCarrerasByIdUniversidad( idUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
@@ -99,6 +112,7 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
 
   onChangeSlideToggleValue( event: MatSlideToggleChange ): void {
     this.activado = event.checked;
+    // this.formUsuario.controls[ 'estado' ].setValue( this.activado );
   }
 
   onChangePerfil(event: MatSelectChange): void {
@@ -112,7 +126,7 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
       this.formUsuario.controls[ 'idCarrera' ].setValidators( undefined );
       this.formUsuario.controls[ 'idCarrera' ].updateValueAndValidity();
     } else if ( event.value === ePerfil.DIRECTOR_DE_CARRERA ) {
-      this.getListaCarreras();
+      // this.getListaCarreras();
       this.showSearchCarreraComponent = true;
       this.showSearchEstudianteComponent = false;
       this.formUsuario.controls[ 'idEstudiante' ].setValidators( undefined );
@@ -130,14 +144,18 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
     }
   }
 
-  onChangeCarrera(event: MatSelectChange): void{
+  onChangeCarrera(event: MatSelectChange): void {
     this.formUsuario.controls[ 'idCarrera' ].setValue( event.value );
   }
 
   onSelectedUser(estudentSelected: BusquedaEstudianteResponse): void {
     this.estudentSelected = estudentSelected;
-    this.formUsuario.controls[ 'idEstudiante' ].setValue( estudentSelected.idEstudiante)
+    this.formUsuario.controls[ 'idEstudiante' ].setValue( estudentSelected.idEstudiante);
     this.formUsuario.controls[ 'idCarrera' ].setValue( estudentSelected.idCarrera );
+
+    this.formUsuario.controls[ 'paterno' ].setValue( estudentSelected.paterno );
+    this.formUsuario.controls[ 'materno' ].setValue( estudentSelected.materno );
+    this.formUsuario.controls[ 'nombres' ].setValue( estudentSelected.nombres );
   }
 
   onSaveUsuario(): void {
@@ -145,8 +163,12 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
       // => edicion
       const usuarioUpdate: UsuarioUpdate = {
         idUsuario: this.selectedUser.idUsuario,
+        paterno  : this.formUsuario.controls[ 'paterno' ].value,
+        materno  : this.formUsuario.controls[ 'materno' ].value,
+        nombres  : this.formUsuario.controls[ 'nombres' ].value,
         idPerfil : this.formUsuario.controls[ 'idPerfil' ].value,
-        nombre   : this.formUsuario.controls[ 'nombre' ].value,
+        idCarrera: this.formUsuario.controls[ 'idCarrera' ].value,
+        nickName : this.formUsuario.controls[ 'nickName' ].value,
         password : this.formUsuario.controls[ 'password' ].value,
         celular  : this.formUsuario.controls[ 'celular' ].value,
         estado   : +this.activado
@@ -159,10 +181,13 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
     } else {
       // => Nueva insercion
       const usuarioInsert: UsuarioInsert = {
+        paterno     : this.formUsuario.controls[ 'paterno' ].value,
+        materno     : this.formUsuario.controls[ 'materno' ].value,
+        nombres     : this.formUsuario.controls[ 'nombres' ].value,
         idPerfil    : this.formUsuario.controls[ 'idPerfil' ].value,
-        idEstudiante: (this.estudentSelected) ? this.formUsuario.controls[ 'idEstudiante' ].value : -1,
+        idEstudiante: (this.estudentSelected) ? this.formUsuario.controls[ 'idEstudiante' ].value: -1,
         idCarrera   : this.formUsuario.controls[ 'idCarrera' ].value ?? 1000,
-        nombre      : this.formUsuario.controls[ 'nombre' ].value,
+        nickName    : this.formUsuario.controls[ 'nickName' ].value,
         password    : this.formUsuario.controls[ 'password' ].value,
         celular     : this.formUsuario.controls[ 'celular' ].value,
         estado      : +this.activado
