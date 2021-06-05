@@ -81,7 +81,7 @@ export class AuthService {
      * Permite realizar el cierre de sesion del usuario
      */
     logoutUser(): void {
-      const user = this.contextoService.getItemContexto('nombre');
+      const user = this.contextoService.getItemContexto('nick_name');
 
       const params = {
         UserName    : user,
