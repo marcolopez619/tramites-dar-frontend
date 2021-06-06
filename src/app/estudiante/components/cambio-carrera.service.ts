@@ -19,6 +19,10 @@ export class CambioCarreraService {
     return this.httpClient.get<Resultado>(`${this.baseURL}/${pIdEstudiante}`);
   }
 
+  getDatosParaImpresionFormularioCambioCarrera(pIdCambioCarrera: number, pIdEstudiante: number): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/${pIdCambioCarrera}/estudiante/${pIdEstudiante}`);
+  }
+
   insertCambioCarrera(cambioCarreraInsert: CambioCarreraInsert): Observable<Resultado> {
     return this.httpClient.post<Resultado>(`${this.baseURL}`, cambioCarreraInsert );
   }

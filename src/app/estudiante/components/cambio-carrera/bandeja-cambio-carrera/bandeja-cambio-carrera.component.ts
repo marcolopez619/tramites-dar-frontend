@@ -10,10 +10,14 @@ import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/templ
 import { BaseComponent } from '../../../../shared/base.component';
 import { eEstado } from '../../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
+import { EstudianteModel } from '../../../../shared/models/estudiante.model';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
+import { ReportesService } from '../../../../shared/services/reportes.service';
 import { TramitesAcademicosService } from '../../../../shared/services/tramites-academicos.service';
-import { BandejaCambioCarrera } from '../../../../tramites/models/tramites.models';
+import { BandejaCambioCarrera, BandejaSuspencion } from '../../../../tramites/models/tramites.models';
+import { EstudianteService } from '../../../estudiante.service';
+import { ImpresionFormularioCambioCarrera } from '../../../models/cambio_carrera.model';
 import { CambioCarreraService } from '../../cambio-carrera.service';
 import { CambioCarreraComponent } from '../cambio-carrera/cambio-carrera.component';
 
@@ -40,6 +44,7 @@ export class BandejaCambioCarreraComponent extends BaseComponent  implements OnI
     private dialog: MatDialog,
     private cambioCarreraService: CambioCarreraService,
     private matSnackBar: MatSnackBar,
+    private reportesService: ReportesService,
     private tramitesAcademicosService: TramitesAcademicosService
   ) {
     super();
@@ -96,6 +101,12 @@ export class BandejaCambioCarreraComponent extends BaseComponent  implements OnI
         this.getListaCambiosCarrera();
       }
     });
+  }
+
+  async imprimirFormulario(element: BandejaCambioCarrera) {
+    const dataForReport : ImpresionFormularioCambioCarrera  =  ( await this.cambioCarreraService.getDatosParaImpresionFormularioCambioCarrera(element.idCambioCarrera, element.idEstudiante).toPromise()).data;
+
+    this.reportesService.printCambioCarreraEstudiante(dataForReport);
   }
 
 }

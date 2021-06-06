@@ -13,3 +13,20 @@ export interface CambioCarreraUpdate {
   idCambioCarrera: number;
   convalidacion?: boolean;
 }
+
+export interface ImpresionFormularioCambioCarrera {
+  idEstudiante: number;
+  ru: number;
+  ci: string;
+  complemento: string;
+  nombrecompleto: string;
+  carreraOrigen: string;
+  carreradestino: string;
+  cantidadtraspasosrealizados: number;
+  fechaSolicitud: string;
+  motivo: string;
+  materiasaprobadas: number;
+  materiasreprobadas: number;
+  fechaProceso: Date;
+  observaciones: string;
+}
