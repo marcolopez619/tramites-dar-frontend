@@ -9,10 +9,13 @@ import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/templ
 import { BaseComponent } from '../../../../shared/base.component';
 import { eEstado } from '../../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
+import { EstudianteModel } from '../../../../shared/models/estudiante.model';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
+import { ReportesService } from '../../../../shared/services/reportes.service';
 import { TramitesAcademicosService } from '../../../../shared/services/tramites-academicos.service';
 import { BandejaSuspencion } from '../../../../tramites/models/tramites.models';
+import { EstudianteService } from '../../../estudiante.service';
 import { SuspencionService } from '../suspencion.service';
 import { SuspencionComponent } from '../suspencion/suspencion.component';
 
@@ -28,6 +31,7 @@ export class BandejaSuspencionComponent extends BaseComponent  implements OnInit
   displayedColumns = ['carrera', 'tiempo', 'motivo', 'fechaSolicitud', 'estado', 'acciones' ];
   dataSource = new MatTableDataSource<BandejaSuspencion>([]);
   isTramiteHabilitado: boolean;
+  datosEstudiante: EstudianteModel;
   eEstado = eEstado;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -36,8 +40,10 @@ export class BandejaSuspencionComponent extends BaseComponent  implements OnInit
   constructor(
     public langService: LangService,
     public contextService: ContextoService,
+    private estudianteService: EstudianteService,
     private dialog: MatDialog,
     private suspencionService: SuspencionService,
+    private reportesService: ReportesService,
     private matSnackBar: MatSnackBar,
     private tramitesAcademicosService: TramitesAcademicosService
   ) {
@@ -93,5 +99,11 @@ export class BandejaSuspencionComponent extends BaseComponent  implements OnInit
         this.getListaSuspenciones();
       }
     });
+  }
+
+  async imprimirFormulario(element: BandejaSuspencion) {
+    this.datosEstudiante =  ( await this.estudianteService.getInformacionEstudiante(element.idEstudiante).toPromise()).data;
+    this.datosEstudiante.fechaSolicitud = element.fechaSolicitud;
+    this.reportesService.printSuspencionEstudiante(this.datosEstudiante, element.descripcion, element.tiempoSolicitado);
   }
 }
