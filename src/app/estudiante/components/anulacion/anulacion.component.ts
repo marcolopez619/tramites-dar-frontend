@@ -10,6 +10,7 @@ import { eEntidad } from '../../../shared/enums/tipo_entidad.enum';
 import { EstudianteModel } from '../../../shared/models/estudiante.model';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
+import { ReportesService } from '../../../shared/services/reportes.service';
 import { EstudianteService } from '../../estudiante.service';
 import { AnulacionInsert } from '../../models/anulacion.models';
 import { AnulacionService } from './anulacion.service';
@@ -33,6 +34,7 @@ export class AnulacionComponent extends BaseComponent  implements OnInit {
     public contextService: ContextoService,
     private estudianteService: EstudianteService,
     private anulacionService: AnulacionService,
+    private reportesService: ReportesService,
     private formBuilder: FormBuilder
   ) {
     super();
@@ -66,11 +68,8 @@ export class AnulacionComponent extends BaseComponent  implements OnInit {
 
     // Inserta la nueva anulacion
     this.anulacionService.insertAnulacion( anulacionInsert ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
-      console.log(`${JSON.stringify(resp.data)}`);
-
-      // TODO:FALTA IMPLEMENTAR LA IMPRESION DEL FORMULARIO
-      console.log(`FALTA IMPLEMENTAR LA IMPRESION DEL FORMULARIO`);
-
+      this.datosEstudiante.fechaSolicitud = resp.data.fecha_solicitud;
+      this.reportesService.printAnulacionEstudiante(this.datosEstudiante, anulacionInsert.motivo);
       this.onClose( resp.data );
     });
 

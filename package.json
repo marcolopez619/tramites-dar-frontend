@@ -38,6 +38,7 @@
     "core-js": "^3.8.3",
     "ng-animate": "^1.0.0",
     "npm-check-updates": "^11.1.1",
+    "pdfmake": "^0.1.71",
     "rxjs": "^6.6.3",
     "secure-ls": "^1.2.6",
     "tslib": "^2.1.0",

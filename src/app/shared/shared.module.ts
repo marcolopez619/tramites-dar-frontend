@@ -72,6 +72,7 @@ import { UniversidadService } from './services/universidad.service';
 import { BusquedaEstudianteComponent } from './components/busqueda-estudiante/busqueda-estudiante.component';
 import { PeriodoGestionService } from './services/periodo-gestion.service';
 import { AlfanumericoDirective } from './directives/alfanumerico.directive';
+import { ReportesService } from './services/reportes.service';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -231,7 +232,8 @@ import { AlfanumericoDirective } from './directives/alfanumerico.directive';
       MotivoService,
       TramitesAcademicosService,
       UniversidadService,
-      PeriodoGestionService
+      PeriodoGestionService,
+      ReportesService
     ]
 })
 export class SharedModule { }

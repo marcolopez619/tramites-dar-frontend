@@ -9,10 +9,13 @@ import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/templ
 import { BaseComponent } from '../../../../shared/base.component';
 import { eEstado } from '../../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
+import { EstudianteModel } from '../../../../shared/models/estudiante.model';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { NotificacionService } from '../../../../shared/services/notificacion.service';
+import { ReportesService } from '../../../../shared/services/reportes.service';
 import { TramitesAcademicosService } from '../../../../shared/services/tramites-academicos.service';
+import { EstudianteService } from '../../../estudiante.service';
 import { BandejaAnulacion } from '../../../models/anulacion.models';
 import { AnulacionComponent } from '../anulacion.component';
 import { AnulacionService } from '../anulacion.service';
@@ -30,6 +33,7 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
   dataSource = new MatTableDataSource<BandejaAnulacion>([]);
   isTramiteHabilitado: boolean;
   eEstado = eEstado;
+  datosEstudiante: EstudianteModel;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -38,9 +42,11 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
     public langService: LangService,
     public contextService: ContextoService,
     private dialog: MatDialog,
+    private estudianteService: EstudianteService,
     private anulacionService: AnulacionService,
     private matSnackBar: MatSnackBar,
     private tramitesAcademicosService: TramitesAcademicosService,
+    private reportesService: ReportesService,
     private notificationService: NotificacionService
   ) {
     super();
@@ -112,10 +118,15 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
     });
     dlgNuevaSolicitud.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {
-        console.log( `---> ${result}` );
         this.getListaAnulaciones();
       }
     });
+  }
+
+  async imprimirFormulario(element: BandejaAnulacion) {
+    this.datosEstudiante =  ( await this.estudianteService.getInformacionEstudiante(element.idEstudiante).toPromise()).data;
+    this.datosEstudiante.fechaSolicitud = element.fechaSolicitud;
+    this.reportesService.printAnulacionEstudiante(this.datosEstudiante, element.motivo);
   }
 
 }
