@@ -19,7 +19,7 @@
     "compodoc:serve": "./node_modules/.bin/compodoc -p src/tsconfig.app.json --theme material --output ./dist-docs -s"
   },
   "authors": [
-    "Marco Antonio Molina López <marco.molina@segip.gob.bo>"
+    "Janeth Coro Aricoma <janethc0128@outlook.com>"
   ],
   "private": true,
   "dependencies": {
