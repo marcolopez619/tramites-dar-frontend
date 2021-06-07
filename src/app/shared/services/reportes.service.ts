@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { ImpresionFormularioCambioCarrera } from '../../estudiante/models/cambio_carrera.model';
+import { ImpresionFormularioTraspaso } from '../../estudiante/models/traspaso.model';
 import { EstudianteModel } from '../models/estudiante.model';
 import { Imagen } from '../models/report.model';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -406,6 +407,208 @@ export class ReportesService {
               columns : [
                 {
                   text: '\n\n\n\n\n Lic: JOSE ALFREDO QUISBERT CHAVEZ \n JEFE ADMICIONES Y REGISTROS',
+                  style: 'firma',
+                  aligment : 'right'
+                }
+              ]
+             }
+            ]
+          ]
+        }
+
+      ],
+      styles: {
+        titulo: {
+          bold: true,
+          alignment: 'center',
+          fontSize: 18
+        },
+        subtitulo: {
+          bold: true,
+          decoration: 'underline',
+          alignment: 'center',
+          fontSize: 16
+        },
+        columnTitle: {
+          bold: true,
+          alignment: 'right',
+          fontSize: 14
+        },
+        columnValue: {
+          bold: false,
+          alignment: 'left',
+          fontSize: 14
+        },
+        cuerpoTitulo: {
+          bold: true,
+          decoration: 'underline',
+          alignment: 'center',
+          fontSize: 11
+        },
+        cuerpoTexto: {
+          bold: false,
+          alignment: 'justify',
+          fontSize: 10
+        },
+        cuerpoTextoIzquierda: {
+          bold: false,
+          alignment: 'left',
+          fontSize: 10
+        },
+        cuerpoTextoCentro: {
+          bold: false,
+          alignment: 'center',
+          fontSize: 10
+        },
+        cuerpoTextoNegritaSubrayado: {
+          bold: true,
+          decoration: 'underline',
+          alignment: 'justify',
+          fontSize: 10
+        },
+        firma: {
+          bold: true,
+          alignment: 'center',
+          fontSize: 8
+        }
+      }
+    };
+
+    pdfMake.createPdf( docDefinition ).open();
+  }
+
+  printTraspasoUniversidadEstudiante(pDataImpresion: ImpresionFormularioTraspaso): void {
+    const docDefinition = {
+      pageSize: 'LETTER',
+      background: [
+        this.getDocumentoBackground()
+      ],
+
+      content: [
+        {
+          // Columnas para la cabecera
+          columns: [
+            this.getColumnsSinSaltosDeLinea( 'FORMULARIO DE TRASPASO DE UNIVERSIDAD' ),
+            this.getQRCode( `Traspaso de universidad de : UATF, a : ${pDataImpresion.universidaddestino}, carrera : ${pDataImpresion.carreradestino}, en fecha : ${pDataImpresion.fechaSolicitud}` )
+          ]
+        },
+        {
+          // Columnas para datos del estudiante
+          columns: [[
+            {
+              text: '1) A DEPARTAMENTO DE ADMISIONES Y REGISTROS DE LA  U.A.T.F. \n',
+              style: 'cuerpoTextoNegritaSubrayado',
+              aligment : 'left'
+            },
+            {
+              text : `Yo ${pDataImpresion.nombrecompleto}, con número de CI: ${pDataImpresion.ci} y número de RU : ${pDataImpresion.ru}; respetuosamente SOLICITO TRASPASO a la : ${pDataImpresion.universidaddestino}, a la carrera de : ${pDataImpresion.carreradestino}, para el período ; ${pDataImpresion.periodo}; para ello, cuento con la siguiente información :\n `,
+              style : 'cuerpoTexto'
+            },
+            {
+              ul : [
+                `Año de ingreso a la universidad : ${pDataImpresion.anioIngreso}`,
+                `Carrera actual : ${pDataImpresion.carreraorigen}`,
+                `Número de diploma de bachiller : ${pDataImpresion.numerodiploma}`,
+                `Materias aprobadas : ${pDataImpresion.materiasAprobadas}`,
+                `Materias reprobadas : ${pDataImpresion.materiasReprobadas}`,
+                `Promedio general : ${pDataImpresion.promediogeneral} %`
+              ],
+              style : 'cuerpoTextoIzquierda',
+              alignment: 'left'
+            },
+            {
+              text : `El motivo por la cual solicito el traspaso de universidad es : ${pDataImpresion.motivo}`,
+              style : 'cuerpoTexto'
+            },
+            {
+              text : `\n\n\n\n`
+            },
+            {
+              columns : [
+                {
+                  text : `${this.fechaActual}`,
+                  style : 'cuerpoTexto',
+                  aligment : 'left'
+                },
+                {
+                  text: `Univ : ${pDataImpresion.nombrecompleto} \n Solicitante`,
+                  style: 'firma',
+                  aligment : 'right'
+                }
+              ]
+            }
+
+          ]]
+        },
+
+        // DATOS PARA VERIFICACION DEL DAR
+        {
+          columns: [
+            [
+              {
+                text: '\n'
+              },
+              {
+                text:  `2) VERIFICACION DE INFORMACION EN REGISTROS Y ADMISIONES \n`,
+                style: 'cuerpoTextoNegritaSubrayado'
+              },
+              {
+                text: `Realizadas las consultas a la : ${pDataImpresion.universidaddestino}, me permito informar a su autoridad que la SOLICITUD DE TRASPASO efectuada por ${pDataImpresion.nombrecompleto}, ha sido : `,
+                style: 'cuerpoTexto'
+              },
+              {
+                text : `\n\n (   ) ACEPTADA      (   ) RECHAZADA  \n\n En consecuencia  se : (   ) CONTINUA      (    ) FINALIZA , con el tramite solicitado `,
+                style : 'cuerpoTexto',
+                alignment: 'center'
+              },
+              {
+                text : '\n\n\n\n'
+              },
+             {
+              columns : [
+                {
+                  text : `Potosí, ...... de ...................... del 20...`,
+                  style : 'cuerpoTexto',
+                  aligment : 'left'
+                },
+                {
+                  text: 'Lic: JOSE ALFREDO QUISBERT CHAVEZ \n JEFE ADMICIONES Y REGISTROS',
+                  style: 'firma',
+                  aligment : 'right'
+                }
+              ]
+             }
+            ]
+          ]
+        },
+
+        {
+          // Datos para enviar al DAR de la universidad destino.
+          columns: [
+            [
+              {
+                text: '\n'
+              },
+              {
+                text:  `3) DEPARTAMENTO DE REGISTROS Y ADMISIONES DE LA : ${pDataImpresion.universidaddestino} \n`,
+                style: 'cuerpoTextoNegritaSubrayado'
+              },
+              {
+                text: `Se ACEPTA la solicitud de TRASPASO DE UNIVERSIDAD de: ${pDataImpresion.nombrecompleto}, en las considiones señaladas en la presente, agradecemos su colaboracion para la inscripcion en la mencionada universidad, previo cumplimiento de todos los requisitos reglamentarios.`,
+                style: 'cuerpoTexto'
+              },
+              {
+                text : '\n\n\n\n'
+              },
+             {
+              columns : [
+                {
+                  text : `Potosí, ...... de ...................... del 20...`,
+                  style : 'cuerpoTexto',
+                  aligment : 'left'
+                },
+                {
+                  text: 'M.B.A. Victor Hugo Villegas Ch. \n VICERECTOR U.A.T.F.',
                   style: 'firma',
                   aligment : 'right'
                 }

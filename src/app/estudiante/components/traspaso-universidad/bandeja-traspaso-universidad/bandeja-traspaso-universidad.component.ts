@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -11,8 +12,10 @@ import { eEstado } from '../../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
+import { ReportesService } from '../../../../shared/services/reportes.service';
 import { TramitesAcademicosService } from '../../../../shared/services/tramites-academicos.service';
 import { BandejaTraspasoUniversidad } from '../../../../tramites/models/tramites.models';
+import { ImpresionFormularioTraspaso } from '../../../models/traspaso.model';
 import { TraspasoUniversidadService } from '../traspaso-universidad.service';
 import { TraspasoUniversidadComponent } from '../traspaso-universidad/traspaso-universidad.component';
 
@@ -38,6 +41,7 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
     private dialog: MatDialog,
     private traspasoUniversidadService: TraspasoUniversidadService,
     private matSnackBar: MatSnackBar,
+    private reportesService: ReportesService,
     private tramitesAcademicosService: TramitesAcademicosService
   ) {
     super();
@@ -94,5 +98,10 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
         this.getListaTraspasos();
       }
     });
+  }
+
+  async imprimirFormulario(element: BandejaTraspasoUniversidad) {
+    const dataForReport : ImpresionFormularioTraspaso  =  ( await this.traspasoUniversidadService.getDatosParaImpresionFormularioTraspasoUniversidad(element.idTraspaso, element.idEstudiante).toPromise()).data;
+    this.reportesService.printTraspasoUniversidadEstudiante( dataForReport );
   }
 }
