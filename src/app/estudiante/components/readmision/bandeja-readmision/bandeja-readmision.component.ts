@@ -11,6 +11,7 @@ import { eEstado } from '../../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
+import { ReportesService } from '../../../../shared/services/reportes.service';
 import { TramitesAcademicosService } from '../../../../shared/services/tramites-academicos.service';
 import { BandejaReadmision } from '../../../../tramites/models/tramites.models';
 import { ReadmisionService } from '../readmision.service';
@@ -38,6 +39,7 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
     public contextService: ContextoService,
     private dialog: MatDialog,
     private readmisionService: ReadmisionService,
+    private reportesService: ReportesService,
     private matSnackBar: MatSnackBar,
     private tramitesAcademicosService: TramitesAcademicosService
   ) {
@@ -60,7 +62,7 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
     this.unsubscribe$.next(true);
     this.matSnackBar.dismiss();
   }
-  private verificarHabilitacionTramite(): void{
+  private verificarHabilitacionTramite(): void {
     const idEstudiante = this.contextService.getItemContexto( 'idEstudiante' );
 
     this.tramitesAcademicosService.verificarHabilitacionTramite( eTipoTramite.READMISION, idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
@@ -91,6 +93,11 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
         this.getListaReadmisiones();
       }
     });
+  }
+
+  async imprimirFormulario(element: BandejaReadmision) {
+    const dataForReport =  ( await this.readmisionService.getDatosParaImpresionFormularioReadmision(element.idReadmision, element.idEstudiante) .toPromise()).data;
+    this.reportesService.printReadmisionEstudiante( dataForReport );
   }
 
 }

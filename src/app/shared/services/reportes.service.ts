@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { ImpresionFormularioCambioCarrera } from '../../estudiante/models/cambio_carrera.model';
+import { ImpresionFormularioReadmision } from '../../estudiante/models/readmision.model';
 import { ImpresionFormularioTraspaso } from '../../estudiante/models/traspaso.model';
 import { EstudianteModel } from '../models/estudiante.model';
 import { Imagen } from '../models/report.model';
@@ -194,6 +195,150 @@ export class ReportesService {
               text: `Univ : ${pEstudianteData.nombreCompleto} \n Solicitante`,
               style: 'firma'
             }, */
+            {
+              text: 'Lic: JOSE ALFREDO QUISBERT CHAVEZ \n JEFE ADMICIONES Y REGISTROS',
+              style: 'firma'
+            },
+
+            {
+              text: 'M.B.A. VICTOR HUGO VILLEGAS CH. \n VICERECTOR U.A.T.F.',
+              style: 'firma'
+            }
+
+          ]
+        }
+      ],
+      styles: {
+        titulo: {
+          bold: true,
+          alignment: 'center',
+          fontSize: 18
+        },
+        subtitulo: {
+          bold: true,
+          decoration: 'underline',
+          alignment: 'center',
+          fontSize: 16
+        },
+        columnTitle: {
+          bold: true,
+          alignment: 'right',
+          fontSize: 14
+        },
+        columnValue: {
+          bold: false,
+          alignment: 'left',
+          fontSize: 14
+        },
+        cuerpoTitulo: {
+          bold: true,
+          decoration: 'underline',
+          alignment: 'center',
+          fontSize: 11
+        },
+        cuerpoTexto: {
+          bold: false,
+          alignment: 'justify',
+          fontSize: 10
+        },
+        firma: {
+          bold: true,
+          alignment: 'center',
+          fontSize: 8
+        }
+      }
+    };
+
+    pdfMake.createPdf( docDefinition ).open();
+  }
+
+  printReadmisionEstudiante( pDataImpresion: ImpresionFormularioReadmision ): void {
+    const docDefinition = {
+      pageSize: 'LETTER',
+      background: [
+        this.getDocumentoBackground()
+      ],
+
+      content: [
+        {
+          // Columnas para la cabecera
+          columns: [
+            this.getColumnsCabecera( 'FORMULARIO DE READMISION DE ESTUDIOS' ),
+            this.getQRCode( `Readmision de estudios de : ${pDataImpresion.nombrecompleto}, en fecha : ${pDataImpresion.fechaSolicitud}` )
+          ]
+        },
+        {
+          // Columnas para datos del estudiante
+          columns: [
+            this.getColumnsDatosReadmisionEstudiante(),
+            this.getColumnsValuesDatosReadmisionEstudiante(pDataImpresion)
+          ]
+        },
+
+        {
+          // Datos aclaratorios
+          columns: [
+            [
+              {
+                text: '\n\n'
+              },
+              {
+                text:  `1) SOLICITUD DE READMISION POR EL ESTUDIANTE \n`,
+                style: 'cuerpoTextoNegritaSubrayado'
+              },
+              {
+                text : `Yo ${pDataImpresion.nombrecompleto}, con número de CI: ${pDataImpresion.ci} y número de RU : ${pDataImpresion.ru}; respetuosamente SOLICITO READMISION DE ESTUDIOS a la carrera de : ${pDataImpresion.carrera}, para ello, cuento con la siguiente información de mi suspencion de estudios realizada anteriormente :\n `,
+                style : 'cuerpoTexto'
+              },
+              {
+                ul : [
+                  `Tiempo solicitado de suspención : ${pDataImpresion.suspencion.tiempoSolicitado} Gestion(es)`,
+                  `Motivo de la solicitud de suspención : ${pDataImpresion.suspencion.motivo}`,
+                  `Fecha de solicitud de la suspención : ${pDataImpresion.suspencion.fechaSolicitud}`
+                ],
+                style : 'cuerpoTextoIzquierda',
+                alignment: 'left'
+              },
+              {
+                text: '\n\n\n\n'
+              },
+              {
+                columns : [
+                  {
+                    text : `${this.fechaActual}`,
+                    style : 'cuerpoTexto',
+                    aligment : 'left'
+                  },
+                  {
+                    text: `Univ : ${pDataImpresion.nombrecompleto} \n Solicitante`,
+                    style: 'firma',
+                    aligment : 'right'
+                  }
+                ]
+              }
+
+            ]
+          ]
+        },
+
+        {
+          text: '\n\n'
+        },
+        {
+          text:  `2) VERIFICACION DE INFORMACION EN REGISTROS Y ADMISIONES \n`,
+          style: 'cuerpoTextoNegritaSubrayado'
+        },
+        {
+          text: `Cumplidos los requisitos reglamentarios, se admite la readmision de estudios a partir del periodo: ${pDataImpresion.periodo}, procédase a la venta de matricula correspondiente previo cumplimiento de todos los requisitos reglamentarios.`,
+          style: 'cuerpoTexto'
+        },
+        {
+          text : '\n\n\n\n\n\n\n'
+        },
+
+        {
+          // columnas de las firmas
+          columns: [
             {
               text: 'Lic: JOSE ALFREDO QUISBERT CHAVEZ \n JEFE ADMICIONES Y REGISTROS',
               style: 'firma'
@@ -839,6 +984,39 @@ export class ReportesService {
     ];
   }
 
+  private getColumnsDatosReadmisionEstudiante(): any {
+    return [
+      {
+        text: 'FACULTAD : ',
+        style: 'columnTitle'
+      },
+      {
+        text: 'CARRERA : ',
+        style: 'columnTitle'
+      },
+      {
+        text: 'R.U. : ',
+        style: 'columnTitle'
+      },
+      {
+        text: 'C.I. : ',
+        style: 'columnTitle'
+      },
+      {
+        text: 'NOMBRE COMPLETO : ',
+        style: 'columnTitle'
+      },
+      {
+        text: 'FECHA SOLICITUD : ',
+        style: 'columnTitle'
+      },
+      {
+        text: 'MOTIVO : ',
+        style: 'columnTitle'
+      }
+    ];
+  }
+
   private getColumnsValuesDatoEstudiante( pEstudianteData: EstudianteModel, pMotivo?: string ): any {
     return [
       {
@@ -903,6 +1081,39 @@ export class ReportesService {
       },
       {
         text: pMotivo ?? '------ SIN MOTIVO -------',
+        style: 'columnValue'
+      }
+    ];
+  }
+
+  private getColumnsValuesDatosReadmisionEstudiante( pDataImpresion: ImpresionFormularioReadmision ): any {
+    return [
+      {
+        text: pDataImpresion.facultad,
+        style: 'columnValue'
+      },
+      {
+        text: pDataImpresion.carrera,
+        style: 'columnValue'
+      },
+      {
+        text: pDataImpresion.ru,
+        style: 'columnValue'
+      },
+      {
+        text: pDataImpresion.ci,
+        style: 'columnValue'
+      },
+      {
+        text: pDataImpresion.nombrecompleto,
+        style: 'columnValue'
+      },
+      {
+        text: pDataImpresion.fechaSolicitud,
+        style: 'columnValue'
+      },
+      {
+        text: pDataImpresion.motivo ?? '------ SIN MOTIVO -------',
         style: 'columnValue'
       }
     ];

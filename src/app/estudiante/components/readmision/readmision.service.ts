@@ -19,6 +19,10 @@ export class ReadmisionService {
     return this.httpClient.get<Resultado>(`${this.baseURL}/${pIdEstudiante}`);
   }
 
+  getDatosParaImpresionFormularioReadmision(pIdReadmision: number, pIdEstudiante: number): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/${pIdReadmision}/estudiante/${pIdEstudiante}`);
+  }
+
   insertReadmision(cambioCarreraInsert: ReadmisionInsert): Observable<Resultado> {
     return this.httpClient.post<Resultado>(`${this.baseURL}`, cambioCarreraInsert );
   }
