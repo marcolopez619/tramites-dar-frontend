@@ -31,7 +31,7 @@
               <div  fxLayout="row" fxLayoutAlign="center center" fxFlexFill  *ngIf="showSearchCarreraComponent || isEdicion">
                 <mat-form-field fxFlex>
                   <mat-label>{{langService.getLang(eModulo.Usuario, 'lbl-carrera' )}} : </mat-label>
-                  <mat-select formControlName="idCarrera" (selectionChange)="onChangeCarrera($event)" [disabled]="selectedUser.idPerfil == ePerfil.ADMINISTRADOR_DEL_SISTEMA || selectedUser.idPerfil == ePerfil.ENCARGADO_DAR" >
+                  <mat-select formControlName="idCarrera" (selectionChange)="onChangeCarrera($event)" [disabled]="selectedUser?.idPerfil == ePerfil.ADMINISTRADOR_DEL_SISTEMA || selectedUser?.idPerfil == ePerfil.ENCARGADO_DAR" >
                     <mat-option *ngFor="let carrera of listaCarreras" [value]="carrera.idCarrera">
                       {{carrera.nombre}}
                     </mat-option>
@@ -150,8 +150,6 @@
              </div>
  -->
           </div>
-
-          {{formUsuario.status}}
 
           <!-- <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
             <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="50"  *ngIf="!showSearchEstudianteComponent && !showSearchCarreraComponent && selectedUser">
