@@ -17,6 +17,12 @@ export const tramiteLang = {
     'lbl-confir-sol-habilitacion-por-excepcion' : '¿Desea habilitar el tramite seleccionado por excepcion?',
     'lbl-periodo' : 'Periodo',
     'lbl-descripcion-excepcion' : 'Motivo de habilitación',
-    'lbl-descripcion-excepcion-error' : 'El motivo de habilitación es obligatorio'
+    'lbl-descripcion-excepcion-error' : 'El motivo de habilitación es obligatorio',
+
+    'lbl-tipo-tramite' : 'Tipo de trámite',
+    'lbl-Responsable' : 'Responsable',
+    'lbl-estado-actual' : 'Estado actual',
+    'lbl-estado-en-fecha' : 'Fecha',
+    'lbl-observaciones' : 'Observaciones'
   }
 };

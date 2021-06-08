@@ -289,8 +289,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
     dlgRechazar.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe((result) => {
       if (result) {
         const observaciones = this.formDetalleTramite.controls[ 'observaciones' ].value;
-
-        // this.pasarSiguienteNivel( eEstado.RECHAZADO, eEntidad.ESTUDIANTE, observaciones, true );
+        this.pasarSiguienteNivel( eEstado.RECHAZADO, eEntidad.ENCARGADO_DAR, observaciones, true );
       }
     });
   }

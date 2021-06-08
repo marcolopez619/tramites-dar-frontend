@@ -1,0 +1,149 @@
+<shared-loader-spinner></shared-loader-spinner>
+<mat-card>
+  <mat-card-header class="alt-theme">
+    <mat-toolbar shToolbarModal color="primary">
+      <h3>Seguimiento</h3>
+      <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+      </a>
+    </mat-toolbar>
+  </mat-card-header>
+  <mat-dialog-content>
+    <mat-card-content>
+      <form [formGroup]="formSeguimiento" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
+
+        <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
+
+          <mat-form-field fxFlexFill>
+            <input
+              readonly
+              matInput
+              placeholder="{{ langService.getLang(eModulo.Tramite, 'lbl-tipo-tramite') }}"
+              formControlName="tramite">
+          </mat-form-field>
+
+          <mat-form-field fxFlexFill>
+            <input
+              readonly
+              matInput
+              placeholder="{{ langService.getLang(eModulo.Base, 'lbl-motivo') }}"
+              formControlName="motivo">
+          </mat-form-field>
+
+          <mat-form-field fxFlexFill>
+            <input
+              readonly
+              matInput
+              placeholder="{{ langService.getLang(eModulo.Tramite, 'lbl-estado-actual') }}"
+              formControlName="estado">
+          </mat-form-field>
+
+          <mat-form-field fxFlexFill>
+            <input
+              readonly
+              matInput
+              placeholder="{{ langService.getLang(eModulo.Tramite, 'lbl-Responsable') }}"
+              formControlName="entidad">
+          </mat-form-field>
+
+          <mat-form-field fxFlexFill>
+            <input
+              readonly
+              matInput
+              placeholder="{{ langService.getLang(eModulo.Tramite, 'lbl-estado-en-fecha') }}"
+              formControlName="fechaProceso">
+          </mat-form-field>
+
+          <mat-form-field fxFlexFill>
+            <input
+              readonly
+              matInput
+              placeholder="{{ langService.getLang(eModulo.Tramite, 'lbl-observaciones') }}"
+              formControlName="observaciones">
+          </mat-form-field>
+
+
+          <!-- <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill *ngIf="!showSearchEstudianteComponent">
+
+            <mat-form-field fxFlex="34">
+              <input matInput
+                autocomplete="off"
+                shUppercase
+                matInput
+                maxlength="100"
+                placeholder="{{ langService.getLang(eModulo.Usuario, 'lbl-paterno') }}"
+                formControlName="paterno">
+              <mat-error *ngIf="formSeguimiento.controls['paterno'].errors?.required">{{langService.getLang(eModulo.Usuario,'lbl-paterno-invalido')}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="34">
+              <input matInput
+                autocomplete="off"
+                shUppercase
+                matInput
+                maxlength="100"
+                placeholder="{{ langService.getLang(eModulo.Usuario, 'lbl-materno') }}"
+                formControlName="materno">
+              <mat-error *ngIf="formSeguimiento.controls['materno'].errors?.required">{{langService.getLang(eModulo.Usuario,'lbl-materno-invalido')}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="34">
+              <input matInput
+                autocomplete="off"
+                shUppercase
+                matInput
+                minlength="3"
+                maxlength="100"
+                required
+                placeholder="{{ langService.getLang(eModulo.Usuario, 'lbl-nombres') }}"
+                formControlName="nombres">
+              <mat-error *ngIf="formSeguimiento.controls['nombres'].errors?.required">{{langService.getLang(eModulo.Usuario,'lbl-nombres-invalido')}}</mat-error>
+            </mat-form-field>
+
+          </div>
+
+
+
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+
+            <mat-form-field fxFlex="49">
+              <input matInput
+                autocomplete="off"
+                type="text"
+                matInput
+                minlength="5"
+                maxlength="50"
+                placeholder="{{ langService.getLang(eModulo.Usuario, 'lbl-nick-name') }}"
+                formControlName="nickName">
+              <mat-error *ngIf="formSeguimiento.controls['nickName'].errors?.required">{{langService.getLang(eModulo.Usuario,'lbl-nick-name-invalido')}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="49">
+              <input matInput
+                autocomplete="off"
+                type="password"
+                matInput
+                minlength="5"
+                maxlength="50"
+                placeholder="{{ langService.getLang(eModulo.Usuario, 'lbl-password') }}"
+                formControlName="password">
+              <mat-error *ngIf="formSeguimiento.controls['password'].errors?.required">{{langService.getLang(eModulo.Usuario,'lbl-password-invalido')}}</mat-error>
+            </mat-form-field>
+
+          </div> -->
+
+
+
+
+        </div>
+      </form>
+
+    </mat-card-content>
+  </mat-dialog-content>
+
+  <mat-dialog-actions fxLayout="row" fxLayoutGap="20px">
+    <!-- <button fxFlex mat-raised-button color="accent" (click)="onSaveUsuario()" [disabled]="!this.formSeguimiento.valid || !this.formSeguimiento.dirty || contextService.isLoading">{{langService.getLang(eModulo.Base, 'lbl-guardar')}}</button> -->
+    <button fxFlex mat-raised-button color="warn" (click)="onClose()">{{langService.getLang(eModulo.Base, 'lbl-cerrar')}}</button>
+  </mat-dialog-actions>
+</mat-card>

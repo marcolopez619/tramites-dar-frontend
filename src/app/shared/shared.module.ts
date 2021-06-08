@@ -73,6 +73,7 @@ import { BusquedaEstudianteComponent } from './components/busqueda-estudiante/bu
 import { PeriodoGestionService } from './services/periodo-gestion.service';
 import { AlfanumericoDirective } from './directives/alfanumerico.directive';
 import { ReportesService } from './services/reportes.service';
+import { SeguimientoComponent } from './components/seguimiento/seguimiento.component';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -113,6 +114,8 @@ import { ReportesService } from './services/reportes.service';
         BusquedaEstudianteComponent,
 
         EstadoToLiteralPipe,
+
+        SeguimientoComponent
 
     ],
     imports: [
@@ -216,7 +219,8 @@ import { ReportesService } from './services/reportes.service';
         DatosEstudianteComponent,
         DatosFormatoTablaComponent,
         UniversidadCarreraComponent,
-        BusquedaEstudianteComponent
+        BusquedaEstudianteComponent,
+        SeguimientoComponent
     ],
     entryComponents: [
         ConfirmDialogComponent

@@ -315,43 +315,14 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
 
     dlgRechazar.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe((result) => {
       if (result) {
+        const observaciones = this.formDetalleTramite.controls[ 'observaciones' ].value;
 
-      }
-    });
-  }
-
-  onEnviarTramite(): void {
-    const dlgEnviar = this.dialog.open( ConfirmDialogComponent , {
-      disableClose: false,
-      width: '600px',
-      data: {
-        title  : 'Enviar',
-        content: '¿Seguro de enviar el tramite seleccionado?',
-        icon   : 'contact_support'
-      }
-    });
-
-    dlgEnviar.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe((result) => {
-      if (result) {
-
-      }
-    });
-  }
-
-  onFinalizarTramite(): void {
-    const dlgFinalizar = this.dialog.open( ConfirmDialogComponent , {
-      disableClose: false,
-      width: '600px',
-      data: {
-        title  : 'Finalizar',
-        content: '¿Seguro de finalizar el tramite seleccionado?',
-        icon   : 'contact_support'
-      }
-    });
-
-    dlgFinalizar.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe((result) => {
-      if (result) {
-
+        if ( this.selectedTramite.idEntidad === eEntidad.DIRECTOR_DE_CARRERA_ORIGEN) {
+          this.pasarSiguienteNivel( eEstado.RECHAZADO, eEntidad.DIRECTOR_DE_CARRERA_ORIGEN, observaciones, true );
+        }
+        if ( this.selectedTramite.idEntidad === eEntidad.DIRECTOR_DE_CARRERA_DESTINO ) {
+            this.pasarSiguienteNivel( eEstado.RECHAZADO, eEntidad.DIRECTOR_DE_CARRERA_DESTINO, observaciones, true );
+        }
       }
     });
   }
