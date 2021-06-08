@@ -67,7 +67,7 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
   private verificarHabilitacionTramite(): void{
     const idEstudiante = this.contextService.getItemContexto( 'idEstudiante' );
 
-    this.tramitesAcademicosService.verificarHabilitacionTramite( eTipoTramite.ANULACION, idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
+    this.tramitesAcademicosService.verificarHabilitacionTramite( eTipoTramite.TRASPASO_DE_UNIVERSIDAD, idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
       this.isTramiteHabilitado = resp.data.isTramiteHabilitado;
 
       if ( !this.isTramiteHabilitado ) {
