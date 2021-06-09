@@ -105,7 +105,10 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
   private getListaCarreras(): void {
     const idUniversidad = this.contextService.getItemContexto('idUniversidad');
 
-    this.universidadService.getListaCarrerasByIdUniversidad( idUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+    /* this.universidadService.getListaCarrerasByIdUniversidad( idUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.listaCarreras = resp.data;
+    }); */
+    this.universidadService.getListaCarreras().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.listaCarreras = resp.data;
     });
   }
@@ -126,7 +129,7 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
       this.formUsuario.controls[ 'idCarrera' ].setValidators( undefined );
       this.formUsuario.controls[ 'idCarrera' ].updateValueAndValidity();
     } else if ( event.value === ePerfil.DIRECTOR_DE_CARRERA ) {
-      // this.getListaCarreras();
+      this.getListaCarreras();
       this.showSearchCarreraComponent = true;
       this.showSearchEstudianteComponent = false;
       this.formUsuario.controls[ 'idEstudiante' ].setValidators( undefined );
