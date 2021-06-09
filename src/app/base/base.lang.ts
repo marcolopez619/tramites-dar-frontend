@@ -89,6 +89,7 @@ export const baseLang = {
             'lbl-numero-cite-doc-adj': 'Numero Cite',
             'lbl-imprimir' : 'Imprimir',
             'lbl-actualizar': 'Actualizar',
+            'lbl-guardar-e-imprimir' : 'Guardar e imprimir',
 
             'lbl-confirmacion' : 'Confirmacion',
             'lbl-carrera' : 'Carrera',
