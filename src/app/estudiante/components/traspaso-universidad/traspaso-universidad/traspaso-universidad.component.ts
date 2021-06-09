@@ -100,6 +100,7 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
 
   onUniversidadSelectionChange(event: MatSelectChange): void {
     this.universidadSelected = this.listaUniversidades.find( x => x.idUniversidad === event.value );
+    this.formTraspaso.controls['idCarreraDestino'].setValue( undefined );
     this.getListaCarreras(this.universidadSelected.idUniversidad);
   }
 
