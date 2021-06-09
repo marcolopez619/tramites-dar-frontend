@@ -30,7 +30,7 @@ export class ReportesService {
           // Columnas para la cabecera
           columns: [
             this.getColumnsCabecera( 'FORMULARIO DE ANULACION DE CARRERA' ),
-            this.getQRCode( `${pEstudianteData.tipoTramite} de : ${pEstudianteData.nombreCompleto}, en fecha : ${pEstudianteData.fechaSolicitud}` )
+            this.getQRCode( `Anulación de carrera de : ${pEstudianteData.nombreCompleto}, en fecha : ${pEstudianteData.fechaSolicitud}` )
           ]
         },
         {
