@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { eTipoTramite } from '../enums/tipoTramite.enum';
 import { Resultado } from '../models/resultado.model';
 import { EstadoTramiteUpdate, TablaIntermediaInsert } from '../models/tramites.models';
 import { ContextoService } from './contexto.service';
@@ -17,6 +18,10 @@ export class TramitesAcademicosService {
 
   getTramitesHabilitados() : Observable<Resultado>{
     return this.httpClient.get<Resultado>(`${this.baseURL}`);
+  }
+
+  getSeguimientoTramite(pIdTramite: number, pIdTipoTramite: eTipoTramite): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/${pIdTramite}/tipo/${pIdTipoTramite}`);
   }
 
   verificarHabilitacionTramite(pIdTramite: number, pIdEstudiante: number) : Observable<Resultado>{

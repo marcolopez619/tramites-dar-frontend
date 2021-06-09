@@ -23,11 +23,12 @@ import { NotificacionService } from './shared/services/notificacion.service';
 import { UtilService } from './shared/services/util.service';
 import { TramitesModule } from './tramites/tramites.module';
 import { UsuarioModule } from './usuarios/usuario.module';
+import { SeguimientoComponent } from './app/shared/components/seguimiento/seguimiento.component';
 
 registerLocaleData(localeEs);
 
 @NgModule({
-    declarations: [],
+    declarations: [SeguimientoComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,

@@ -19,6 +19,10 @@ export class TransferenciaService {
     return this.httpClient.get<Resultado>(`${this.baseURL}/${pIdEstudiante}`);
   }
 
+  getDatosParaImpresionFormularioTransferenciaCarrera(pIdTransferenciaCarrera: number, pIdEstudiante: number): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/${pIdTransferenciaCarrera}/estudiante/${pIdEstudiante}`);
+  }
+
   insertTransferencia(transferenciaInsert: TransferenciaInsert): Observable<Resultado> {
     return this.httpClient.post<Resultado>(`${this.baseURL}`, transferenciaInsert );
   }

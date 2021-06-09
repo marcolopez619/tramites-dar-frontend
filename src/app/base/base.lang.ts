@@ -89,6 +89,7 @@ export const baseLang = {
             'lbl-numero-cite-doc-adj': 'Numero Cite',
             'lbl-imprimir' : 'Imprimir',
             'lbl-actualizar': 'Actualizar',
+            'lbl-guardar-e-imprimir' : 'Guardar e imprimir',
 
             'lbl-confirmacion' : 'Confirmacion',
             'lbl-carrera' : 'Carrera',
@@ -99,7 +100,9 @@ export const baseLang = {
             'lbl-finalizar' : 'Finalizar',
             'lbl-nombre-completo' : 'Nombre completo',
             'lbl-fecha-nacimiento' : 'Fecha nacimiento',
-            'lbl-busqueda' : 'Búsqueda'
+            'lbl-busqueda' : 'Búsqueda',
+            'lbl-cerrar' : 'Cerrar',
+            'lbl-ver-seguimiento' : 'Ver seguimiento'
         },
         'en': {
             'lang-error': 'Lang not found',

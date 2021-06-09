@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../../shared/base.component';
+import { SeguimientoComponent } from '../../../../shared/components/seguimiento/seguimiento.component';
 import { eEstado } from '../../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
 import { ContextoService } from '../../../../shared/services/contexto.service';
@@ -103,5 +104,21 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
   async imprimirFormulario(element: BandejaTraspasoUniversidad) {
     const dataForReport : ImpresionFormularioTraspaso  =  ( await this.traspasoUniversidadService.getDatosParaImpresionFormularioTraspasoUniversidad(element.idTraspaso, element.idEstudiante).toPromise()).data;
     this.reportesService.printTraspasoUniversidadEstudiante( dataForReport );
+  }
+
+  onVerSeguimiento(element: BandejaTraspasoUniversidad) : void{
+    const dlgSeguimiento = this.dialog.open( SeguimientoComponent,  {
+      disableClose: false,
+      width: '1000px',
+      data: {
+        idTramite : element.idTraspaso,
+        idTipoTramite : eTipoTramite.TRASPASO_DE_UNIVERSIDAD
+      }
+    });
+    dlgSeguimiento.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
+      /* if (result) {
+        this.getListaAnulaciones();
+      } */
+    });
   }
 }

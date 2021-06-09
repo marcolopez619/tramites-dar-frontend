@@ -7,12 +7,16 @@ import { MatTableDataSource } from '@angular/material/table';
 import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../../shared/base.component';
+import { SeguimientoComponent } from '../../../../shared/components/seguimiento/seguimiento.component';
 import { eEstado } from '../../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
+import { ReportesService } from '../../../../shared/services/reportes.service';
 import { TramitesAcademicosService } from '../../../../shared/services/tramites-academicos.service';
 import { BandejaTranseferencia } from '../../../../tramites/models/tramites.models';
+import { ImpresionFormularioTransferenciaCarrera } from '../../../models/transferencia.model';
+import { CambioCarreraService } from '../../cambio-carrera.service';
 import { TransferenciaService } from '../transferencia.service';
 import { TransferenciaComponent } from '../transferencia/transferencia.component';
 
@@ -37,6 +41,7 @@ export class BandejaTransferenciaComponent extends BaseComponent implements OnIn
     public langService: LangService,
     public contextService: ContextoService,
     private dialog: MatDialog,
+    private reportesService: ReportesService,
     private transferenciaService: TransferenciaService,
     private matSnackBar: MatSnackBar,
     private tramitesAcademicosService: TramitesAcademicosService
@@ -61,7 +66,7 @@ export class BandejaTransferenciaComponent extends BaseComponent implements OnIn
     this.matSnackBar.dismiss();
   }
 
-  private verificarHabilitacionTramite(): void{
+  private verificarHabilitacionTramite(): void {
     const idEstudiante = this.contextService.getItemContexto( 'idEstudiante' );
 
     this.tramitesAcademicosService.verificarHabilitacionTramite( eTipoTramite.TRANSFERENCIA, idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
@@ -77,7 +82,7 @@ export class BandejaTransferenciaComponent extends BaseComponent implements OnIn
 
     const idEstudiante = this.contextService.getItemContexto('idEstudiante');
 
-    this.transferenciaService.getListaTransferencias( idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp =>{
+    this.transferenciaService.getListaTransferencias( idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
       this.dataSource.data = resp.data ?? [];
     });
 
@@ -94,6 +99,27 @@ export class BandejaTransferenciaComponent extends BaseComponent implements OnIn
         console.log( `---> ${result}` );
         this.getListaTranseferencias();
       }
+    });
+  }
+
+  async imprimirFormulario(element: BandejaTranseferencia) {
+    const dataForReport: ImpresionFormularioTransferenciaCarrera = ( await this.transferenciaService.getDatosParaImpresionFormularioTransferenciaCarrera(element.idTransferencia, element.idEstudiante).toPromise()).data;
+    this.reportesService.printTransferenciaCarreraEstudiante(dataForReport);
+  }
+
+  onVerSeguimiento(element: BandejaTranseferencia): void {
+    const dlgSeguimiento = this.dialog.open( SeguimientoComponent,  {
+      disableClose: false,
+      width: '1000px',
+      data: {
+        idTramite : element.idTransferencia,
+        idTipoTramite : eTipoTramite.TRANSFERENCIA
+      }
+    });
+    dlgSeguimiento.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
+      /* if (result) {
+        this.getListaAnulaciones();
+      } */
     });
   }
 }

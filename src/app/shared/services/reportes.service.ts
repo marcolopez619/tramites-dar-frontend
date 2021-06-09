@@ -3,6 +3,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { ImpresionFormularioCambioCarrera } from '../../estudiante/models/cambio_carrera.model';
 import { ImpresionFormularioReadmision } from '../../estudiante/models/readmision.model';
+import { ImpresionFormularioTransferenciaCarrera } from '../../estudiante/models/transferencia.model';
 import { ImpresionFormularioTraspaso } from '../../estudiante/models/traspaso.model';
 import { EstudianteModel } from '../models/estudiante.model';
 import { Imagen } from '../models/report.model';
@@ -144,7 +145,7 @@ export class ReportesService {
           // Columnas para la cabecera
           columns: [
             this.getColumnsCabecera( 'FORMULARIO DE SUSPENCION DE ESTUDIOS' ),
-            this.getQRCode( `${pEstudianteData.tipoTramite} de : ${pEstudianteData.nombreCompleto}, en fecha : ${pEstudianteData.fechaSolicitud}` )
+            this.getQRCode( `Suspención de : ${pEstudianteData.nombreCompleto}, en fecha : ${pEstudianteData.fechaSolicitud}` )
           ]
         },
         {
@@ -546,6 +547,232 @@ export class ReportesService {
               },
               {
                 text: `\nUna vez ACEPTADA la solicitud de Cambio de Carrera de : ${pDataImpresion.nombrecompleto}, en las condiciones señaladas en el punto 3 de la presente, procédase a la inscripcion en la carrera de : ${pDataImpresion.carreradestino}, previo cumplimiento de ltodos los requisitos reglamentarios vigentes.`,
+                style: 'cuerpoTexto'
+              },
+             {
+              columns : [
+                {
+                  text: '\n\n\n\n\n Lic: JOSE ALFREDO QUISBERT CHAVEZ \n JEFE ADMICIONES Y REGISTROS',
+                  style: 'firma',
+                  aligment : 'right'
+                }
+              ]
+             }
+            ]
+          ]
+        }
+
+      ],
+      styles: {
+        titulo: {
+          bold: true,
+          alignment: 'center',
+          fontSize: 18
+        },
+        subtitulo: {
+          bold: true,
+          decoration: 'underline',
+          alignment: 'center',
+          fontSize: 16
+        },
+        columnTitle: {
+          bold: true,
+          alignment: 'right',
+          fontSize: 14
+        },
+        columnValue: {
+          bold: false,
+          alignment: 'left',
+          fontSize: 14
+        },
+        cuerpoTitulo: {
+          bold: true,
+          decoration: 'underline',
+          alignment: 'center',
+          fontSize: 11
+        },
+        cuerpoTexto: {
+          bold: false,
+          alignment: 'justify',
+          fontSize: 10
+        },
+        cuerpoTextoIzquierda: {
+          bold: false,
+          alignment: 'left',
+          fontSize: 10
+        },
+        cuerpoTextoCentro: {
+          bold: false,
+          alignment: 'center',
+          fontSize: 10
+        },
+        cuerpoTextoNegritaSubrayado: {
+          bold: true,
+          decoration: 'underline',
+          alignment: 'justify',
+          fontSize: 10
+        },
+        firma: {
+          bold: true,
+          alignment: 'center',
+          fontSize: 8
+        }
+      }
+    };
+
+    pdfMake.createPdf( docDefinition ).open();
+  }
+
+  printTransferenciaCarreraEstudiante(pDataImpresion: ImpresionFormularioTransferenciaCarrera): void {
+    const docDefinition = {
+      pageSize: 'LETTER',
+      background: [
+        this.getDocumentoBackground()
+      ],
+
+      content: [
+        {
+          // Columnas para la cabecera
+          columns: [
+            this.getColumnsSinSaltosDeLinea( 'FORMULARIO DE TRANSFERENCIA DE CARRERA' ),
+            this.getQRCode( `Transferencia de carrera de : ${pDataImpresion.nombrecompleto}, en fecha : ${pDataImpresion.fechaSolicitud}` )
+          ]
+        },
+        {
+          // Columnas para datos del estudiante
+          columns: [[
+            {
+              text: '1) A Departamento de Admsiones y Registros de la U.A.T.F. '.toUpperCase(),
+              style: 'cuerpoTextoNegritaSubrayado',
+              aligment : 'left'
+            },
+            {
+              text : `Yo ${pDataImpresion.nombrecompleto}, con número de CI: ${pDataImpresion.ci} y número de RU : ${pDataImpresion.ru}; respetuosamente SOLICITO TRANSFERENCIA DE CARRERA de: ${pDataImpresion.carreraOrigen} a la carrera de : ${pDataImpresion.carreradestino}, teniendo hasta el momento los siguientes datos :\n `,
+              style : 'cuerpoTexto'
+            },
+            {
+              ul : [
+                // `Cantidad de trasapasos de universidad realizados : ${pDataImpresion.cantidadtraspasosrealizados}`,
+                `Materias aprobadas : ${pDataImpresion.materiasaprobadas}`,
+                `Materias reprobadas : ${pDataImpresion.materiasreprobadas}`
+              ],
+              style : 'cuerpoTextoIzquierda',
+              aligment : 'left'
+            },
+            {
+              text : `El motivo por la cual solicito la transferencia es: ${pDataImpresion.motivo}`,
+              style : 'cuerpoTexto'
+            },
+            {
+              text : `\n\n\n\n`
+            },
+            {
+              columns : [
+                {
+                  text : `${this.fechaActual}`,
+                  style : 'cuerpoTexto',
+                  aligment : 'left'
+                },
+                {
+                  text: `Univ : ${pDataImpresion.nombrecompleto} \n Solicitante`,
+                  style: 'firma',
+                  aligment : 'right'
+                }
+              ]
+            }
+
+          ]]
+        },
+
+        // DATOS PARA LA CARRERA ORGIEN
+        {
+          columns: [
+            [
+              {
+                text: '\n'
+              },
+              {
+                text:  `2) INFORME ACADEMICO DE LA JEFETURA DE LA CARRERA DE ORIGEN : ${pDataImpresion.carreraOrigen}`,
+                style: 'cuerpoTextoNegritaSubrayado'
+              },
+              {
+                text: `\n ${pDataImpresion.nombrecompleto}, de acuerdo a su archivo, ingresó a la universidad en la gestion academica : 1/2017, por lo tanto se encuentra inscrito en la presente carrera.`,
+                style: 'cuerpoTexto'
+              },
+              {
+                text : '\n\n\n\n'
+              },
+             {
+              columns : [
+                {
+                  text : `Potosí, ...... de ...................... del 20...`,
+                  style : 'cuerpoTexto',
+                  aligment : 'left'
+                },
+                {
+                  text: `Director de Carrera \n ${pDataImpresion.carreraOrigen}`,
+                  style: 'firma',
+                  aligment : 'right'
+                }
+              ]
+             }
+            ]
+          ]
+        },
+
+        {
+          // DATOS PARA LA CARRERA DESTINO
+          columns: [
+            [
+              {
+                text: '\n'
+              },
+              {
+                text:  `3) INFORME ACADEMICO DE LA JEFETURA DE LA CARRERA DE DESTINO : ${pDataImpresion.carreradestino}`,
+                style: 'cuerpoTextoNegritaSubrayado'
+              },
+              {
+                text: `\n Realizadas las consultas pertinentes a la carrera pertinente, se llega a las siguientes conclusiones : `,
+                style: 'cuerpoTexto'
+              },
+              {
+                text : `( ) SE ACEPTA - ( ) NO SE ACEPTA, la solicitud de TRANFERENCIA DE CARRERA,  ( ) CON CONVALIDACIONES DE MATERIAS - ( ) SIN CONVALIDACIONES DE MATERIAS`,
+                style : 'cuerpoTexto'
+              },
+              {
+                text: '\n\n\n'
+              },
+             {
+              columns : [
+                {
+                  text : `Potosí, ...... de ...................... del 20...`,
+                  style : 'cuerpoTexto',
+                  aligment : 'left'
+                },
+                {
+                  text: `Director de Carrera \n ${pDataImpresion.carreradestino}`,
+                  style: 'firma',
+                  aligment : 'right'
+                }
+              ]
+             }
+            ]
+          ]
+        },
+
+        {
+          // DATOS PARA EL DAR
+          columns: [
+            [
+              {
+                text: '\n'
+              },
+              {
+                text:  `4) VERIFICACION DEL DEPARTAMENTO DE ADMISIONES Y REGISTROS`,
+                style: 'cuerpoTextoNegritaSubrayado'
+              },
+              {
+                text: `\nUna vez ACEPTADA la solicitud de Transferencia de Carrera de : ${pDataImpresion.nombrecompleto}, en las condiciones señaladas en el punto 3 de la presente, procédase a la inscripcion en la carrera de : ${pDataImpresion.carreradestino}, previo cumplimiento de ltodos los requisitos reglamentarios vigentes.`,
                 style: 'cuerpoTexto'
               },
              {

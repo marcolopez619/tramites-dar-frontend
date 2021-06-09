@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../../shared/base.component';
+import { SeguimientoComponent } from '../../../../shared/components/seguimiento/seguimiento.component';
 import { eEstado } from '../../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
 import { EstudianteModel } from '../../../../shared/models/estudiante.model';
@@ -127,6 +128,22 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
     this.datosEstudiante =  ( await this.estudianteService.getInformacionEstudiante(element.idEstudiante).toPromise()).data;
     this.datosEstudiante.fechaSolicitud = element.fechaSolicitud;
     this.reportesService.printAnulacionEstudiante(this.datosEstudiante, element.motivo);
+  }
+
+  onVerSeguimiento(element: BandejaAnulacion) : void{
+    const dlgSeguimiento = this.dialog.open( SeguimientoComponent,  {
+      disableClose: false,
+      width: '1000px',
+      data: {
+        idTramite : element.idAnulacion,
+        idTipoTramite : eTipoTramite.ANULACION
+      }
+    });
+    dlgSeguimiento.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
+      /* if (result) {
+        this.getListaAnulaciones();
+      } */
+    });
   }
 
 }
