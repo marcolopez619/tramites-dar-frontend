@@ -15,51 +15,51 @@
 
         <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
 
-          <mat-form-field fxFlexFill>
+          <mat-form-field fxFlexFill appearance="outline">
+            <mat-label>{{ langService.getLang(eModulo.Tramite, 'lbl-tipo-tramite') }} </mat-label>
             <input
               readonly
               matInput
-              placeholder="{{ langService.getLang(eModulo.Tramite, 'lbl-tipo-tramite') }}"
               formControlName="tramite">
           </mat-form-field>
 
-          <mat-form-field fxFlexFill>
+          <mat-form-field fxFlexFill appearance="outline">
+            <mat-label>{{ langService.getLang(eModulo.Base, 'lbl-motivo') }} </mat-label>
             <input
               readonly
               matInput
-              placeholder="{{ langService.getLang(eModulo.Base, 'lbl-motivo') }}"
               formControlName="motivo">
           </mat-form-field>
 
-          <mat-form-field fxFlexFill>
+          <mat-form-field fxFlexFill appearance="outline">
+            <mat-label>{{ langService.getLang(eModulo.Tramite, 'lbl-estado-actual') }} </mat-label>
             <input
               readonly
               matInput
-              placeholder="{{ langService.getLang(eModulo.Tramite, 'lbl-estado-actual') }}"
               formControlName="estado">
           </mat-form-field>
 
-          <mat-form-field fxFlexFill>
+          <mat-form-field fxFlexFill appearance="outline">
+            <mat-label>{{ langService.getLang(eModulo.Tramite, 'lbl-Responsable') }} </mat-label>
             <input
               readonly
               matInput
-              placeholder="{{ langService.getLang(eModulo.Tramite, 'lbl-Responsable') }}"
               formControlName="entidad">
           </mat-form-field>
 
-          <mat-form-field fxFlexFill>
+          <mat-form-field fxFlexFill appearance="outline">
+            <mat-label>{{ langService.getLang(eModulo.Tramite, 'lbl-estado-en-fecha') }} </mat-label>
             <input
               readonly
               matInput
-              placeholder="{{ langService.getLang(eModulo.Tramite, 'lbl-estado-en-fecha') }}"
               formControlName="fechaProceso">
           </mat-form-field>
 
-          <mat-form-field fxFlexFill>
+          <mat-form-field fxFlexFill appearance="outline">
+            <mat-label>{{ langService.getLang(eModulo.Tramite, 'lbl-observaciones') }} </mat-label>
             <input
               readonly
               matInput
-              placeholder="{{ langService.getLang(eModulo.Tramite, 'lbl-observaciones') }}"
               formControlName="observaciones">
           </mat-form-field>
 
