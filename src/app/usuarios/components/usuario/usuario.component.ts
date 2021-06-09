@@ -83,7 +83,7 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
         paterno     : [ undefined , Validators.compose( [ Validators.maxLength( 100 )])],
         materno     : [ undefined , Validators.compose( [ Validators.maxLength( 100 )])],
         nombres     : [ undefined , Validators.compose( [ Validators.minLength( 3 ), Validators.maxLength( 100 )])],
-        nickName    : [ undefined , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
+        nickName    : [ undefined , Validators.compose( [ Validators.required, Validators.minLength( 3 ), Validators.maxLength( 50 )])],
         password    : [ undefined, Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 10 )])],
         celular     : [ undefined , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 15 )])],
         estado      : [ this.activado , Validators.compose( [ Validators.required ])],
