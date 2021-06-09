@@ -2,7 +2,7 @@
 <mat-card>
   <mat-card-header class="alt-theme">
     <mat-toolbar shToolbarModal color="primary">
-      <h3>Seguimiento</h3>
+      <h3>{{tituloDialog}}</h3>
       <span class="flex-spacer"></span>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'btn-cerrar') }}" (click)="onClose()">
         <mat-icon>close</mat-icon>
@@ -12,8 +12,40 @@
   <mat-dialog-content>
     <mat-card-content>
       <form [formGroup]="formUsuario" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill ngNativeValidate>
-
         <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
+
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+
+            <div fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+              <mat-form-field fxFlexFill>
+                <mat-label>{{langService.getLang(eModulo.Usuario, 'lbl-perfil' )}} : </mat-label>
+                <mat-select formControlName="idPerfil" placeholder="Seleccione perfil: " (selectionChange)="onChangePerfil($event)" [disabled]="isEdicion">
+                  <mat-option *ngFor="let perfil of listaPerfiles" [value]="perfil.idPerfil">
+                    {{perfil.nombrePerfil}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <sh-busqueda-estudiante *ngIf="showSearchEstudianteComponent" (onSelectedUser)="onSelectedUser($event)"></sh-busqueda-estudiante>
+
+              <div  fxLayout="row" fxLayoutAlign="center center" fxFlexFill  *ngIf="showSearchCarreraComponent || isEdicion">
+                <mat-form-field fxFlex>
+                  <mat-label>{{langService.getLang(eModulo.Usuario, 'lbl-carrera' )}} : </mat-label>
+                  <mat-select formControlName="idCarrera" (selectionChange)="onChangeCarrera($event)" [disabled]="selectedUser?.idPerfil == ePerfil.ADMINISTRADOR_DEL_SISTEMA || selectedUser?.idPerfil == ePerfil.ENCARGADO_DAR" >
+                    <mat-option *ngFor="let carrera of listaCarreras" [value]="carrera.idCarrera">
+                      {{carrera.nombre}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="formUsuario.controls['idCarrera'].invalid">{{ langService.getLang(eModulo.Usuario,'lbl-carrera-invalida') }}</mat-error>
+                </mat-form-field>
+              </div>
+
+
+            </div>
+
+          </div>
+
+
 
 
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill *ngIf="!showSearchEstudianteComponent">
@@ -64,7 +96,7 @@
                 autocomplete="off"
                 type="text"
                 matInput
-                minlength="5"
+                minlength="3"
                 maxlength="50"
                 placeholder="{{ langService.getLang(eModulo.Usuario, 'lbl-nick-name') }}"
                 formControlName="nickName">
@@ -85,6 +117,53 @@
 
           </div>
 
+
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+            <mat-form-field fxFlex="49">
+              <input matInput
+                autocomplete="off"
+                type="tel"
+                shUppercase
+                matInput
+                minlength="5"
+                maxlength="10"
+                placeholder="{{ langService.getLang(eModulo.Usuario, 'lbl-celular') }}"
+                formControlName="celular">
+              <mat-error *ngIf="formUsuario.controls['celular'].errors?.required">{{langService.getLang(eModulo.Usuario,'lbl-celular-invalido')}}</mat-error>
+            </mat-form-field>
+
+
+            <div fxLayout="row" fxLayoutAlign="center center" fxFlex="50">
+                <span>Estado: &nbsp;&nbsp;&nbsp; </span>
+                <mat-slide-toggle formControlName="estado" [checked]="activado" (change)="onChangeSlideToggleValue($event)"></mat-slide-toggle>
+            </div>
+
+            <!--  <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
+               <mat-form-field fxFlex>
+                 <mat-label>{{langService.getLang(eModulo.Usuario, 'lbl-perfil' )}} : </mat-label>
+                 <mat-select formControlName="idPerfil" placeholder="Seleccione perfil: " (selectionChange)="onChangePerfil($event)">
+                   <mat-option *ngFor="let perfil of listaPerfiles" [value]="perfil.idPerfil">
+                     {{perfil.nombrePerfil}}
+                   </mat-option>
+                 </mat-select>
+               </mat-form-field>
+             </div>
+ -->
+          </div>
+
+          <!-- <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+            <div  fxLayout="row" fxLayoutAlign="center center" fxFlex="50"  *ngIf="!showSearchEstudianteComponent && !showSearchCarreraComponent && selectedUser">
+              <strong>Carrera : </strong>&nbsp;{{selectedUser.carrera}}
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center center" fxFlex="50">
+              <span>Estado: </span>
+              <mat-slide-toggle [formControl]="this.formUsuario.get('estado')" [checked]="activado" (change)="onChangeSlideToggleValue($event)"></mat-slide-toggle>
+            </div>
+          </div> -->
+
+
+
+          <!-- <sh-busqueda-estudiante *ngIf="showSearchEstudianteComponent" (onSelectedUser)="onSelectedUser($event)"></sh-busqueda-estudiante> -->
 
 
 

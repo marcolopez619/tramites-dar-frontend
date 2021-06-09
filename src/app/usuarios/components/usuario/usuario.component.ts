@@ -66,7 +66,7 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
         paterno  : [ this.selectedUser.paterno , Validators.compose( [ Validators.maxLength( 100 )])],
         materno  : [ this.selectedUser.materno , Validators.compose( [ Validators.maxLength( 100 )])],
         nombres  : [ this.selectedUser.nombres , Validators.compose( [ Validators.minLength( 3 ), Validators.maxLength( 100 )])],
-        nickName : [ this.selectedUser.nickName , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 50 )])],
+        nickName : [ this.selectedUser.nickName , Validators.compose( [ Validators.required, Validators.minLength( 3 ), Validators.maxLength( 50 )])],
         password : [ this.selectedUser.password , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 10 )])],
         celular  : [ this.selectedUser.celular , Validators.compose( [ Validators.required, Validators.minLength( 5 ), Validators.maxLength( 15 )])],
         estado   : [ +this.activado , Validators.compose( [ Validators.required ])],
