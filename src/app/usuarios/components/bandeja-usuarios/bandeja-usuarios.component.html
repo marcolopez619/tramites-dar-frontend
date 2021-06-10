@@ -54,8 +54,13 @@
       </ng-container>
 
       <ng-container matColumnDef="perfil" >
-        <mat-header-cell *matHeaderCellDef fxFlex="25"  mat-sort-header> {{ langService.getLang(eModulo.Usuario, 'lbl-perfil') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="25" > {{element.nombrePerfil}} &nbsp; </mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="20"  mat-sort-header> {{ langService.getLang(eModulo.Usuario, 'lbl-perfil') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="20" > {{element.nombrePerfil}} &nbsp; </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="carrera" >
+        <mat-header-cell *matHeaderCellDef fxFlex="20"  mat-sort-header> {{ langService.getLang(eModulo.Usuario, 'lbl-carrera') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="20" > {{element.carrera}} &nbsp; </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="estado" >

@@ -22,7 +22,7 @@ import { UsuarioComponent } from '../usuario/usuario.component';
 })
 export class BandejaUsuariosComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['nickName', 'paterno', 'materno', 'nombres', 'perfil', 'estado', 'acciones'];
+  displayedColumns = ['nickName', 'paterno', 'materno', 'nombres', 'perfil', 'carrera', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<BandejaUsuarios>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
