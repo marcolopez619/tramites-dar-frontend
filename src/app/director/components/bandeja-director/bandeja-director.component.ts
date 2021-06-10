@@ -26,7 +26,7 @@ import { DirectorService } from '../../director.service';
 })
 export class BandejaDirectorComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['nombreCompleto', 'carrera', 'tipoTramite', 'fechaSolicitud', 'estado', 'acciones' ];
+  displayedColumns = ['nombreCompleto', 'carrera', 'tipoTramite', 'fechaSolicitud', 'estado' ];
   dataSource = new MatTableDataSource<BandejaDirector>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

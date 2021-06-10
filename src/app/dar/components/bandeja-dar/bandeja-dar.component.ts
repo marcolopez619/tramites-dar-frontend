@@ -20,7 +20,7 @@ import { DarService } from '../../dar.service';
 })
 export class BandejaDarComponent extends BaseComponent  implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['nombreCompleto', 'carrera', 'tipoTramite', 'fechaProceso', 'estado', 'acciones' ];
+  displayedColumns = ['nombreCompleto', 'carrera', 'tipoTramite', 'fechaProceso', 'estado' ];
   dataSource = new MatTableDataSource<BandejaDar>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

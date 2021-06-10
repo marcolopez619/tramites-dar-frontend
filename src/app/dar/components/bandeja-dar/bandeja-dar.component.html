@@ -34,13 +34,13 @@
       </ng-container>
 
       <ng-container matColumnDef="carrera">
-        <mat-header-cell *matHeaderCellDef fxFlex="35" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-carrera') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="35"> {{element.carrera}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="30" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-carrera') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="30"> {{element.carrera}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="tipoTramite">
-        <mat-header-cell *matHeaderCellDef fxFlex="15" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-tipo-tramite') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="15"> {{element.tramite}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="20" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-tipo-tramite') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="20"> {{element.tramite}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="fechaProceso" >
@@ -53,20 +53,20 @@
         <mat-cell *matCellDef="let element" fxFlex="10" > {{element.estado }} </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="acciones">
+      <!-- <ng-container matColumnDef="acciones">
         <mat-header-cell *matHeaderCellDef fxFlex="10" fxLayoutAlign="center center"> {{ langService.getLang(eModulo.Base, 'lbl-acciones') }} </mat-header-cell>
         <mat-cell *matCellDef="let element;" fxFlex="10" fxLayoutAlign="center center">
           <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-imprimir') }}">
             <mat-icon>print</mat-icon>
           </a>
-          <!-- <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}">
+           <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-editar') }}">
             <mat-icon>edit</mat-icon>
           </a>
           <a mat-icon-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-eliminar') }}" >
             <mat-icon>delete_forever</mat-icon>
-          </a> -->
+          </a>
         </mat-cell>
-      </ng-container>
+      </ng-container> -->
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
