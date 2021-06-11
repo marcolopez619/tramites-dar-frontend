@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { BandejaTramitesAtendidosComponent } from '../shared/components/bandeja-tramites-atendidos/bandeja-tramites-atendidos.component';
 import { BandejaDarComponent } from './components/bandeja-dar/bandeja-dar.component';
 import { DetalleTramiteComponent } from './components/detalle-tramite/detalle-tramite.component';
 import { BandejaCarrerasComponent } from './components/gestion-universidades/bandeja-carreras/bandeja-carreras.component';
@@ -33,6 +34,10 @@ export const darRoutes: Routes = [
           {
               path: 'habilitaciones/index',
               component: BandejaHabilitacionGestionesComponent
+          },
+          {
+              path: 'tramites_atendidos/index',
+              component: BandejaTramitesAtendidosComponent
           }
       ]
   }

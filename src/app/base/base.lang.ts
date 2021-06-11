@@ -102,7 +102,8 @@ export const baseLang = {
             'lbl-fecha-nacimiento' : 'Fecha nacimiento',
             'lbl-busqueda' : 'Búsqueda',
             'lbl-cerrar' : 'Cerrar',
-            'lbl-ver-seguimiento' : 'Ver seguimiento'
+            'lbl-ver-seguimiento' : 'Ver seguimiento',
+            'tit-bandeja-tramites-atendidos' : 'Trámites atendidos'
         },
         'en': {
             'lang-error': 'Lang not found',

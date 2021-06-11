@@ -74,6 +74,7 @@ import { PeriodoGestionService } from './services/periodo-gestion.service';
 import { AlfanumericoDirective } from './directives/alfanumerico.directive';
 import { ReportesService } from './services/reportes.service';
 import { SeguimientoComponent } from './components/seguimiento/seguimiento.component';
+import { BandejaTramitesAtendidosComponent } from './components/bandeja-tramites-atendidos/bandeja-tramites-atendidos.component';
 
 /**
  * Shared modulo que importa y exporta los modulos necesarios para material design, tambien exporta directivas y pipes.
@@ -112,10 +113,11 @@ import { SeguimientoComponent } from './components/seguimiento/seguimiento.compo
         DatosFormatoTablaComponent,
         UniversidadCarreraComponent,
         BusquedaEstudianteComponent,
+        SeguimientoComponent,
+        BandejaTramitesAtendidosComponent,
 
-        EstadoToLiteralPipe,
+        EstadoToLiteralPipe
 
-        SeguimientoComponent
 
     ],
     imports: [
@@ -220,7 +222,8 @@ import { SeguimientoComponent } from './components/seguimiento/seguimiento.compo
         DatosFormatoTablaComponent,
         UniversidadCarreraComponent,
         BusquedaEstudianteComponent,
-        SeguimientoComponent
+        SeguimientoComponent,
+        BandejaTramitesAtendidosComponent
     ],
     entryComponents: [
         ConfirmDialogComponent

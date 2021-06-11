@@ -18,6 +18,10 @@ export class DirectorService {
     return this.httpClient.get<Resultado>(`${this.baseURL}/${pIdeCarrera}`);
   }
 
+  getTramitesAtendidos(pIdeCarrera: number): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/${pIdeCarrera}/tramites/atendidos`);
+  }
+
   /* getDetalleTramitePorAtender(pIdTramite: number, pIdEstudiante: number): Observable<Resultado> {
 
     const params = new HttpParams().set( 'idTramite', pIdTramite.toString() )

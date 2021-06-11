@@ -19,6 +19,9 @@ export class DarService {
   getTramitesPorAtender(): Observable<Resultado> {
     return this.httpClient.get<Resultado>(`${this.baseURL}`);
   }
+  getTramitesAtendidos(): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/tramites/atendidos`);
+  }
 
   /* getDetalleTramitePorAtender(pIdTramite: number, pIdEstudiante: number): Observable<Resultado> {
 
