@@ -75,6 +75,16 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
     });
   }
 
+  private getIdSuspencionesUtilizadas(): Array<number>{
+    let listaIdSuspenciones = [];
+
+    if (this.dataSource.data?.length > 0) {
+      listaIdSuspenciones = this.dataSource.data.map( x => x.suspencion[ 0 ].idSuspencion);
+    }
+
+    return listaIdSuspenciones;
+  }
+
   getListaReadmisiones(): void {
     const idEstudiante = this.contextService.getItemContexto('idEstudiante');
 
@@ -84,10 +94,13 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
   }
 
   onNuevaSolicitud(): void {
+    // const listaIdsSuspencionesUtilizadas = this.getIdSuspencionesUtilizadas()
     const dlgReadmision = this.dialog.open( ReadmisionComponent,  {
       disableClose: false,
       width: '1000px',
-      data: { }
+      data: {
+        listaIdsSuspencionesUtilizadas : this.getIdSuspencionesUtilizadas()
+       }
     });
     dlgReadmision.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe( result => {
       if (result) {

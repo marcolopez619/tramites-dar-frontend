@@ -10,7 +10,7 @@ import { eEntidad } from '../../../../shared/enums/tipo_entidad.enum';
 import { EstudianteModel } from '../../../../shared/models/estudiante.model';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
-import { BandejaSuspencion } from '../../../../tramites/models/tramites.models';
+import { BandejaReadmision, BandejaSuspencion } from '../../../../tramites/models/tramites.models';
 import { EstudianteService } from '../../../estudiante.service';
 import { ReadmisionInsert } from '../../../models/readmision.model';
 import { SuspencionService } from '../../suspencion/suspencion.service';
@@ -27,7 +27,7 @@ export class ReadmisionComponent  extends BaseComponent implements OnInit {
   datoEstudiante: EstudianteModel;
   listaSuspenciones: Array<BandejaSuspencion> = [];
   datoSuspencionSeleceted: BandejaSuspencion = {};
-  // rangoLiteralSeleccionado: string;
+  listaIdsSuspencionesUtilizadas : Array<BandejaReadmision>;
 
    constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -44,6 +44,9 @@ export class ReadmisionComponent  extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Obtiene la lista de ids de las suspenciones q ya fueron utilizadas
+    this.listaIdsSuspencionesUtilizadas = this.data.listaIdsSuspencionesUtilizadas;
+
     this.getDatosEstudiante();
 
     this.getListSuspenciones();
@@ -65,7 +68,12 @@ export class ReadmisionComponent  extends BaseComponent implements OnInit {
     const idEstudiante = this.contextService.getItemContexto('idEstudiante');
 
     this.suspencionService.getAllListaSuspenciones( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
-      this.listaSuspenciones = resp.data;
+
+      // Filtra las suspenciones disponibles y que no han sido utilizadas en readmisiones anteriores
+      if (resp.data) {
+        this.listaSuspenciones = resp.data.filter( x => !this.listaIdsSuspencionesUtilizadas.includes( x.idSuspencion ) );
+      }
+
     });
   }
 
