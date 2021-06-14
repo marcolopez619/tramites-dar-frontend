@@ -14,15 +14,21 @@
 <mat-dialog-content>
 <mat-card-content>
 
-  <mat-horizontal-stepper labelPosition="bottom" #stepper *ngIf="datoEstudiante">
+  <mat-horizontal-stepper labelPosition="bottom" #stepper *ngIf="datoEstudiante" linear>
 
     <mat-step>
       <ng-template matStepLabel>{{langService.getLang(eModulo.Estudiante, 'lbl-datos-estudiante' )}}</ng-template>
 
       <sh-datos-estudiante [datoEstudiante]="datoEstudiante"></sh-datos-estudiante>
 
+      <div fxLayout="row" fxLayoutAlign="start center" *ngIf="this.listaSuspenciones?.length == 0">
+          <mat-icon>info</mat-icon>
+          &nbsp;&nbsp;
+          <h4>NOTA:  DEBE REALIZAR UNA SUSPENCIÓN PARA CONTINUAR CON EL TRAMITE DE READMISIÓN.</h4>
+      </div>
+
       <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>
-        <button mat-raised-button color="primary" matStepperNext>{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
+        <button mat-raised-button color="primary" matStepperNext [disabled]="this.listaSuspenciones.length == 0" >{{langService.getLang(eModulo.Cites, 'lbl-siguiente' )}}</button>
       </div>
     </mat-step>
 
