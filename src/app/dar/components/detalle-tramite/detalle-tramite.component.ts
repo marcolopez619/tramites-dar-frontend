@@ -69,7 +69,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
     this.selectedTramite = JSON.parse(localStorage.getItem( 'selectedTramite' ) ) as BandejaDar;
 
     this.formDetalleTramite = this.formBuilder.group({
-      observaciones : [undefined, Validators.compose([ Validators.minLength(5), Validators.maxLength(200)])]
+      observaciones : [undefined, Validators.compose([ Validators.required, Validators.minLength(5), Validators.maxLength(200)])]
     });
 
     this.getDatosEstudiante();
@@ -81,32 +81,6 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
     const idTipoTramite = this.selectedTramite.idTipoTramite;
 
     this.getDetalleTramite(idTramite, idEstudiante, idTipoTramite);
-
-    /* const idTramite = eTipoTramite.ANULACION; // FIXME: dato quemado q tiene q ser obtenido del localstorage cuando se elija una fila de la bandeja de solicitudes por atender.
-    const idTipoTramite = 14; // FIXME: dato quemado q tiene q ser obtenido del localstorage cuando se elija una fila de la bandeja de solicitudes por atender.
-    const idEstudiante = 1; // FIXME: dato quemado q tiene q ser obtenido del localstorage cuando se elija una fila de la bandeja de solicitudes por atender.
-    this.getDetalleTramite(idTramite, idEstudiante, idTipoTramite); */
-
-    /* const idTramite = eTipoTramite.CAMBIO_DE_CARRERA;
-    const idTipoTramite = 7;
-    const idEstudiante = 1;
-    this.getDetalleTramite(idTramite, idEstudiante, idTipoTramite); */
-
-    /* const idTramite = eTipoTramite.SUSPENCION;
-    const idTipoTramite = 8;
-    const idEstudiante = 1;
-    this.getDetalleTramite(idTramite, idEstudiante, idTipoTramite); */
-
-   /*  const idTramite = eTipoTramite.READMISION;
-    const idTipoTramite = 11;
-    const idEstudiante = 1;
-    this.getDetalleTramite(idTramite, idEstudiante, idTipoTramite); */
-
-    /* const idTramite = eTipoTramite.TRASPASO_DE_UNIVERSIDAD;
-    const idTipoTramite = 5;
-    const idEstudiante = 1;
-    this.getDetalleTramite(idTramite, idEstudiante, idTipoTramite); */
-
   }
 
   ngOnDestroy(): void {

@@ -38,7 +38,7 @@
       <div fxLayout="row" fxLayoutAlign="center center" fxLayout.lt-sm="column" fxLayoutGap="5px" fxFill >
         <form [formGroup]="formDetalleTramite" fxFlexFill>
           <mat-form-field fxFlex>
-            <input type="text" shUppercase shAutofocus matInput minlength="5" maxlength="200" autocomplete="off" formControlName="observaciones">
+            <input type="text" shUppercase shAutofocus required matInput minlength="5" maxlength="200" autocomplete="off" formControlName="observaciones">
             <mat-label>&nbsp; {{langService.getLang(eModulo.Dar,'lbl-observaciones')}} </mat-label>
             <mat-error *ngIf="formDetalleTramite.invalid">{{langService.getLang(eModulo.Dar,'lbl-observaciones-error') }}</mat-error>
           </mat-form-field>
@@ -49,8 +49,8 @@
 
       <div fxLayout="row" fxLayoutAlign="center center" fxLayout.lt-sm="column" fxLayoutGap="5px" fxFill >
         <!-- <button mat-raised-button color="warn" fxFlex="25" (click)="onAprobarTramite()" >Aprobar</button> -->
-        <button mat-raised-button color="accent" fxFlex="50" [disabled] ="!cuentaConDocumentacion"(click)="onFinalizarTramite()">Finalizar</button>
-        <button mat-raised-button  color="warn" fxFlex="50" (click)="onRechazarTramite()">Rechazar</button>
+        <button mat-raised-button color="accent" fxFlex="50" [disabled] ="!cuentaConDocumentacion || formDetalleTramite.invalid" (click)="onFinalizarTramite()">Finalizar</button>
+        <button mat-raised-button  color="warn" fxFlex="50" [disabled]="formDetalleTramite.invalid" (click)="onRechazarTramite()">Rechazar</button>
         <!-- <button mat-raised-button color="primary" fxFlex="25" (click)="onEnviarTramite()">Enviar</button> -->
       </div>
     </div>

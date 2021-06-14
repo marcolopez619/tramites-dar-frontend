@@ -25,7 +25,7 @@ export const darLang = {
     'lbl-nombre-completo' : 'Nombre completo',
     'lbl-tipo-tramite' : 'Tipo trámite',
     'lbl-observaciones' : 'Observaciones',
-    'lbl-observaciones-error' : 'La observacion es inválida',
+    'lbl-observaciones-error' : 'La observación es necesaria',
 
     'lbl-gestiones' : 'Gestiones',
     'lbl-fecha-modificacion' : 'Fecha modificación',
