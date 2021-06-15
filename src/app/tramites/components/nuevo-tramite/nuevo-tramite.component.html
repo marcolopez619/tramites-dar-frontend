@@ -49,11 +49,26 @@
 
           </div>
 
-
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
-              <span>Estado: </span>
-              <mat-slide-toggle formControlName="estado" [checked]="activado" (change)="onChangeSlideToggleValue($event)"></mat-slide-toggle>
+
+            <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
+              <mat-form-field fxFlex>
+                <mat-label>{{langService.getLang(eModulo.Tramite, 'lbl-tipo-carrera' )}} : </mat-label>
+                <mat-select formControlName="idTipoCarrera" placeholder="Seleccione">
+                  <mat-option *ngFor="let tipoCarrera of listaTipoCarreras" [value]="tipoCarrera.idTipoCarrera">
+                    {{tipoCarrera.tipoCarrera}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlex="49">
+                <span>Estado: </span>
+                <mat-slide-toggle formControlName="estado" [checked]="activado" (change)="onChangeSlideToggleValue($event)"></mat-slide-toggle>
+            </div>
           </div>
+
+
 
 
         </div>

@@ -6,11 +6,12 @@ import { takeUntil } from 'rxjs/operators';
 import { fadeInAnim, slideInLeftAnim } from '../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../shared/base.component';
 import { PeriodoGestion } from '../../../shared/models/periodo_gestion.model';
-import { HabilitacionTramiteModelInsert, HabilitacionTramiteModelUpdate, TramiteModel } from '../../../shared/models/tramites.models';
+import { HabilitacionTramiteModelInsert, HabilitacionTramiteModelUpdate, TipoCarrera, TramiteModel } from '../../../shared/models/tramites.models';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { PeriodoGestionService } from '../../../shared/services/periodo-gestion.service';
 import { TramitesAcademicosService } from '../../../shared/services/tramites-academicos.service';
+import { UniversidadService } from '../../../shared/services/universidad.service';
 import { BandejaTramite } from '../../models/tramites.models';
 import { TramitesService } from '../../tramites.service';
 
@@ -24,6 +25,7 @@ import { TramitesService } from '../../tramites.service';
 export class NuevoTramiteComponent extends BaseComponent implements OnInit {
   formTramite: FormGroup;
   listaTramites: Array<TramiteModel> = [];
+  listaTipoCarreras: Array<TipoCarrera> = [];
   activado = true;
   periodoActivo: PeriodoGestion;
   fechaAux = new Date();
@@ -38,6 +40,7 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
     public langService: LangService,
     public contextService: ContextoService,
     private formBuilder: FormBuilder,
+    private universidadService: UniversidadService,
     private tramiteService: TramitesService,
     private tramitesAcademicosService: TramitesAcademicosService,
     private periodoGestionService: PeriodoGestionService
@@ -49,6 +52,8 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
     this.getListaTramites();
 
     this.getPeriodoActivo();
+
+    this.getListaTipoCarreras();
 
     // Captura el elemento a editar si es que lo hay
     this.elementBandejaSelected = this.data.elementBandejaTramite as BandejaTramite;
@@ -62,6 +67,7 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
 
       this.formTramite = this.formBuilder.group({
         idTramite      : [ this.elementBandejaSelected.idTramite, Validators.compose([ Validators.required ])],
+        idTipoCarrera  : [ this.elementBandejaSelected.idTipoCarrera, Validators.compose([ Validators.required ])],
         estado         : [ +this.activado ],
         rangoFechaGroup: this.formBuilder.group({
           fechaInicial: [ this.elementBandejaSelected.fechaInicial, Validators.compose([ Validators.required ]) ],
@@ -73,6 +79,7 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
       // => Nueva insercion
       this.formTramite = this.formBuilder.group({
         idTramite      : [ undefined, Validators.compose([ Validators.required ])],
+        idTipoCarrera  : [ undefined, Validators.compose([ Validators.required ])],
         estado         : [ undefined ],
         rangoFechaGroup: this.formBuilder.group({
           fechaInicial: [ undefined, Validators.compose([ Validators.required ]) ],
@@ -96,6 +103,12 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
     });
   }
 
+  private getListaTipoCarreras(): void {
+    this.universidadService.getTipoCarreras().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.listaTipoCarreras = resp.data ?? [];
+    });
+  }
+
   onChangeSlideToggleValue( event: MatSlideToggleChange ): void {
     this.activado = event.checked;
   }
@@ -109,6 +122,7 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
       // => Edicion
       const habilitacionTramiteModelUpdate: HabilitacionTramiteModelUpdate = {
         idHabilitacionTramite: this.elementBandejaSelected.idHabilitacionTramite,
+        idTipoCarrera        : this.formTramite.controls['idTipoCarrera'].value,
         fechaInicial         : fechaIncial,
         fechaFinal           : fechaFinal,
         estado               : +this.activado,
@@ -127,6 +141,7 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
         fechaFinal      : fechaFinal,
         estado          : +this.activado,
         idTramite       : this.formTramite.controls['idTramite'].value,
+        idTipoCarrera   : this.formTramite.controls['idTipoCarrera'].value,
         idPeriodoGestion: this.periodoActivo.idPeriodoGestion
       };
 

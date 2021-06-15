@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { BandejaCarreras, BandejaFacultad, BandejaUniversidades } from '../../tramites/models/tramites.models';
@@ -60,6 +60,11 @@ export class UniversidadService {
   }
   getListaCarreras(): Observable<Resultado> {
     return this.httpClient.get<Resultado>(`${this.baseURL}/carrera`);
+  }
+
+  getTipoCarreras(): Observable<Resultado> {
+    const headers = new HttpHeaders().set('X-Notificador', 'false');
+    return this.httpClient.get<Resultado>(`${this.baseURL}/carrera/tipos`,{headers : headers });
   }
 
   insertCarrera(pCarrera: BandejaCarreras): Observable<Resultado> {

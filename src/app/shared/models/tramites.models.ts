@@ -3,6 +3,11 @@ export interface TramiteModel {
   descripcionTramite?: string;
 }
 
+export interface TipoCarrera{
+  idTipoCarrera: number;
+  tipoCarrera: string;
+}
+
 
 /** MODELO DE INSERCION DE DATOS **/
 export interface HabilitacionTramiteModelInsert{
@@ -11,6 +16,7 @@ export interface HabilitacionTramiteModelInsert{
   estado?: number;
   idPeriodoGestion?: number;
   idTramite?: number;
+  idTipoCarrera: number;
 }
 
 export interface HabilitacionTramiteModelUpdate extends HabilitacionTramiteModelInsert{
