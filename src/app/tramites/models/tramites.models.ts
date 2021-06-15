@@ -9,6 +9,8 @@ export interface BandejaTramite extends BandejaAbstract {
   fechaFinal?: Date;
   estado?: number;
   gestion?: number;
+  idTipoCarrera: number;
+  tipoCarrera: string;
 }
 
 export interface BandejaCambioCarrera {

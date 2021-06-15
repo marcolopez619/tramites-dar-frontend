@@ -21,7 +21,7 @@ import { NuevoTramiteComponent } from '../nuevo-tramite/nuevo-tramite.component'
 })
 export class BandejaTramitesComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['tramite', 'rangoFechas', 'gestion', 'estado', 'acciones'];
+  displayedColumns = ['tramite', 'tipoCarrera', 'rangoFechas', 'gestion', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<BandejaTramite>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

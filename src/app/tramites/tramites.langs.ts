@@ -18,6 +18,7 @@ export const tramiteLang = {
     'lbl-periodo' : 'Periodo',
     'lbl-descripcion-excepcion' : 'Motivo de habilitación',
     'lbl-descripcion-excepcion-error' : 'El motivo de habilitación es obligatorio',
+    'lbl-ttipo-carrera' : 'Tipo carrera',
 
     'lbl-tipo-tramite' : 'Tipo de trámite',
     'lbl-Responsable' : 'Responsable',
