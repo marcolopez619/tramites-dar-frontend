@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
+
 import { fadeInAnim, slideInLeftAnim } from '../../../../shared/animations/template.animation';
 import { BaseComponent } from '../../../../shared/base.component';
 import { SeguimientoComponent } from '../../../../shared/components/seguimiento/seguimiento.component';
@@ -27,6 +28,7 @@ import { AnulacionService } from '../anulacion.service';
   styleUrls: ['./bandeja-anulacion.component.css'],
   animations: [fadeInAnim, slideInLeftAnim],
   host: { class: 'container-fluid', '[@fadeInAnim]': 'true' }
+  // encapsulation: ViewEncapsulation.None
 })
 export class BandejaAnulacionComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -85,7 +87,9 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
       this.isTramiteHabilitado = resp.data.isTramiteHabilitado;
 
       if ( !this.isTramiteHabilitado ) {
-        this.matSnackBar.open( 'NOTA: EL TRAMITE PARA REALIZAR LAS ANULACIONES HA FINALIZADO', 'Cerrar' );
+        this.matSnackBar.open( 'NOTA: EL TRAMITE PARA REALIZAR LAS ANULACIONES HA FINALIZADO', 'Cerrar', {
+          panelClass : 'mensaje-snack'
+        });
       }
     });
   }

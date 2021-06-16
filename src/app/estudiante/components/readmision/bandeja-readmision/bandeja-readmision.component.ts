@@ -70,7 +70,9 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
       this.isTramiteHabilitado = resp.data.isTramiteHabilitado;
 
       if ( !this.isTramiteHabilitado ) {
-        this.matSnackBar.open( 'NOTA: EL TRAMITE PARA REALIZAR LAS READMISIONES HA FINALIZADO', 'Cerrar' );
+        this.matSnackBar.open( 'NOTA: EL TRAMITE PARA REALIZAR LAS READMISIONES HA FINALIZADO', 'Cerrar', {
+          panelClass : 'mensaje-snack'
+        } );
       }
     });
   }

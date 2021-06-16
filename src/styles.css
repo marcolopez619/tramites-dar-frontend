@@ -184,3 +184,7 @@ mat-card-content {
 .icono-tab{
   margin-right: 8px;
 }
+
+.mensaje-snack{
+  background-color: brown !important;
+}

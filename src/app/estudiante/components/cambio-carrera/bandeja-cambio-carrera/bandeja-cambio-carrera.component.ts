@@ -75,7 +75,9 @@ export class BandejaCambioCarreraComponent extends BaseComponent  implements OnI
       this.isTramiteHabilitado = resp.data.isTramiteHabilitado;
 
       if ( !this.isTramiteHabilitado ) {
-        this.matSnackBar.open( 'NOTA: EL TRAMITE PARA REALIZAR CAMBIOS DE CARRERA HA FINALIZADO', 'Cerrar' );
+        this.matSnackBar.open( 'NOTA: EL TRAMITE PARA REALIZAR CAMBIOS DE CARRERA HA FINALIZADO', 'Cerrar', {
+          panelClass : 'mensaje-snack'
+        } );
       }
     });
   }

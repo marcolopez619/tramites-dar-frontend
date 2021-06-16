@@ -72,7 +72,9 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
       this.isTramiteHabilitado = resp.data.isTramiteHabilitado;
 
       if ( !this.isTramiteHabilitado ) {
-        this.matSnackBar.open( 'NOTA: EL TRAMITE PARA REALIZAR LOS TRASPASOS ENTRE UNIVERSIDADE HA FINALIZADO', 'Cerrar' );
+        this.matSnackBar.open( 'NOTA: EL TRAMITE PARA REALIZAR LOS TRASPASOS ENTRE UNIVERSIDADE HA FINALIZADO', 'Cerrar', {
+          panelClass : 'mensaje-snack'
+        } );
       }
     });
   }
