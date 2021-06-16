@@ -188,7 +188,7 @@ export class UsuarioComponent extends BaseComponent implements OnInit {
         materno     : this.formUsuario.controls[ 'materno' ].value,
         nombres     : this.formUsuario.controls[ 'nombres' ].value,
         idPerfil    : this.formUsuario.controls[ 'idPerfil' ].value,
-        idEstudiante: (this.estudentSelected) ? this.formUsuario.controls[ 'idEstudiante' ].value: -1,
+        idEstudiante: this.formUsuario.controls[ 'idEstudiante' ].value ?? -1,
         idCarrera   : this.formUsuario.controls[ 'idCarrera' ].value ?? 1000,
         nickName    : this.formUsuario.controls[ 'nickName' ].value,
         password    : this.formUsuario.controls[ 'password' ].value,
