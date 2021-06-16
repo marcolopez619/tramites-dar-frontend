@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { eTipoTramite } from '../enums/tipoTramite.enum';
@@ -25,7 +25,8 @@ export class TramitesAcademicosService {
   }
 
   verificarHabilitacionTramite(pIdTramite: number, pIdEstudiante: number) : Observable<Resultado>{
-    return this.httpClient.get<Resultado>(`${this.baseURL}/verificar/habilitacion/${pIdTramite}/estudiante/${pIdEstudiante}`);
+    const headers = new HttpHeaders().set('X-Notificador', 'false');
+    return this.httpClient.get<Resultado>(`${this.baseURL}/verificar/habilitacion/${pIdTramite}/estudiante/${pIdEstudiante}`, {headers : headers});
   }
 
   insertDataTablaIntermedia(pTablaIntermediaInsert : TablaIntermediaInsert ) : Observable<Resultado>{
