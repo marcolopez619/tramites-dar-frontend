@@ -19,6 +19,8 @@ import { PeriodoGestionService } from '../../../../shared/services/periodo-gesti
 })
 export class HabilitacionGestionComponent extends BaseComponent implements OnInit {
   formHabilitacionGestion: FormGroup;
+  listaPeriodosDisponibles = [ 1, 2 ];
+  listaGestionesDisponibles: Array<number> = [];
   listaGestiones: Array<PeriodoGestion> = [];
   activado = true;
   periodoActivo: PeriodoGestion;
@@ -37,7 +39,9 @@ export class HabilitacionGestionComponent extends BaseComponent implements OnIni
   }
 
   ngOnInit(): void {
-    this.getAllPeriodos();
+    // this.getAllPeriodos();
+
+    this.getGestionesDisponibles();
 
     // Captura el elemento a editar si es que lo hay
     this.elementBandejaSelected = this.data.elementSelected as PeriodoGestion;
@@ -47,16 +51,18 @@ export class HabilitacionGestionComponent extends BaseComponent implements OnIni
       this.activado = !!this.elementBandejaSelected.estado;
 
       this.formHabilitacionGestion = this.formBuilder.group({
-        idPeriodoGestion: [ this.elementBandejaSelected.idPeriodoGestion, Validators.compose([ Validators.required ])],
-        estado          : [ +this.activado ]
+        periodo: [ this.elementBandejaSelected.periodo, Validators.compose([ Validators.required])],
+        gestion: [ this.elementBandejaSelected.gestion, Validators.compose([ Validators.required])],
+        estado : [ +this.activado ]
       });
 
     } else {
       // => Nueva insercion
-      /* this.formHabilitacionGestion = this.formBuilder.group({
-        idPeriodoGestion: [ undefined, Validators.compose([ Validators.required ])],
-        estado          : [ +this.activado ]
-      }); */
+      this.formHabilitacionGestion = this.formBuilder.group({
+        periodo: [ undefined, Validators.compose([ Validators.required])],
+        gestion: [ undefined, Validators.compose([ Validators.required])],
+        estado : [ +this.activado ]
+      });
     }
 
   }
@@ -67,24 +73,28 @@ export class HabilitacionGestionComponent extends BaseComponent implements OnIni
     });
   }
 
+  private getGestionesDisponibles(): void {
+    const date = new Date();
+    const anioActual = date.getFullYear();
+
+    for (let gestion =  anioActual; gestion < anioActual + 5; gestion++) {
+      this.listaGestionesDisponibles.push( gestion );
+    }
+
+  }
+
   onChangeSlideToggleValue( event: MatSlideToggleChange ): void {
     this.activado = event.checked;
   }
 
   onSaveTramite(): void {
-    const updateModel: PeriodoGestion = {
-      idPeriodoGestion: this.formHabilitacionGestion.controls['idPeriodoGestion'].value,
-      estado          : this.formHabilitacionGestion.controls['estado'].value
-    };
 
-    this.periodoGestionService.updatePeriodo(updateModel).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( respUpdate => {
-      this.onClose(respUpdate);
-    });
-
-    /* if ( this.elementBandejaSelected ) {
+    if ( this.elementBandejaSelected ) {
       // => Edicion
-      const updateModel : PeriodoGestion = {
-        idPeriodoGestion: this.formHabilitacionGestion.controls['idPeriodoGestion'].value,
+      const updateModel: PeriodoGestion = {
+        idPeriodoGestion: this.elementBandejaSelected.idPeriodoGestion,
+        periodo         : this.formHabilitacionGestion.controls[ 'periodo' ].value,
+        gestion         : this.formHabilitacionGestion.controls[ 'gestion' ].value,
         estado          : this.formHabilitacionGestion.controls['estado'].value
       };
 
@@ -94,18 +104,17 @@ export class HabilitacionGestionComponent extends BaseComponent implements OnIni
 
     } else {
       // => Nueva insercion
-      const habilitacionTramiteInsert: HabilitacionTramiteModelInsert = {
-        fechaInicial    : fechaIncial,
-        fechaFinal      : fechaFinal,
-        estado          : +this.activado,
-        idTramite       : this.formHabilitacionGestion.controls['idTramite'].value,
-        idPeriodoGestion: this.periodoActivo.idPeriodoGestion
+      const insertModel: PeriodoGestion = {
+        periodo: this.formHabilitacionGestion.controls[ 'periodo' ].value,
+        gestion: this.formHabilitacionGestion.controls[ 'gestion' ].value,
+        estado : this.formHabilitacionGestion.controls['estado'].value
       };
 
-      this.tramiteService.insertHabilitaconTramite( habilitacionTramiteInsert ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( respInsert => {
-        this.onClose(respInsert);
+      this.periodoGestionService.addPeriodo(insertModel).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( respUpdate => {
+        this.onClose(respUpdate);
       });
-    } */
+
+    }
 
   }
 

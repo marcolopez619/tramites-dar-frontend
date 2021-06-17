@@ -23,6 +23,9 @@ export class PeriodoGestionService {
     const headers = new HttpHeaders().set('X-Notificador', 'false');
     return this.httpClient.get<Resultado>(`${this.baseURL}/activo`, {headers : headers });
   }
+  addPeriodo(parametro: PeriodoGestion): Observable<Resultado> {
+    return this.httpClient.post<Resultado>(`${this.baseURL}`, parametro );
+  }
   updatePeriodo(parametro: PeriodoGestion): Observable<Resultado> {
     // const headers = new HttpHeaders().set('X-Notificador', 'false');
     return this.httpClient.patch<Resultado>(`${this.baseURL}`, parametro );

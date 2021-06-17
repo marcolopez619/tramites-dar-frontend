@@ -103,7 +103,8 @@ export const baseLang = {
             'lbl-busqueda' : 'Búsqueda',
             'lbl-cerrar' : 'Cerrar',
             'lbl-ver-seguimiento' : 'Ver seguimiento',
-            'tit-bandeja-tramites-atendidos' : 'Trámites atendidos'
+            'tit-bandeja-tramites-atendidos' : 'Trámites atendidos',
+            'tit-nueva-gestion' : 'Añadir nuevo periodo y gestion'
         },
         'en': {
             'lang-error': 'Lang not found',

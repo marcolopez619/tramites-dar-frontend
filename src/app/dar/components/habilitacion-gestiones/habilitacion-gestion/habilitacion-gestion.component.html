@@ -18,11 +18,22 @@
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
 
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
-              <mat-form-field fxFlex>
+              <mat-form-field fxFlex="50">
+                <mat-label>{{langService.getLang(eModulo.Tramite, 'lbl-periodo' )}} : </mat-label>
+                <mat-select formControlName="periodo" placeholder="Seleccione periodo">
+                  <mat-option *ngFor="let periodo of listaPeriodosDisponibles" [value]="periodo">
+                    {{periodo}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <strong>&nbsp;/&nbsp;</strong>
+
+              <mat-form-field fxFlex="50">
                 <mat-label>{{langService.getLang(eModulo.Tramite, 'lbl-gestion' )}} : </mat-label>
-                <mat-select formControlName="idPeriodoGestion" placeholder="Seleccione gestión">
-                  <mat-option *ngFor="let gestion of listaGestiones" [value]="gestion.idPeriodoGestion">
-                    {{gestion.periodo}} / {{gestion.gestion}}
+                <mat-select formControlName="gestion" placeholder="Seleccione gestión">
+                  <mat-option *ngFor="let gestion of listaGestionesDisponibles" [value]="gestion">
+                    {{gestion}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
