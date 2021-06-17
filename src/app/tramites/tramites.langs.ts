@@ -1,6 +1,6 @@
 export const tramiteLang = {
   'es' : {
-    'tit-lista-habilitacion-tramites' : 'Habilitacion de trámites',
+    'tit-lista-habilitacion-tramites' : 'Habilitacion de trámites (Calendario Académico)',
     'tit-lista-edicion-gestiones' : 'Edición de gestiones',
     'tit-lista-habilitacion-tramites-por-excepcion' : 'Habilitacion de trámites por excepcion',
     'tit-nueva-habilitacion' : 'Nueva habilitación',
