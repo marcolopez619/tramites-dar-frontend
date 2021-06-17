@@ -123,19 +123,10 @@
 
       <div fxLayout="column" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
 
+        <sh-periodo-gestion-actual></sh-periodo-gestion-actual>
 
         <h3><u>Datos académicos del estudiante</u></h3>
           <table>
-           <!--  <tr>
-              <td style="text-align: end;"><span><strong>Nombre y Apellidos : </strong></span></td>
-              <td><span>&nbsp;{{this.datoEstudiante.nombreCompleto}}</span></td>
-            </tr>
-
-            <tr>
-              <td style="text-align: end;"><span><strong>Carrera : </strong></span></td>
-              <td><span>&nbsp;{{this.datoEstudiante.carrera}}</span></td>
-            </tr> -->
-
             <tr>
               <td style="text-align: end;"><span><strong>Año ingreso : </strong></span></td>
               <td><span>&nbsp;{{this.datoEstudiante.anioIngreso}}</span></td>
@@ -177,21 +168,6 @@
                <td><span>&nbsp;{{this.motivoSelected?.descripcionMotivo}}</span></td>
              </tr>
           </table>
-
-
-
-       <!--  <div fxLayout="column" fxLayoutAlign="space-around center" >
-          <h3><u>Datos universidad destino</u></h3>
-
-          <div fxLayout="row" fxLayoutAlign="start center" >
-            <mat-label><strong>Universidad : </strong>&nbsp; {{this.universidadSelected?.nombre}}</mat-label>
-            &nbsp;&nbsp;&nbsp;
-            <mat-label><strong>Carrera :</strong>&nbsp; {{this.carreraSelected?.carrera}}</mat-label>
-            &nbsp;&nbsp;&nbsp;
-            <mat-label><strong>Motivo :</strong>&nbsp; {{this.motivoSelected?.descripcionMotivo}}</mat-label>
-
-          </div>
-        </div> -->
 
       </div>
 

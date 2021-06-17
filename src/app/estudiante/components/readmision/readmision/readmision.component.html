@@ -89,7 +89,7 @@
     <mat-step>
       <ng-template matStepLabel>{{langService.getLang(eModulo.Cites, 'lbl-confirmar-creacion-cite' )}}</ng-template>
 
-      <div fxLayout="column" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFlexFill>
+      <div fxLayout="column" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="0px" fxFlexFill>
 
         <div fxLayout="row" fxLayoutAlign="center center">
           <div fxLayout="row" fxLayoutAlign="center center" fxFlex="15" >
@@ -97,6 +97,8 @@
           </div>
           <span style="font-size: 20px; text-align: center">{{langService.getLang(eModulo.Estudiante, 'lbl-confir-sol-nuevo-tramite-readmision' )}}</span>
         </div>
+
+        <sh-periodo-gestion-actual></sh-periodo-gestion-actual>
 
         <table>
           <tr>
