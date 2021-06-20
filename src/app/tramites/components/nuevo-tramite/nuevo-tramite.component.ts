@@ -30,7 +30,7 @@ export class NuevoTramiteComponent extends BaseComponent implements OnInit {
   periodoActivo: PeriodoGestion;
   fechaAux = new Date();
   fechaLimiteSuperior = new Date( this.fechaAux.getFullYear(), this.fechaAux.getMonth() + 5 );
-  fechaLimiteInferior = new Date( this.fechaLimiteSuperior.getFullYear() - 5, 0, 1 );
+  fechaLimiteInferior = new Date();
 
   elementBandejaSelected: BandejaTramite;
 
