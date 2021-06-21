@@ -38,4 +38,5 @@ export interface ImpresionFormularioTraspaso {
   materiasReprobadas: number;
   fechaSolicitud: Date;
   motivo: string;
+  costoTramite: number;
 }

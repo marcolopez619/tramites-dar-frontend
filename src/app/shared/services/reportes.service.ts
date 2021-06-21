@@ -913,8 +913,8 @@ export class ReportesService {
         {
           // Columnas para la cabecera
           columns: [
-            this.getColumnsSinSaltosDeLinea( 'FORMULARIO DE TRASPASO DE UNIVERSIDAD', pDataImpresion ),
-            this.getQRCode( `Traspaso de universidad de : UATF, a : ${pDataImpresion.universidaddestino}, carrera : ${pDataImpresion.carreradestino}, en fecha : ${pDataImpresion.fechaSolicitud}` )
+            this.getQRCode( `Traspaso de universidad de : UATF, a : ${pDataImpresion.universidaddestino}, carrera : ${pDataImpresion.carreradestino}, en fecha : ${pDataImpresion.fechaSolicitud}` ),
+            this.getColumnsSinSaltosDeLinea( 'FORMULARIO DE TRASPASO DE UNIVERSIDAD', pDataImpresion )
           ]
         },
         {
@@ -926,7 +926,7 @@ export class ReportesService {
               aligment : 'left'
             },
             {
-              text : `Yo ${pDataImpresion.nombrecompleto}, con número de CI: ${pDataImpresion.ci} y número de RU : ${pDataImpresion.ru}; respetuosamente SOLICITO TRASPASO a la : ${pDataImpresion.universidaddestino}, a la carrera de : ${pDataImpresion.carreradestino}, para el período ; ${pDataImpresion.periodo}; para ello, cuento con la siguiente información :\n `,
+              text : `Yo ${pDataImpresion.nombrecompleto}, con número de CI: ${pDataImpresion.ci} y número de RU : ${pDataImpresion.ru}; respetuosamente SOLICITO TRASPASO a la : ${pDataImpresion.universidaddestino}, a la carrera de : ${pDataImpresion.carreradestino}, para la gestión: ${pDataImpresion.periodo}; para ello, cuento con la siguiente información :\n `,
               style : 'cuerpoTexto'
             },
             {
