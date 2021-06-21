@@ -454,7 +454,7 @@ export class ReportesService {
               aligment : 'left'
             },
             {
-              text : `Yo ${pDataImpresion.nombrecompleto}, con número de CI: ${pDataImpresion.ci} y número de RU : ${pDataImpresion.ru}; respetuosamente SOLICITO CAMBIO DE CARRERA de la carrera : ${pDataImpresion.carreraOrigen} a la carrera de : ${pDataImpresion.carreradestino}, para la gestión ${pDataImpresion.periodo}, teniendo hasta el momento los siguientes datos :\n `,
+              text : `Yo ${pDataImpresion.nombrecompleto}, con número de CI: ${pDataImpresion.ci} y número de RU : ${pDataImpresion.ru}; respetuosamente SOLICITO CAMBIO DE CARRERA de la carrera : ${pDataImpresion.carreraOrigen} a la carrera de : ${pDataImpresion.carreradestino}, para el periodo ${pDataImpresion.periodo}, teniendo hasta el momento los siguientes datos :\n `,
               style : 'cuerpoTexto'
             },
             {
@@ -926,7 +926,7 @@ export class ReportesService {
               aligment : 'left'
             },
             {
-              text : `Yo ${pDataImpresion.nombrecompleto}, con número de CI: ${pDataImpresion.ci} y número de RU : ${pDataImpresion.ru}; respetuosamente SOLICITO TRASPASO a la : ${pDataImpresion.universidaddestino}, a la carrera de : ${pDataImpresion.carreradestino}, para la gestión: ${pDataImpresion.periodo}; para ello, cuento con la siguiente información :\n `,
+              text : `Yo ${pDataImpresion.nombrecompleto}, con número de CI: ${pDataImpresion.ci} y número de RU : ${pDataImpresion.ru}; respetuosamente SOLICITO TRASPASO a la : ${pDataImpresion.universidaddestino}, a la carrera de : ${pDataImpresion.carreradestino}, para el periodo: ${pDataImpresion.periodo}; para ello, cuento con la siguiente información :\n `,
               style : 'cuerpoTexto'
             },
             {
