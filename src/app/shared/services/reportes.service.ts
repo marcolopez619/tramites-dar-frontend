@@ -287,8 +287,8 @@ export class ReportesService {
         {
           // Columnas para la cabecera
           columns: [
-            this.getColumnsCabecera( 'FORMULARIO DE READMISION DE ESTUDIOS' ),
-            this.getQRCode( `Readmision de estudios de : ${pDataImpresion.nombrecompleto}, en fecha : ${pDataImpresion.fechaSolicitud}` )
+            this.getQRCode( `Readmision de estudios de : ${pDataImpresion.nombrecompleto}, en fecha : ${pDataImpresion.fechaSolicitud}` ),
+            this.getColumnsCabecera( 'FORMULARIO DE READMISION DE ESTUDIOS', pDataImpresion )
           ]
         },
         {
@@ -441,8 +441,8 @@ export class ReportesService {
         {
           // Columnas para la cabecera
           columns: [
-            this.getColumnsSinSaltosDeLinea( 'FORMULARIO DE CAMBIO DE CARRERA' ),
-            this.getQRCode( `Cambio de carrera de : ${pDataImpresion.nombrecompleto}, en fecha : ${pDataImpresion.fechaSolicitud}` )
+            this.getQRCode( `Cambio de carrera de : ${pDataImpresion.nombrecompleto}, en fecha : ${pDataImpresion.fechaSolicitud}` ),
+            this.getColumnsSinSaltosDeLinea( 'FORMULARIO DE CAMBIO DE CARRERA', pDataImpresion )
           ]
         },
         {
@@ -454,7 +454,7 @@ export class ReportesService {
               aligment : 'left'
             },
             {
-              text : `Yo ${pDataImpresion.nombrecompleto}, con número de CI: ${pDataImpresion.ci} y número de RU : ${pDataImpresion.ru}; respetuosamente SOLICITO CAMBIO DE CARRERA de la carrera : ${pDataImpresion.carreraOrigen} a la carrera de : ${pDataImpresion.carreradestino}, teniendo hasta el momento los siguientes datos :\n `,
+              text : `Yo ${pDataImpresion.nombrecompleto}, con número de CI: ${pDataImpresion.ci} y número de RU : ${pDataImpresion.ru}; respetuosamente SOLICITO CAMBIO DE CARRERA de la carrera : ${pDataImpresion.carreraOrigen} a la carrera de : ${pDataImpresion.carreradestino}, para la gestión ${pDataImpresion.periodo}, teniendo hasta el momento los siguientes datos :\n `,
               style : 'cuerpoTexto'
             },
             {
@@ -547,7 +547,7 @@ export class ReportesService {
                 style : 'cuerpoTexto'
               },
               {
-                text: '\n\n\n'
+                text: '\n\n'
               },
              {
               columns : [
@@ -677,7 +677,7 @@ export class ReportesService {
         {
           // Columnas para la cabecera
           columns: [
-            this.getColumnsSinSaltosDeLinea( 'FORMULARIO DE TRANSFERENCIA DE CARRERA' ),
+            this.getColumnsSinSaltosDeLinea( 'FORMULARIO DE TRANSFERENCIA DE CARRERA', pDataImpresion ),
             this.getQRCode( `Transferencia de carrera de : ${pDataImpresion.nombrecompleto}, en fecha : ${pDataImpresion.fechaSolicitud}` )
           ]
         },
@@ -913,7 +913,7 @@ export class ReportesService {
         {
           // Columnas para la cabecera
           columns: [
-            this.getColumnsSinSaltosDeLinea( 'FORMULARIO DE TRASPASO DE UNIVERSIDAD' ),
+            this.getColumnsSinSaltosDeLinea( 'FORMULARIO DE TRASPASO DE UNIVERSIDAD', pDataImpresion ),
             this.getQRCode( `Traspaso de universidad de : UATF, a : ${pDataImpresion.universidaddestino}, carrera : ${pDataImpresion.carreradestino}, en fecha : ${pDataImpresion.fechaSolicitud}` )
           ]
         },
@@ -1168,18 +1168,18 @@ export class ReportesService {
           text: '\n'
         },
         {
-          text : `N° ${data.tramite} : **${data.idAnulacion ?? data.idSuspencion ?? data.idReadmision ?? data.idCambioCarrera ?? data.idTransferencia ?? data.idTraspaso}** \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t  COSTO : **${data.costoTramite} BS**`,
+          text : `Trámite N°: **${data.idAnulacion ?? data.idSuspencion ?? data.idReadmision ?? data.idCambioCarrera ?? data.idTransferencia ?? data.idTraspaso}** \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t  COSTO : **${data.costoTramite} BS**`,
           style : 'codigoTramite'
         },
 
         {
-          text: '\n\n\n\n\n\n\n\n'
+          text: '\n\n\n\n\n'
         }
       ]
     ];
   }
 
-  private getColumnsSinSaltosDeLinea(pTituloTramite: string): any {
+  private getColumnsSinSaltosDeLinea(pTituloTramite: string, data: any): any {
     return [
       [
         {
@@ -1195,6 +1195,13 @@ export class ReportesService {
         {
           text : pTituloTramite,
           style: 'subtitulo'
+        },
+        {
+          text: '\n'
+        },
+        {
+          text : `Trámite N°: **${data.idCambioCarrera ?? data.idTransferencia ?? data.idTraspaso}** \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t  COSTO : **${data.costoTramite} BS**`,
+          style : 'codigoTramite'
         },
         {
           text : '\n'
@@ -1317,6 +1324,10 @@ export class ReportesService {
         style: 'columnTitle'
       },
       {
+        text: 'PERIODO : ',
+        style: 'columnTitle'
+      },
+      {
         text: 'MOTIVO : ',
         style: 'columnTitle'
       }
@@ -1424,6 +1435,10 @@ export class ReportesService {
       },
       {
         text: pDataImpresion.fechaSolicitud,
+        style: 'columnValue'
+      },
+      {
+        text: pDataImpresion.periodo,
         style: 'columnValue'
       },
       {

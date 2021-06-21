@@ -23,10 +23,13 @@ export interface ImpresionFormularioCambioCarrera {
   carreraOrigen: string;
   carreradestino: string;
   cantidadtraspasosrealizados: number;
+  idCambioCarrera: number;
   fechaSolicitud: string;
   motivo: string;
   materiasaprobadas: number;
   materiasreprobadas: number;
   fechaProceso: Date;
   observaciones: string;
+  costoTramite: number,
+  periodo: string;
 }

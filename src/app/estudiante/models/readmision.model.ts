@@ -18,6 +18,7 @@ export interface ImpresionFormularioReadmision {
   nombrecompleto: string;
   carrera: string;
   facultad: string;
+  costoTramite: number;
   periodo: string;
   idReadmision: number;
   fechaSolicitud: Date;
