@@ -107,7 +107,7 @@ export class BandejaSuspencionComponent extends BaseComponent  implements OnInit
   async imprimirFormulario(element: BandejaSuspencion) {
     this.datosEstudiante =  ( await this.estudianteService.getInformacionEstudiante(element.idEstudiante).toPromise()).data;
     this.datosEstudiante.fechaSolicitud = element.fechaSolicitud;
-    this.reportesService.printSuspencionEstudiante(this.datosEstudiante, element.descripcion, element.tiempoSolicitado);
+    this.reportesService.printSuspencionEstudiante(this.datosEstudiante, element);
   }
 
   onVerSeguimiento(element: BandejaSuspencion) : void{

@@ -86,6 +86,8 @@ export interface BandejaSuspencion {
   observaciones?: string;
   idTramite?: number;
   tramite?: string;
+  costoTramite?: number;
+  periodo?: string;
   idEstado?: number;
   estado?: string;
   idEntidad?: number;

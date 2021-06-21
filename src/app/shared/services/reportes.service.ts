@@ -6,6 +6,7 @@ import { ImpresionFormularioCambioCarrera } from '../../estudiante/models/cambio
 import { ImpresionFormularioReadmision } from '../../estudiante/models/readmision.model';
 import { ImpresionFormularioTransferenciaCarrera } from '../../estudiante/models/transferencia.model';
 import { ImpresionFormularioTraspaso } from '../../estudiante/models/traspaso.model';
+import { BandejaSuspencion } from '../../tramites/models/tramites.models';
 import { EstudianteModel } from '../models/estudiante.model';
 import { Imagen } from '../models/report.model';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -145,7 +146,7 @@ export class ReportesService {
     pdfMake.createPdf( docDefinition ).open();
   }
 
-  printSuspencionEstudiante(pEstudianteData: EstudianteModel, pMotivo: string, pTiempo: number): void {
+  printSuspencionEstudiante(pEstudianteData: EstudianteModel, pDataSuspencion: BandejaSuspencion ): void {
     const docDefinition = {
       pageSize: 'LETTER',
       background: [
@@ -156,15 +157,15 @@ export class ReportesService {
         {
           // Columnas para la cabecera
           columns: [
-            this.getColumnsCabecera( 'FORMULARIO DE SUSPENCION DE ESTUDIOS' ),
-            this.getQRCode( `Suspención de : ${pEstudianteData.nombreCompleto}, en fecha : ${pEstudianteData.fechaSolicitud}` )
+            this.getQRCode( `Suspención de : ${pEstudianteData.nombreCompleto}, en fecha : ${pEstudianteData.fechaSolicitud}` ),
+            this.getColumnsCabecera( 'FORMULARIO DE SUSPENCION DE ESTUDIOS', pDataSuspencion )
           ]
         },
         {
           // Columnas para datos del estudiante
           columns: [
             this.getColumnsDatosSuspencionEstudiante(),
-            this.getColumnsValuesDatosSuspencionEstudiante( pEstudianteData , pMotivo, pTiempo)
+            this.getColumnsValuesDatosSuspencionEstudiante( pEstudianteData , pDataSuspencion)
           ]
         },
 
@@ -173,7 +174,7 @@ export class ReportesService {
           columns: [
             [
               {
-                text: '\n\n\n\n'
+                text: '\n\n'
               },
              /*  {
                 text: '*** NOTA ACLARATORIA *** \n\n',
@@ -253,6 +254,16 @@ export class ReportesService {
           bold: false,
           alignment: 'justify',
           fontSize: 10
+        },
+        codigoTramite: {
+          bold: false,
+          alignment: 'left',
+          fontSize: 12
+        },
+        costoTramite: {
+          bold: false,
+          alignment: 'right',
+          fontSize: 15
         },
         firma: {
           bold: true,
@@ -397,6 +408,16 @@ export class ReportesService {
           bold: false,
           alignment: 'justify',
           fontSize: 10
+        },
+        codigoTramite: {
+          bold: false,
+          alignment: 'left',
+          fontSize: 12
+        },
+        costoTramite: {
+          bold: false,
+          alignment: 'right',
+          fontSize: 15
         },
         firma: {
           bold: true,
@@ -624,6 +645,16 @@ export class ReportesService {
           alignment: 'justify',
           fontSize: 10
         },
+        codigoTramite: {
+          bold: false,
+          alignment: 'left',
+          fontSize: 12
+        },
+        costoTramite: {
+          bold: false,
+          alignment: 'right',
+          fontSize: 15
+        },
         firma: {
           bold: true,
           alignment: 'center',
@@ -850,6 +881,16 @@ export class ReportesService {
           alignment: 'justify',
           fontSize: 10
         },
+        codigoTramite: {
+          bold: false,
+          alignment: 'left',
+          fontSize: 12
+        },
+        costoTramite: {
+          bold: false,
+          alignment: 'right',
+          fontSize: 15
+        },
         firma: {
           bold: true,
           alignment: 'center',
@@ -1052,6 +1093,16 @@ export class ReportesService {
           alignment: 'justify',
           fontSize: 10
         },
+        codigoTramite: {
+          bold: false,
+          alignment: 'left',
+          fontSize: 12
+        },
+        costoTramite: {
+          bold: false,
+          alignment: 'right',
+          fontSize: 15
+        },
         firma: {
           bold: true,
           alignment: 'center',
@@ -1096,7 +1147,7 @@ export class ReportesService {
     };
   }
 
-  private getColumnsCabecera(pTituloTramite: string, datoAnulacion?: BandejaAnulacion): any {
+  private getColumnsCabecera(pTituloTramite: string, data?: any): any {
     return [
       [
         {
@@ -1117,7 +1168,7 @@ export class ReportesService {
           text: '\n'
         },
         {
-          text : `N° ${datoAnulacion.tramite} : **${datoAnulacion.idAnulacion}** \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t  COSTO : **${datoAnulacion.costoTramite} BS**`,
+          text : `N° ${data.tramite} : **${data.idAnulacion ?? data.idSuspencion ?? data.idReadmision ?? data.idCambioCarrera ?? data.idTransferencia ?? data.idTraspaso}** \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t  COSTO : **${data.costoTramite} BS**`,
           style : 'codigoTramite'
         },
 
@@ -1229,6 +1280,10 @@ export class ReportesService {
         style: 'columnTitle'
       },
       {
+        text: 'PERIODO : ',
+        style: 'columnTitle'
+      },
+      {
         text: 'MOTIVO : ',
         style: 'columnTitle'
       }
@@ -1304,7 +1359,7 @@ export class ReportesService {
       }
     ];
   }
-  private getColumnsValuesDatosSuspencionEstudiante( pEstudianteData: EstudianteModel, pMotivo: string, pTiempo: number ): any {
+  private getColumnsValuesDatosSuspencionEstudiante( pEstudianteData: EstudianteModel, pDataSuspencion: BandejaSuspencion ): any {
     return [
       {
         text: pEstudianteData.facultad,
@@ -1331,11 +1386,15 @@ export class ReportesService {
         style: 'columnValue'
       },
       {
-        text: `${pTiempo} GESTION(ES)`,
+        text: `${pDataSuspencion.tiempoSolicitado} GESTION(ES)`,
         style: 'columnValue'
       },
       {
-        text: pMotivo ?? '------ SIN MOTIVO -------',
+        text: `${pDataSuspencion.periodo}`,
+        style: 'columnValue'
+      },
+      {
+        text: `${pDataSuspencion.descripcion}` ?? '------ SIN MOTIVO -------',
         style: 'columnValue'
       }
     ];
