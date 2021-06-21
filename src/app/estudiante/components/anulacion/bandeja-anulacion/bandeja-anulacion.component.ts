@@ -131,7 +131,7 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
   async imprimirFormulario(element: BandejaAnulacion) {
     this.datosEstudiante =  ( await this.estudianteService.getInformacionEstudiante(element.idEstudiante).toPromise()).data;
     this.datosEstudiante.fechaSolicitud = element.fechaSolicitud;
-    this.reportesService.printAnulacionEstudiante(this.datosEstudiante, element.motivo);
+    this.reportesService.printAnulacionEstudiante(this.datosEstudiante, element);
   }
 
   onVerSeguimiento(element: BandejaAnulacion) : void{

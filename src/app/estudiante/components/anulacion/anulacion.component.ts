@@ -12,7 +12,7 @@ import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
 import { ReportesService } from '../../../shared/services/reportes.service';
 import { EstudianteService } from '../../estudiante.service';
-import { AnulacionInsert } from '../../models/anulacion.models';
+import { AnulacionInsert, BandejaAnulacion } from '../../models/anulacion.models';
 import { AnulacionService } from './anulacion.service';
 
 @Component({
@@ -44,7 +44,7 @@ export class AnulacionComponent extends BaseComponent  implements OnInit {
     this.getInformacionEstudiante(this.data.idEstudiante);
 
     this.formAnulacion = this.formBuilder.group({
-      motivo: [ undefined, Validators.compose([ Validators.required ])]
+      motivo: [ undefined, Validators.compose([ Validators.required, Validators.maxLength( 100 ) ])]
     });
   }
 
@@ -68,8 +68,13 @@ export class AnulacionComponent extends BaseComponent  implements OnInit {
 
     // Inserta la nueva anulacion
     this.anulacionService.insertAnulacion( anulacionInsert ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
-      this.datosEstudiante.fechaSolicitud = resp.data.fecha_solicitud;
-      this.reportesService.printAnulacionEstudiante(this.datosEstudiante, anulacionInsert.motivo);
+      /* this.datosEstudiante.fechaSolicitud = resp.data.fecha_solicitud;
+
+      const BandejaAnulacion : BandejaAnulacion = {
+        motivo : anulacionInsert.motivo
+      };
+
+      this.reportesService.printAnulacionEstudiante(this.datosEstudiante, BandejaAnulacion ); */
       this.onClose( resp.data );
     });
 

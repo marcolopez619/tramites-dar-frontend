@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { BandejaAnulacion } from '../../estudiante/models/anulacion.models';
 import { ImpresionFormularioCambioCarrera } from '../../estudiante/models/cambio_carrera.model';
 import { ImpresionFormularioReadmision } from '../../estudiante/models/readmision.model';
 import { ImpresionFormularioTransferenciaCarrera } from '../../estudiante/models/transferencia.model';
@@ -18,7 +19,7 @@ export class ReportesService {
     //...
   }
 
-  printAnulacionEstudiante(pEstudianteData: EstudianteModel, pMotivo?: string): void {
+  printAnulacionEstudiante(pEstudianteData: EstudianteModel, datoAnulacion?: BandejaAnulacion): void {
     const docDefinition = {
       pageSize: 'LETTER',
       background: [
@@ -29,24 +30,25 @@ export class ReportesService {
         {
           // Columnas para la cabecera
           columns: [
-            this.getColumnsCabecera( 'FORMULARIO DE ANULACION DE CARRERA' ),
-            this.getQRCode( `Anulación de carrera de : ${pEstudianteData.nombreCompleto}, en fecha : ${pEstudianteData.fechaSolicitud}` )
+            this.getQRCode( `Anulación de carrera de : ${pEstudianteData.nombreCompleto}, en fecha : ${pEstudianteData.fechaSolicitud}` ),
+            this.getColumnsCabecera( 'FORMULARIO DE ANULACION DE CARRERA', datoAnulacion)
           ]
         },
         {
           // Columnas para datos del estudiante
           columns: [
             this.getColumnsDatoEstudiante(),
-            this.getColumnsValuesDatoEstudiante( pEstudianteData , pMotivo)
+            this.getColumnsValuesDatoEstudiante( pEstudianteData , datoAnulacion)
           ]
         },
+
 
         {
           // Datos aclaratorios
           columns: [
             [
               {
-                text: '\n\n\n\n\n\n\n\n\n'
+                text: '\n\n\n\n\n'
               },
               {
                 text: '*** NOTA ACLARATORIA *** \n\n',
@@ -121,6 +123,16 @@ export class ReportesService {
           bold: false,
           alignment: 'justify',
           fontSize: 10
+        },
+        codigoTramite: {
+          bold: false,
+          alignment: 'left',
+          fontSize: 12
+        },
+        costoTramite: {
+          bold: false,
+          alignment: 'right',
+          fontSize: 15
         },
         firma: {
           bold: true,
@@ -1084,7 +1096,7 @@ export class ReportesService {
     };
   }
 
-  private getColumnsCabecera(pTituloTramite: string): any {
+  private getColumnsCabecera(pTituloTramite: string, datoAnulacion?: BandejaAnulacion): any {
     return [
       [
         {
@@ -1101,6 +1113,14 @@ export class ReportesService {
           text : pTituloTramite,
           style: 'subtitulo'
         },
+        {
+          text: '\n'
+        },
+        {
+          text : `N° ${datoAnulacion.tramite} : **${datoAnulacion.idAnulacion}** \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t  COSTO : **${datoAnulacion.costoTramite} BS**`,
+          style : 'codigoTramite'
+        },
+
         {
           text: '\n\n\n\n\n\n\n\n'
         }
@@ -1165,6 +1185,10 @@ export class ReportesService {
       },
       {
         text: 'FECHA SOLICITUD : ',
+        style: 'columnTitle'
+      },
+      {
+        text: 'PERIODO : ',
         style: 'columnTitle'
       },
       {
@@ -1244,7 +1268,7 @@ export class ReportesService {
     ];
   }
 
-  private getColumnsValuesDatoEstudiante( pEstudianteData: EstudianteModel, pMotivo?: string ): any {
+  private getColumnsValuesDatoEstudiante( pEstudianteData: EstudianteModel, pDataAnulacion?: BandejaAnulacion ): any {
     return [
       {
         text: pEstudianteData.facultad,
@@ -1271,7 +1295,11 @@ export class ReportesService {
         style: 'columnValue'
       },
       {
-        text: pMotivo ?? '------ SIN MOTIVO -------',
+        text: pDataAnulacion.periodo,
+        style: 'columnValue'
+      },
+      {
+        text: pDataAnulacion.motivo ?? '------ SIN MOTIVO -------',
         style: 'columnValue'
       }
     ];
