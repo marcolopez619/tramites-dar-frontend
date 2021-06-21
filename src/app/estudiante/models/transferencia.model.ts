@@ -12,4 +12,5 @@ export interface TransferenciaInsert {
 }
 
 export interface ImpresionFormularioTransferenciaCarrera extends ImpresionFormularioCambioCarrera {
+  idTransferencia: number;
 }

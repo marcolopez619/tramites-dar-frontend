@@ -677,8 +677,8 @@ export class ReportesService {
         {
           // Columnas para la cabecera
           columns: [
-            this.getColumnsSinSaltosDeLinea( 'FORMULARIO DE TRANSFERENCIA DE CARRERA', pDataImpresion ),
-            this.getQRCode( `Transferencia de carrera de : ${pDataImpresion.nombrecompleto}, en fecha : ${pDataImpresion.fechaSolicitud}` )
+            this.getQRCode( `Transferencia de carrera de : ${pDataImpresion.nombrecompleto}, en fecha : ${pDataImpresion.fechaSolicitud}` ),
+            this.getColumnsSinSaltosDeLinea( 'FORMULARIO DE TRANSFERENCIA DE CARRERA', pDataImpresion )
           ]
         },
         {
@@ -690,7 +690,7 @@ export class ReportesService {
               aligment : 'left'
             },
             {
-              text : `Yo ${pDataImpresion.nombrecompleto}, con número de CI: ${pDataImpresion.ci} y número de RU : ${pDataImpresion.ru}; respetuosamente SOLICITO TRANSFERENCIA DE CARRERA de: ${pDataImpresion.carreraOrigen} a la carrera de : ${pDataImpresion.carreradestino}, teniendo hasta el momento los siguientes datos :\n `,
+              text : `Yo ${pDataImpresion.nombrecompleto}, con número de CI: ${pDataImpresion.ci} y número de RU : ${pDataImpresion.ru}; respetuosamente SOLICITO TRANSFERENCIA DE CARRERA de: ${pDataImpresion.carreraOrigen} a la carrera de : ${pDataImpresion.carreradestino}, para la gestion : ${pDataImpresion.periodo}, teniendo hasta el momento los siguientes datos :\n `,
               style : 'cuerpoTexto'
             },
             {
