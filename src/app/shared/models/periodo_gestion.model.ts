@@ -5,3 +5,10 @@ export interface PeriodoGestion {
   estado?: Number;
   fechaModificacion?: Date;
 }
+
+export interface CalculoGestion{
+  cantidadPeriodos: number;
+  cantidadGestiones: number;
+  gestionInicial: string;
+  gestionFinal: string;
+}

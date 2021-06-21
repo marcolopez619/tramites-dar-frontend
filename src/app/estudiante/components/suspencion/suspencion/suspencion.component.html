@@ -36,13 +36,23 @@
         <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
 
           <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFill>
-            <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
-              <mat-form-field fxFlex>
-                <input type="number" style="text-align: center;" min="1" max="50" minlength="1" maxlength="2" autocomplete="off" matInput required
-                  formControlName="tiempoSuspencion">
-                  <mat-label>&nbsp; {{langService.getLang(eModulo.Estudiante,'lbl-tiempo-solicitado')}} </mat-label>
+            <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxFlex="49">
+              <mat-form-field fxFlex="50">
+                <input type="number" style="text-align: center;" min="1" max="6" autocomplete="off" matInput required formControlName="tiempoSuspencion">
+                  <mat-label>&nbsp; {{langService.getLang(eModulo.Estudiante,'lbl-cant-gestiones')}} </mat-label>
                 <mat-error *ngIf="formSuspencion.controls['tiempoSuspencion'].invalid">{{langService.getLang(eModulo.Estudiante,'lbl-tiempo-suspencion-solicitado-error') }}</mat-error>
               </mat-form-field>
+
+              <div fxFlex="60">
+                <mat-label class="info-equivalencia-periodo">
+                  <div *ngIf="this.calculoGestionSuspencion.cantidadGestiones == 0">
+                    &nbsp; Equivalente a:<strong>&nbsp;{{formSuspencion.get('tiempoSuspencion').value * 2}} Periodos </strong>
+                  </div>
+                  <div *ngIf="this.calculoGestionSuspencion.cantidadGestiones > 0">
+                    &nbsp; Equivalente a:<strong>&nbsp;{{this.calculoGestionSuspencion.cantidadPeriodos}} Periodos </strong>
+                  </div>
+                </mat-label>
+              </div>
             </div>
 
             <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
@@ -102,8 +112,24 @@
           </tr>
 
           <tr>
-            <td style="text-align: end;"><span><strong>{{langService.getLang(eModulo.Estudiante,'lbl-tiempo-solicitado')}} : </strong></span></td>
-            <td><span>&nbsp;{{this.formSuspencion.controls['tiempoSuspencion'].value}}</span></td>
+            <td style="text-align: end;"><span><strong>Tiempo Solicitado : </strong></span></td>
+            <td>
+              <mat-label>
+                Desde : {{this.calculoGestionSuspencion.gestionInicial }}
+                &nbsp;
+                hasta : {{ (this.calculoGestionSuspencion.cantidadGestiones == 0) ? '1 / ' + ( this.calculoGestionManual + formSuspencion.get('tiempoSuspencion').value - 1 ) : this.calculoGestionSuspencion.gestionFinal }} ;
+               </mat-label>
+
+              <span>
+
+              <mat-label class="info-equivalencia-periodo">
+                &nbsp; Equivalente a:
+                &nbsp;{{this.formSuspencion.controls['tiempoSuspencion'].value}} &nbsp; Gestion(es) &nbsp; ó
+                &nbsp;{{(this.calculoGestionSuspencion.cantidadGestiones == 0) ? (formSuspencion.get('tiempoSuspencion').value * 2) : this.calculoGestionSuspencion.cantidadPeriodos }}
+                &nbsp; Periodos
+               </mat-label>
+              </span>
+            </td>
           </tr>
 
           <tr>

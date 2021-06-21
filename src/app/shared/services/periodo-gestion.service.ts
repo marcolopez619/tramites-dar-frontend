@@ -23,6 +23,12 @@ export class PeriodoGestionService {
     const headers = new HttpHeaders().set('X-Notificador', 'false');
     return this.httpClient.get<Resultado>(`${this.baseURL}/activo`, {headers : headers });
   }
+
+  getCalculoCompraMatriculaToGestionActual(pIdEstudiante: number): Observable<Resultado> {
+    const headers = new HttpHeaders().set('X-Notificador', 'false');
+    return this.httpClient.get<Resultado>(`${this.baseURL}/calculo/${pIdEstudiante}`, {headers : headers });
+  }
+
   addPeriodo(parametro: PeriodoGestion): Observable<Resultado> {
     return this.httpClient.post<Resultado>(`${this.baseURL}`, parametro );
   }

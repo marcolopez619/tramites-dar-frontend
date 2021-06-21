@@ -62,6 +62,8 @@ export const estudianteLang = {
     'msg-anulacion-inhabilitada' : 'NO PUEDE REALIZAR UNA ANULACIÓN PARA LA MISMA CARRERA EN LA QUE SE ENCUENTRA MAS DE DOS VECES',
 
     'lbl-finalizar-tramite' : 'SI, DESEO FINALIZAR',
-    'msg-impresion-anulacion-carrera' : '¿ Seguro de imprimir el formulario de anulación de carrera ?'
+    'msg-impresion-anulacion-carrera' : '¿ Seguro de imprimir el formulario de anulación de carrera ?',
+
+    'lbl-cant-gestiones' : 'Cantidad gestiones'
   }
 };
