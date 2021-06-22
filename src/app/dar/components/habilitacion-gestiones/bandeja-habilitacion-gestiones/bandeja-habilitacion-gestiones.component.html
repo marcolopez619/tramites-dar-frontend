@@ -39,7 +39,14 @@
 
       <ng-container matColumnDef="estado" >
         <mat-header-cell *matHeaderCellDef fxFlex="30"  mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-estado') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="30" > {{element.estado | estadoToLiteral}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="30" >
+          {{element.estado | estadoToLiteral}}
+
+          <div *ngIf="element.estado">
+            &nbsp;&nbsp; <mat-icon style="color: greenyellow;">check_circle</mat-icon>
+          </div>
+
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="acciones">
