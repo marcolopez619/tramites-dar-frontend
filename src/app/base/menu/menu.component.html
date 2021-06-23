@@ -62,7 +62,7 @@
                 </mat-card-title>
             </mat-card-header>
             <mat-card-content fxLayoutAlign="center center">
-                    <mat-icon class="mat-24" color="primary" *ngIf="menu.Imagen != null; else noImage">{{ menu.Imagen }}</mat-icon>
+                    <mat-icon class="mat-24" color="primary" *ngIf="menu.icono != null; else noImage">{{ menu.icono }}</mat-icon>
                     <ng-template #noImage>
                         <mat-icon class="mat-24" color="primary" >extension</mat-icon>
                     </ng-template>
