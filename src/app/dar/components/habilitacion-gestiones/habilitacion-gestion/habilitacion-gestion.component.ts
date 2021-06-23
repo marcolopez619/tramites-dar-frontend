@@ -75,7 +75,7 @@ export class HabilitacionGestionComponent extends BaseComponent implements OnIni
 
   private getGestionesDisponibles(): void {
     const date = new Date();
-    const anioActual = date.getFullYear();
+    const anioActual = date.getFullYear() - 3;
 
     for (let gestion =  anioActual; gestion < anioActual + 5; gestion++) {
       this.listaGestionesDisponibles.push( gestion );
