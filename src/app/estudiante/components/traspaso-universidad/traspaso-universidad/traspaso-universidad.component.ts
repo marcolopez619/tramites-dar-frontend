@@ -59,8 +59,8 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
     this.formTraspaso = this.formBuilder.group({
       idUnivDestino      : [undefined, Validators.compose([ Validators.required ])],
       idCarreraDestino   : [undefined, Validators.compose([ Validators.required ])],
-      idMotivoTraspaso   : [undefined, Validators.compose([ Validators.required ])],
-      descripcionTraspaso: [undefined , Validators.compose([ Validators.required ])]
+      idMotivoTraspaso   : [undefined, Validators.compose([ Validators.required ])]
+      // descripcionTraspaso: [undefined , Validators.compose([ Validators.required ])]
     });
   }
 
@@ -117,7 +117,7 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
       idUnivDestino     : this.formTraspaso.controls[ 'idUnivDestino' ].value,
       idCarreraDestino  : this.formTraspaso.controls[ 'idCarreraDestino' ].value,
       idCarreraOrigen   : this.datoEstudiante.idCarrera,
-      descripcion       : this.formTraspaso.controls[ 'descripcionTraspaso' ].value,
+      // descripcion       : this.formTraspaso.controls[ 'descripcionTraspaso' ].value,
       anioIngreso       : this.datoEstudiante.anioIngreso,
       materiasAprobadas : this.datoEstudiante.cantMateriasAprobadas,
       materiasReprobadas: this.datoEstudiante.cantMateriasReprobadas,
