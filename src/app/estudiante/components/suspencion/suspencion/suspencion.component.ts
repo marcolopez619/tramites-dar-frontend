@@ -54,7 +54,7 @@ export class SuspencionComponent extends BaseComponent implements OnInit {
     this.formSuspencion = this.formBuilder.group({
       idMotivoSuspencion : [undefined, Validators.compose([ Validators.required ])],
       tiempoSuspencion   : [undefined, Validators.compose([ Validators.required, Validators.min( 1 ), Validators.max( 6 ) ])],
-      descripcion        : [undefined, Validators.compose([ Validators.required ])]
+      // descripcion        : [undefined, Validators.compose([ Validators.required ])]
     });
   }
 
@@ -101,7 +101,7 @@ export class SuspencionComponent extends BaseComponent implements OnInit {
       idEstudiante    : this.datoEstudiante.idEstudiante,
       idCarrera       : this.datoEstudiante.idCarrera,
       tiempoSolicitado: this.formSuspencion.controls[ 'tiempoSuspencion' ].value,
-      descripcion     : this.formSuspencion.controls[ 'descripcion' ].value,
+      // descripcion     : this.formSuspencion.controls[ 'descripcion' ].value,
       idMotivo        : this.formSuspencion.controls[ 'idMotivoSuspencion' ].value,
       idTramite       : eTipoTramite.SUSPENCION,
       idEstado        : eEstado.ENVIADO,
