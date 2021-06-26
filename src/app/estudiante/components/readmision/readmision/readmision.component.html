@@ -39,8 +39,8 @@
 
         <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
 
-          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="20px" fxFill>
-            <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
+          <div fxLayout="row wrap" fxLayoutAlign="center center"  fxFill>
+            <div fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
               <mat-form-field fxFlex>
                 <mat-select formControlName="idSuspencionSelected" (selectionChange)="onSuspencionSelectedChange($event)" placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-tiempo-suspencion-solicitado')}}">
                    <mat-option shAutofocus *ngFor="let suspencion of listaSuspenciones" [value]="suspencion.idSuspencion">
@@ -51,12 +51,14 @@
               </mat-form-field>
             </div>
 
-            <div fxLayout="row" fxLayoutAlign="center center" fxFlex="49">
+            <div fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
               <mat-form-field fxFlex>
-                <input type="text" required matInput shUppercase minlength="5" maxlength="120" autocomplete="off"
-                  placeholder="{{langService.getLang(eModulo.Estudiante,'lbl-motivo-readmision')}}" formControlName="motivo">
-                  <mat-label>&nbsp; {{langService.getLang(eModulo.Estudiante,'lbl-motivo-readmision')}} </mat-label>
-                <mat-error *ngIf="formReadmision.controls['motivo'].invalid">{{langService.getLang(eModulo.Estudiante,'lbl-motivo-readmision-error') }}</mat-error>
+                <mat-select formControlName="idMotivo" placeholder="{{langService.getLang(eModulo.Base,'lbl-motivo')}}">
+                   <mat-option *ngFor="let motivo of listaMotivoTraspaso" [value]="motivo.idMotivo">
+                     {{motivo.descripcionMotivo}}
+                   </mat-option>
+                 </mat-select>
+                 <mat-error *ngIf="formReadmision.controls['idMotivo'].invalid">{{langService.getLang(eModulo.Base,'lbl-motivo-obligatorio') }}</mat-error>
               </mat-form-field>
             </div>
 
@@ -115,7 +117,7 @@
 
           <tr>
             <td style="text-align: end;"><span><strong>{{langService.getLang(eModulo.Estudiante,'lbl-motivo-readmision')}}</strong></span></td>
-            <td><span>&nbsp;{{formReadmision.controls['motivo'].value}}</span></td>
+            <td><span>&nbsp;{{listaMotivoTraspaso[ formReadmision.controls['idMotivo'].value - 1]?.descripcionMotivo}}</span></td>
           </tr>
 
         </table>

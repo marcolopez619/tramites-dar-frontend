@@ -8,8 +8,10 @@ import { eEstado } from '../../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
 import { eEntidad } from '../../../../shared/enums/tipo_entidad.enum';
 import { EstudianteModel } from '../../../../shared/models/estudiante.model';
+import { Motivo } from '../../../../shared/models/motivos.models';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
+import { MotivoService } from '../../../../shared/services/motivo.service';
 import { BandejaReadmision, BandejaSuspencion } from '../../../../tramites/models/tramites.models';
 import { EstudianteService } from '../../../estudiante.service';
 import { ReadmisionInsert } from '../../../models/readmision.model';
@@ -26,8 +28,9 @@ export class ReadmisionComponent  extends BaseComponent implements OnInit {
   formReadmision: FormGroup;
   datoEstudiante: EstudianteModel;
   listaSuspenciones: Array<BandejaSuspencion> = [];
+  listaMotivoTraspaso: Array<Motivo> = [];
   datoSuspencionSeleceted: BandejaSuspencion = {};
-  listaIdsSuspencionesUtilizadas : Array<BandejaReadmision>;
+  listaIdsSuspencionesUtilizadas: Array<BandejaReadmision>;
 
    constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -36,6 +39,7 @@ export class ReadmisionComponent  extends BaseComponent implements OnInit {
     public contextService: ContextoService,
     private formBuilder: FormBuilder,
     // private datePipe: DatePipe,
+    private motivoService: MotivoService,
     private estudianteService: EstudianteService,
     private suspencionService: SuspencionService,
     private readmisionService: ReadmisionService
@@ -51,9 +55,11 @@ export class ReadmisionComponent  extends BaseComponent implements OnInit {
 
     this.getListSuspenciones();
 
+    this.getListaMotivos();
+
     this.formReadmision = this.formBuilder.group({
       idSuspencionSelected: [undefined, Validators.compose([ Validators.required ])],
-      motivo              : [undefined, Validators.compose([ Validators.required ])]
+      idMotivo              : [undefined, Validators.compose([ Validators.required ])]
     });
   }
 
@@ -77,8 +83,15 @@ export class ReadmisionComponent  extends BaseComponent implements OnInit {
     });
   }
 
+  private getListaMotivos(): void {
+
+    this.motivoService.getListaMotivos().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.listaMotivoTraspaso = resp.data;
+    });
+
+  }
+
   onSuspencionSelectedChange(event: MatSelectChange): void {
-    // FIXME: arreglar esto para que sea intuitiva la interfaz
     this.datoSuspencionSeleceted =  this.listaSuspenciones.find( x => x.idSuspencion === event.value );
 
     /* this.rangoLiteralSeleccionado = this.datePipe.transform( datosSuspencionSelected.fechaProceso, 'dd-MM-yyyy' )
@@ -91,7 +104,7 @@ export class ReadmisionComponent  extends BaseComponent implements OnInit {
     const readmisionInsert: ReadmisionInsert = {
       idEstudiante : this.datoEstudiante.idEstudiante,
       idCarrera    : this.datoEstudiante.idCarrera,
-      motivo       : this.formReadmision.controls[ 'motivo' ].value,
+      idMotivo     : this.formReadmision.controls[ 'idMotivo' ].value,
       idSuspencion : this.formReadmision.controls[ 'idSuspencionSelected' ].value,
       idTramite    : eTipoTramite.READMISION,
       idEstado     : eEstado.ENVIADO,
