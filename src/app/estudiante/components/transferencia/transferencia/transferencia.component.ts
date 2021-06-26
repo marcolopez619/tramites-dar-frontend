@@ -9,8 +9,10 @@ import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
 import { eEntidad } from '../../../../shared/enums/tipo_entidad.enum';
 import { CarreraModel } from '../../../../shared/models/carrera.model';
 import { EstudianteModel } from '../../../../shared/models/estudiante.model';
+import { Motivo } from '../../../../shared/models/motivos.models';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
+import { MotivoService } from '../../../../shared/services/motivo.service';
 import { UniversidadService } from '../../../../shared/services/universidad.service';
 import { EstudianteService } from '../../../estudiante.service';
 import { TransferenciaInsert } from '../../../models/transferencia.model';
@@ -26,6 +28,7 @@ export class TransferenciaComponent extends BaseComponent implements OnInit {
   formTransferencia: FormGroup;
   listaCarreras: Array<CarreraModel> = [];
   listaCarrerasFiltradas: Observable<Array<CarreraModel>>;
+  listaMotivoTraspaso: Array<Motivo> = [];
   datosEstudiante: EstudianteModel;
 
   listaLabelColumnas: Array<string> = [];
@@ -39,6 +42,7 @@ export class TransferenciaComponent extends BaseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private estudianteService: EstudianteService,
     private universidadService: UniversidadService,
+    private motivoService: MotivoService,
     private transferenciaService: TransferenciaService
   ) {
     super();
@@ -47,10 +51,11 @@ export class TransferenciaComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.getInformacionEstudiante( );
     this.getListaCarreras();
+    this.getListaMotivos();
 
     this.formTransferencia = this.formBuilder.group({
       idCarreraDestino : [undefined, Validators.compose([ Validators.required ])],
-      motivo           : [undefined, Validators.compose([ Validators.required ])]
+      idMotivo           : [undefined, Validators.compose([ Validators.required ])]
     });
 
     this.listaCarrerasFiltradas = this.formTransferencia.controls['idCarreraDestino'].valueChanges.pipe(
@@ -78,6 +83,14 @@ export class TransferenciaComponent extends BaseComponent implements OnInit {
     });
   }
 
+  private getListaMotivos(): void {
+
+    this.motivoService.getListaMotivos().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.listaMotivoTraspaso = resp.data;
+    });
+
+  }
+
   private filtrarValores(value: string): Array<CarreraModel> {
     const filterValue = value.toLowerCase();
     const dataFiltrada = this.listaCarreras.filter(carrera => carrera.nombre.toLowerCase().includes( filterValue ));
@@ -86,7 +99,7 @@ export class TransferenciaComponent extends BaseComponent implements OnInit {
 
   setDatosFormatoTabla(): void{
     this.listaLabelColumnas = ['Carrera origen', 'Carrera destino', 'Motivo'];
-    this.listaValoresColumnas = [this.datosEstudiante.carrera , this.formTransferencia.get('idCarreraDestino').value, this.formTransferencia.controls['motivo'].value];
+    this.listaValoresColumnas = [this.datosEstudiante.carrera , this.formTransferencia.get('idCarreraDestino').value, this.listaMotivoTraspaso.find( x => x.idMotivo == this.formTransferencia.controls['idMotivo'].value).descripcionMotivo];
   }
 
   onFinalizarSolicitud(): void {
@@ -96,7 +109,7 @@ export class TransferenciaComponent extends BaseComponent implements OnInit {
       idEstudiante    : this.datosEstudiante.idEstudiante,
       idCarreraOrigen : this.datosEstudiante.idCarrera,
       idCarreraDestino: carreraDestino.idCarrera,
-      motivo          : this.formTransferencia.controls['motivo'].value,
+      idMotivo        : this.formTransferencia.controls['idMotivo'].value,
       idTramite       : eTipoTramite.TRANSFERENCIA,
       idEstado        : eEstado.ENVIADO,
       idEntidad       : eEntidad.DIRECTOR_DE_CARRERA_ORIGEN,
