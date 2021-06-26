@@ -96,6 +96,7 @@ export const baseLang = {
             'lbl-fecha-solicitud' : 'Fecha solicitud',
             'lbl-fecha-proceso' : 'Fecha proceso',
             'lbl-motivo' : 'Motivo',
+            'lbl-motivo-obligatorio' : 'El motivo es obligatorio',
             'lbl-gestion' : 'Gestión',
             'lbl-finalizar' : 'Finalizar',
             'lbl-nombre-completo' : 'Nombre completo',

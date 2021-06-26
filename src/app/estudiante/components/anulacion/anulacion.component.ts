@@ -8,8 +8,10 @@ import { eEstado } from '../../../shared/enums/estado.enum';
 import { eTipoTramite } from '../../../shared/enums/tipoTramite.enum';
 import { eEntidad } from '../../../shared/enums/tipo_entidad.enum';
 import { EstudianteModel } from '../../../shared/models/estudiante.model';
+import { Motivo } from '../../../shared/models/motivos.models';
 import { ContextoService } from '../../../shared/services/contexto.service';
 import { LangService } from '../../../shared/services/lang.service';
+import { MotivoService } from '../../../shared/services/motivo.service';
 import { ReportesService } from '../../../shared/services/reportes.service';
 import { EstudianteService } from '../../estudiante.service';
 import { AnulacionInsert, BandejaAnulacion } from '../../models/anulacion.models';
@@ -24,7 +26,7 @@ import { AnulacionService } from './anulacion.service';
 })
 export class AnulacionComponent extends BaseComponent  implements OnInit {
   formAnulacion: FormGroup;
-
+  listaMotivoTraspaso: Array<Motivo> = [];
   datosEstudiante: EstudianteModel;
 
   constructor(
@@ -35,6 +37,7 @@ export class AnulacionComponent extends BaseComponent  implements OnInit {
     private estudianteService: EstudianteService,
     private anulacionService: AnulacionService,
     private reportesService: ReportesService,
+    private motivoService: MotivoService,
     private formBuilder: FormBuilder
   ) {
     super();
@@ -42,9 +45,11 @@ export class AnulacionComponent extends BaseComponent  implements OnInit {
 
   ngOnInit(): void {
     this.getInformacionEstudiante(this.data.idEstudiante);
+    this.getListaMotivos();
 
     this.formAnulacion = this.formBuilder.group({
-      motivo: [ undefined, Validators.compose([ Validators.required, Validators.maxLength( 100 ) ])]
+      // motivo: [ undefined, Validators.compose([ Validators.required, Validators.maxLength( 100 ) ])]
+      idMotivo   : [undefined, Validators.compose([ Validators.required ])]
     });
   }
 
@@ -54,11 +59,19 @@ export class AnulacionComponent extends BaseComponent  implements OnInit {
     });
   }
 
+  private getListaMotivos(): void {
+
+    this.motivoService.getListaMotivos().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.listaMotivoTraspaso = resp.data;
+    });
+
+  }
+
   onImprimirFormulario(): void {
 
     const anulacionInsert: AnulacionInsert = {
       idEstudiante   : this.datosEstudiante.idEstudiante,
-      motivo         : this.formAnulacion.controls[ 'motivo' ].value,
+      idMotivo       : this.formAnulacion.controls[ 'idMotivo' ].value,
       idCarreraOrigen: this.datosEstudiante.idCarrera,
       idTramite      : eTipoTramite.ANULACION,
       idEstado       : eEstado.ENVIADO,
