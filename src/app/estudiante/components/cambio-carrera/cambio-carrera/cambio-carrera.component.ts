@@ -11,8 +11,10 @@ import { eTipoTramite } from '../../../../shared/enums/tipoTramite.enum';
 import { eEntidad } from '../../../../shared/enums/tipo_entidad.enum';
 import { CarreraModel } from '../../../../shared/models/carrera.model';
 import { EstudianteModel } from '../../../../shared/models/estudiante.model';
+import { Motivo } from '../../../../shared/models/motivos.models';
 import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
+import { MotivoService } from '../../../../shared/services/motivo.service';
 import { UniversidadService } from '../../../../shared/services/universidad.service';
 import { EstudianteService } from '../../../estudiante.service';
 import { CambioCarreraInsert } from '../../../models/cambio_carrera.model';
@@ -27,6 +29,7 @@ export class CambioCarreraComponent extends BaseComponent implements OnInit {
 
   formCambioCarrera: FormGroup;
   listaCarreras: Array<CarreraModel> = [];
+  listaMotivoTraspaso: Array<Motivo> = [];
   listaCarrerasFiltradas: Observable<Array<CarreraModel>>;
   datosEstudiante: EstudianteModel;
 
@@ -36,6 +39,7 @@ export class CambioCarreraComponent extends BaseComponent implements OnInit {
     public langService: LangService,
     public contextService: ContextoService,
     private formBuilder: FormBuilder,
+    private motivoService: MotivoService,
     private estudianteService: EstudianteService,
     private universidadService: UniversidadService,
     private cambioCarreraService: CambioCarreraService
@@ -46,10 +50,11 @@ export class CambioCarreraComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.getInformacionEstudiante( );
     this.getListaCarreras();
+    this.getListaMotivos();
 
     this.formCambioCarrera = this.formBuilder.group({
       idCarreraDestino : [undefined, Validators.compose([ Validators.required ])],
-      motivo           : [undefined, Validators.compose([ Validators.required ])]
+      idMotivo           : [undefined, Validators.compose([ Validators.required ])]
     });
 
     this.listaCarrerasFiltradas = this.formCambioCarrera.controls['idCarreraDestino'].valueChanges.pipe(
@@ -81,6 +86,14 @@ export class CambioCarreraComponent extends BaseComponent implements OnInit {
     return dataFiltrada;
   }
 
+  private getListaMotivos(): void {
+
+    this.motivoService.getListaMotivos().pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.listaMotivoTraspaso = resp.data;
+    });
+
+  }
+
   onFinalizarSolicitud(): void {
     const carreraDestino = this.listaCarreras.filter( x => x.nombre === this.formCambioCarrera.controls[ 'idCarreraDestino' ].value ) [ 0 ];
 
@@ -88,7 +101,7 @@ export class CambioCarreraComponent extends BaseComponent implements OnInit {
       idEstudiante    : this.datosEstudiante.idEstudiante,
       idCarreraOrigen : this.datosEstudiante.idCarrera,
       idCarreraDestino: carreraDestino.idCarrera,
-      motivo          : this.formCambioCarrera.controls['motivo'].value,
+      idMotivo        : this.formCambioCarrera.controls['idMotivo'].value,
       idTramite       : eTipoTramite.CAMBIO_DE_CARRERA,
       idEstado        : eEstado.ENVIADO,
       idEntidad       : eEntidad.DIRECTOR_DE_CARRERA_ORIGEN,
