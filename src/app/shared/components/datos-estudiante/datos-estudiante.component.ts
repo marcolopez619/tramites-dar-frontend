@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { fadeInAnim, slideInLeftAnim } from '../../animations/template.animation';
 import { EstudianteModel } from '../../models/estudiante.model';
 import { ContextoService } from '../../services/contexto.service';
@@ -16,12 +17,17 @@ export class DatosEstudianteComponent implements OnInit {
   datoEstudiante: EstudianteModel;
 
   constructor(
-    //
+    private domSanitizer: DomSanitizer
   ) {
-    //
+    //..
   }
 
   ngOnInit(): void {
+    // ...
+  }
+
+  imagenSanitizada(): SafeResourceUrl{
+    return this.domSanitizer.bypassSecurityTrustResourceUrl( `data:image/png;base64,`.concat(`${this.datoEstudiante.fotografia}` ));
   }
 
 }
