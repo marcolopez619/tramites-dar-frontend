@@ -32,6 +32,7 @@ export class BandejaSuspencionComponent extends BaseComponent  implements OnInit
   displayedColumns = ['carrera', 'tiempo', 'motivo', 'fechaSolicitud', 'estado', 'acciones' ];
   dataSource = new MatTableDataSource<BandejaSuspencion>([]);
   isTramiteHabilitado: boolean;
+  existenTramitesEnCurso: boolean;
   datosEstudiante: EstudianteModel;
   eEstado = eEstado;
 
@@ -53,6 +54,7 @@ export class BandejaSuspencionComponent extends BaseComponent  implements OnInit
 
   ngOnInit(): void {
     this.getListaSuspenciones();
+    this.verificarTramitesEncCurso();
   }
 
   ngAfterViewInit(): void {
@@ -79,6 +81,14 @@ export class BandejaSuspencionComponent extends BaseComponent  implements OnInit
           panelClass : 'mensaje-snack'
         } );
       }
+    });
+  }
+
+  private verificarTramitesEncCurso(): void {
+    const idEstudiante = this.contextService.getItemContexto( 'idEstudiante' );
+
+    this.tramitesAcademicosService.verificarExistenciaTramiteEnCurso(idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
+      this.existenTramitesEnCurso = resp.data.existenTramitesEnCurso;
     });
   }
 

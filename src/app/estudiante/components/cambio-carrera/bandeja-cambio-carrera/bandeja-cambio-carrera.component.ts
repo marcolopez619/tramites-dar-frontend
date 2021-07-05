@@ -34,6 +34,7 @@ export class BandejaCambioCarreraComponent extends BaseComponent  implements OnI
   displayedColumns = ['origen', 'destino', 'fechaSolicitud', 'motivo', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<BandejaCambioCarrera>();
   isTramiteHabilitado: boolean;
+  existenTramitesEnCurso: boolean;
   eEstado = eEstado;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -53,6 +54,7 @@ export class BandejaCambioCarreraComponent extends BaseComponent  implements OnI
 
   ngOnInit(): void {
     this.getListaCambiosCarrera();
+    this.verificarTramitesEncCurso();
   }
 
   ngAfterViewInit(): void {
@@ -79,6 +81,14 @@ export class BandejaCambioCarreraComponent extends BaseComponent  implements OnI
           panelClass : 'mensaje-snack'
         } );
       }
+    });
+  }
+
+  private verificarTramitesEncCurso(): void {
+    const idEstudiante = this.contextService.getItemContexto( 'idEstudiante' );
+
+    this.tramitesAcademicosService.verificarExistenciaTramiteEnCurso(idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
+      this.existenTramitesEnCurso = resp.data.existenTramitesEnCurso;
     });
   }
 

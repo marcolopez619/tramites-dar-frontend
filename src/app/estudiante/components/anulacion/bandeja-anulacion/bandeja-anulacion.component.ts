@@ -58,6 +58,7 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
 
   ngOnInit(): void {
     this.getListaAnulaciones();
+    this.verificarTramitesEncCurso();
   }
 
   ngAfterViewInit(): void {
@@ -66,7 +67,6 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
       this.dataSource.sort = this.sort;
     }
     this.verificarHabilitacionTramite();
-    this.verificarTramitesEncCurso();
   }
 
   ngOnDestroy(): void {

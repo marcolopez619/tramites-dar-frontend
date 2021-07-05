@@ -32,6 +32,7 @@ export class BandejaTransferenciaComponent extends BaseComponent implements OnIn
   displayedColumns = ['origen', 'destino', 'fechaSolicitud', 'motivo', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<BandejaTranseferencia>([]);
   isTramiteHabilitado: boolean;
+  existenTramitesEnCurso: boolean;
   eEstado = eEstado;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -51,6 +52,7 @@ export class BandejaTransferenciaComponent extends BaseComponent implements OnIn
 
   ngOnInit(): void {
     this.getListaTranseferencias();
+    this.verificarTramitesEncCurso();
   }
 
   ngAfterViewInit(): void {
@@ -77,6 +79,14 @@ export class BandejaTransferenciaComponent extends BaseComponent implements OnIn
           panelClass : 'mensaje-snack'
         } );
       }
+    });
+  }
+
+  private verificarTramitesEncCurso(): void {
+    const idEstudiante = this.contextService.getItemContexto( 'idEstudiante' );
+
+    this.tramitesAcademicosService.verificarExistenciaTramiteEnCurso(idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
+      this.existenTramitesEnCurso = resp.data.existenTramitesEnCurso;
     });
   }
 
