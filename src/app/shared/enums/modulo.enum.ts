@@ -12,5 +12,6 @@ export enum eModulo {
     Tramite,
     Dar,
     Usuario,
-    Director
+    Director,
+    Reporte
 }
