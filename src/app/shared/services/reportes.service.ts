@@ -1464,4 +1464,8 @@ export class ReportesService {
   getCantidadPorTipoTramite(pIdGestion: number): Observable<Resultado> {
     return this.httpClient.get<Resultado>(`${this.baseURL}/tramites/${pIdGestion}`);
   }
+
+  getCantidadPorTipoTramitePorCarrera(pIdGestion: number, pIdCarrera): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/tramites/${pIdGestion}/carrera/${pIdCarrera}`);
+  }
 }

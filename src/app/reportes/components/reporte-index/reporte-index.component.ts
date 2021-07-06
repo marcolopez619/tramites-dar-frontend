@@ -43,14 +43,28 @@ export class ReporteIndexComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCantidadPorTipoTramite( 3 );
+    // this.getCantidadPorTipoTramite( 3 );
+    this.getCantidadPorTipoTramitePorCarrera( 3, 3 );
   }
 
-  private getCantidadPorTipoTramite(pIdGestion: number): void{
+  private getCantidadPorTipoTramite(pIdGestion: number): void {
 
     this.reportesService.getCantidadPorTipoTramite( pIdGestion ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       if ( resp.data ) {
         this.tituloGrafico = 'CANTIDAD DE ESTUDIANTES POR TIPO DE TRAMITE EN LA GESTION : 1/2021';
+        this.barChartLabels = resp.data.map( x => x.label);
+
+        const cantidades = resp.data.map ( x => ({ data : [x.cantidad], label : x.label.concat( ` (${x.cantidad})` ) }) );
+        this.barChartData = cantidades;
+      }
+    });
+  }
+
+  private getCantidadPorTipoTramitePorCarrera(pIdGestion: number, pIdCarrera: number): void {
+
+    this.reportesService.getCantidadPorTipoTramitePorCarrera( pIdGestion, pIdCarrera ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      if ( resp.data ) {
+        this.tituloGrafico = `ESTUDIANTES POR TIPO DE TRAMITE DE LA CARRERA <mi_carrera> EN LA GESTION : 1/2021`;
         this.barChartLabels = resp.data.map( x => x.label);
 
         const cantidades = resp.data.map ( x => ({ data : [x.cantidad], label : x.label.concat( ` (${x.cantidad})` ) }) );
