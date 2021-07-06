@@ -52,7 +52,6 @@ export class ReportesService {
           ]
         },
 
-
         {
           // Datos aclaratorios
           columns: [
@@ -1456,8 +1455,6 @@ export class ReportesService {
       }
     ];
   }
-
-
 
   //********************* REPORTES PARA GRAFICOS ***********************************
 

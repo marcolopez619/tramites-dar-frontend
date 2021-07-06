@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { fadeInAnim } from '../../shared/animations/template.animation';
+import { fadeInAnim, slideInLeftAnim } from '../../shared/animations/template.animation';
 import { BaseComponent } from '../../shared/base.component';
 import { AuthService } from '../../shared/services/auth.service';
 import { ContextoService } from '../../shared/services/contexto.service';
@@ -10,9 +10,9 @@ import { LangService } from '../../shared/services/lang.service';
 @Component({
     selector: 'base-login',
     templateUrl: 'login.component.html',
-    styleUrls: ['login.component.css'],
-    animations: [fadeInAnim],
-    host: { '[@fadeInAnim]': '' }
+    styleUrls: ['login.component.css'] ,
+    animations: [fadeInAnim, slideInLeftAnim],
+    host: { class: 'container-fluid', '[@fadeInAnim]': 'true' }
 })
 export class LoginComponent extends BaseComponent implements OnInit {
 
