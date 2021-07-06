@@ -1,1 +1,13 @@
-<p>reporte-index works!</p>
+<h3>{{ tituloGrafico }}</h3>
+<div fxLayout="row" fxLayoutAlign="center stretch" >
+
+  <canvas baseChart style = "height:400px; width: auto;"
+          [colors]        = "lineChartColors"
+          [datasets]      = "barChartData"
+          [labels]        = "barChartLabels"
+          [options]       = "barChartOptions"
+          [plugins]       = "barChartPlugins"
+          [legend]        = "barChartLegend"
+          [chartType]     = "barChartType">
+</canvas>
+</div>

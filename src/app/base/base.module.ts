@@ -19,6 +19,7 @@ import { TramitesModule } from '../tramites/tramites.module';
 import { DarModule } from '../dar/dar.module';
 import { UsuarioModule } from '../usuarios/usuario.module';
 import { DirectorModule } from '../director/director.module';
+import { ReportesModule } from '../reportes/reportes.module';
 
 /**
  * Modulo base del sistema.
@@ -38,7 +39,8 @@ import { DirectorModule } from '../director/director.module';
     TramitesModule,
     DarModule,
     UsuarioModule,
-    DirectorModule
+    DirectorModule,
+    ReportesModule
   ],
   declarations: [
     LayoutComponent,

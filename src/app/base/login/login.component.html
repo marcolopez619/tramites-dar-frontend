@@ -1,10 +1,10 @@
-<mat-card class="mat-elevation-z12">
+<!-- <mat-card class="mat-elevation-z12">
 	<mat-card-header fxFlexFill class="alt-theme">
 		<mat-toolbar color="primary">
 				<h3>{{ langService.getLang(eModulo.Base,'tit-autenticacion') }}</h3>
 		</mat-toolbar>
 	</mat-card-header>
-	<mat-card-content>	
+	<mat-card-content>
 		<form fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center stretch" [formGroup]="form">
 			<mat-form-field color="primary">
 				<mat-icon matSuffix>account_box</mat-icon>
@@ -16,9 +16,9 @@
 				<input type="password" matInput placeholder="{{ langService.getLang(eModulo.Base,'passwordFormLabel') }}" formControlName="password">
 				<mat-error *ngIf="form.controls['password'].invalid">{{ langService.getLang(eModulo.Base,'passwordLogin') }}</mat-error>
 			</mat-form-field>
-			<button 
-				mat-raised-button 
-				color="accent" 
+			<button
+				mat-raised-button
+				color="accent"
 				(click)="login()"
 				disabled = "{{ form.invalid || contextService.isLoading }}">
 					{{ langService.getLang(eModulo.Base,'btnLogin') }}
@@ -26,3 +26,6 @@
 		</form>
 	</mat-card-content>
 </mat-card>
+ -->
+
+ <app-reporte-index></app-reporte-index>
