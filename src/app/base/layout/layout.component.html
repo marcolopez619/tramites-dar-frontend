@@ -28,6 +28,10 @@
                 </button>
             </mat-menu>
 
+            <button mat-button *ngIf="authService.isUserAuthenticated()" matTooltip="{{langService.getLang(eModulo.Base,'lbl-cambiar-contrasena')}}" (click)="onChangePassword()">
+              <mat-icon>vpn_key</mat-icon>
+            </button>
+
             <a mat-button (click)="authService.logoutUser()" matTooltip="{{langService.getLang(eModulo.Base,'logoutMensaje')}}" *ngIf="authService.isUserAuthenticated()"><mat-icon class="transform_icon">input</mat-icon></a>
             <a mat-button routerLink="/login" matTooltip="{{langService.getLang(eModulo.Base,'loginMensaje')}}" *ngIf="!authService.isUserAuthenticated()"><mat-icon>input</mat-icon></a>
         </mat-toolbar>

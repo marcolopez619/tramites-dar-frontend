@@ -10,9 +10,7 @@ import { LangService } from '../../shared/services/lang.service';
 @Component({
     selector: 'base-login',
     templateUrl: 'login.component.html',
-    styleUrls: ['login.component.css'] ,
-    animations: [fadeInAnim, slideInLeftAnim],
-    host: { class: 'container-fluid', '[@fadeInAnim]': 'true' }
+    styleUrls: ['login.component.css']
 })
 export class LoginComponent extends BaseComponent implements OnInit {
 

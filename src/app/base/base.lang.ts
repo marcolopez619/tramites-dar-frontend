@@ -105,7 +105,8 @@ export const baseLang = {
             'lbl-cerrar' : 'Cerrar',
             'lbl-ver-seguimiento' : 'Ver seguimiento',
             'tit-bandeja-tramites-atendidos' : 'Trámites atendidos',
-            'tit-nueva-gestion' : 'Añadir nuevo periodo y gestion'
+            'tit-nueva-gestion' : 'Añadir nuevo periodo y gestion',
+            'lbl-cambiar-contrasena' : 'Cambiar contraseña',
         },
         'en': {
             'lang-error': 'Lang not found',

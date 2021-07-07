@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ContextoService } from './contexto.service';
 import { Resultado } from '../../shared/models/resultado.model';
+import { MatDialog } from '@angular/material/dialog';
+import { takeUntil } from 'rxjs/operators';
+import { eTipoTramite } from '../enums/tipoTramite.enum';
 
 /**
  * Servicio de autenticación.
@@ -34,7 +37,8 @@ export class AuthService {
     constructor(
         private router: Router,
         private http: HttpClient,
-        private contextoService: ContextoService
+        private contextoService: ContextoService,
+        private dialog: MatDialog
     ) {}
 
     /**
@@ -106,8 +110,6 @@ export class AuthService {
 
       } */
 
-
-
       /* const idHistoricoUsuarioSesion = this.contextoService.getItemContexto('idHistoricoUsuarioSesion');
       const user = this.contextoService.getItemContexto('usuario');
 
@@ -148,6 +150,24 @@ export class AuthService {
 
       } */
 
+    }
+
+    changePassword(pIdUsuario: number, pNuevoPassword: string): void {
+      const params = {
+        idUsuario    : pIdUsuario,
+        nuevoPassword: pNuevoPassword
+      };
+      this.http.post<Resultado>(`${this.contextoService.getConfig('backendApi')}/login/cambiar-contrasena`, params ).subscribe( resp => {
+
+        if (resp.data) {
+
+          this.logoutUser();
+
+          setTimeout(() => {
+            this.router.navigate(['login']);
+          }, 3000);
+        }
+      });
     }
 
     /**
