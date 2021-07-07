@@ -35,6 +35,7 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
   displayedColumns = ['carrera', 'fechaSolicitud', 'motivo', 'estado', 'entidadDestino', 'acciones'];
   dataSource = new MatTableDataSource<BandejaAnulacion>([]);
   isTramiteHabilitado: boolean;
+  existenTramitesEnCurso: boolean;
   eEstado = eEstado;
   datosEstudiante: EstudianteModel;
 
@@ -57,6 +58,7 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
 
   ngOnInit(): void {
     this.getListaAnulaciones();
+    this.verificarTramitesEncCurso();
   }
 
   ngAfterViewInit(): void {
@@ -91,6 +93,14 @@ export class BandejaAnulacionComponent extends BaseComponent implements OnInit, 
           panelClass : 'mensaje-snack'
         });
       }
+    });
+  }
+
+  private verificarTramitesEncCurso(): void {
+    const idEstudiante = this.contextService.getItemContexto( 'idEstudiante' );
+
+    this.tramitesAcademicosService.verificarExistenciaTramiteEnCurso(idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
+      this.existenTramitesEnCurso = resp.data.existenTramitesEnCurso;
     });
   }
 

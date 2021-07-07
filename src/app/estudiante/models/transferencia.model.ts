@@ -3,7 +3,7 @@ import { ImpresionFormularioCambioCarrera } from './cambio_carrera.model';
 export interface TransferenciaInsert {
   idCarreraOrigen?: number;
   idCarreraDestino?: number;
-  motivo?: string;
+  idMotivo?: number;
   idEstudiante?: number;
   idTramite?: number;
   idEstado?: number;

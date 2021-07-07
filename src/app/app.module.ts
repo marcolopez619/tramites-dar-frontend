@@ -6,6 +6,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { ChartsModule } from 'ng2-charts';
 import { appRoutes } from './app.routing';
 import { BandejaPrincipalModule } from './bandeja-principal/bandeja-principal.module';
 import { BaseModule } from './base/base.module';
@@ -23,12 +24,10 @@ import { NotificacionService } from './shared/services/notificacion.service';
 import { UtilService } from './shared/services/util.service';
 import { TramitesModule } from './tramites/tramites.module';
 import { UsuarioModule } from './usuarios/usuario.module';
-import { SeguimientoComponent } from './app/shared/components/seguimiento/seguimiento.component';
 
 registerLocaleData(localeEs);
 
 @NgModule({
-    declarations: [SeguimientoComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -40,7 +39,8 @@ registerLocaleData(localeEs);
         BandejaPrincipalModule,
         EstudianteModule,
         TramitesModule,
-        UsuarioModule
+        UsuarioModule,
+
     ],
     providers: [
         AuthService,

@@ -2,7 +2,7 @@ import { SuspencionModel } from './suspencion.model';
 
 export interface ReadmisionInsert {
   idCarrera?: number;
-  motivo?: number;
+  idMotivo?: number;
   idSuspencion?: number;
   idEstudiante?: number;
   idTramite?: number;

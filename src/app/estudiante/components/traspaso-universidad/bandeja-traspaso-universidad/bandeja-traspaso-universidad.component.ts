@@ -34,6 +34,7 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
   displayedColumns = ['universidadDestino', 'carreraDestino', 'periodo', 'motivo', 'fechaSolicitud', 'estado', 'acciones' ];
   dataSource = new MatTableDataSource<BandejaTraspasoUniversidad>([]);
   isTramiteHabilitado: boolean;
+  existenTramitesEnCurso: boolean;
   eEstado = eEstado;
 
   constructor(
@@ -50,6 +51,7 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
 
   ngOnInit(): void {
     this.getListaTraspasos();
+    this.verificarTramitesEncCurso();
   }
 
   ngAfterViewInit(): void {
@@ -76,6 +78,14 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
           panelClass : 'mensaje-snack'
         } );
       }
+    });
+  }
+
+  private verificarTramitesEncCurso(): void {
+    const idEstudiante = this.contextService.getItemContexto( 'idEstudiante' );
+
+    this.tramitesAcademicosService.verificarExistenciaTramiteEnCurso(idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
+      this.existenTramitesEnCurso = resp.data.existenTramitesEnCurso;
     });
   }
 

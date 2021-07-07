@@ -1,0 +1,73 @@
+<shared-loader-spinner></shared-loader-spinner>
+
+<mat-card class="mat-elevation-z12">
+  <mat-card-header class="alt-theme">
+  <mat-toolbar color="primary">
+      <a mat-button routerLink="/menu" matTooltip="{{ langService.getLang(eModulo.Base, 'tit-volver') }}">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </a>
+      {{ langService.getLang(eModulo.Usuario, 'tit-lista-usurios' ) }}
+      <span class="flex-spacer"></span>
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-actualizar') }}">
+        <mat-icon>refresh</mat-icon>
+      </a>
+  </mat-toolbar>
+</mat-card-header>
+
+<mat-card-content>
+
+  <form [formGroup]="formReporte" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
+    <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
+
+      <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center start" fxLayoutGap="20px" fxFlexFill>
+
+        <div fxLayout="row" fxLayoutAlign="end center" fxFlexFill>
+          <mat-form-field fxFlex="40">
+            <mat-label>{{langService.getLang(eModulo.Tramite, 'lbl-periodo' )}} : </mat-label>
+            <mat-select formControlName="idPeriodoGestion" (selectionChange)="onPeriodoGestionSelectionChange($event)" placeholder="Seleccione periodo y gestion">
+              <mat-option *ngFor="let gestion of listaGestiones" [value]="gestion.idPeriodoGestion">
+                {{gestion.periodo}}/{{gestion.gestion}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill>
+          <mat-form-field fxFlex="45">
+            <mat-label>{{langService.getLang(eModulo.Base, 'lbl-carrera' )}} : </mat-label>
+            <mat-select formControlName="idCarrera" (selectionChange)="onCarreraSelectionChange($event)" placeholder="Seleccione carrera">
+              <mat-option *ngFor="let carrera of listaCarreras" [value]="carrera.idCarrera">
+                {{carrera.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+      </div>
+
+    </div>
+  </form>
+
+
+
+  <h3>{{ tituloGrafico }}</h3>
+  <div fxLayout="row" fxLayoutAlign="center stretch" >
+    <canvas baseChart
+            [colors]        = "lineChartColors"
+            [datasets]      = "barChartData"
+            [labels]        = "barChartLabels"
+            [options]       = "barChartOptions"
+            [plugins]       = "barChartPlugins"
+            [legend]        = "barChartLegend"
+            [chartType]     = "barChartType">
+  </canvas>
+
+  </div>
+
+
+</mat-card-content>
+</mat-card>
+
+
+

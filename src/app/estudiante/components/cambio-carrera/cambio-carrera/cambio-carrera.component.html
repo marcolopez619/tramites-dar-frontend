@@ -94,10 +94,14 @@
             </mat-form-field>
 
 
-            <div fxLayout="column" fxLayoutAlign="space-around center" fxFlexFill>
-              <mat-form-field fxFlexFill>
-                <input type="text" required matInput shUppercase min="5" max="200" minlength="5" maxlength="200" autocomplete="off" placeholder="Motivo de cambio de carrera" formControlName="motivo">
-                <mat-error *ngIf="formCambioCarrera.controls['motivo'].invalid">El motivo de la anulacion es obligatoria</mat-error>
+            <div fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
+              <mat-form-field fxFlex>
+                <mat-select formControlName="idMotivo" placeholder="{{langService.getLang(eModulo.Base,'lbl-motivo')}}">
+                   <mat-option *ngFor="let motivo of listaMotivoTraspaso" [value]="motivo.idMotivo">
+                     {{motivo.descripcionMotivo}}
+                   </mat-option>
+                 </mat-select>
+                 <mat-error *ngIf="formCambioCarrera.controls['idMotivo'].invalid">{{langService.getLang(eModulo.Base,'lbl-motivo-obligatorio') }}</mat-error>
               </mat-form-field>
             </div>
 
@@ -136,7 +140,7 @@
         <div fxLayout="column" fxLayoutAlign="space-around center" >
           <span> <strong>Carrera origen : </strong> {{datosEstudiante.carrera}}</span>
           <span> <strong>Carrera destino : </strong> {{formCambioCarrera.get('idCarreraDestino').value}}</span>
-          <span> <strong>Motivo : </strong> {{formCambioCarrera.controls['motivo'].value}}</span>
+          <span> <strong>Motivo : </strong> {{listaMotivoTraspaso[ formCambioCarrera.controls['idMotivo'].value - 1 ]?.descripcionMotivo}}</span>
         </div>
       </div>
 

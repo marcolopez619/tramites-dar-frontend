@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { Observable } from 'rxjs';
 import { BandejaAnulacion } from '../../estudiante/models/anulacion.models';
 import { ImpresionFormularioCambioCarrera } from '../../estudiante/models/cambio_carrera.model';
 import { ImpresionFormularioReadmision } from '../../estudiante/models/readmision.model';
@@ -9,14 +11,21 @@ import { ImpresionFormularioTraspaso } from '../../estudiante/models/traspaso.mo
 import { BandejaSuspencion } from '../../tramites/models/tramites.models';
 import { EstudianteModel } from '../models/estudiante.model';
 import { Imagen } from '../models/report.model';
+import { Resultado } from '../models/resultado.model';
+import { ContextoService } from './contexto.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Injectable()
 export class ReportesService {
 
+  readonly baseURL = this.contextoService.getConfig(`backendApi`).concat('/reporte');
+
   private fechaActual = this.getFechaActualAsLiteral();
 
-  constructor() {
+  constructor(
+    private httpClient: HttpClient,
+    private contextoService: ContextoService
+  ) {
     //...
   }
 
@@ -42,7 +51,6 @@ export class ReportesService {
             this.getColumnsValuesDatoEstudiante( pEstudianteData , datoAnulacion)
           ]
         },
-
 
         {
           // Datos aclaratorios
@@ -1446,5 +1454,15 @@ export class ReportesService {
         style: 'columnValue'
       }
     ];
+  }
+
+  //********************* REPORTES PARA GRAFICOS ***********************************
+
+  getCantidadPorTipoTramite(pIdGestion: number): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/tramites/${pIdGestion}`);
+  }
+
+  getCantidadPorTipoTramitePorCarrera(pIdGestion: number, pIdCarrera): Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${this.baseURL}/tramites/${pIdGestion}/carrera/${pIdCarrera}`);
   }
 }

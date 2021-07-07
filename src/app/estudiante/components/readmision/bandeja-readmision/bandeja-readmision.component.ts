@@ -30,6 +30,7 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   isTramiteHabilitado: boolean;
+  existenTramitesEnCurso: boolean;
   eEstado = eEstado;
 
   displayedColumns = ['carrera', 'fechaSolicitudSuspencion', 'fechaSolicitudReadmision', 'motivo', 'tiempo', 'estado', 'acciones' ];
@@ -49,6 +50,7 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
 
   ngOnInit(): void {
     this.getListaReadmisiones();
+    this.verificarTramitesEncCurso();
   }
 
   ngAfterViewInit(): void {
@@ -85,6 +87,14 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
     }
 
     return listaIdSuspenciones;
+  }
+
+  private verificarTramitesEncCurso(): void {
+    const idEstudiante = this.contextService.getItemContexto( 'idEstudiante' );
+
+    this.tramitesAcademicosService.verificarExistenciaTramiteEnCurso(idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
+      this.existenTramitesEnCurso = resp.data.existenTramitesEnCurso;
+    });
   }
 
   getListaReadmisiones(): void {

@@ -11,7 +11,7 @@
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-actualizar') }}" (click)="getListaTraspasos()">
         <mat-icon>refresh</mat-icon>
       </a>
-      <a mat-button matTooltip="{{ langService.getLang(eModulo.Estudiante, 'tit-nueva-solicitud') }}" (click)="onNuevaSolicitud()" *ngIf="this.isTramiteHabilitado">
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Estudiante, 'tit-nueva-solicitud') }}" (click)="onNuevaSolicitud()" *ngIf="this.isTramiteHabilitado && !this.existenTramitesEnCurso">
           <mat-icon>add_circle</mat-icon>
       </a>
   </mat-toolbar>
