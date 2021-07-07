@@ -4,8 +4,8 @@ export const usuarioLang = {
     'tit-editar-usuario': 'Editar usuario',
     'tit-lista-usurios' : 'Lista de usuarios',
 
-    'lbl-nick-name'         : 'Nickname',
-    'lbl-nick-name-invalido': 'Nickname inválido',
+    'lbl-nick-name'         : 'Nombre de usuario',
+    'lbl-nick-name-invalido': 'Nombre de usuario inválido',
 
     'lbl-password'         : 'Password',
     'lbl-password-invalido': 'Password inválido',
