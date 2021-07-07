@@ -20,6 +20,7 @@ import { DarModule } from '../dar/dar.module';
 import { UsuarioModule } from '../usuarios/usuario.module';
 import { DirectorModule } from '../director/director.module';
 import { ReportesModule } from '../reportes/reportes.module';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 /**
  * Modulo base del sistema.
@@ -50,7 +51,8 @@ import { ReportesModule } from '../reportes/reportes.module';
     NotfoundComponent,
     ProgressBarComponent,
     UnauthorizedComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    ChangePasswordComponent
   ],
   exports: [
     LayoutComponent,

@@ -17,9 +17,9 @@ import { UniversidadService } from '../../../shared/services/universidad.service
 @Component({
   selector: 'app-reporte-index',
   templateUrl: './reporte-index.component.html',
-  styleUrls: ['./reporte-index.component.css'],
-  animations: [fadeInAnim, slideInLeftAnim],
-  host: { class: 'container-fluid', '[@fadeInAnim]': 'true' }
+  styleUrls: ['./reporte-index.component.css']
+  // animations: [fadeInAnim, slideInLeftAnim],
+  // host: { class: 'container-fluid', '[@fadeInAnim]': 'true' }
 })
 export class ReporteIndexComponent extends BaseComponent implements OnInit {
 

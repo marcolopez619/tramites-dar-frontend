@@ -1,3 +1,5 @@
+@import "~@fontsource/material-icons/index.css";
+
 html, body {
     height: 100%;
     margin: 0;
@@ -10,7 +12,7 @@ html, body {
     font-family: 'Material Icons';
     font-style: normal;
     font-weight: 400;
-    src: url(/assets/material-icons.woff2) format('woff2');
+    src: url(./assets/material-icons-base-400-normal.woff2) format('woff2');
 }
 
 .material-icons {
