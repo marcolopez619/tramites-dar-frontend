@@ -94,7 +94,7 @@ export class TraspasoUniversidadComponent extends BaseComponent implements OnIni
       this.datoEstudiante.anioIngreso = 2000;
       this.datoEstudiante.cantMateriasAprobadas = 83;
       this.datoEstudiante.cantMateriasReprobadas = 34;
-      this.datoEstudiante.promedioGeneral = this.datoEstudiante.cantMateriasAprobadas / this.datoEstudiante.cantMateriasReprobadas;
+      this.datoEstudiante.promedioGeneral = Number( ( (this.datoEstudiante.cantMateriasAprobadas / this.datoEstudiante.cantMateriasReprobadas ) * 10 ).toFixed( 2 ) );
     });
   }
 
