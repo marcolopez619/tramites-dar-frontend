@@ -82,7 +82,7 @@ export class ReporteIndexComponent extends BaseComponent implements OnInit {
   private getListaCarreras(): void {
     const idUniversidad = this.contextService.getItemContexto('idUniversidad') ?? 2;
 
-    this.universidadService.getListaCarrerasByIdUniversidad( idUniversidad ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+    this.universidadService.getListaCarreras( ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.listaCarreras = resp.data ?? [];
     });
   }
