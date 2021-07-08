@@ -95,6 +95,11 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
 
     this.traspasoUniversidadService.getAllTraspasos( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
       this.dataSource.data = resp.data ?? [];
+
+      if ( resp.data ) {
+        const itemBandeja = this.dataSource.data[ 0 ];
+        this.isTramiteHabilitado = (this.dataSource.data.length > 0 && itemBandeja.idEstado === eEstado.RECHAZADO);
+      }
     });
 
   }
