@@ -1,12 +1,12 @@
 <shared-loader-spinner></shared-loader-spinner>
 
-<mat-card class="mat-elevation-z12">
+<mat-card>
   <mat-card-header class="alt-theme">
   <mat-toolbar color="primary">
       <a mat-button routerLink="/menu" matTooltip="{{ langService.getLang(eModulo.Base, 'tit-volver') }}">
         <mat-icon>keyboard_backspace</mat-icon>
       </a>
-      {{ langService.getLang(eModulo.Usuario, 'tit-lista-usurios' ) }}
+      Reportes
       <span class="flex-spacer"></span>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-actualizar') }}">
         <mat-icon>refresh</mat-icon>
@@ -52,8 +52,8 @@
 
 
   <h3>{{ tituloGrafico }}</h3>
-  <div fxLayout="row" fxLayoutAlign="center stretch" >
-    <canvas baseChart
+  <div fxLayout="row" fxLayoutAlign="center stretch">
+    <canvas baseChart style="width: 80%; height: auto;"
             [colors]        = "lineChartColors"
             [datasets]      = "barChartData"
             [labels]        = "barChartLabels"
