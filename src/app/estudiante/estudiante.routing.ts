@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuardService } from '../shared/services/auth-guard.service';
 import { BandejaAnulacionComponent } from './components/anulacion/bandeja-anulacion/bandeja-anulacion.component';
 import { BandejaCambioCarreraComponent } from './components/cambio-carrera/bandeja-cambio-carrera/bandeja-cambio-carrera.component';
 import { BandejaReadmisionComponent } from './components/readmision/bandeja-readmision/bandeja-readmision.component';
@@ -13,26 +14,38 @@ export const estudianteRoutes: Routes = [
           {
               path: 'anulacion/index',
               component: BandejaAnulacionComponent,
+              canActivate : [AuthGuardService],
+              data: {checkRecurso: true}
           },
           {
               path: 'cambiocarrera/index',
               component: BandejaCambioCarreraComponent,
+              canActivate : [AuthGuardService],
+              data: {checkRecurso: true}
           },
           {
-            path : 'suspenciones/index',
-            component : BandejaSuspencionComponent
+              path : 'suspenciones/index',
+              component : BandejaSuspencionComponent,
+              canActivate : [AuthGuardService],
+              data: {checkRecurso: true}
           },
           {
-            path : 'readmisiones/index',
-            component : BandejaReadmisionComponent
+              path : 'readmisiones/index',
+              component : BandejaReadmisionComponent,
+              canActivate : [AuthGuardService],
+              data: {checkRecurso: true}
           },
           {
-            path : 'transferencias/index',
-            component : BandejaTransferenciaComponent
+              path : 'transferencias/index',
+              component : BandejaTransferenciaComponent,
+              canActivate : [AuthGuardService],
+              data: {checkRecurso: true}
           },
           {
-            path : 'traspasos/index',
-            component : BandejaTraspasoUniversidadComponent
+              path : 'traspasos/index',
+              component : BandejaTraspasoUniversidadComponent,
+              canActivate : [AuthGuardService],
+              data: {checkRecurso: true}
           }
       ]
   }

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuardService } from '../shared/services/auth-guard.service';
 import { ReporteIndexComponent } from './components/reporte-index/reporte-index.component';
 
 export const reportesRoutes: Routes = [
@@ -7,7 +8,9 @@ export const reportesRoutes: Routes = [
       children: [
           {
               path: 'index',
-              component: ReporteIndexComponent
+              component: ReporteIndexComponent,
+              canActivate : [AuthGuardService],
+              data: {checkRecurso: true}
           }
       ]
   }

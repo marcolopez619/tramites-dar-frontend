@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { BandejaTramitesAtendidosComponent } from '../shared/components/bandeja-tramites-atendidos/bandeja-tramites-atendidos.component';
+import { AuthGuardService } from '../shared/services/auth-guard.service';
 import { BandejaDirectorComponent } from './components/bandeja-director/bandeja-director.component';
 import { DetalleTramiteComponent } from './components/detalle-tramite/detalle-tramite.component';
 
@@ -9,15 +10,21 @@ export const directorRoutes: Routes = [
       children: [
           {
               path: 'bandeja/index',
-              component: BandejaDirectorComponent
+              component: BandejaDirectorComponent,
+              canActivate : [AuthGuardService],
+              data: {checkRecurso: true}
           },
           {
               path: 'detalle/tramite',
-              component: DetalleTramiteComponent
+              component: DetalleTramiteComponent,
+              canActivate : [AuthGuardService],
+              data: {checkRecurso: true}
           },
           {
-            path: 'tramites_atendidos/index',
-            component: BandejaTramitesAtendidosComponent
+              path: 'tramites_atendidos/index',
+              component: BandejaTramitesAtendidosComponent,
+              canActivate : [AuthGuardService],
+              data: {checkRecurso: true}
           }
       ]
   }

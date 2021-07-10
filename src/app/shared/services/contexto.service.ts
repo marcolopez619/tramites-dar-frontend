@@ -111,7 +111,7 @@ export class ContextoService {
         const item = this.getItemContexto('recursos');
         if (item) {
             const result = item.filter(obj => {
-                return pUrl.includes(obj.Uri);
+                return pUrl.includes(obj.ruta);
                 // return obj.Uri === pUrl.substring(1);
             });
             return result.length > 0;
