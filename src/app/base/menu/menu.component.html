@@ -1,22 +1,3 @@
-      <!--COMPONENTES INTEGRADOS CON EL BACKEND-->
-      <!-- <app-bandeja-tramites></app-bandeja-tramites> -->
-      <!-- <app-bandeja-anulacion></app-bandeja-anulacion> -->
-      <!-- <app-bandeja-cambio-carrera></app-bandeja-cambio-carrera> -->
-      <!-- <app-bandeja-suspencion></app-bandeja-suspencion> -->
-      <!-- <app-bandeja-readmision></app-bandeja-readmision> -->
-      <!-- <app-bandeja-traspaso-universidad></app-bandeja-traspaso-universidad> -->
-
-      <!-- MODULO DAR-->
-      <!-- <app-bandeja-dar></app-bandeja-dar> -->
-      <!-- <app-detalle-tramite></app-detalle-tramite> --> <!-- TODO: falta definir los flujos dependiendo del tipo de tramite en los cuatro botones de este componente -->
-      <!-- <app-bandeja-universidades></app-bandeja-universidades> -->
-      <!-- <app-bandeja-facultades></app-bandeja-facultades> -->
-      <!-- <app-bandeja-carreras></app-bandeja-carreras> -->
-      <!-- <app-bandeja-transferencia></app-bandeja-transferencia> -->
-      <!-- <app-bandeja-habilitacion-excepcion></app-bandeja-habilitacion-excepcion> -->
-      <!-- <app-bandeja-usuarios></app-bandeja-usuarios> -->
-
-
       <div fxFlex fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center center">
         <mat-form-field [@breadListAnim]  *ngIf="contextoService.breadCrumbs.length > 0" fxFlex="100" appearance="outline">
             <span matPrefix><mat-icon>search</mat-icon>&nbsp;</span>
@@ -46,28 +27,44 @@
             </mat-card-content>
         </mat-card>
 
-        <mat-card [@zoomInAnim]
-            class="menu-card fixFxLayoutGapBottom"
-            (click)="onMenuSelected(menu)"
-            [shHover]="'mat-elevation-z24'"
-            [shNotHover]="'mat-elevation-z8'"
-             *ngFor="let menu of contextoService.listaMenu">
-            <mat-card-header>
-                <mat-card-title>
-                    <mat-chip-list class="alt-theme">
-                        <mat-chip selected="true" color="primary" (click)="onMenuSelected(menu)">
-                            {{ menu.nombreModulo }}
-                        </mat-chip>
-                    </mat-chip-list>
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content fxLayoutAlign="center center">
-                    <mat-icon class="mat-24" color="primary" *ngIf="menu.icono != null; else noImage">{{ menu.icono }}</mat-icon>
-                    <ng-template #noImage>
-                        <mat-icon class="mat-24" color="primary" >extension</mat-icon>
-                    </ng-template>
-            </mat-card-content>
-        </mat-card>
+        <div *ngFor="let menu of contextoService.listaMenu">
+
+          <ng-container *ngIf="menu.visible; else elseTemplate">
+
+            <mat-card [@zoomInAnim]
+                class="menu-card fixFxLayoutGapBottom"
+                (click)="onMenuSelected(menu)"
+                [shHover]="'mat-elevation-z24'"
+                [shNotHover]="'mat-elevation-z8'"
+                >
+
+                   <mat-card-header>
+                       <mat-card-title>
+                           <mat-chip-list class="alt-theme">
+                               <mat-chip selected="true" color="primary" (click)="onMenuSelected(menu)">
+                                   {{ menu.nombreModulo }}
+                               </mat-chip>
+                           </mat-chip-list>
+                       </mat-card-title>
+                   </mat-card-header>
+                   <mat-card-content fxLayoutAlign="center center">
+                           <mat-icon class="mat-24" color="primary" *ngIf="menu.icono != null; else noImage">{{ menu.icono }}</mat-icon>
+                           <ng-template #noImage>
+                               <mat-icon class="mat-24" color="primary" >extension</mat-icon>
+                           </ng-template>
+                   </mat-card-content>
+
+
+            </mat-card>
+
+          </ng-container>
+          <ng-template #elseTemplate>
+
+          </ng-template>
+        </div>
+
+
+
     </div>
 
 
