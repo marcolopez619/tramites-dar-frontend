@@ -84,7 +84,7 @@ export class BandejaTraspasoUniversidadComponent extends BaseComponent  implemen
   private verificarTramitesEncCurso(): void {
     const idEstudiante = this.contextService.getItemContexto( 'idEstudiante' );
 
-    this.tramitesAcademicosService.verificarExistenciaTramiteEnCurso(idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
+    this.tramitesAcademicosService.verificarExistenciaTramiteEnCursoOrFinalizado(idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
       this.existenTramitesEnCurso = resp.data.existenTramitesEnCurso;
     });
   }

@@ -29,7 +29,7 @@ export class TramitesAcademicosService {
     return this.httpClient.get<Resultado>(`${this.baseURL}/verificar/habilitacion/${pIdTramite}/estudiante/${pIdEstudiante}`, {headers : headers});
   }
 
-  verificarExistenciaTramiteEnCurso(pIdEstudiante: number) : Observable<Resultado>{
+  verificarExistenciaTramiteEnCursoOrFinalizado(pIdEstudiante: number) : Observable<Resultado>{
     const headers = new HttpHeaders().set('X-Notificador', 'false');
     return this.httpClient.get<Resultado>(`${this.baseURL}/verificar/existencia/tramite/curso/${pIdEstudiante}`, {headers : headers});
   }
