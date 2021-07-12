@@ -28,6 +28,11 @@
 
     <mat-table #table [dataSource]="dataSource" matSort>
 
+      <ng-container matColumnDef="ru">
+        <mat-header-cell *matHeaderCellDef fxFlex="8" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-ru') }} </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="8"> {{element.ru}}&nbsp;</mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="nombreCompleto">
         <mat-header-cell *matHeaderCellDef fxFlex="25" mat-sort-header> {{ langService.getLang(eModulo.Dar, 'lbl-nombre-completo') }} </mat-header-cell>
         <mat-cell *matCellDef="let element" fxFlex="25"> {{element.paterno}}&nbsp;{{element.materno}}&nbsp;{{element.nombres}} </mat-cell>

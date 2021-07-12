@@ -90,6 +90,7 @@ export const baseLang = {
             'lbl-imprimir' : 'Imprimir',
             'lbl-actualizar': 'Actualizar',
             'lbl-guardar-e-imprimir' : 'Guardar e imprimir',
+            'lbl-ru' : 'R.U.',
 
             'lbl-confirmacion' : 'Confirmacion',
             'lbl-carrera' : 'Carrera',

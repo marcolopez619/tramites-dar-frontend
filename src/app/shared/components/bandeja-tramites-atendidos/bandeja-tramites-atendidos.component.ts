@@ -21,7 +21,7 @@ import { LangService } from '../../services/lang.service';
 })
 export class BandejaTramitesAtendidosComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['nombreCompleto', 'carrera', 'tipoTramite', 'fechaProceso', 'estado', 'observaciones' ];
+  displayedColumns = ['ru','nombreCompleto', 'carrera', 'tipoTramite', 'fechaProceso', 'estado', 'observaciones' ];
   dataSource = new MatTableDataSource<BandejaDar | BandejaDirector >([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
