@@ -14,7 +14,8 @@ import { ContextoService } from '../../../../shared/services/contexto.service';
 import { LangService } from '../../../../shared/services/lang.service';
 import { ReportesService } from '../../../../shared/services/reportes.service';
 import { TramitesAcademicosService } from '../../../../shared/services/tramites-academicos.service';
-import { BandejaReadmision } from '../../../../tramites/models/tramites.models';
+import { BandejaReadmision, BandejaSuspencion } from '../../../../tramites/models/tramites.models';
+import { SuspencionService } from '../../suspencion/suspencion.service';
 import { ReadmisionService } from '../readmision.service';
 import { ReadmisionComponent } from '../readmision/readmision.component';
 
@@ -29,6 +30,7 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  listaSuspenciones: Array<BandejaSuspencion> = [];
   isTramiteHabilitado: boolean;
   existenTramitesEnCurso: boolean;
   eEstado = eEstado;
@@ -40,6 +42,7 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
     public langService: LangService,
     public contextService: ContextoService,
     private dialog: MatDialog,
+    private suspencionService: SuspencionService,
     private readmisionService: ReadmisionService,
     private reportesService: ReportesService,
     private matSnackBar: MatSnackBar,
@@ -79,7 +82,7 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
     });
   }
 
-  private getIdSuspencionesUtilizadas(): Array<number>{
+  private getIdSuspencionesUtilizadas(): Array<number> {
     let listaIdSuspenciones = [];
 
     if (this.dataSource.data?.length > 0) {
@@ -94,6 +97,29 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
 
     this.tramitesAcademicosService.verificarExistenciaTramiteEnCursoOrFinalizado(idEstudiante ).pipe( takeUntil( this.unsubscribe$ ) ).subscribe( resp => {
       this.existenTramitesEnCurso = resp.data.existenTramitesEnCurso;
+
+      if (this.existenTramitesEnCurso) {
+         // => obtiene sus suspenciones
+         this.verificarEstadoSuspencion();
+      }
+    });
+  }
+
+  private verificarEstadoSuspencion(): void {
+    const idEstudiante = this.contextService.getItemContexto('idEstudiante');
+
+    this.suspencionService.getAllListaSuspenciones( idEstudiante ).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+
+      if (resp.data) {
+        const suspencion = resp.data[ 0 ] as BandejaSuspencion;
+
+        // Verifica si la suspencion esta en estado finalizado
+        if ( suspencion.idEstado === eEstado.FINALIZADO ) {
+          // => habilita el boton de : nueva solicitud
+          this.existenTramitesEnCurso = false;
+        }
+      }
+
     });
   }
 
@@ -131,7 +157,7 @@ export class BandejaReadmisionComponent extends BaseComponent  implements OnInit
     this.reportesService.printReadmisionEstudiante( dataForReport );
   }
 
-  onVerSeguimiento(element: BandejaReadmision) : void{
+  onVerSeguimiento(element: BandejaReadmision): void {
     const dlgSeguimiento = this.dialog.open( SeguimientoComponent,  {
       disableClose: false,
       width: '1000px',
