@@ -70,7 +70,7 @@ export class BandejaTramitesAtendidosComponent extends BaseComponent implements 
 
     } else {
       // Sino , es Director de cualquier tipo
-      this.directorService.getTramitesAtendidos(idPerfil).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
+      this.directorService.getTramitesAtendidos(idCarrera).pipe( takeUntil( this.unsubscribe$ )).subscribe( resp => {
         this.dataSource.data = resp.data ?? [];
       });
 
