@@ -38,7 +38,7 @@
 
       <ng-container matColumnDef="motivo">
         <mat-header-cell *matHeaderCellDef fxFlex="20" mat-sort-header> {{ langService.getLang(eModulo.Base, 'lbl-motivo') }} </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="20"> {{element.descripcion}} </mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="20"> {{element.motivo}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="fechaSolicitud" >

@@ -79,7 +79,7 @@ export interface BandejaSuspencion {
   idCarrera?: number;
   carrera?: string;
   tiempoSolicitado?: number;
-  descripcionMotivo?: string;
+  motivo?: string;
   fechaSolicitud?: Date;
   descripcion?: string;
   fechaProceso?: Date;
@@ -131,7 +131,7 @@ export interface BandejaTraspasoUniversidad {
   universidaddestino?: string;
   idCarrera?: number;
   carreradestino?: string;
-  descripcionMotivo?: string;
+  // descripcionMotivo?: string;
   anioIngreso?: number;
   materiasAprobadas?: number;
   materiasReprobadas?: number;

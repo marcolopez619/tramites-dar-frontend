@@ -8,7 +8,7 @@
       </a>
       {{ langService.getLang(eModulo.Estudiante,'tit-lista-readmision-carrera') }}
       <span class="flex-spacer"></span>
-      <a mat-button matTooltip="{{ langService.getLang(eModulo.Estudiante, 'tit-nueva-solicitud') }}" (click)="getListaReadmisiones()">
+      <a mat-button matTooltip="{{ langService.getLang(eModulo.Base, 'lbl-actualizar') }}" (click)="getListaReadmisiones()">
         <mat-icon>refresh</mat-icon>
       </a>
       <a mat-button matTooltip="{{ langService.getLang(eModulo.Estudiante, 'tit-nueva-solicitud') }}" (click)="onNuevaSolicitud()" *ngIf="this.isTramiteHabilitado && !this.existenTramitesEnCurso && this.dataSource.data.length == 0">

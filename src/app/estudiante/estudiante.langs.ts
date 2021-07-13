@@ -1,12 +1,12 @@
 export const estudianteLang = {
   'es' : {
-    'tit-lista-anulaciones' : 'Solicitud de anulaciones',
+    'tit-lista-anulaciones' : 'Solicitud de anulaciones de carrera',
     'tit-lista-cambios-carrera' : 'Solicitud de cambios de carrera',
     'tit-nuevo-cambio-carrera' : 'Nuevo cambio de carrera',
-    'tit-lista-suspenciones-carrera' : 'Solicitud de suspenciónes de carrera',
-    'tit-lista-readmision-carrera' : 'Solicitudes de readmisiones de carrera',
+    'tit-lista-suspenciones-carrera' : 'Solicitud de suspención de estudios',
+    'tit-lista-readmision-carrera' : 'Solicitudes de readmision de estudios',
     'tit-lista-traspaso-universidad' : 'Solicitudes de traspaso de universidades',
-    'tit-lista-transferencias' : 'Solicitudes de transferencias',
+    'tit-lista-transferencias' : 'Solicitudes de transferencias de carrera',
     'tit-nueva-solicitud' : 'Nueva solicitud',
     'tit-nueva-solicitud-anulacion' : 'Nueva solicitud de anulación',
     'tit-nueva-solicitud-suspencion' : 'Nueva solicitud de suspención',

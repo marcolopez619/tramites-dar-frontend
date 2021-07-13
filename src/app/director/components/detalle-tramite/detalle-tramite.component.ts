@@ -166,7 +166,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
       case eTipoTramite.SUSPENCION:
         const dataSuspencion = data as BandejaSuspencion;
         this.listaLabelColumnas = ['Tramite solicitado', 'Carrera origen', 'Tiempo',  'Fecha solicitud', 'Motivo'];
-        this.listaValoresColumnas = [dataSuspencion.tramite, dataSuspencion.carrera, dataSuspencion.tiempoSolicitado.toString().concat(` Gestiones`),  dataSuspencion.fechaSolicitud.toString(), dataSuspencion.descripcionMotivo ];
+        this.listaValoresColumnas = [dataSuspencion.tramite, dataSuspencion.carrera, dataSuspencion.tiempoSolicitado.toString().concat(` Gestiones`),  dataSuspencion.fechaSolicitud.toString(), dataSuspencion.motivo ];
         break;
       case eTipoTramite.READMISION:
         const dataReadmision = data as BandejaReadmision;
@@ -181,7 +181,7 @@ export class DetalleTramiteComponent extends BaseComponent implements OnInit, On
       case eTipoTramite.TRASPASO_DE_UNIVERSIDAD:
         const dataTraspaso = data as BandejaTraspasoUniversidad;
         this.listaLabelColumnas = ['Tramite solicitado', 'Universidad destino', 'Carrera destino', 'Periodo' , 'Año ingreso', 'Materias aprobadas', 'Materias reprobadas', 'Promedio General', 'Fecha solicitud', 'Motivo'];
-        this.listaValoresColumnas = [dataTraspaso.tramite, dataTraspaso.universidaddestino, dataTraspaso.carreradestino, dataTraspaso.periodo, dataTraspaso.anioIngreso, dataTraspaso.materiasAprobadas , dataTraspaso.materiasReprobadas, ( (dataTraspaso.materiasAprobadas / dataTraspaso.materiasReprobadas) * 100).toFixed( 2 ), dataTraspaso.fechaSolicitud, dataTraspaso.descripcionMotivo ];
+        this.listaValoresColumnas = [dataTraspaso.tramite, dataTraspaso.universidaddestino, dataTraspaso.carreradestino, dataTraspaso.periodo, dataTraspaso.anioIngreso, dataTraspaso.materiasAprobadas , dataTraspaso.materiasReprobadas, ( (dataTraspaso.materiasAprobadas / dataTraspaso.materiasReprobadas) * 100).toFixed( 2 ), dataTraspaso.fechaSolicitud, dataTraspaso.motivo ];
         break;
 
       default:
