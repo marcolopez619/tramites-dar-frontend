@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -25,7 +26,8 @@ export class SeguimientoComponent extends BaseComponent implements OnInit {
     public langService: LangService,
     public contextService: ContextoService,
     private tramiteAcademicoService: TramitesAcademicosService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private datePipe: DatePipe
   ) {
     super();
   }
@@ -63,7 +65,7 @@ export class SeguimientoComponent extends BaseComponent implements OnInit {
         estado       : [this.dataSeguimiento.estado],
         idEntidad    : [this.dataSeguimiento.idEntidad],
         entidad      : [this.dataSeguimiento.entidad],
-        fechaProceso : [this.dataSeguimiento.estado.concat( ` en fecha : `, this.dataSeguimiento.fechaProceso.toString() ) ],
+        fechaProceso : [this.dataSeguimiento.estado.concat( ` en fecha : `, this.datePipe.transform( this.dataSeguimiento.fechaProceso, 'dd-MM-yyyy') ) ],
         observaciones: [this.dataSeguimiento.observaciones ?? `${ninguna}`],
         idMotivo     : [this.dataSeguimiento.idMotivo],
         motivo       : [this.dataSeguimiento.motivo ?? `${ninguna}` ]
